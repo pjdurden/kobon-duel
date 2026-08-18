@@ -224,3 +224,23 @@ The next turn owed is not another structural property of the f=0 family. It's 7 
 <!-- meta
 {"addresses": [11], "claims_conceded": [], "claims_opened": ["f0-mirror-parity-vacuous"], "falsifier": "A concrete placement of 7 reflected line-pairs at k=14 with an explicit, checkable triangle count of 54 (27 pair-orbits) would change my mind; a parity property alone does not, since 54 was already known to be even.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 13 - PythagorAss - 2026-08-18T14:18:21Z
+
+Turn 13. Not a concession — Euclidn't's critique of turn 11 lands and I'm not disputing it — but a real decomposition of the f=0 mirror family that the criticism itself demands.
+
+Turn 11 established that each of the 7 reflected pairs (ℓ_i, ℓ_i') meets at a point p_i, and that p_i must lie on the mirror axis A: reflection sends ℓ_i↦ℓ_i', so it fixes their intersection point, and a fixed point of a reflection lies on the axis. So the f=0 family carries 7 special vertices p_1,...,p_7, all collinear on A, even though A itself is not one of the 14 lines. Since no arrangement line coincides with A (that would make it a fixed line, and f=0 excludes those), no arrangement line can pass through two different p_i's — the only line through two points of A is A itself.
+
+This licenses a genuine split of the triangle count by vertex type. Call a triangle **Case A** if two of its three sides are a full pair (ℓ_i, ℓ_i'), meeting at p_i, with the third side any other line. Call it **Case B** if its three sides come from three distinct pairs, with no two sides being mirror partners. Every triangle in the family is one or the other — a triangle can't use two full pairs at once, since that would need 4 sides.
+
+Case A is boundable by the same sector-counting logic Euclidn't validated in turn 8 for m(v)≤4. At vertex p_i, lines ℓ_i and ℓ_i' cross, cutting the plane locally into 4 angular sectors. A Case-A triangle anchored at p_i occupies exactly one sector, closed off by whichever third line sits nearest p_i in that sector — and only the nearest such line can produce an *elementary* (unsubdivided) triangular face there, since any farther line would have its potential triangle cut through by the nearer one. So at most one Case-A triangle per sector, at most 4 per axis point, at most 4×7 = 28 across the whole family.
+
+Because T_fixed = 0 (turn 11, unchallenged), every triangle including Case A ones pairs up under reflection into an orbit of 2 — a Case-A triangle anchored at p_i using ℓ_j as its third side reflects to the Case-A triangle at the same p_i using ℓ_j' instead, a different triangle, still Case A. So Case A contributes at most 14 orbits, Case B must supply the rest.
+
+Target: 27 orbits total (54 triangles). Case A ≤ 14 orbits. So **Case B must supply ≥ 13 orbits (≥ 26 triangles)** for this family to reach 54 — and this holds regardless of how the 7 pairs are placed, not as a promise but as an arithmetic consequence of the 28-cap.
+
+This is not a kill of the family — 14 + 13 = 27 is arithmetically consistent, nothing here forces total below 27. What it does is convert "count the orbits" into two separate, smaller design problems: (1) can real placement of the 7 pairs get close to the 4-per-axis-point maximum, and (2) separately, can 13+ orbits of distinct-triple triangles be packed among the remaining structure. I don't have either yet. Next turn's job is placing actual angles to test whether Case A saturates anywhere near 28, since that's the cheaper piece to check first.
+
+<!-- meta
+{"addresses": [12], "claims_conceded": [], "claims_opened": ["f0-case-a-sector-bound"], "falsifier": "A global order-type argument showing the 7 axis points cannot simultaneously support near-maximal sector closings (e.g. a parity or convexity obstruction forcing most p_i below 4) would collapse the 28-cap toward something well under 14 orbits, and I'd need to redo the Case A/B split with a lower ceiling.", "tier": "none", "verifier_runs": []}
+-->
