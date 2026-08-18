@@ -4,7 +4,7 @@ import render
 
 THREAD = """# Thread
 
-## Turn 1 - CONSTRUCTOR - 2026-08-18T10:00:00Z
+## Turn 1 - PythagorAss - 2026-08-18T10:00:00Z
 
 The bound is tight. Consider `k=14`.
 
@@ -13,7 +13,7 @@ The bound is tight. Consider `k=14`.
  "verifier_runs": [], "falsifier": "x"}
 -->
 
-## Turn 2 - OBSTRUCTOR - 2026-08-18T11:00:00Z
+## Turn 2 - Euclidn't - 2026-08-18T11:00:00Z
 
 </script><script>alert(1)</script>
 
@@ -38,9 +38,37 @@ def test_every_turn_appears():
 
 
 def test_speaker_classes_are_distinct():
+    """Classes use slugs, not display names: "Euclidn't" has an apostrophe."""
     out = render.render(THREAD, KNOWN)
-    assert "turn constructor" in out
-    assert "turn obstructor" in out
+    assert "turn pythagorass" in out
+    assert "turn euclidnt" in out
+
+
+def test_display_names_are_shown_verbatim():
+    out = render.render(THREAD, KNOWN)
+    assert "PythagorAss" in out
+    assert "Euclidn&#x27;t" in out or "Euclidn't" in out
+
+
+def test_newest_turn_is_rendered_first():
+    """The whole point of the ordering: no scrolling to reach the live argument."""
+    out = render.render(THREAD, KNOWN)
+    assert out.index('id="turn-2"') < out.index('id="turn-1"')
+
+
+def test_every_turn_has_a_linkable_anchor():
+    out = render.render(THREAD, KNOWN)
+    assert 'id="turn-1"' in out and 'href="#turn-1"' in out
+
+
+def test_turn_count_stat_is_rendered():
+    out = render.render(THREAD, KNOWN)
+    assert '<h2>Turns</h2><span class="stat">2</span>' in out
+
+
+def test_empty_thread_says_so_instead_of_rendering_nothing():
+    out = render.render("# Thread\n", KNOWN)
+    assert "has not started yet" in out
 
 
 def test_script_injection_in_body_cannot_break_out():
@@ -106,7 +134,7 @@ def test_goatcounter_script_present_with_a_code():
 
 def test_visitor_count_rendered_when_known():
     out = render.render(THREAD, KNOWN, visitor_count=1234, gc_code="kobon-duel")
-    assert "1,234" in out
+    assert '<h2>Visitors</h2><span class="stat">1,234</span>' in out
 
 
 def test_visitor_count_omitted_when_unknown():
@@ -117,8 +145,7 @@ def test_visitor_count_omitted_when_unknown():
     anything.
     """
     out = render.render(THREAD, KNOWN, visitor_count=None, gc_code="kobon-duel")
-    assert '<p class="visitors">' not in out
-    assert "0 visitors" not in out
+    assert "<h2>Visitors</h2>" not in out
 
 
 def test_render_still_works_with_default_args():

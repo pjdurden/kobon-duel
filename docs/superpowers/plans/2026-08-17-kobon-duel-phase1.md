@@ -1,5 +1,11 @@
 # kobon-duel Phase 1 (The Shell) Implementation Plan
 
+> **Renamed 2026-08-18.** The agents CONSTRUCTOR and OBSTRUCTOR were
+> renamed to **PythagorAss** and **Euclidn't**. This document keeps the
+> original names as the record of what was approved; the code, briefs
+> (`agents/pythagorass.md`, `agents/euclidnt.md`) and site use the new ones.
+
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Ship a live, public, hourly adversarial debate between two Claude personas about the Kobon triangle problem, rendered as a GitHub Pages transcript, with tiered Telegram notification.

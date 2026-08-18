@@ -19,22 +19,22 @@ RAW_GOLD = """I have solved it.
 
 
 def test_ingest_extracts_body_and_meta():
-    t = take_turn.ingest(RAW_GOOD, 4, "CONSTRUCTOR", "2026-08-18T10:00:00Z", False)
+    t = take_turn.ingest(RAW_GOOD, 4, "PythagorAss", "2026-08-18T10:00:00Z", False)
     assert t.number == 4
-    assert t.speaker == "CONSTRUCTOR"
+    assert t.speaker == "PythagorAss"
     assert "Here is my argument" in t.body
     assert t.meta["claims_opened"] == ["k14-family-a"]
     assert t.violations == []
 
 
 def test_ingest_flags_missing_meta():
-    t = take_turn.ingest(RAW_NO_META, 4, "CONSTRUCTOR", "ts", False)
+    t = take_turn.ingest(RAW_NO_META, 4, "PythagorAss", "ts", False)
     assert any("MALFORMED_META" in v for v in t.violations)
     assert t.meta["tier"] == "none"
 
 
 def test_ingest_downgrades_agent_gold():
-    t = take_turn.ingest(RAW_GOLD, 4, "CONSTRUCTOR", "ts", False)
+    t = take_turn.ingest(RAW_GOLD, 4, "PythagorAss", "ts", False)
     assert t.meta["tier"] == "none"
     assert any("TIER_DOWNGRADED" in v for v in t.violations)
 
@@ -46,7 +46,7 @@ def test_ingest_allows_referee_gold():
 
 def test_build_prompt_contains_every_source():
     p = take_turn.build_prompt(
-        "CONSTRUCTOR", [], "KNOWNTEXT", "LITTEXT", "LEDGERTEXT",
+        "PythagorAss", [], "KNOWNTEXT", "LITTEXT", "LEDGERTEXT",
         "AGENDATEXT", "BRIEFTEXT",
     )
     for marker in ("KNOWNTEXT", "LITTEXT", "LEDGERTEXT", "AGENDATEXT"):
@@ -55,24 +55,24 @@ def test_build_prompt_contains_every_source():
 
 def test_build_prompt_windows_to_six_turns():
     turns = [
-        thread.Turn(i, "CONSTRUCTOR", "ts", f"BODY{i}", {})
+        thread.Turn(i, "PythagorAss", "ts", f"BODY{i}", {})
         for i in range(1, 11)
     ]
-    p = take_turn.build_prompt("OBSTRUCTOR", turns, "k", "l", "g", "a", "b")
+    p = take_turn.build_prompt("Euclidn't", turns, "k", "l", "g", "a", "b")
     assert "BODY10" in p and "BODY5" in p
     assert "BODY4" not in p
 
 
 def test_build_prompt_names_the_speaker():
-    p = take_turn.build_prompt("OBSTRUCTOR", [], "k", "l", "g", "a", "b")
-    assert "OBSTRUCTOR" in p
+    p = take_turn.build_prompt("Euclidn't", [], "k", "l", "g", "a", "b")
+    assert "Euclidn't" in p
 
 
 def test_ingest_strips_code_fences_around_meta():
     raw = "Body.\n\n```\n<!-- meta\n{\"tier\": \"none\", \"addresses\": [], " \
           "\"claims_opened\": [], \"claims_conceded\": [], " \
           "\"verifier_runs\": [], \"falsifier\": \"x\"}\n-->\n```"
-    t = take_turn.ingest(raw, 1, "CONSTRUCTOR", "ts", False)
+    t = take_turn.ingest(raw, 1, "PythagorAss", "ts", False)
     assert t.meta["tier"] == "none"
     assert not any("MALFORMED_META" in v for v in t.violations)
     assert "```" not in t.body
@@ -85,7 +85,7 @@ def test_ingest_strips_a_harness_aside_comment():
         '<!-- meta\n{"tier": "none", "addresses": [], "claims_opened": [], '
         '"claims_conceded": [], "verifier_runs": [], "falsifier": "x"}\n-->'
     )
-    t = take_turn.ingest(raw, 1, "CONSTRUCTOR", "ts", False)
+    t = take_turn.ingest(raw, 1, "PythagorAss", "ts", False)
     assert "Using no skill" not in t.body
     assert t.body.startswith("The real argument")
     assert t.meta["tier"] == "none"
@@ -97,6 +97,6 @@ def test_ingest_keeps_the_meta_trailer_when_stripping_comments():
         '<!-- meta\n{"tier": "silver", "addresses": [], "claims_opened": [], '
         '"claims_conceded": [], "verifier_runs": [], "falsifier": "x"}\n-->'
     )
-    t = take_turn.ingest(raw, 1, "OBSTRUCTOR", "ts", False)
+    t = take_turn.ingest(raw, 1, "Euclidn't", "ts", False)
     assert t.meta["tier"] == "silver"
     assert "aside" not in t.body

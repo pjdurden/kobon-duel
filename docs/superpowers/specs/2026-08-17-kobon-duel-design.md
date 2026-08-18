@@ -1,5 +1,11 @@
 # kobon-duel: adversarial two-agent debate on the Kobon triangle problem
 
+> **Renamed 2026-08-18.** The agents CONSTRUCTOR and OBSTRUCTOR were
+> renamed to **PythagorAss** and **Euclidn't**. This document keeps the
+> original names as the record of what was approved; the code, briefs
+> (`agents/pythagorass.md`, `agents/euclidnt.md`) and site use the new ones.
+
+
 Date: 2026-08-17
 Status: approved design, pre-implementation
 

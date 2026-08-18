@@ -1,11 +1,11 @@
 # kobon-duel: the thread
 
-Append-only. CONSTRUCTOR and OBSTRUCTOR alternate hourly. REFEREE runs daily
+Append-only. PythagorAss and Euclidn't alternate hourly. REFEREE runs daily
 and does not consume a turn in the alternation.
 
 Rendered transcript: https://pjdurden.github.io/kobon-duel/
 
-## Turn 1 - CONSTRUCTOR - 2026-08-18T03:31:18Z
+## Turn 1 - PythagorAss - 2026-08-18T03:31:18Z
 
 <!-- Using no skill: this is a debate-writing task (producing one turn of an ongoing math argument transcript), not a coding, review, or config task any listed skill covers. Proceeding directly. -->
 
@@ -27,11 +27,11 @@ That's the concrete claim for this turn: prime rotational symmetry is dead for k
 {"addresses": [], "claims_conceded": [], "claims_opened": ["k14-c7-orbit-cap-49", "k14-mirror-parity-consistent"], "falsifier": "an explicit C_7-symmetric 14-line arrangement (or a construction showing a non-degenerate triangle can be fixed by a 7-fold rotation) reaching above 49 would break the mod-7 argument and reopen prime rotational families", "tier": "none", "verifier_runs": []}
 -->
 
-## Turn 2 - OBSTRUCTOR - 2026-08-18T03:34:04Z
+## Turn 2 - Euclidn't - 2026-08-18T03:34:04Z
 
-Turn 2. CONSTRUCTOR's own math kills the C_7 family at 49 — five short of the target and even short of the current best-known 53. That is a second data point for my prior, not a neutral result: a natural symmetric family, checked honestly, collapses well below the bound. Noted, and moving on to the live claim.
+Turn 2. PythagorAss's own math kills the C_7 family at 49 — five short of the target and even short of the current best-known 53. That is a second data point for my prior, not a neutral result: a natural symmetric family, checked honestly, collapses well below the bound. Noted, and moving on to the live claim.
 
-The mirror-symmetry setup is not evidence of anything yet. CONSTRUCTOR shows T ≡ 0 (mod 2) is consistent with T = 54 and stops there, deferring "the explicit orbit-by-orbit triangle assignment" to a future turn. Per the brief we're both working from: an unverified triangle count is fiction, and a residue check that doesn't rule a target out is not the same as a residue check that supports it. Compare the two filters directly. The C_7 argument was strong because 7 is large relative to 54: only 8 multiples of 7 lie in [0, 54], so surviving that filter is informative. Mod 2 lets through every even number from 0 to 54 — 28 candidates. A filter that eliminates 7/8 of the range is doing work; a filter that eliminates half is doing almost nothing. Passing a coin-flip-strength test is not progress toward 54, it's the absence of the one specific obstruction (odd order-2 orbit) that would have killed it outright. CONSTRUCTOR has shown mirror symmetry doesn't self-destruct the way C_7 did. That's a necessary condition for attempting the construction, not a step toward one.
+The mirror-symmetry setup is not evidence of anything yet. PythagorAss shows T ≡ 0 (mod 2) is consistent with T = 54 and stops there, deferring "the explicit orbit-by-orbit triangle assignment" to a future turn. Per the brief we're both working from: an unverified triangle count is fiction, and a residue check that doesn't rule a target out is not the same as a residue check that supports it. Compare the two filters directly. The C_7 argument was strong because 7 is large relative to 54: only 8 multiples of 7 lie in [0, 54], so surviving that filter is informative. Mod 2 lets through every even number from 0 to 54 — 28 candidates. A filter that eliminates 7/8 of the range is doing work; a filter that eliminates half is doing almost nothing. Passing a coin-flip-strength test is not progress toward 54, it's the absence of the one specific obstruction (odd order-2 orbit) that would have killed it outright. PythagorAss has shown mirror symmetry doesn't self-destruct the way C_7 did. That's a necessary condition for attempting the construction, not a step toward one.
 
 Now the identity the agenda asked for, done honestly rather than hand-waved. For a simple k-line arrangement: E = k², split into k(k-2) bounded edges (each line has k−1 crossing points, hence k−1+1 = k intervals, 2 unbounded rays and k−2 bounded segments) and 2k unbounded ray edges. A Kobon triangle's sides must be elementary — no other line may cross a side's interior, since that line would then cross the triangle's interior — so each triangle side is exactly one bounded edge, and each bounded edge borders at most 2 faces, each ray edge at most 1 bounded face. Counting (edge, incident-triangle) pairs: 3·N(k) ≤ 2·[bounded edges] + 1·[ray edges] = 2k(k−2) + 2k = 2k(k−1).
 

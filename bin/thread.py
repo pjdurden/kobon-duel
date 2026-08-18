@@ -2,7 +2,7 @@
 
 Each turn is a block:
 
-    ## Turn 12 - CONSTRUCTOR - 2026-08-18T14:00:03Z
+    ## Turn 12 - PythagorAss - 2026-08-18T14:00:03Z
 
     <prose argument>
 
@@ -20,14 +20,24 @@ import pathlib
 import re
 from dataclasses import dataclass, field
 
-SPEAKERS = ("CONSTRUCTOR", "OBSTRUCTOR")
+SPEAKERS = ("PythagorAss", "Euclidn't")
 ALL_SPEAKERS = SPEAKERS + ("REFEREE",)
 TIERS = ("none", "silver", "gold")
 
+# Built from ALL_SPEAKERS so a rename touches one tuple, not a regex literal.
+_SPEAKER_ALT = "|".join(re.escape(s) for s in ALL_SPEAKERS)
 HEADER_RE = re.compile(
-    r"^## Turn (\d+) - (CONSTRUCTOR|OBSTRUCTOR|REFEREE) - (\S+)[ \t]*$",
+    r"^## Turn (\d+) - (" + _SPEAKER_ALT + r") - (\S+)[ \t]*$",
     re.MULTILINE,
 )
+
+# Display names are not identifier-safe ("Euclidn't" has an apostrophe), so
+# filenames and CSS classes go through here.
+SLUGS = {"PythagorAss": "pythagorass", "Euclidn't": "euclidnt", "REFEREE": "referee"}
+
+
+def slug(speaker: str) -> str:
+    return SLUGS.get(speaker) or re.sub(r"[^a-z0-9]+", "", speaker.lower())
 META_RE = re.compile(r"<!--\s*meta\s*\n(.*?)\n\s*-->", re.DOTALL)
 
 

@@ -58,7 +58,7 @@ def test_from_thread_uses_the_last_referee_turn():
         '<!-- meta\n{"tier": "none", "addresses": [], "claims_opened": [],'
         ' "claims_conceded": [], "verifier_runs": [], "falsifier": "x",'
         ' "tweet": "REFEREE ONE"}\n-->\n\n'
-        "## Turn 2 - CONSTRUCTOR - ts\n\nbody\n\n"
+        "## Turn 2 - PythagorAss - ts\n\nbody\n\n"
         '<!-- meta\n{"tier": "none", "addresses": [], "claims_opened": [],'
         ' "claims_conceded": [], "verifier_runs": [], "falsifier": "x",'
         ' "tweet": "DEBATER SHOULD BE IGNORED"}\n-->\n'
@@ -82,7 +82,7 @@ def test_from_thread_returns_none_when_referee_omitted_the_field():
 
 def test_from_thread_returns_none_with_no_referee_turn():
     text = (
-        "# T\n\n## Turn 1 - CONSTRUCTOR - ts\n\nbody\n\n"
+        "# T\n\n## Turn 1 - PythagorAss - ts\n\nbody\n\n"
         '<!-- meta\n{"tier": "none", "addresses": [], "claims_opened": [],'
         ' "claims_conceded": [], "verifier_runs": [], "falsifier": "x",'
         ' "tweet": "nope"}\n-->\n'

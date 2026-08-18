@@ -11,7 +11,7 @@ def mk(body="argument", **meta):
         "falsifier": "something",
     }
     base.update(meta)
-    return thread.Turn(1, "CONSTRUCTOR", "2026-08-18T10:00:00Z", body, base)
+    return thread.Turn(1, "PythagorAss", "2026-08-18T10:00:00Z", body, base)
 
 
 def test_valid_meta_has_no_errors():
@@ -101,7 +101,7 @@ def test_referee_must_supply_a_tweet_field():
 
 
 def test_debaters_need_no_tweet_field():
-    assert thread.validate_meta(mk().meta, speaker="CONSTRUCTOR") == []
+    assert thread.validate_meta(mk().meta, speaker="PythagorAss") == []
     assert thread.validate_meta(mk().meta) == []
 
 

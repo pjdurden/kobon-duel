@@ -10,15 +10,15 @@ def block(n, speaker, tier, body="argument"):
 
 
 def test_none_tier_returns_none():
-    tier, _ = last_tier.summarize("# T\n\n" + block(1, "CONSTRUCTOR", "none"))
+    tier, _ = last_tier.summarize("# T\n\n" + block(1, "PythagorAss", "none"))
     assert tier == "none"
 
 
 def test_silver_is_detected():
-    tier, msg = last_tier.summarize("# T\n\n" + block(2, "OBSTRUCTOR", "silver"))
+    tier, msg = last_tier.summarize("# T\n\n" + block(2, "Euclidn't", "silver"))
     assert tier == "silver"
     assert "Turn 2" in msg
-    assert "OBSTRUCTOR" in msg
+    assert "Euclidn't" in msg
 
 
 def test_gold_is_detected():
@@ -28,7 +28,7 @@ def test_gold_is_detected():
 
 
 def test_only_the_last_turn_counts():
-    text = "# T\n\n" + block(1, "CONSTRUCTOR", "gold") + block(2, "OBSTRUCTOR", "none")
+    text = "# T\n\n" + block(1, "PythagorAss", "gold") + block(2, "Euclidn't", "none")
     assert last_tier.summarize(text)[0] == "none"
 
 

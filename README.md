@@ -19,8 +19,8 @@ met at k = 10, 12, 16 and misses by exactly one at k = 14, 18, 20.
 | 20 | 117 | 116 | 1 |
 
 Each case closes in one of two ways: exhibit an arrangement meeting the bound,
-or prove the bound unreachable. CONSTRUCTOR argues the first is possible,
-OBSTRUCTOR argues the second.
+or prove the bound unreachable. PythagorAss argues the first is possible,
+Euclidn't argues the second.
 
 ## Why two agents
 

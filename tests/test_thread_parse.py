@@ -2,7 +2,7 @@ import thread
 
 FIXTURE = """# Thread
 
-## Turn 1 - CONSTRUCTOR - 2026-08-18T10:00:00Z
+## Turn 1 - PythagorAss - 2026-08-18T10:00:00Z
 
 The even bound is tight at 14.
 
@@ -11,7 +11,7 @@ The even bound is tight at 14.
  "claims_conceded": [], "verifier_runs": [], "falsifier": "a proof of 53"}
 -->
 
-## Turn 2 - OBSTRUCTOR - 2026-08-18T11:00:00Z
+## Turn 2 - Euclidn't - 2026-08-18T11:00:00Z
 
 It is not, and you have shown nothing.
 
@@ -34,7 +34,7 @@ Both sides are asserting priors without argument.
 def test_parses_all_blocks():
     turns = thread.parse(FIXTURE)
     assert [t.number for t in turns] == [1, 2, 3]
-    assert [t.speaker for t in turns] == ["CONSTRUCTOR", "OBSTRUCTOR", "REFEREE"]
+    assert [t.speaker for t in turns] == ["PythagorAss", "Euclidn't", "REFEREE"]
 
 
 def test_body_excludes_meta_trailer():
@@ -56,16 +56,16 @@ def test_timestamp_captured():
 
 def test_next_speaker_alternates():
     turns = thread.parse(FIXTURE)
-    assert thread.next_speaker(turns) == "CONSTRUCTOR"
+    assert thread.next_speaker(turns) == "PythagorAss"
 
 
 def test_next_speaker_ignores_trailing_referee_run():
     turns = thread.parse(FIXTURE)[:2]
-    assert thread.next_speaker(turns) == "CONSTRUCTOR"
+    assert thread.next_speaker(turns) == "PythagorAss"
 
 
 def test_next_speaker_on_empty_thread_is_constructor():
-    assert thread.next_speaker([]) == "CONSTRUCTOR"
+    assert thread.next_speaker([]) == "PythagorAss"
 
 
 def test_next_number_is_max_plus_one():
@@ -78,7 +78,7 @@ def test_parse_empty_text():
 
 
 def test_block_without_meta_yields_empty_meta():
-    text = "## Turn 1 - CONSTRUCTOR - 2026-08-18T10:00:00Z\n\nno trailer here\n"
+    text = "## Turn 1 - PythagorAss - 2026-08-18T10:00:00Z\n\nno trailer here\n"
     turns = thread.parse(text)
     assert turns[0].meta == {}
     assert "no trailer here" in turns[0].body
@@ -86,7 +86,7 @@ def test_block_without_meta_yields_empty_meta():
 
 def test_malformed_meta_json_yields_empty_meta():
     text = (
-        "## Turn 1 - CONSTRUCTOR - 2026-08-18T10:00:00Z\n\nbody\n\n"
+        "## Turn 1 - PythagorAss - 2026-08-18T10:00:00Z\n\nbody\n\n"
         "<!-- meta\n{not json}\n-->\n"
     )
     assert thread.parse(text)[0].meta == {}

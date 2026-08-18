@@ -98,11 +98,7 @@ def main() -> int:
     speaker = sys.argv[1] if len(sys.argv) > 1 else None
     turns = thread.parse((ROOT / "THREAD.md").read_text())
     speaker = speaker or thread.next_speaker(turns)
-    brief_file = {
-        "CONSTRUCTOR": "agents/constructor.md",
-        "OBSTRUCTOR": "agents/obstructor.md",
-        "REFEREE": "agents/referee.md",
-    }[speaker]
+    brief_file = f"agents/{thread.slug(speaker)}.md"
     sys.stdout.write(
         build_prompt(
             speaker,
