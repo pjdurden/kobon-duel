@@ -14,6 +14,7 @@ import pathlib
 import re
 import sys
 
+import diagram
 import thread
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -25,181 +26,227 @@ TAGLINE = (
     "they agreed on."
 )
 
-HEAD = """<!doctype html>
+HEAD = r'''<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>kobon-duel</title>
-<meta name="description" content="Two AI agents arguing about the Kobon triangle problem.">
+<meta name="description" content="Two AI agents arguing about an unsolved problem in combinatorial geometry.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 <!--GOATCOUNTER-->
 <style>
-:root {
-  --bg:#faf8f4; --surface:#fffefb; --fg:#1b1915; --muted:#6d6659;
-  --rule:#e7e0d3; --hair:#efe9de;
-  --a-ac:#2f5d8c; --a-bg:#f0f4f9;
-  --b-ac:#a4552a; --b-bg:#faf1e9;
-  --r-ac:#4c4a44; --r-bg:#f3f1ec;
-  --warn:#9c3125; --gold:#8a6a1f; --silver:#6c6a72;
+:root{
+  --paper:#f7f4ef; --card:#fffdf9; --ink:#17150f; --dim:#57524a;
+  --rule:#ded6c7; --hair:#ebe4d7;
+  --blue:#2c5d86; --rust:#a8542a; --slate:#55534c;
+  --warn:#973026; --gold:#8a6a1f; --silver:#6c6a72;
+  --serif:"Source Serif 4",ui-serif,Georgia,Cambria,serif;
+  --display:"Instrument Serif",ui-serif,Georgia,serif;
+  --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg:#121215; --surface:#191920; --fg:#e9e5dd; --muted:#928c82;
-    --rule:#2b2b33; --hair:#232329;
-    --a-ac:#84b4e6; --a-bg:#151d27;
-    --b-ac:#e0a06d; --b-bg:#241a12;
-    --r-ac:#a8a49b; --r-bg:#1d1d23;
-    --warn:#e2796a; --gold:#d6ae52; --silver:#9b99a3;
-  }
-}
-:root[data-theme="dark"] {
-  --bg:#121215; --surface:#191920; --fg:#e9e5dd; --muted:#928c82;
-  --rule:#2b2b33; --hair:#232329;
-  --a-ac:#84b4e6; --a-bg:#151d27;
-  --b-ac:#e0a06d; --b-bg:#241a12;
-  --r-ac:#a8a49b; --r-bg:#1d1d23;
-  --warn:#e2796a; --gold:#d6ae52; --silver:#9b99a3;
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0f0f12; --card:#16161b; --ink:#ece8e0; --dim:#8f8a80;
+  --rule:#2c2c34; --hair:#202026;
+  --blue:#7fb2e5; --rust:#dd9d63; --slate:#a5a19a;
+  --warn:#e07f6f; --gold:#d5ad51; --silver:#9b99a3;
+}}
+:root[data-theme="dark"]{
+  --paper:#0f0f12; --card:#16161b; --ink:#ece8e0; --dim:#8f8a80;
+  --rule:#2c2c34; --hair:#202026;
+  --blue:#7fb2e5; --rust:#dd9d63; --slate:#a5a19a;
+  --warn:#e07f6f; --gold:#d5ad51; --silver:#9b99a3;
 }
 
-*,*::before,*::after { box-sizing:border-box; }
-html { -webkit-text-size-adjust:100%; }
-body {
-  margin:0; background:var(--bg); color:var(--fg);
-  font:400 clamp(15px,0.55vw + 13.6px,17px)/1.72 ui-serif,Georgia,Cambria,"Times New Roman",serif;
-  -webkit-font-smoothing:antialiased;
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font:400 clamp(15.5px,.4vw + 14.2px,17.5px)/1.68 var(--serif);
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+
+/* ---------- sticky bar ---------- */
+.bar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 90%,transparent);
+  backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--hair)}
+.bar-in{max-width:56rem;margin:0 auto;padding:.62rem 1.4rem;display:flex;
+  align-items:center;justify-content:space-between;gap:1rem}
+.brand{font-family:var(--display);font-size:1.12rem;letter-spacing:.01em;white-space:nowrap}
+.brand .dot{display:inline-block;width:.42rem;height:.42rem;border-radius:50%;
+  background:var(--rust);margin-right:.42rem;vertical-align:.08em}
+.repo{display:inline-flex;align-items:center;gap:.42rem;font:500 .765rem/1 var(--sans);
+  color:var(--dim);text-decoration:none;padding:.36rem .62rem;border:1px solid var(--rule);
+  border-radius:99px;white-space:nowrap;transition:color .15s,border-color .15s}
+.repo:hover{color:var(--ink);border-color:var(--dim)}
+.repo svg{width:.92rem;height:.92rem;flex:none}
+.repo .full{display:inline}.repo .short{display:none}
+@media (max-width:600px){.repo .full{display:none}.repo .short{display:inline}}
+
+.wrap{max-width:56rem;margin:0 auto;padding:3.4rem 1.4rem 6rem}
+
+/* ---------- masthead ---------- */
+.masthead{margin-bottom:3rem}
+.kicker{font:600 .69rem/1 var(--sans);letter-spacing:.17em;text-transform:uppercase;
+  color:var(--dim);margin-bottom:1.15rem}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(2.6rem,8.5vw,4.6rem);
+  line-height:.98;letter-spacing:-.018em;margin:0}
+h1 .vs{display:block;font-style:italic;font-size:.44em;color:var(--dim);
+  letter-spacing:0;margin:.22em 0 .1em}
+h1 .a{color:var(--blue)} h1 .b{color:var(--rust)}
+.lede{margin:1.6rem 0 0;max-width:34em;font-size:1.06rem;color:var(--dim)}
+
+/* ---------- section rules ---------- */
+.sec{display:flex;align-items:center;gap:.9rem;margin:3.2rem 0 1.35rem;
+  font:600 .69rem/1 var(--sans);letter-spacing:.17em;text-transform:uppercase;color:var(--dim)}
+.sec::after{content:"";flex:1;height:1px;background:var(--rule)}
+
+/* ---------- the problem ---------- */
+.problem p{margin:0 0 1.05rem;max-width:36em}
+.problem p:last-child{margin-bottom:0}
+.problem b{font-weight:600}
+.figure{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.1rem;margin:1.9rem 0 .4rem}
+.panel{margin:0}
+.plot{aspect-ratio:1/1;border:1px solid var(--hair);border-radius:7px;background:var(--card);
+  padding:.55rem;color:var(--dim);display:flex}
+.panel-open .plot{border-style:dashed;border-color:var(--rule)}
+figcaption{margin-top:.6rem;font:.78rem/1.35 var(--sans);display:flex;flex-direction:column;gap:.1rem}
+figcaption b{font-weight:600;letter-spacing:.01em}
+figcaption span{color:var(--dim)}
+.panel-open figcaption b{color:var(--rust)}
+@media (max-width:560px){
+  .figure{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .panel:last-child{grid-column:1/-1}
+  .panel:last-child .plot{aspect-ratio:2/1}
 }
-.serif-display { font-family:"Instrument Serif",ui-serif,Georgia,serif; font-weight:400; }
 
-/* ---- sticky bar ---- */
-.bar {
-  position:sticky; top:0; z-index:10;
-  background:color-mix(in srgb,var(--bg) 88%,transparent);
-  backdrop-filter:saturate(1.4) blur(10px);
-  border-bottom:1px solid var(--hair);
-}
-.bar-in {
-  max-width:50rem; margin:0 auto; padding:.6rem 1.25rem;
-  display:flex; align-items:baseline; justify-content:space-between; gap:1rem;
-}
-.bar .mark { font-size:1.05rem; letter-spacing:-.01em; }
-.bar .links { font-size:.78rem; color:var(--muted); white-space:nowrap; }
-.bar .links a { margin-left:.85rem; }
+/* ---------- facts ---------- */
+.facts{display:flex;flex-wrap:wrap;gap:2rem 3.2rem;align-items:flex-start;
+  padding:1.5rem 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.facts h2{font:600 .69rem/1 var(--sans);letter-spacing:.13em;text-transform:uppercase;
+  color:var(--dim);margin:0 0 .75rem}
+table{border-collapse:collapse;font-size:.87rem;font-variant-numeric:tabular-nums lining-nums}
+th,td{text-align:right;padding:.2rem 0 .2rem 1.25rem}
+th:first-child,td:first-child{text-align:left;padding-left:0}
+th{color:var(--dim);font-weight:600;font-size:.74rem;font-family:var(--sans)}
+tbody td:last-child{color:var(--rust);font-weight:600}
+.stat{font-family:var(--display);font-size:2.5rem;line-height:.9;display:block;
+  font-variant-numeric:tabular-nums lining-nums}
 
-.wrap { max-width:50rem; margin:0 auto; padding:2.75rem 1.25rem 6rem; }
+/* ---------- turns ---------- */
+.turn{position:relative;padding:1.85rem 0 1.95rem 1.55rem;border-top:1px solid var(--hair)}
+.turn::before{content:"";position:absolute;left:0;top:2.05rem;bottom:2.15rem;width:2px;border-radius:2px}
+.turn.pythagorass::before{background:var(--blue)}
+.turn.euclidnt::before{background:var(--rust)}
+.turn.referee{background:var(--card);border:1px solid var(--rule);border-radius:8px;
+  padding:1.6rem 1.4rem 1.7rem 1.55rem;margin-top:1.1rem}
+.turn.referee::before{background:var(--slate);top:1.8rem;bottom:1.9rem;left:.55rem}
+.who{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;
+  gap:.35rem 1rem;margin-bottom:.95rem}
+.name{font-family:var(--display);font-size:1.42rem;line-height:1.05;letter-spacing:.005em}
+.turn.pythagorass .name{color:var(--blue)}
+.turn.euclidnt .name{color:var(--rust)}
+.turn.referee .name{color:var(--slate);font-style:italic}
+.stamp{font:500 .715rem/1 var(--sans);color:var(--dim);letter-spacing:.05em;
+  display:inline-flex;align-items:center;gap:.55rem}
+.stamp a{color:inherit;text-decoration:none}
+.stamp a:hover{color:var(--ink)}
+.badge{font:600 .63rem/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;
+  padding:.28rem .5rem;border:1px solid currentColor;border-radius:3px}
+.tier-gold{color:var(--gold)} .tier-silver{color:var(--silver)}
 
-/* ---- header ---- */
-h1 { font-size:clamp(2.1rem,6vw,3.1rem); line-height:1.04; margin:0 0 .5rem; letter-spacing:-.02em; }
-.tagline { color:var(--muted); font-size:1.02rem; margin:0 0 2rem; max-width:38rem; }
+.body{max-width:38em;overflow-wrap:break-word}
+.body>:first-child{margin-top:0} .body>:last-child{margin-bottom:0}
+.body p{margin:0 0 1.05rem}
+code,kbd{font-family:var(--mono);font-size:.855em}
+code{background:color-mix(in srgb,var(--dim) 15%,transparent);padding:.12em .34em;border-radius:3px}
+pre{overflow-x:auto;background:var(--card);border:1px solid var(--hair);padding:.95rem 1.1rem;
+  border-radius:5px;font-family:var(--mono);font-size:.855em}
+pre code{background:none;padding:0}
+blockquote{margin:1.1rem 0;padding:.2rem 0 .2rem 1.05rem;border-left:2px solid var(--rule);
+  color:var(--dim);font-style:italic}
+.body table{display:block;overflow-x:auto;max-width:100%}
+.katex-display{overflow-x:auto;overflow-y:hidden;padding:.25rem 0}
 
-.facts { display:flex; flex-wrap:wrap; gap:1.75rem 2.5rem; align-items:flex-start;
-  padding:1.35rem 0; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); }
-.facts h2 { font-size:.7rem; text-transform:uppercase; letter-spacing:.13em;
-  color:var(--muted); margin:0 0 .6rem; font-family:ui-sans-serif,system-ui,sans-serif; font-weight:600; }
-table { border-collapse:collapse; font-size:.86rem; font-variant-numeric:tabular-nums; }
-th,td { text-align:right; padding:.16rem 0 .16rem 1.15rem; }
-th:first-child,td:first-child { text-align:left; padding-left:0; }
-th { color:var(--muted); font-weight:600; font-size:.74rem; }
-.stat { font-family:"Instrument Serif",ui-serif,serif; font-size:2rem; line-height:1;
-  display:block; font-variant-numeric:tabular-nums; }
-.stat-l { font-size:.74rem; color:var(--muted); text-transform:uppercase; letter-spacing:.1em;
-  font-family:ui-sans-serif,system-ui,sans-serif; }
+.viol{margin-top:1.2rem;padding:.75rem .95rem;border-left:2px solid var(--warn);
+  background:color-mix(in srgb,var(--warn) 8%,transparent);color:var(--warn);
+  font:.795rem/1.5 var(--sans);border-radius:0 4px 4px 0;max-width:38em}
+.viol b{display:block;font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;margin-bottom:.32rem}
 
-.order { display:flex; align-items:center; gap:.7rem; margin:2.25rem 0 1.5rem;
-  font-size:.72rem; text-transform:uppercase; letter-spacing:.13em; color:var(--muted);
-  font-family:ui-sans-serif,system-ui,sans-serif; }
-.order::after { content:""; flex:1; height:1px; background:var(--rule); }
-
-/* ---- turns ---- */
-.turn { position:relative; padding:1.55rem 0 1.7rem 1.4rem; border-top:1px solid var(--hair); }
-.turn::before { content:""; position:absolute; left:0; top:1.55rem; bottom:1.7rem; width:2px; border-radius:2px; }
-.turn.pythagorass::before { background:var(--a-ac); }
-.turn.euclidnt::before    { background:var(--b-ac); }
-.turn.referee { background:var(--r-bg); padding-left:1.4rem; padding-right:1.1rem;
-  border-radius:3px; border-top:1px solid var(--rule); }
-.turn.referee::before { background:var(--r-ac); left:0; }
-
-.who { display:flex; flex-wrap:wrap; align-items:baseline; gap:.5rem .8rem; margin-bottom:.7rem; }
-.name { font-family:"Instrument Serif",ui-serif,serif; font-size:1.3rem; line-height:1.1; }
-.turn.pythagorass .name { color:var(--a-ac); }
-.turn.euclidnt .name    { color:var(--b-ac); }
-.turn.referee .name     { color:var(--r-ac); font-style:italic; }
-.stamp { font:500 .7rem/1 ui-sans-serif,system-ui,sans-serif; color:var(--muted);
-  letter-spacing:.06em; text-transform:uppercase; }
-.stamp a { color:inherit; text-decoration:none; border-bottom:1px dotted var(--rule); }
-.badge { font:600 .64rem/1 ui-sans-serif,system-ui,sans-serif; letter-spacing:.11em;
-  text-transform:uppercase; padding:.24rem .5rem; border:1px solid currentColor; border-radius:2px; }
-.tier-gold { color:var(--gold); } .tier-silver { color:var(--silver); }
-
-.body { overflow-wrap:break-word; }
-.body > :first-child { margin-top:0; } .body > :last-child { margin-bottom:0; }
-.body p { margin:0 0 1rem; }
-pre,code,kbd { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.86em; }
-code { background:color-mix(in srgb,var(--muted) 14%,transparent); padding:.1em .32em; border-radius:3px; }
-pre { overflow-x:auto; background:var(--surface); border:1px solid var(--hair);
-  padding:.9rem 1rem; border-radius:4px; }
-pre code { background:none; padding:0; }
-blockquote { margin:1rem 0; padding:.15rem 0 .15rem 1rem; border-left:2px solid var(--rule);
-  color:var(--muted); font-style:italic; }
-.body table { display:block; overflow-x:auto; max-width:100%; }
-.katex-display { overflow-x:auto; overflow-y:hidden; padding:.2rem 0; }
-
-.viol { margin-top:1.1rem; padding:.7rem .9rem; border-left:2px solid var(--warn);
-  background:color-mix(in srgb,var(--warn) 8%,transparent); color:var(--warn);
-  font:.8rem/1.5 ui-sans-serif,system-ui,sans-serif; border-radius:0 3px 3px 0; }
-.viol b { display:block; font-size:.66rem; letter-spacing:.12em; text-transform:uppercase; margin-bottom:.3rem; }
-
-.empty { color:var(--muted); font-style:italic; padding:2rem 0; }
-footer { margin-top:4.5rem; padding-top:1.6rem; border-top:1px solid var(--rule);
-  color:var(--muted); font-size:.84rem; }
-footer p { margin:0 0 .6rem; }
-a { color:inherit; text-decoration-color:var(--rule); text-underline-offset:.18em; }
-a:hover { text-decoration-color:currentColor; }
-
-@media (max-width:640px) {
-  .wrap { padding:2rem 1.05rem 4rem; }
-  .facts { gap:1.4rem 2rem; }
-  .turn { padding-left:1.05rem; }
-  .bar .links a { margin-left:.6rem; }
-}
-@media (prefers-reduced-motion:no-preference) { html { scroll-behavior:smooth; } }
+.empty{color:var(--dim);font-style:italic;padding:2.5rem 0}
+footer{margin-top:5rem;padding-top:1.7rem;border-top:1px solid var(--rule);
+  color:var(--dim);font-size:.86rem;max-width:40em}
+footer p{margin:0 0 .75rem}
+footer b{color:var(--ink);font-weight:600}
+a{color:inherit;text-decoration-color:var(--rule);text-underline-offset:.19em}
+a:hover{text-decoration-color:currentColor}
+@media (max-width:600px){.wrap{padding:2.4rem 1.15rem 4rem}.turn{padding-left:1.15rem}}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 </style>
 </head>
 <body>
 <div class="bar"><div class="bar-in">
-  <span class="mark serif-display">kobon&#8209;duel</span>
-  <span class="links"><a href="https://github.com/pjdurden/kobon-duel">repo</a><a href="#about">about</a></span>
+  <span class="brand"><span class="dot"></span>kobon&#8209;duel</span>
+  <a class="repo" href="https://github.com/pjdurden/kobon-duel">
+    <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+    <span class="full">github.com/pjdurden/kobon-duel</span><span class="short">repo</span>
+  </a>
 </div></div>
 <div class="wrap">
-<header>
-<h1 class="serif-display">PythagorAss <span style="color:var(--muted)">vs</span> Euclidn&rsquo;t</h1>
-<p class="tagline">__TAGLINE__</p>
+<header class="masthead">
+<p class="kicker">An unsolved problem, argued hourly</p>
+<h1><span class="a">PythagorAss</span><span class="vs">versus</span><span class="b">Euclidn&rsquo;t</span></h1>
+<p class="lede">__TAGLINE__</p>
+</header>
+
+<section class="problem">
+<div class="sec">The problem</div>
+__PROBLEM__
+__FIGURE__
+</section>
+
 <div class="facts">
-  <div>
-    <h2>Open cases</h2>
-    <!--TABLE-->
-  </div>
+  <div><h2>Open cases</h2><!--TABLE--></div>
   <!--VISITORS-->
 </div>
-</header>
-<main id="thread">
-<div class="order">Newest first</div>
-"""
 
-FOOT = """</main>
+<main id="thread">
+<div class="sec">The argument &middot; newest first</div>
+'''
+
+PROBLEM = '''<p>Draw <b>k</b> straight lines across a plane. Wherever three of them
+enclose a region that no other line cuts through, you get a triangle. Because
+no line passes through them, these triangles never overlap. The question is
+simply: <b>how many can you force?</b></p>
+
+<p>Three lines give you one. Five lines arranged as a pentagram give you five,
+and five is provably the most five lines can do. The counts climb from there,
+and for most k the exact answer is settled. For three values it is not.</p>
+
+<p>At <b>14, 18 and 20 lines</b>, the best arrangement anyone has ever built
+falls exactly <b>one triangle short</b> of the ceiling that has been proven.
+Nobody knows whether the missing triangle is out there or whether the ceiling
+is simply wrong. Closing any one of the three means either drawing the
+arrangement or proving it cannot exist.</p>
+
+<p>That single triangle is what these two are arguing about.</p>'''
+
+FOOT = r'''</main>
 <footer id="about">
-<p><b>What this is.</b> PythagorAss argues the improved even-k bound is
-reachable. Euclidn&rsquo;t argues it is provably not. Neither sees the
-other&rsquo;s brief. A concession is only valid if it cites a verifier run or
-quotes the specific line being conceded to; ungrounded agreement is stamped on
-the turn in public.</p>
-<p>Upper bounds from Clement and Bader (2007) and the improved even-k bound.
-Prior art: Savchuk (2025),
-<a href="https://arxiv.org/abs/2507.07951">arXiv:2507.07951</a>.
-Source: <a href="https://github.com/pjdurden/kobon-duel">github.com/pjdurden/kobon-duel</a>.</p>
+<p><b>How it works.</b> PythagorAss argues the ceiling is reachable and hunts
+constructions. Euclidn&rsquo;t argues there is a counting obstruction nobody has
+isolated. Neither sees the other&rsquo;s brief. A concession is only valid if it
+cites a verifier run or quotes the specific line being conceded to, and
+ungrounded agreement is stamped onto the turn in public. A referee on a stronger
+model rewrites the ledger daily and can reopen anything they agreed on. Neither
+debater can declare a result.</p>
+<p><b>Sources.</b> Upper bounds from Clement and Bader (2007) and the improved
+even-k bound. Prior art: Savchuk (2025),
+<a href="https://arxiv.org/abs/2507.07951">arXiv:2507.07951</a>, which closed
+k=23 and k=27 by SAT and proved k=11 unreachable. The diagrams above are
+generated from exact rational arithmetic, not drawn by hand.</p>
+<p><a href="https://github.com/pjdurden/kobon-duel">github.com/pjdurden/kobon-duel</a></p>
 </footer>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
@@ -213,7 +260,7 @@ if (window.renderMathInElement) {
   renderMathInElement(document.body, {
     delimiters: [
       {left: "$$", right: "$$", display: true},
-      {left: "\\\\[", right: "\\\\]", display: true},
+      {left: "\\[", right: "\\]", display: true},
       {left: "$", right: "$", display: false}
     ],
     throwOnError: false
@@ -222,7 +269,7 @@ if (window.renderMathInElement) {
 </script>
 </body>
 </html>
-"""
+'''
 
 GC_TAG = (
     '<script data-goatcounter="https://{code}.goatcounter.com/count"\n'
@@ -312,6 +359,8 @@ def render(thread_text: str, known_text: str, visitor_count=None, gc_code=None) 
     turns = thread.parse(thread_text)
 
     head = HEAD.replace("__TAGLINE__", TAGLINE)
+    head = head.replace("__PROBLEM__", PROBLEM)
+    head = head.replace("__FIGURE__", diagram.figure())
     head = head.replace("<!--TABLE-->", _target_table(known_text))
     head = head.replace(
         "<!--GOATCOUNTER-->", GC_TAG.format(code=gc_code) if gc_code else ""

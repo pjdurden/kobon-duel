@@ -90,9 +90,21 @@ def test_silver_tier_is_badged():
 
 
 def test_theme_tokens_defined_on_bare_root():
+    """The full palette must exist on bare :root, with dark as an override.
+
+    Matches whitespace-insensitively: asserting on formatting rather than on
+    the requirement made this fail the moment the CSS was reflowed.
+    """
     out = render.render(THREAD, KNOWN)
-    assert ":root {" in out
-    assert "prefers-color-scheme: dark" in out
+    assert re.search(r":root\s*\{[^}]*--paper\s*:", out), "no light palette on bare :root"
+    assert re.search(r"prefers-color-scheme\s*:\s*dark", out)
+    assert re.search(r':root\[data-theme="dark"\]', out), "no explicit dark override"
+
+
+def test_body_has_an_explicit_background():
+    """A transparent body borrows the host page's colour."""
+    out = render.render(THREAD, KNOWN)
+    assert re.search(r"body\s*\{[^}]*background\s*:\s*var\(--paper\)", out)
 
 
 def test_empty_thread_still_renders():
@@ -151,3 +163,27 @@ def test_visitor_count_omitted_when_unknown():
 def test_render_still_works_with_default_args():
     out = render.render(THREAD, KNOWN)
     assert "<!doctype html>" in out.lstrip()
+
+
+def test_problem_section_is_present_and_names_the_open_cases():
+    out = render.render(THREAD, KNOWN)
+    assert "The problem" in out
+    assert "14, 18 and 20 lines" in out
+
+
+def test_diagram_is_embedded_as_inline_svg():
+    out = render.render(THREAD, KNOWN)
+    assert out.count("<svg") >= 3, "expected three explainer panels"
+    assert "polygon" in out, "expected shaded triangles"
+
+
+def test_diagram_captions_match_verified_counts():
+    """The captions are asserted against exact arithmetic inside diagram.figure()."""
+    out = render.render(THREAD, KNOWN)
+    assert "1 triangle" in out and "5 triangles" in out
+
+
+def test_repo_link_is_in_the_top_bar():
+    out = render.render(THREAD, KNOWN)
+    bar = out[out.index('class="bar"'):out.index('class="wrap"')]
+    assert "github.com/pjdurden/kobon-duel" in bar
