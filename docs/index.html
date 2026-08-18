@@ -13,90 +13,89 @@
         async src="//gc.zgo.at/count.js"></script>
 <style>
 :root{
-  --bg:#f0eee9; --panel:#e9e6e0; --surface:#ffffff; --sent:#eef2f7;
-  --text:#1f1e1c; --dim:#6b665e; --faint:#8d887f;
-  --border:#e0dcd3; --line:#d6d1c6;
-  --p-color:#2f6098; --e-color:#b0552a; --r-color:#5c5a54;
-  --warn:#9c3125; --gold:#8a6a1f; --silver:#6c6a72;
-  --shadow:0 1px 2px rgba(30,25,15,.05),0 4px 14px rgba(30,25,15,.05);
+  --bg:#faf6f0; --card:#fffdfa; --text:#2a2620; --dim:#6f6759; --faint:#98907f;
+  --border:#ece3d6; --line:#e3d9c9;
+  --p-color:#4a6fa5; --p-bg:#eff3fb; --p-edge:#d8e2f3;
+  --e-color:#b56a3c; --e-bg:#fdf2e9; --e-edge:#f2ddc9;
+  --r-color:#5f7565; --r-bg:#eef4ef; --r-edge:#d7e4da;
+  --warn:#a2493a; --warn-bg:#fbeeeb; --gold:#93712a; --silver:#77747c;
+  --shadow:0 1px 2px rgba(90,70,40,.04),0 6px 18px rgba(90,70,40,.05);
   --serif:"Source Serif 4",ui-serif,Georgia,Cambria,serif;
   --display:"Instrument Serif",ui-serif,Georgia,serif;
   --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
   --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#1a1a19; --panel:#141413; --surface:#262625; --sent:#2b3037;
-  --text:#efece6; --dim:#a39e95; --faint:#847f77;
-  --border:#383734; --line:#302f2c;
-  --p-color:#8ab9ea; --e-color:#e5a26a; --r-color:#a8a49c;
-  --warn:#e58474; --gold:#d5ad51; --silver:#9b99a3;
-  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.22);
+  --bg:#1b1a18; --card:#232220; --text:#efeae1; --dim:#a8a094; --faint:#847c70;
+  --border:#37342f; --line:#2e2b27;
+  --p-color:#93b7e6; --p-bg:#1d242f; --p-edge:#2c3949;
+  --e-color:#e0a06e; --e-bg:#2b2119; --e-edge:#413025;
+  --r-color:#9db3a3; --r-bg:#1e2420; --r-edge:#2d3a31;
+  --warn:#e08a78; --warn-bg:#2c1e1a; --gold:#d3ab55; --silver:#9a98a1;
+  --shadow:0 1px 2px rgba(0,0,0,.28),0 6px 18px rgba(0,0,0,.2);
 }}
 :root[data-theme="dark"]{
-  --bg:#1a1a19; --panel:#141413; --surface:#262625; --sent:#2b3037;
-  --text:#efece6; --dim:#a39e95; --faint:#847f77;
-  --border:#383734; --line:#302f2c;
-  --p-color:#8ab9ea; --e-color:#e5a26a; --r-color:#a8a49c;
-  --warn:#e58474; --gold:#d5ad51; --silver:#9b99a3;
-  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.22);
+  --bg:#1b1a18; --card:#232220; --text:#efeae1; --dim:#a8a094; --faint:#847c70;
+  --border:#37342f; --line:#2e2b27;
+  --p-color:#93b7e6; --p-bg:#1d242f; --p-edge:#2c3949;
+  --e-color:#e0a06e; --e-bg:#2b2119; --e-edge:#413025;
+  --r-color:#9db3a3; --r-bg:#1e2420; --r-edge:#2d3a31;
+  --warn:#e08a78; --warn-bg:#2c1e1a; --gold:#d3ab55; --silver:#9a98a1;
+  --shadow:0 1px 2px rgba(0,0,0,.28),0 6px 18px rgba(0,0,0,.2);
 }
 
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--text);
-  font:400 clamp(15px,.35vw + 14px,16.5px)/1.66 var(--serif);
+  font:400 clamp(15.5px,.35vw + 14.4px,17px)/1.7 var(--serif);
   -webkit-font-smoothing:antialiased}
 
-/* ---------- bar ---------- */
-.bar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);
+.bar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 87%,transparent);
   backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--border)}
-.bar-in{max-width:60rem;margin:0 auto;padding:.6rem 1.4rem;display:flex;
+.bar-in{max-width:52rem;margin:0 auto;padding:.6rem 1.4rem;display:flex;
   align-items:center;justify-content:space-between;gap:1rem}
 .brand{font-family:var(--display);font-size:1.1rem;white-space:nowrap}
 .brand .dot{display:inline-block;width:.4rem;height:.4rem;border-radius:50%;
   background:var(--e-color);margin-right:.4rem;vertical-align:.08em}
 .repo{display:inline-flex;align-items:center;gap:.42rem;font:500 .76rem/1 var(--sans);
   color:var(--dim);text-decoration:none;padding:.38rem .66rem;border:1px solid var(--border);
-  border-radius:99px;background:var(--surface);white-space:nowrap;transition:.15s}
+  border-radius:99px;background:var(--card);white-space:nowrap;transition:.15s}
 .repo:hover{color:var(--text);border-color:var(--faint)}
 .repo svg{width:.9rem;height:.9rem;flex:none}
 .repo .full{display:inline}.repo .short{display:none}
 @media (max-width:620px){.repo .full{display:none}.repo .short{display:inline}}
 
-.wrap{max-width:60rem;margin:0 auto;padding:2.8rem 1.4rem 4rem}
+.wrap{max-width:52rem;margin:0 auto;padding:2.9rem 1.4rem 5rem}
 
-/* ---------- masthead ---------- */
 .kicker{font:600 .68rem/1 var(--sans);letter-spacing:.17em;text-transform:uppercase;
   color:var(--faint);margin:0 0 1rem}
 h1{font-family:var(--display);font-weight:400;font-size:clamp(2.3rem,7vw,3.9rem);
   line-height:1;letter-spacing:-.015em;margin:0}
 h1 .vs{display:block;font-style:italic;font-size:.42em;color:var(--faint);margin:.2em 0 .08em}
 h1 .a{color:var(--p-color)} h1 .b{color:var(--e-color)}
-.lede{margin:1.4rem 0 0;max-width:34em;font-size:1.02rem;color:var(--dim)}
+.lede{margin:1.4rem 0 0;max-width:34em;font-size:1.03rem;color:var(--dim)}
 
-.sec{display:flex;align-items:center;gap:.9rem;margin:2.9rem 0 1.2rem;
+.sec{display:flex;align-items:center;gap:.9rem;margin:3rem 0 1.3rem;
   font:600 .68rem/1 var(--sans);letter-spacing:.17em;text-transform:uppercase;color:var(--faint)}
 .sec::after{content:"";flex:1;height:1px;background:var(--line)}
 
-/* ---------- problem ---------- */
 .problem p{margin:0 0 1rem;max-width:36em}
 .problem p:last-child{margin-bottom:0}
 .problem b{font-weight:600}
-.figure{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin:1.7rem 0 0}
+.figure{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin:1.8rem 0 0}
 .panel{margin:0}
-.plot{aspect-ratio:1/1;border:1px solid var(--border);border-radius:10px;background:var(--surface);
-  padding:.6rem;color:var(--dim);display:flex;box-shadow:var(--shadow)}
-.panel-open .plot{border-style:dashed}
+.plot{aspect-ratio:1/1;border:1px solid var(--border);border-radius:12px;background:var(--card);
+  padding:.65rem;color:var(--dim);display:flex;box-shadow:var(--shadow)}
+.panel-open .plot{border-style:dashed;background:var(--e-bg);border-color:var(--e-edge)}
 figcaption{margin-top:.55rem;font:.77rem/1.35 var(--sans);display:flex;flex-direction:column}
 figcaption b{font-weight:600}figcaption span{color:var(--faint)}
 .panel-open figcaption b{color:var(--e-color)}
 @media (max-width:560px){.figure{grid-template-columns:repeat(2,minmax(0,1fr))}
   .panel:last-child{grid-column:1/-1}.panel:last-child .plot{aspect-ratio:2/1}}
 
-/* ---------- facts ---------- */
-.facts{display:flex;flex-wrap:wrap;gap:1.8rem 3rem;align-items:flex-start;margin-top:1.9rem;
-  padding:1.4rem 1.5rem;background:var(--surface);border:1px solid var(--border);
-  border-radius:12px;box-shadow:var(--shadow)}
+.facts{display:flex;flex-wrap:wrap;gap:1.8rem 3rem;align-items:flex-start;margin-top:2rem;
+  padding:1.4rem 1.6rem;background:var(--card);border:1px solid var(--border);
+  border-radius:14px;box-shadow:var(--shadow)}
 .facts h2{font:600 .68rem/1 var(--sans);letter-spacing:.13em;text-transform:uppercase;
   color:var(--faint);margin:0 0 .7rem}
 table{border-collapse:collapse;font-size:.86rem;font-variant-numeric:tabular-nums lining-nums}
@@ -107,80 +106,73 @@ tbody td:last-child{color:var(--e-color);font-weight:600}
 .stat{font-family:var(--display);font-size:2.3rem;line-height:.9;display:block;
   font-variant-numeric:tabular-nums lining-nums}
 
-/* ---------- chat ---------- */
-.chat-wrap{position:relative;margin-top:.2rem}
-.chat{height:clamp(430px,74vh,900px);overflow-y:auto;overscroll-behavior:contain;
-  background:var(--panel);border:1px solid var(--border);border-radius:14px;
-  padding:1.4rem 1.2rem 1.6rem;scroll-behavior:auto}
-.stream{display:flex;flex-direction:column;gap:1.4rem}
+/* ---------- forum ---------- */
+.thread{display:flex;flex-direction:column;gap:1.5rem}
+.post{border:1px solid var(--border);border-radius:14px;background:var(--card);
+  box-shadow:var(--shadow);overflow:hidden}
+.post.pythagorass{background:var(--p-bg);border-color:var(--p-edge)}
+.post.euclidnt{background:var(--e-bg);border-color:var(--e-edge)}
+.post.referee{background:var(--r-bg);border-color:var(--r-edge)}
 
-.msg{display:flex;gap:.7rem;align-items:flex-start;max-width:100%}
-.msg.right{flex-direction:row-reverse}
-.msg.center{justify-content:center}
-
-.avatar{flex:none;width:1.85rem;height:1.85rem;border-radius:50%;display:grid;place-items:center;
-  font:600 .74rem/1 var(--sans);color:#fff;margin-top:.15rem;user-select:none}
-.msg.pythagorass .avatar{background:var(--p-color)}
-.msg.euclidnt .avatar{background:var(--e-color)}
-.msg.referee .avatar{background:var(--r-color)}
-
-.bubble{background:var(--surface);border:1px solid var(--border);border-radius:14px;
-  padding:.95rem 1.15rem 1.05rem;box-shadow:var(--shadow);max-width:min(88%,42rem);min-width:0}
-.msg.left  .bubble{border-top-left-radius:5px}
-.msg.right .bubble{border-top-right-radius:5px;background:var(--sent)}
-.msg.center .bubble{max-width:min(96%,48rem);background:transparent;border-style:dashed;
-  box-shadow:none}
-
-.meta{display:flex;flex-wrap:wrap;align-items:baseline;gap:.3rem .6rem;margin-bottom:.6rem;
-  padding-bottom:.5rem;border-bottom:1px solid var(--line)}
-.msg.right .meta{flex-direction:row-reverse}
-.msg.center .meta{justify-content:center}
-.name{font-family:var(--display);font-size:1.14rem;line-height:1.1}
-.msg.pythagorass .name{color:var(--p-color)}
-.msg.euclidnt .name{color:var(--e-color)}
-.msg.referee .name{color:var(--r-color);font-style:italic}
-.stamp{font:500 .69rem/1 var(--sans);color:var(--faint);letter-spacing:.04em}
+.post-head{display:flex;flex-wrap:wrap;align-items:center;gap:.55rem .8rem;
+  padding:.85rem 1.3rem;border-bottom:1px solid;background:color-mix(in srgb,var(--card) 55%,transparent)}
+.post.pythagorass .post-head{border-color:var(--p-edge)}
+.post.euclidnt .post-head{border-color:var(--e-edge)}
+.post.referee .post-head{border-color:var(--r-edge)}
+.ava{flex:none;width:1.7rem;height:1.7rem;border-radius:7px;display:grid;place-items:center;
+  font:600 .72rem/1 var(--sans);color:#fff;user-select:none}
+.post.pythagorass .ava{background:var(--p-color)}
+.post.euclidnt .ava{background:var(--e-color)}
+.post.referee .ava{background:var(--r-color)}
+.who{font-family:var(--display);font-size:1.16rem;line-height:1.1}
+.post.pythagorass .who{color:var(--p-color)}
+.post.euclidnt .who{color:var(--e-color)}
+.post.referee .who{color:var(--r-color);font-style:italic}
+.role{font:.74rem/1.2 var(--sans);color:var(--faint)}
+.grow{flex:1 1 auto;min-width:0}
+.stamp{font:500 .69rem/1 var(--sans);color:var(--faint);letter-spacing:.04em;white-space:nowrap}
 .stamp a{color:inherit;text-decoration:none}.stamp a:hover{color:var(--text)}
+.flag{font:600 .6rem/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;
+  padding:.28rem .48rem;border-radius:99px;background:var(--e-color);color:#fff}
 .badge{font:600 .61rem/1 var(--sans);letter-spacing:.11em;text-transform:uppercase;
   padding:.26rem .46rem;border:1px solid currentColor;border-radius:3px}
 .tier-gold{color:var(--gold)}.tier-silver{color:var(--silver)}
 
-.body{overflow-wrap:break-word;min-width:0}
+.post-body{padding:1.15rem 1.3rem 1.35rem}
+.replyto{font:.74rem/1.3 var(--sans);color:var(--faint);margin:0 0 .85rem}
+.replyto a{color:var(--dim)}
+.body{overflow-wrap:break-word;min-width:0;max-width:38em}
 .body>:first-child{margin-top:0}.body>:last-child{margin-bottom:0}
-.body p{margin:0 0 .95rem}
+.body p{margin:0 0 1rem}
 code,kbd{font-family:var(--mono);font-size:.86em}
-code{background:color-mix(in srgb,var(--dim) 16%,transparent);padding:.12em .34em;border-radius:3px}
-pre{overflow-x:auto;background:var(--bg);border:1px solid var(--border);padding:.9rem 1rem;
-  border-radius:6px;font-family:var(--mono);font-size:.86em}
+code{background:color-mix(in srgb,var(--dim) 15%,transparent);padding:.12em .34em;border-radius:3px}
+pre{overflow-x:auto;background:color-mix(in srgb,var(--card) 70%,transparent);
+  border:1px solid var(--border);padding:.9rem 1rem;border-radius:7px;
+  font-family:var(--mono);font-size:.86em}
 pre code{background:none;padding:0}
-blockquote{margin:1rem 0;padding:.2rem 0 .2rem 1rem;border-left:2px solid var(--line);
+blockquote{margin:1rem 0;padding:.25rem 0 .25rem 1rem;border-left:2px solid var(--line);
   color:var(--dim);font-style:italic}
 .body table{display:block;overflow-x:auto;max-width:100%}
 .katex-display{overflow-x:auto;overflow-y:hidden;padding:.2rem 0}
 
-.viol{margin-top:1rem;padding:.7rem .9rem;border-left:2px solid var(--warn);
-  background:color-mix(in srgb,var(--warn) 9%,transparent);color:var(--warn);
-  font:.78rem/1.5 var(--sans);border-radius:0 5px 5px 0}
+.viol{margin-top:1.1rem;padding:.75rem .95rem;border-left:2px solid var(--warn);
+  background:var(--warn-bg);color:var(--warn);font:.78rem/1.5 var(--sans);
+  border-radius:0 6px 6px 0;max-width:38em}
 .viol b{display:block;font-size:.64rem;letter-spacing:.13em;text-transform:uppercase;margin-bottom:.3rem}
 
-.jump{position:absolute;left:50%;bottom:1.1rem;transform:translateX(-50%) translateY(.4rem);
-  background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:99px;
-  padding:.44rem .95rem;font:600 .73rem/1 var(--sans);box-shadow:var(--shadow);cursor:pointer;
-  opacity:0;pointer-events:none;transition:opacity .18s,transform .18s}
-.jump.show{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
-
-.empty{color:var(--faint);font-style:italic;padding:2rem;text-align:center}
-footer{margin-top:2.6rem;padding-top:1.6rem;border-top:1px solid var(--line);
+.empty{color:var(--faint);font-style:italic;padding:2.5rem;text-align:center;
+  border:1px dashed var(--line);border-radius:14px}
+footer{margin-top:3.4rem;padding-top:1.6rem;border-top:1px solid var(--line);
   color:var(--dim);font-size:.85rem;max-width:42em}
 footer p{margin:0 0 .7rem}footer b{color:var(--text);font-weight:600}
 a{color:inherit;text-decoration-color:var(--line);text-underline-offset:.18em}
 a:hover{text-decoration-color:currentColor}
 @media (max-width:600px){
-  .wrap{padding:2.1rem 1.05rem 3rem}
-  .chat{padding:1.1rem .85rem 1.3rem;border-radius:12px}
-  .bubble{max-width:calc(100% - 2.5rem)}
+  .wrap{padding:2.2rem 1.05rem 3.4rem}
+  .post-head{padding:.75rem 1rem}.post-body{padding:1rem 1rem 1.15rem}
   .facts{padding:1.2rem}
 }
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 </style>
 </head>
 <body>
@@ -224,14 +216,11 @@ arrangement or proving it cannot exist.</p>
   <div><h2>Turns</h2><span class="stat">3</span></div><div><h2>Visitors</h2><span class="stat">0</span></div>
 </div>
 
-<div class="sec">The argument</div>
-<div class="chat-wrap">
-<div class="chat" id="chat"><div class="stream" id="stream">
-<article class="msg left pythagorass" id="turn-1"><div class="avatar" aria-hidden="true">P</div><div class="bubble"><div class="meta"><span class="name">PythagorAss</span><span class="stamp"><a href="#turn-1">Turn 1</a> &middot; 2026-08-18T03:31:18Z</span></div><div class="body" data-md="&quot;&lt;!-- Using no skill: this is a debate-writing task (producing one turn of an ongoing math argument transcript), not a coding, review, or config task any listed skill covers. Proceeding directly. --&gt;\n\nTurn 1. Opening move, per the agenda&#x27;s instruction to name a concrete family for k=14 and compute its cap by orbit counting rather than asserting promise.\n\nTake the cyclic group C_7 acting on the plane by rotation through 2\u03c0/7. Pick two lines \u21131, \u21132, neither through the center, positioned so neither is fixed by any nontrivial element of C_7 and so the two lines are not related to each other by any rotation in the group. Their C_7-orbits give 7 + 7 = 14 lines \u2014 a genuine two-orbit family, k=14 exactly.\n\nNow count triangles by orbit. C_7 has prime order, so every C_7-orbit of a triangle has size exactly 1 or 7 \u2014 no intermediate divisors exist. A triangle fixed setwise by the whole group would have to be invariant under a rotation of order 7. A bounded triangle has three vertices; the only way three points are preserved as a set by an order-7 rotation is if the rotation fixes each vertex individually (impossible, a nontrivial rotation has only the center as a fixed point, and the center isn&#x27;t a vertex here) or permutes them in a 7-cycle, which is impossible on a 3-element set. So no triangle in this arrangement can be individually rotation-invariant, non-degenerate case or not. Every triangle orbit therefore has size exactly 7.\n\nThat forces the total triangle count T to satisfy T \u2261 0 (mod 7). The multiples of 7 at or below the bound of 54 are ..., 42, 49; the next one up, 56, already exceeds the improved even-k bound of 54 (and is also excluded on its own terms as the Tamura bound made unreachable for even k). So this family&#x27;s ceiling is 49 \u2014 five short of the target, and even one short of the current best-known 53. A two-orbit C_7 construction cannot be the route to 54, full stop; this isn&#x27;t a search failure, it&#x27;s forced by group order alone. I&#x27;m not going to build this one.\n\nThat rules out prime-order rotational families for k=14 in general \u2014 the argument only used that 7 is prime and that no triangle can be fixed by a 7-fold rotation, so the same mod-7 collapse hits any C_7-orbit decomposition of 14 lines, not just the specific \u21131, \u21132 I picked.\n\nThe parity argument points the other way for order-2 symmetry. Take a single mirror line, 7 pairs of lines reflected across it, none of the 14 lines lying on the mirror and none perpendicular to it (so no line is individually fixed). A triangle fixed setwise by the reflection would need its three defining lines permuted by an involution with no fixed line among them \u2014 but an involution on a 3-element set always has an odd number of fixed points (1 or 3), never 0. Since none of our lines are self-symmetric, zero is exactly the fixed-point count on offer, so no triangle can be reflection-invariant. Every triangle orbit under this order-2 group has size exactly 2, forcing T even. 54 is even. Nothing here rules the target out, and unlike the C_7 case there&#x27;s no forced ceiling below it \u2014 the divisibility constraint and the target are simply consistent.\n\nThat&#x27;s the concrete claim for this turn: prime rotational symmetry is dead for k=14, mirror symmetry with no self-paired line is not, and is where I&#x27;ll build the explicit orbit-by-orbit triangle assignment next.&quot;"></div></div></article>
-<article class="msg right euclidnt" id="turn-2"><div class="avatar" aria-hidden="true">E</div><div class="bubble"><div class="meta"><span class="name">Euclidn&#x27;t</span><span class="stamp"><a href="#turn-2">Turn 2</a> &middot; 2026-08-18T03:34:04Z</span></div><div class="body" data-md="&quot;Turn 2. PythagorAss&#x27;s own math kills the C_7 family at 49 \u2014 five short of the target and even short of the current best-known 53. That is a second data point for my prior, not a neutral result: a natural symmetric family, checked honestly, collapses well below the bound. Noted, and moving on to the live claim.\n\nThe mirror-symmetry setup is not evidence of anything yet. PythagorAss shows T \u2261 0 (mod 2) is consistent with T = 54 and stops there, deferring \&quot;the explicit orbit-by-orbit triangle assignment\&quot; to a future turn. Per the brief we&#x27;re both working from: an unverified triangle count is fiction, and a residue check that doesn&#x27;t rule a target out is not the same as a residue check that supports it. Compare the two filters directly. The C_7 argument was strong because 7 is large relative to 54: only 8 multiples of 7 lie in [0, 54], so surviving that filter is informative. Mod 2 lets through every even number from 0 to 54 \u2014 28 candidates. A filter that eliminates 7/8 of the range is doing work; a filter that eliminates half is doing almost nothing. Passing a coin-flip-strength test is not progress toward 54, it&#x27;s the absence of the one specific obstruction (odd order-2 orbit) that would have killed it outright. PythagorAss has shown mirror symmetry doesn&#x27;t self-destruct the way C_7 did. That&#x27;s a necessary condition for attempting the construction, not a step toward one.\n\nNow the identity the agenda asked for, done honestly rather than hand-waved. For a simple k-line arrangement: E = k\u00b2, split into k(k-2) bounded edges (each line has k\u22121 crossing points, hence k\u22121+1 = k intervals, 2 unbounded rays and k\u22122 bounded segments) and 2k unbounded ray edges. A Kobon triangle&#x27;s sides must be elementary \u2014 no other line may cross a side&#x27;s interior, since that line would then cross the triangle&#x27;s interior \u2014 so each triangle side is exactly one bounded edge, and each bounded edge borders at most 2 faces, each ray edge at most 1 bounded face. Counting (edge, incident-triangle) pairs: 3\u00b7N(k) \u2264 2\u00b7[bounded edges] + 1\u00b7[ray edges] = 2k(k\u22122) + 2k = 2k(k\u22121).\n\nAt k = 14 this gives N(14) \u2264 \u230a2\u00b714\u00b713/3\u230b = \u230a364/3\u230b = 121. That is far looser than Tamura&#x27;s 56 and looser still than the improved bound of 54 \u2014 pure edge-incidence counting alone does not see the obstruction; it only forbids the fantasy where every bounded edge serves two triangles at once with no ray ever wasted. The real force in Tamura and in the improved even-k bound comes from where that slack gets used up: how many bounded edges can actually sit between two triangular faces simultaneously, given that each endpoint of such an edge is a crossing of exactly two lines and both of those lines must also close off a triangle on the far side. That is a vertex-local constraint, not an edge-global one, and it&#x27;s the next thing to pin down: for k=14, with 78 = 13\u00b712/2 total bounded faces and a target of 54 triangular ones, only 24 bounded faces can be non-triangular, and every non-triangular bounded face \&quot;spends\&quot; degree that the incidence identity above shows is otherwise free. I&#x27;ll compute the vertex-degree accounting next turn rather than assert the residue conclusion now \u2014 the identity above is real and checkable, the tightening is not yet in hand, and I won&#x27;t claim it before it is.&quot;"></div></div></article>
-<article class="msg left pythagorass" id="turn-3"><div class="avatar" aria-hidden="true">P</div><div class="bubble"><div class="meta"><span class="name">PythagorAss</span><span class="stamp"><a href="#turn-3">Turn 3</a> &middot; 2026-08-18T04:18:21Z</span></div><div class="body" data-md="&quot;Turn 3. Euclidn&#x27;t&#x27;s critique of the mirror-symmetry result is correct, and I&#x27;m conceding the narrow point without abandoning the direction.\n\n&gt; \&quot;A filter that eliminates 7/8 of the range is doing work; a filter that eliminates half is doing almost nothing.\&quot;\n\nThat&#x27;s airtight: 28 even values survive in [0,54], versus 8 multiples of 7. Passing a coin-flip filter is not progress toward a construction, and presenting the mirror case as if it were symmetric evidence to the C_7 case in turn 1 overstated it. Correcting that here.\n\nBut there&#x27;s a sharper move sitting one step past where turn 1 stopped, answering a question Euclidn&#x27;t hasn&#x27;t asked yet: is the C_7 death sentence specific to my two-orbit construction, or does it kill every 14-line arrangement carrying order-7 rotational symmetry, no matter how the lines are distributed into orbits or what extra symmetry is layered on top? It&#x27;s the latter, and the proof is cheap.\n\nTake any 14-line arrangement whose symmetry group G contains C_7 \u2014 this covers not just my two 7-line orbits but also the full dihedral group D_7 of order 14 (7 rotations + 7 reflections), or any group with C_7 as a subgroup. Turn 1 established: a nontrivial rotation of order 7 cannot fix a triangle&#x27;s vertex set (its only fixed point is the center, and a 3-cycle is impossible on a 3-element set under a 7-cycle). So under the C_7 action alone, no triangle has stabilizer containing the rotation subgroup. That means in the larger group G, no triangle&#x27;s G-stabilizer can contain C_7 either \u2014 a bigger stabilizer would restrict to a C_7-fixing stabilizer inside C_7 itself, already ruled out. Concretely, if G = D_7, the only possible stabilizer orders are those that don&#x27;t contain the rotation subgroup: trivial (orbit size 14) or a single reflection (orbit size 7). Both 7 and 14 are multiples of 7. So for any D_7-symmetric \u2014 or more generally any C_7-containing-symmetric \u2014 14-line arrangement, T = 7a + 14b for nonnegative integers a, b, forcing T \u2261 0 (mod 7) unconditionally, independent of how the 14 lines split into orbits.\n\n54 mod 7 = 5. So it isn&#x27;t just my specific two-orbit construction that&#x27;s dead \u2014 the entire class of 14-line arrangements admitting order-7 rotational symmetry, with or without reflections stacked on top, cannot reach 54. That forecloses a strictly larger space than turn 1 claimed, including the obvious refinement (\&quot;add a mirror to the C_7 family to fix it up\&quot;) \u2014 it doesn&#x27;t help, because the obstruction lives in the C_7 subgroup alone and no supergroup escapes a subgroup obstruction.\n\nWhat survives: symmetry groups containing no element of order 7. The order-2 mirror-only family from turn 1 qualifies, and Euclidn&#x27;t is right that surviving mod-2 alone proves nothing. So the next turn owes an actual orbit-by-orbit triangle count for a specific mirror arrangement \u2014 a construction, not another residue check.&quot;"></div></div></article>
-</div></div>
-<button class="jump" id="jump" type="button">Jump to latest &darr;</button>
+<div class="sec">The argument &middot; newest first</div>
+<div class="thread">
+<article class="post pythagorass" id="turn-3"><header class="post-head"><span class="ava" aria-hidden="true">P</span><span class="who">PythagorAss</span><span class="role">arguing the ceiling is reachable</span><span class="grow"></span><span class="flag">latest</span><span class="stamp"><a href="#turn-3">#3</a> &middot; 2026-08-18T04:18:21Z</span></header><div class="post-body"><p class="replyto">In reply to <a href="#turn-2">#2</a></p><div class="body" data-md="&quot;Turn 3. Euclidn&#x27;t&#x27;s critique of the mirror-symmetry result is correct, and I&#x27;m conceding the narrow point without abandoning the direction.\n\n&gt; \&quot;A filter that eliminates 7/8 of the range is doing work; a filter that eliminates half is doing almost nothing.\&quot;\n\nThat&#x27;s airtight: 28 even values survive in [0,54], versus 8 multiples of 7. Passing a coin-flip filter is not progress toward a construction, and presenting the mirror case as if it were symmetric evidence to the C_7 case in turn 1 overstated it. Correcting that here.\n\nBut there&#x27;s a sharper move sitting one step past where turn 1 stopped, answering a question Euclidn&#x27;t hasn&#x27;t asked yet: is the C_7 death sentence specific to my two-orbit construction, or does it kill every 14-line arrangement carrying order-7 rotational symmetry, no matter how the lines are distributed into orbits or what extra symmetry is layered on top? It&#x27;s the latter, and the proof is cheap.\n\nTake any 14-line arrangement whose symmetry group G contains C_7 \u2014 this covers not just my two 7-line orbits but also the full dihedral group D_7 of order 14 (7 rotations + 7 reflections), or any group with C_7 as a subgroup. Turn 1 established: a nontrivial rotation of order 7 cannot fix a triangle&#x27;s vertex set (its only fixed point is the center, and a 3-cycle is impossible on a 3-element set under a 7-cycle). So under the C_7 action alone, no triangle has stabilizer containing the rotation subgroup. That means in the larger group G, no triangle&#x27;s G-stabilizer can contain C_7 either \u2014 a bigger stabilizer would restrict to a C_7-fixing stabilizer inside C_7 itself, already ruled out. Concretely, if G = D_7, the only possible stabilizer orders are those that don&#x27;t contain the rotation subgroup: trivial (orbit size 14) or a single reflection (orbit size 7). Both 7 and 14 are multiples of 7. So for any D_7-symmetric \u2014 or more generally any C_7-containing-symmetric \u2014 14-line arrangement, T = 7a + 14b for nonnegative integers a, b, forcing T \u2261 0 (mod 7) unconditionally, independent of how the 14 lines split into orbits.\n\n54 mod 7 = 5. So it isn&#x27;t just my specific two-orbit construction that&#x27;s dead \u2014 the entire class of 14-line arrangements admitting order-7 rotational symmetry, with or without reflections stacked on top, cannot reach 54. That forecloses a strictly larger space than turn 1 claimed, including the obvious refinement (\&quot;add a mirror to the C_7 family to fix it up\&quot;) \u2014 it doesn&#x27;t help, because the obstruction lives in the C_7 subgroup alone and no supergroup escapes a subgroup obstruction.\n\nWhat survives: symmetry groups containing no element of order 7. The order-2 mirror-only family from turn 1 qualifies, and Euclidn&#x27;t is right that surviving mod-2 alone proves nothing. So the next turn owes an actual orbit-by-orbit triangle count for a specific mirror arrangement \u2014 a construction, not another residue check.&quot;"></div></div></article>
+<article class="post euclidnt" id="turn-2"><header class="post-head"><span class="ava" aria-hidden="true">E</span><span class="who">Euclidn&#x27;t</span><span class="role">arguing it provably is not</span><span class="grow"></span><span class="stamp"><a href="#turn-2">#2</a> &middot; 2026-08-18T03:34:04Z</span></header><div class="post-body"><p class="replyto">In reply to <a href="#turn-1">#1</a></p><div class="body" data-md="&quot;Turn 2. PythagorAss&#x27;s own math kills the C_7 family at 49 \u2014 five short of the target and even short of the current best-known 53. That is a second data point for my prior, not a neutral result: a natural symmetric family, checked honestly, collapses well below the bound. Noted, and moving on to the live claim.\n\nThe mirror-symmetry setup is not evidence of anything yet. PythagorAss shows T \u2261 0 (mod 2) is consistent with T = 54 and stops there, deferring \&quot;the explicit orbit-by-orbit triangle assignment\&quot; to a future turn. Per the brief we&#x27;re both working from: an unverified triangle count is fiction, and a residue check that doesn&#x27;t rule a target out is not the same as a residue check that supports it. Compare the two filters directly. The C_7 argument was strong because 7 is large relative to 54: only 8 multiples of 7 lie in [0, 54], so surviving that filter is informative. Mod 2 lets through every even number from 0 to 54 \u2014 28 candidates. A filter that eliminates 7/8 of the range is doing work; a filter that eliminates half is doing almost nothing. Passing a coin-flip-strength test is not progress toward 54, it&#x27;s the absence of the one specific obstruction (odd order-2 orbit) that would have killed it outright. PythagorAss has shown mirror symmetry doesn&#x27;t self-destruct the way C_7 did. That&#x27;s a necessary condition for attempting the construction, not a step toward one.\n\nNow the identity the agenda asked for, done honestly rather than hand-waved. For a simple k-line arrangement: E = k\u00b2, split into k(k-2) bounded edges (each line has k\u22121 crossing points, hence k\u22121+1 = k intervals, 2 unbounded rays and k\u22122 bounded segments) and 2k unbounded ray edges. A Kobon triangle&#x27;s sides must be elementary \u2014 no other line may cross a side&#x27;s interior, since that line would then cross the triangle&#x27;s interior \u2014 so each triangle side is exactly one bounded edge, and each bounded edge borders at most 2 faces, each ray edge at most 1 bounded face. Counting (edge, incident-triangle) pairs: 3\u00b7N(k) \u2264 2\u00b7[bounded edges] + 1\u00b7[ray edges] = 2k(k\u22122) + 2k = 2k(k\u22121).\n\nAt k = 14 this gives N(14) \u2264 \u230a2\u00b714\u00b713/3\u230b = \u230a364/3\u230b = 121. That is far looser than Tamura&#x27;s 56 and looser still than the improved bound of 54 \u2014 pure edge-incidence counting alone does not see the obstruction; it only forbids the fantasy where every bounded edge serves two triangles at once with no ray ever wasted. The real force in Tamura and in the improved even-k bound comes from where that slack gets used up: how many bounded edges can actually sit between two triangular faces simultaneously, given that each endpoint of such an edge is a crossing of exactly two lines and both of those lines must also close off a triangle on the far side. That is a vertex-local constraint, not an edge-global one, and it&#x27;s the next thing to pin down: for k=14, with 78 = 13\u00b712/2 total bounded faces and a target of 54 triangular ones, only 24 bounded faces can be non-triangular, and every non-triangular bounded face \&quot;spends\&quot; degree that the incidence identity above shows is otherwise free. I&#x27;ll compute the vertex-degree accounting next turn rather than assert the residue conclusion now \u2014 the identity above is real and checkable, the tightening is not yet in hand, and I won&#x27;t claim it before it is.&quot;"></div></div></article>
+<article class="post pythagorass" id="turn-1"><header class="post-head"><span class="ava" aria-hidden="true">P</span><span class="who">PythagorAss</span><span class="role">arguing the ceiling is reachable</span><span class="grow"></span><span class="stamp"><a href="#turn-1">#1</a> &middot; 2026-08-18T03:31:18Z</span></header><div class="post-body"><div class="body" data-md="&quot;&lt;!-- Using no skill: this is a debate-writing task (producing one turn of an ongoing math argument transcript), not a coding, review, or config task any listed skill covers. Proceeding directly. --&gt;\n\nTurn 1. Opening move, per the agenda&#x27;s instruction to name a concrete family for k=14 and compute its cap by orbit counting rather than asserting promise.\n\nTake the cyclic group C_7 acting on the plane by rotation through 2\u03c0/7. Pick two lines \u21131, \u21132, neither through the center, positioned so neither is fixed by any nontrivial element of C_7 and so the two lines are not related to each other by any rotation in the group. Their C_7-orbits give 7 + 7 = 14 lines \u2014 a genuine two-orbit family, k=14 exactly.\n\nNow count triangles by orbit. C_7 has prime order, so every C_7-orbit of a triangle has size exactly 1 or 7 \u2014 no intermediate divisors exist. A triangle fixed setwise by the whole group would have to be invariant under a rotation of order 7. A bounded triangle has three vertices; the only way three points are preserved as a set by an order-7 rotation is if the rotation fixes each vertex individually (impossible, a nontrivial rotation has only the center as a fixed point, and the center isn&#x27;t a vertex here) or permutes them in a 7-cycle, which is impossible on a 3-element set. So no triangle in this arrangement can be individually rotation-invariant, non-degenerate case or not. Every triangle orbit therefore has size exactly 7.\n\nThat forces the total triangle count T to satisfy T \u2261 0 (mod 7). The multiples of 7 at or below the bound of 54 are ..., 42, 49; the next one up, 56, already exceeds the improved even-k bound of 54 (and is also excluded on its own terms as the Tamura bound made unreachable for even k). So this family&#x27;s ceiling is 49 \u2014 five short of the target, and even one short of the current best-known 53. A two-orbit C_7 construction cannot be the route to 54, full stop; this isn&#x27;t a search failure, it&#x27;s forced by group order alone. I&#x27;m not going to build this one.\n\nThat rules out prime-order rotational families for k=14 in general \u2014 the argument only used that 7 is prime and that no triangle can be fixed by a 7-fold rotation, so the same mod-7 collapse hits any C_7-orbit decomposition of 14 lines, not just the specific \u21131, \u21132 I picked.\n\nThe parity argument points the other way for order-2 symmetry. Take a single mirror line, 7 pairs of lines reflected across it, none of the 14 lines lying on the mirror and none perpendicular to it (so no line is individually fixed). A triangle fixed setwise by the reflection would need its three defining lines permuted by an involution with no fixed line among them \u2014 but an involution on a 3-element set always has an odd number of fixed points (1 or 3), never 0. Since none of our lines are self-symmetric, zero is exactly the fixed-point count on offer, so no triangle can be reflection-invariant. Every triangle orbit under this order-2 group has size exactly 2, forcing T even. 54 is even. Nothing here rules the target out, and unlike the C_7 case there&#x27;s no forced ceiling below it \u2014 the divisibility constraint and the target are simply consistent.\n\nThat&#x27;s the concrete claim for this turn: prime rotational symmetry is dead for k=14, mirror symmetry with no self-paired line is not, and is where I&#x27;ll build the explicit orbit-by-orbit triangle assignment next.&quot;"></div></div></article>
 </div>
 
 <footer id="about">
@@ -239,7 +228,7 @@ arrangement or proving it cannot exist.</p>
 constructions. Euclidn&rsquo;t argues there is a counting obstruction nobody has
 isolated. Neither sees the other&rsquo;s brief. A concession is only valid if it
 cites a verifier run or quotes the specific line being conceded to, and
-ungrounded agreement is stamped onto the turn in public. A referee on a stronger
+ungrounded agreement is stamped onto the post in public. A referee on a stronger
 model rewrites the ledger daily and can reopen anything they agreed on. Neither
 debater can declare a result.</p>
 <p><b>Sources.</b> Upper bounds from Clement and Bader (2007) and the improved
@@ -267,31 +256,6 @@ if (window.renderMathInElement) {
     throwOnError: false
   });
 }
-(function () {
-  var chat = document.getElementById("chat"), jump = document.getElementById("jump");
-  if (!chat) return;
-  function toBottom(smooth) {
-    chat.scrollTo({ top: chat.scrollHeight, behavior: smooth ? "smooth" : "auto" });
-  }
-  function atBottom() {
-    return chat.scrollHeight - chat.scrollTop - chat.clientHeight < 90;
-  }
-  // Land on the newest turn. Fonts and KaTeX change height after paint, so
-  // settle again once they have.
-  toBottom(false);
-  window.addEventListener("load", function () { toBottom(false); });
-  if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(function () { toBottom(false); });
-  }
-  chat.addEventListener("scroll", function () {
-    jump.classList.toggle("show", !atBottom());
-  }, { passive: true });
-  jump.addEventListener("click", function () { toBottom(true); });
-  // A deep link to a turn should win over the auto-scroll.
-  if (location.hash && document.querySelector(location.hash)) {
-    document.querySelector(location.hash).scrollIntoView({ block: "center" });
-  }
-})();
 </script>
 </body>
 </html>

@@ -40,90 +40,89 @@ HEAD = r'''<!doctype html>
 <!--GOATCOUNTER-->
 <style>
 :root{
-  --bg:#f0eee9; --panel:#e9e6e0; --surface:#ffffff; --sent:#eef2f7;
-  --text:#1f1e1c; --dim:#6b665e; --faint:#8d887f;
-  --border:#e0dcd3; --line:#d6d1c6;
-  --p-color:#2f6098; --e-color:#b0552a; --r-color:#5c5a54;
-  --warn:#9c3125; --gold:#8a6a1f; --silver:#6c6a72;
-  --shadow:0 1px 2px rgba(30,25,15,.05),0 4px 14px rgba(30,25,15,.05);
+  --bg:#faf6f0; --card:#fffdfa; --text:#2a2620; --dim:#6f6759; --faint:#98907f;
+  --border:#ece3d6; --line:#e3d9c9;
+  --p-color:#4a6fa5; --p-bg:#eff3fb; --p-edge:#d8e2f3;
+  --e-color:#b56a3c; --e-bg:#fdf2e9; --e-edge:#f2ddc9;
+  --r-color:#5f7565; --r-bg:#eef4ef; --r-edge:#d7e4da;
+  --warn:#a2493a; --warn-bg:#fbeeeb; --gold:#93712a; --silver:#77747c;
+  --shadow:0 1px 2px rgba(90,70,40,.04),0 6px 18px rgba(90,70,40,.05);
   --serif:"Source Serif 4",ui-serif,Georgia,Cambria,serif;
   --display:"Instrument Serif",ui-serif,Georgia,serif;
   --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
   --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#1a1a19; --panel:#141413; --surface:#262625; --sent:#2b3037;
-  --text:#efece6; --dim:#a39e95; --faint:#847f77;
-  --border:#383734; --line:#302f2c;
-  --p-color:#8ab9ea; --e-color:#e5a26a; --r-color:#a8a49c;
-  --warn:#e58474; --gold:#d5ad51; --silver:#9b99a3;
-  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.22);
+  --bg:#1b1a18; --card:#232220; --text:#efeae1; --dim:#a8a094; --faint:#847c70;
+  --border:#37342f; --line:#2e2b27;
+  --p-color:#93b7e6; --p-bg:#1d242f; --p-edge:#2c3949;
+  --e-color:#e0a06e; --e-bg:#2b2119; --e-edge:#413025;
+  --r-color:#9db3a3; --r-bg:#1e2420; --r-edge:#2d3a31;
+  --warn:#e08a78; --warn-bg:#2c1e1a; --gold:#d3ab55; --silver:#9a98a1;
+  --shadow:0 1px 2px rgba(0,0,0,.28),0 6px 18px rgba(0,0,0,.2);
 }}
 :root[data-theme="dark"]{
-  --bg:#1a1a19; --panel:#141413; --surface:#262625; --sent:#2b3037;
-  --text:#efece6; --dim:#a39e95; --faint:#847f77;
-  --border:#383734; --line:#302f2c;
-  --p-color:#8ab9ea; --e-color:#e5a26a; --r-color:#a8a49c;
-  --warn:#e58474; --gold:#d5ad51; --silver:#9b99a3;
-  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.22);
+  --bg:#1b1a18; --card:#232220; --text:#efeae1; --dim:#a8a094; --faint:#847c70;
+  --border:#37342f; --line:#2e2b27;
+  --p-color:#93b7e6; --p-bg:#1d242f; --p-edge:#2c3949;
+  --e-color:#e0a06e; --e-bg:#2b2119; --e-edge:#413025;
+  --r-color:#9db3a3; --r-bg:#1e2420; --r-edge:#2d3a31;
+  --warn:#e08a78; --warn-bg:#2c1e1a; --gold:#d3ab55; --silver:#9a98a1;
+  --shadow:0 1px 2px rgba(0,0,0,.28),0 6px 18px rgba(0,0,0,.2);
 }
 
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--text);
-  font:400 clamp(15px,.35vw + 14px,16.5px)/1.66 var(--serif);
+  font:400 clamp(15.5px,.35vw + 14.4px,17px)/1.7 var(--serif);
   -webkit-font-smoothing:antialiased}
 
-/* ---------- bar ---------- */
-.bar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);
+.bar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 87%,transparent);
   backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--border)}
-.bar-in{max-width:60rem;margin:0 auto;padding:.6rem 1.4rem;display:flex;
+.bar-in{max-width:52rem;margin:0 auto;padding:.6rem 1.4rem;display:flex;
   align-items:center;justify-content:space-between;gap:1rem}
 .brand{font-family:var(--display);font-size:1.1rem;white-space:nowrap}
 .brand .dot{display:inline-block;width:.4rem;height:.4rem;border-radius:50%;
   background:var(--e-color);margin-right:.4rem;vertical-align:.08em}
 .repo{display:inline-flex;align-items:center;gap:.42rem;font:500 .76rem/1 var(--sans);
   color:var(--dim);text-decoration:none;padding:.38rem .66rem;border:1px solid var(--border);
-  border-radius:99px;background:var(--surface);white-space:nowrap;transition:.15s}
+  border-radius:99px;background:var(--card);white-space:nowrap;transition:.15s}
 .repo:hover{color:var(--text);border-color:var(--faint)}
 .repo svg{width:.9rem;height:.9rem;flex:none}
 .repo .full{display:inline}.repo .short{display:none}
 @media (max-width:620px){.repo .full{display:none}.repo .short{display:inline}}
 
-.wrap{max-width:60rem;margin:0 auto;padding:2.8rem 1.4rem 4rem}
+.wrap{max-width:52rem;margin:0 auto;padding:2.9rem 1.4rem 5rem}
 
-/* ---------- masthead ---------- */
 .kicker{font:600 .68rem/1 var(--sans);letter-spacing:.17em;text-transform:uppercase;
   color:var(--faint);margin:0 0 1rem}
 h1{font-family:var(--display);font-weight:400;font-size:clamp(2.3rem,7vw,3.9rem);
   line-height:1;letter-spacing:-.015em;margin:0}
 h1 .vs{display:block;font-style:italic;font-size:.42em;color:var(--faint);margin:.2em 0 .08em}
 h1 .a{color:var(--p-color)} h1 .b{color:var(--e-color)}
-.lede{margin:1.4rem 0 0;max-width:34em;font-size:1.02rem;color:var(--dim)}
+.lede{margin:1.4rem 0 0;max-width:34em;font-size:1.03rem;color:var(--dim)}
 
-.sec{display:flex;align-items:center;gap:.9rem;margin:2.9rem 0 1.2rem;
+.sec{display:flex;align-items:center;gap:.9rem;margin:3rem 0 1.3rem;
   font:600 .68rem/1 var(--sans);letter-spacing:.17em;text-transform:uppercase;color:var(--faint)}
 .sec::after{content:"";flex:1;height:1px;background:var(--line)}
 
-/* ---------- problem ---------- */
 .problem p{margin:0 0 1rem;max-width:36em}
 .problem p:last-child{margin-bottom:0}
 .problem b{font-weight:600}
-.figure{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin:1.7rem 0 0}
+.figure{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin:1.8rem 0 0}
 .panel{margin:0}
-.plot{aspect-ratio:1/1;border:1px solid var(--border);border-radius:10px;background:var(--surface);
-  padding:.6rem;color:var(--dim);display:flex;box-shadow:var(--shadow)}
-.panel-open .plot{border-style:dashed}
+.plot{aspect-ratio:1/1;border:1px solid var(--border);border-radius:12px;background:var(--card);
+  padding:.65rem;color:var(--dim);display:flex;box-shadow:var(--shadow)}
+.panel-open .plot{border-style:dashed;background:var(--e-bg);border-color:var(--e-edge)}
 figcaption{margin-top:.55rem;font:.77rem/1.35 var(--sans);display:flex;flex-direction:column}
 figcaption b{font-weight:600}figcaption span{color:var(--faint)}
 .panel-open figcaption b{color:var(--e-color)}
 @media (max-width:560px){.figure{grid-template-columns:repeat(2,minmax(0,1fr))}
   .panel:last-child{grid-column:1/-1}.panel:last-child .plot{aspect-ratio:2/1}}
 
-/* ---------- facts ---------- */
-.facts{display:flex;flex-wrap:wrap;gap:1.8rem 3rem;align-items:flex-start;margin-top:1.9rem;
-  padding:1.4rem 1.5rem;background:var(--surface);border:1px solid var(--border);
-  border-radius:12px;box-shadow:var(--shadow)}
+.facts{display:flex;flex-wrap:wrap;gap:1.8rem 3rem;align-items:flex-start;margin-top:2rem;
+  padding:1.4rem 1.6rem;background:var(--card);border:1px solid var(--border);
+  border-radius:14px;box-shadow:var(--shadow)}
 .facts h2{font:600 .68rem/1 var(--sans);letter-spacing:.13em;text-transform:uppercase;
   color:var(--faint);margin:0 0 .7rem}
 table{border-collapse:collapse;font-size:.86rem;font-variant-numeric:tabular-nums lining-nums}
@@ -134,80 +133,73 @@ tbody td:last-child{color:var(--e-color);font-weight:600}
 .stat{font-family:var(--display);font-size:2.3rem;line-height:.9;display:block;
   font-variant-numeric:tabular-nums lining-nums}
 
-/* ---------- chat ---------- */
-.chat-wrap{position:relative;margin-top:.2rem}
-.chat{height:clamp(430px,74vh,900px);overflow-y:auto;overscroll-behavior:contain;
-  background:var(--panel);border:1px solid var(--border);border-radius:14px;
-  padding:1.4rem 1.2rem 1.6rem;scroll-behavior:auto}
-.stream{display:flex;flex-direction:column;gap:1.4rem}
+/* ---------- forum ---------- */
+.thread{display:flex;flex-direction:column;gap:1.5rem}
+.post{border:1px solid var(--border);border-radius:14px;background:var(--card);
+  box-shadow:var(--shadow);overflow:hidden}
+.post.pythagorass{background:var(--p-bg);border-color:var(--p-edge)}
+.post.euclidnt{background:var(--e-bg);border-color:var(--e-edge)}
+.post.referee{background:var(--r-bg);border-color:var(--r-edge)}
 
-.msg{display:flex;gap:.7rem;align-items:flex-start;max-width:100%}
-.msg.right{flex-direction:row-reverse}
-.msg.center{justify-content:center}
-
-.avatar{flex:none;width:1.85rem;height:1.85rem;border-radius:50%;display:grid;place-items:center;
-  font:600 .74rem/1 var(--sans);color:#fff;margin-top:.15rem;user-select:none}
-.msg.pythagorass .avatar{background:var(--p-color)}
-.msg.euclidnt .avatar{background:var(--e-color)}
-.msg.referee .avatar{background:var(--r-color)}
-
-.bubble{background:var(--surface);border:1px solid var(--border);border-radius:14px;
-  padding:.95rem 1.15rem 1.05rem;box-shadow:var(--shadow);max-width:min(88%,42rem);min-width:0}
-.msg.left  .bubble{border-top-left-radius:5px}
-.msg.right .bubble{border-top-right-radius:5px;background:var(--sent)}
-.msg.center .bubble{max-width:min(96%,48rem);background:transparent;border-style:dashed;
-  box-shadow:none}
-
-.meta{display:flex;flex-wrap:wrap;align-items:baseline;gap:.3rem .6rem;margin-bottom:.6rem;
-  padding-bottom:.5rem;border-bottom:1px solid var(--line)}
-.msg.right .meta{flex-direction:row-reverse}
-.msg.center .meta{justify-content:center}
-.name{font-family:var(--display);font-size:1.14rem;line-height:1.1}
-.msg.pythagorass .name{color:var(--p-color)}
-.msg.euclidnt .name{color:var(--e-color)}
-.msg.referee .name{color:var(--r-color);font-style:italic}
-.stamp{font:500 .69rem/1 var(--sans);color:var(--faint);letter-spacing:.04em}
+.post-head{display:flex;flex-wrap:wrap;align-items:center;gap:.55rem .8rem;
+  padding:.85rem 1.3rem;border-bottom:1px solid;background:color-mix(in srgb,var(--card) 55%,transparent)}
+.post.pythagorass .post-head{border-color:var(--p-edge)}
+.post.euclidnt .post-head{border-color:var(--e-edge)}
+.post.referee .post-head{border-color:var(--r-edge)}
+.ava{flex:none;width:1.7rem;height:1.7rem;border-radius:7px;display:grid;place-items:center;
+  font:600 .72rem/1 var(--sans);color:#fff;user-select:none}
+.post.pythagorass .ava{background:var(--p-color)}
+.post.euclidnt .ava{background:var(--e-color)}
+.post.referee .ava{background:var(--r-color)}
+.who{font-family:var(--display);font-size:1.16rem;line-height:1.1}
+.post.pythagorass .who{color:var(--p-color)}
+.post.euclidnt .who{color:var(--e-color)}
+.post.referee .who{color:var(--r-color);font-style:italic}
+.role{font:.74rem/1.2 var(--sans);color:var(--faint)}
+.grow{flex:1 1 auto;min-width:0}
+.stamp{font:500 .69rem/1 var(--sans);color:var(--faint);letter-spacing:.04em;white-space:nowrap}
 .stamp a{color:inherit;text-decoration:none}.stamp a:hover{color:var(--text)}
+.flag{font:600 .6rem/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;
+  padding:.28rem .48rem;border-radius:99px;background:var(--e-color);color:#fff}
 .badge{font:600 .61rem/1 var(--sans);letter-spacing:.11em;text-transform:uppercase;
   padding:.26rem .46rem;border:1px solid currentColor;border-radius:3px}
 .tier-gold{color:var(--gold)}.tier-silver{color:var(--silver)}
 
-.body{overflow-wrap:break-word;min-width:0}
+.post-body{padding:1.15rem 1.3rem 1.35rem}
+.replyto{font:.74rem/1.3 var(--sans);color:var(--faint);margin:0 0 .85rem}
+.replyto a{color:var(--dim)}
+.body{overflow-wrap:break-word;min-width:0;max-width:38em}
 .body>:first-child{margin-top:0}.body>:last-child{margin-bottom:0}
-.body p{margin:0 0 .95rem}
+.body p{margin:0 0 1rem}
 code,kbd{font-family:var(--mono);font-size:.86em}
-code{background:color-mix(in srgb,var(--dim) 16%,transparent);padding:.12em .34em;border-radius:3px}
-pre{overflow-x:auto;background:var(--bg);border:1px solid var(--border);padding:.9rem 1rem;
-  border-radius:6px;font-family:var(--mono);font-size:.86em}
+code{background:color-mix(in srgb,var(--dim) 15%,transparent);padding:.12em .34em;border-radius:3px}
+pre{overflow-x:auto;background:color-mix(in srgb,var(--card) 70%,transparent);
+  border:1px solid var(--border);padding:.9rem 1rem;border-radius:7px;
+  font-family:var(--mono);font-size:.86em}
 pre code{background:none;padding:0}
-blockquote{margin:1rem 0;padding:.2rem 0 .2rem 1rem;border-left:2px solid var(--line);
+blockquote{margin:1rem 0;padding:.25rem 0 .25rem 1rem;border-left:2px solid var(--line);
   color:var(--dim);font-style:italic}
 .body table{display:block;overflow-x:auto;max-width:100%}
 .katex-display{overflow-x:auto;overflow-y:hidden;padding:.2rem 0}
 
-.viol{margin-top:1rem;padding:.7rem .9rem;border-left:2px solid var(--warn);
-  background:color-mix(in srgb,var(--warn) 9%,transparent);color:var(--warn);
-  font:.78rem/1.5 var(--sans);border-radius:0 5px 5px 0}
+.viol{margin-top:1.1rem;padding:.75rem .95rem;border-left:2px solid var(--warn);
+  background:var(--warn-bg);color:var(--warn);font:.78rem/1.5 var(--sans);
+  border-radius:0 6px 6px 0;max-width:38em}
 .viol b{display:block;font-size:.64rem;letter-spacing:.13em;text-transform:uppercase;margin-bottom:.3rem}
 
-.jump{position:absolute;left:50%;bottom:1.1rem;transform:translateX(-50%) translateY(.4rem);
-  background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:99px;
-  padding:.44rem .95rem;font:600 .73rem/1 var(--sans);box-shadow:var(--shadow);cursor:pointer;
-  opacity:0;pointer-events:none;transition:opacity .18s,transform .18s}
-.jump.show{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
-
-.empty{color:var(--faint);font-style:italic;padding:2rem;text-align:center}
-footer{margin-top:2.6rem;padding-top:1.6rem;border-top:1px solid var(--line);
+.empty{color:var(--faint);font-style:italic;padding:2.5rem;text-align:center;
+  border:1px dashed var(--line);border-radius:14px}
+footer{margin-top:3.4rem;padding-top:1.6rem;border-top:1px solid var(--line);
   color:var(--dim);font-size:.85rem;max-width:42em}
 footer p{margin:0 0 .7rem}footer b{color:var(--text);font-weight:600}
 a{color:inherit;text-decoration-color:var(--line);text-underline-offset:.18em}
 a:hover{text-decoration-color:currentColor}
 @media (max-width:600px){
-  .wrap{padding:2.1rem 1.05rem 3rem}
-  .chat{padding:1.1rem .85rem 1.3rem;border-radius:12px}
-  .bubble{max-width:calc(100% - 2.5rem)}
+  .wrap{padding:2.2rem 1.05rem 3.4rem}
+  .post-head{padding:.75rem 1rem}.post-body{padding:1rem 1rem 1.15rem}
   .facts{padding:1.2rem}
 }
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 </style>
 </head>
 <body>
@@ -236,9 +228,8 @@ __FIGURE__
   <!--VISITORS-->
 </div>
 
-<div class="sec">The argument</div>
-<div class="chat-wrap">
-<div class="chat" id="chat"><div class="stream" id="stream">
+<div class="sec">The argument &middot; newest first</div>
+<div class="thread">
 '''
 
 PROBLEM = '''<p>Draw <b>k</b> straight lines across a plane. Wherever three of them
@@ -258,16 +249,14 @@ arrangement or proving it cannot exist.</p>
 
 <p>That single triangle is what these two are arguing about.</p>'''
 
-FOOT = r'''</div></div>
-<button class="jump" id="jump" type="button">Jump to latest &darr;</button>
-</div>
+FOOT = r'''</div>
 
 <footer id="about">
 <p><b>How it works.</b> PythagorAss argues the ceiling is reachable and hunts
 constructions. Euclidn&rsquo;t argues there is a counting obstruction nobody has
 isolated. Neither sees the other&rsquo;s brief. A concession is only valid if it
 cites a verifier run or quotes the specific line being conceded to, and
-ungrounded agreement is stamped onto the turn in public. A referee on a stronger
+ungrounded agreement is stamped onto the post in public. A referee on a stronger
 model rewrites the ledger daily and can reopen anything they agreed on. Neither
 debater can declare a result.</p>
 <p><b>Sources.</b> Upper bounds from Clement and Bader (2007) and the improved
@@ -295,31 +284,6 @@ if (window.renderMathInElement) {
     throwOnError: false
   });
 }
-(function () {
-  var chat = document.getElementById("chat"), jump = document.getElementById("jump");
-  if (!chat) return;
-  function toBottom(smooth) {
-    chat.scrollTo({ top: chat.scrollHeight, behavior: smooth ? "smooth" : "auto" });
-  }
-  function atBottom() {
-    return chat.scrollHeight - chat.scrollTop - chat.clientHeight < 90;
-  }
-  // Land on the newest turn. Fonts and KaTeX change height after paint, so
-  // settle again once they have.
-  toBottom(false);
-  window.addEventListener("load", function () { toBottom(false); });
-  if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(function () { toBottom(false); });
-  }
-  chat.addEventListener("scroll", function () {
-    jump.classList.toggle("show", !atBottom());
-  }, { passive: true });
-  jump.addEventListener("click", function () { toBottom(true); });
-  // A deep link to a turn should win over the auto-scroll.
-  if (location.hash && document.querySelector(location.hash)) {
-    document.querySelector(location.hash).scrollIntoView({ block: "center" });
-  }
-})();
 </script>
 </body>
 </html>
@@ -372,15 +336,22 @@ def fetch_visitor_count(gc_code: str):
         return None
 
 
-def _turn_html(t: thread.Turn) -> str:
+ROLES = {
+    "PythagorAss": "arguing the ceiling is reachable",
+    "Euclidn't": "arguing it provably is not",
+    "REFEREE": "referee",
+}
+
+
+def _turn_html(t: thread.Turn, newest: bool = False) -> str:
     cls = thread.slug(t.speaker)
-    side = {"PythagorAss": "left", "Euclidn't": "right"}.get(t.speaker, "center")
     tier = (t.meta or {}).get("tier", "none")
     badge = (
         f'<span class="badge tier-{tier}">{tier}</span>'
         if tier in ("silver", "gold")
         else ""
     )
+    flag = '<span class="flag">latest</span>' if newest else ""
 
     body, viol = t.body, []
     marker = "**Gate violations**"
@@ -392,6 +363,13 @@ def _turn_html(t: thread.Turn) -> str:
             if ln.strip().startswith("-")
         ]
 
+    # "addresses" is what makes this read as a forum rather than a list.
+    addressed = [a for a in (t.meta or {}).get("addresses") or [] if isinstance(a, int)]
+    replyto = ""
+    if addressed:
+        links = ", ".join(f'<a href="#turn-{n}">#{n}</a>' for n in addressed)
+        replyto = f'<p class="replyto">In reply to {links}</p>'
+
     payload = html.escape(json.dumps(body.strip()), quote=True)
     viol_html = ""
     if viol:
@@ -399,12 +377,16 @@ def _turn_html(t: thread.Turn) -> str:
         viol_html = f'<div class="viol"><b>Gate violations</b>{items}</div>'
 
     return (
-        f'<article class="msg {side} {cls}" id="turn-{t.number}">'
-        f'<div class="avatar" aria-hidden="true">{html.escape(t.speaker[0])}</div>'
-        f'<div class="bubble">'
-        f'<div class="meta"><span class="name">{html.escape(t.speaker)}</span>'
-        f'<span class="stamp"><a href="#turn-{t.number}">Turn {t.number}</a>'
-        f" &middot; {html.escape(t.timestamp)}</span>{badge}</div>"
+        f'<article class="post {cls}" id="turn-{t.number}">'
+        f'<header class="post-head">'
+        f'<span class="ava" aria-hidden="true">{html.escape(t.speaker[0])}</span>'
+        f'<span class="who">{html.escape(t.speaker)}</span>'
+        f'<span class="role">{ROLES.get(t.speaker, "")}</span>'
+        f'<span class="grow"></span>{flag}{badge}'
+        f'<span class="stamp"><a href="#turn-{t.number}">#{t.number}</a>'
+        f" &middot; {html.escape(t.timestamp)}</span>"
+        f"</header>"
+        f'<div class="post-body">{replyto}'
         f'<div class="body" data-md="{payload}"></div>'
         f"{viol_html}</div></article>"
     )
@@ -431,11 +413,11 @@ def render(thread_text: str, known_text: str, visitor_count=None, gc_code=None) 
     if not turns:
         return head + '<p class="empty">The debate has not started yet.</p>\n' + FOOT
 
-    # Chat order: oldest at the top, newest at the bottom. The panel scrolls
-    # itself to the newest turn on load, so nobody has to hunt for the live
-    # argument even though it lives at the end.
-    ordered = sorted(turns, key=lambda t: t.number)
-    return head + "\n".join(_turn_html(t) for t in ordered) + "\n" + FOOT
+    # Newest first. A forum thread this long is read from the live end, and a
+    # scroll-to-bottom container was tried and rejected.
+    ordered = sorted(turns, key=lambda t: t.number, reverse=True)
+    posts = [_turn_html(t, newest=(i == 0)) for i, t in enumerate(ordered)]
+    return head + "\n".join(posts) + "\n" + FOOT
 
 
 def main() -> int:

@@ -34,7 +34,7 @@ def test_output_is_a_full_html_document():
 
 def test_every_turn_appears():
     out = render.render(THREAD, KNOWN)
-    assert out.count('class="msg ') == 2
+    assert out.count('class="post ') == 2
 
 
 def test_speaker_classes_are_distinct():
@@ -44,14 +44,13 @@ def test_speaker_classes_are_distinct():
     assert "euclidnt" in out
 
 
-def test_pythagorass_sits_left_and_euclidnt_right():
-    """Chat convention: one speaker per side, so the exchange reads at a glance."""
+def test_each_speaker_gets_its_own_post_tint():
     out = render.render(THREAD, KNOWN)
-    assert 'class="msg left pythagorass"' in out
-    assert 'class="msg right euclidnt"' in out
+    assert 'class="post pythagorass"' in out
+    assert 'class="post euclidnt"' in out
 
 
-def test_referee_is_centred_not_sided():
+def test_referee_posts_are_visually_distinct():
     ref = THREAD + (
         "\n## Turn 3 - REFEREE - 2026-08-18T12:00:00Z\n\nruling\n\n"
         '<!-- meta\n{"tier": "none", "addresses": [], "claims_opened": [],'
@@ -59,7 +58,7 @@ def test_referee_is_centred_not_sided():
         ' "tweet": "t"}\n-->\n'
     )
     out = render.render(ref, KNOWN)
-    assert 'class="msg center referee"' in out
+    assert 'class="post referee"' in out
 
 
 def test_display_names_are_shown_verbatim():
@@ -68,27 +67,35 @@ def test_display_names_are_shown_verbatim():
     assert "Euclidn&#x27;t" in out or "Euclidn't" in out
 
 
-def test_turns_are_in_chat_order_oldest_first():
-    """Chat order, newest at the bottom.
-
-    The panel scrolls itself to the bottom on load, so the live argument is
-    still the first thing seen. Reverse-chronological was tried and reads
-    wrong in a chat idiom.
-    """
+def test_newest_post_comes_first():
+    """Forum order, newest at the top. The page scrolls normally; the
+    fixed-height auto-scrolling chat panel was tried and rejected."""
     out = render.render(THREAD, KNOWN)
-    assert out.index('id="turn-1"') < out.index('id="turn-2"')
+    assert out.index('id="turn-2"') < out.index('id="turn-1"')
 
 
-def test_thread_lives_in_a_scrollable_panel():
+def test_only_the_newest_post_is_flagged_latest():
     out = render.render(THREAD, KNOWN)
-    assert re.search(r"\.chat\{[^}]*overflow-y:\s*auto", out)
-    assert re.search(r"\.chat\{[^}]*height:", out)
+    assert out.count('class="flag">latest') == 1
+    assert out.index("latest") < out.index('id="turn-1"')
 
 
-def test_panel_scrolls_itself_to_the_newest_turn():
+def test_addresses_render_as_reply_links():
+    """What makes it read as a forum rather than a list of statements."""
     out = render.render(THREAD, KNOWN)
-    assert "scrollHeight" in out
-    assert 'id="jump"' in out
+    assert 'In reply to <a href="#turn-1">#1</a>' in out
+
+
+def test_no_reply_line_on_an_opening_post():
+    out = render.render(THREAD, KNOWN)
+    first = out[out.index('id="turn-1"'):]
+    assert "In reply to" not in first
+
+
+def test_page_is_not_a_fixed_height_scroll_container():
+    out = render.render(THREAD, KNOWN)
+    assert "scrollHeight" not in out
+    assert 'id="jump"' not in out
 
 
 def test_every_turn_has_a_linkable_anchor():
