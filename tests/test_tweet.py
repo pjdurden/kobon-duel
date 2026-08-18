@@ -88,3 +88,16 @@ def test_from_thread_returns_none_with_no_referee_turn():
         ' "tweet": "nope"}\n-->\n'
     )
     assert tweet.from_thread(text)[0] is None
+
+
+def test_posting_is_disabled_by_default(tmp_path, monkeypatch):
+    """Absent flag file means never post. The referee runs unattended."""
+    monkeypatch.setattr(tweet, "ENABLE_FLAG", tmp_path / "tweets.enabled")
+    assert tweet.posting_enabled() is False
+
+
+def test_posting_enabled_when_the_flag_exists(tmp_path, monkeypatch):
+    flag = tmp_path / "tweets.enabled"
+    flag.write_text("")
+    monkeypatch.setattr(tweet, "ENABLE_FLAG", flag)
+    assert tweet.posting_enabled() is True

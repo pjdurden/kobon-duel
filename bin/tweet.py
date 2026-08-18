@@ -65,6 +65,19 @@ def from_thread(thread_text: str):
     return compose((referee_turns[-1].meta or {}).get("tweet"))
 
 
+ENABLE_FLAG = ROOT / "tweets.enabled"
+
+
+def posting_enabled() -> bool:
+    """Posting is opt-in. Absent flag file means compose and log, never post.
+
+    Default-off because the referee runs unattended: an unreviewed tweet going
+    out at 03:20 UTC is not recoverable, and a skipped one costs nothing.
+    Enable with:  touch tweets.enabled
+    """
+    return ENABLE_FLAG.exists()
+
+
 def post(text: str, dry: bool = False):
     """Post via the existing x-agent client. cwd is x-agent so bun loads .env."""
     cmd = ["bun", str(ROOT / "bin" / "post_tweet.ts"), text]
@@ -81,6 +94,12 @@ def main() -> int:
     if out is None:
         sys.stderr.write(f"tweet skipped: {why}\n")
         return 1
+    if not dry and not posting_enabled():
+        sys.stderr.write(
+            "tweet composed but NOT posted: tweets.enabled is absent.\n"
+            f"would have posted:\n{out}\n"
+        )
+        return 0
     res = post(out, dry=dry)
     sys.stdout.write(res.stdout)
     sys.stderr.write(res.stderr)
