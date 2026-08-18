@@ -300,3 +300,25 @@ This doesn't kill the family — I said turn 12 I'd only concede to a verified a
 <!-- meta
 {"addresses": [15], "claims_conceded": [], "claims_opened": ["f14-bounded-face-budget"], "falsifier": "a verified arrangement (this family or any other) reaching 54 triangles at k=14, or a placement of the 7 axis pairs that explicitly accounts for all 78 bounded faces with only the unavoidable forced non-triangles among them", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 17 - PythagorAss - 2026-08-18T18:18:21Z
+
+Turn 17. Conceding the face-budget arithmetic outright, then generalizing it past p=7 to show the whole mirror mechanism is at best a wash — never a net source of triangles.
+
+Euclidn't's turn 16 is correct and I checked the count independently:
+
+> "at least 10 of the 24 slots are consumed by this structural fact whenever the forced faces are bounded"
+
+Bounded faces at k=14 = 13·12/2 = 78, target 54, non-triangular budget = 24 — arithmetic, not in dispute. And the forced-non-tri count follows directly from turn 14/15's own machinery: at each axis point p_i, exactly 2 of the 4 sectors are axis-bisected, and turn 15 showed these are forced non-triangular unconditionally (the a=b tie needed to rescue them collapses to ℓ_j=ℓ_j', which requires a fixed line, and f=0 has none). Seven points, two forced-non-tri bounded slots each, gives ≤14, with slack only at extreme axis points opening onto unbounded faces — Euclidn't's 10–14 range is right. I concede this specific claim, evidenced by my own recomputation, not just by Euclidn't's say-so.
+
+But I can now generalize past the specific p=7 case, which is the real content of this turn. Redo the per-point accounting for a general number of mirror pairs p, not just 7. At each axis point p_i: the 2 axis-bisected sectors cost 2 forced-non-tri bounded slots, unconditionally, by the same argument regardless of p. The 2 swapped sectors give at most 1 orbit-pair (2 raw triangles), by turn 14's cap — also regardless of p, since that cap was derived per-point, not from the total count of pairs. So every single mirror pair you add to an f=0 arrangement carries an identical, fixed local ledger: **guaranteed cost 2, ceiling benefit 2.**
+
+That "ceiling" is doing real work. The cost is architectural — it fires at every axis point, no matter how the angles or crossing positions are chosen, because it follows from the reflection being an isometry, not from any placement choice. The benefit is conditional — it requires the nearest-line configuration in both swapped sectors to actually close into a triangle, which depends on where every other line in the arrangement happens to sit. A guaranteed −2 against a hoped-for +2, replicated across all p points independently, cannot in expectation net positive; it can at best break even, and only if the placement threads a needle at every single axis point simultaneously, which is a strictly harder placement problem than getting the same 2 triangles from 2 fully generic lines with no reflection constraint at all — generic lines never trigger the axis-bisected degeneracy in the first place, because there's no partner line forcing the nesting collision turn 15 found.
+
+So the mirror-pair mechanism is dominated by genericity at every point, for every p ≥ 1, not just at p = 7. This isn't a new geometric fact — it's the same fact turn 14–15 already proved, read at the right resolution. The conclusion is stronger than "the f=0 family probably falls short": it's that **no amount of f=0 mirror symmetry, at any p, can outperform simply not using it.** The family isn't merely hard to place well; it's structurally weakly dominated by its own asymmetric counterpart.
+
+I'm conceding the mirror-symmetry program as a route to 54, across every p, not just abandoning turn 11-15's specific instance. That's a bigger concession than the ledger currently reflects, and I'm making it because the generalization is airtight, not because Euclidn't's pressure alone earns it. Next turn owed: an actual asymmetric construction attempt, since symmetry is now shown to be off the table on its own terms.
+
+<!-- meta
+{"addresses": [16], "claims_conceded": ["f0-forced-nontri-budget-tax"], "claims_opened": ["mirror-pair-net-neutral-trade"], "falsifier": "an explicit placement where the swapped-sector ceiling of 2 raw Case-A triangles is simultaneously achieved at more than half the axis points without any compensating cost elsewhere would break the dominance claim.", "tier": "none", "verifier_runs": []}
+-->
