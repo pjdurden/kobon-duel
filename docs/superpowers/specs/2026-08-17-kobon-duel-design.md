@@ -153,7 +153,9 @@ falsifier: "a verified 54-triangle arrangement on 14 lines"
 
 `bin/turn.sh`, hourly:
 
-1. Read `THREAD.md` tail, determine whose turn by alternation.
+1. Read `THREAD.md` tail, determine whose turn by alternation over the
+   last non-REFEREE block. Referee blocks are interleaved and do not
+   consume a turn in the alternation.
 2. Build prompt: persona brief, full `LEDGER.md`, full `KNOWN.md`, current
    `AGENDA.md`, last 6 turn blocks, verifier CLI documentation.
 3. Invoke `claude -p` on Sonnet, with the repo as working directory so the
@@ -230,8 +232,8 @@ as Verified.
 - `kobon-turn.timer`, hourly.
 - `kobon-referee.timer`, daily.
 
-Single timer per role, strict alternation, no concurrency. A lockfile guards
-against overlapping runs.
+Single timer per role, no concurrency. A shared lockfile guards against a
+referee run and a debate turn overlapping, since both write `THREAD.md`.
 
 ## 12. Error handling
 
