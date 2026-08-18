@@ -186,3 +186,23 @@ So the concrete ask, sharper than "deliver a number": when the count arrives, it
 <!-- meta
 {"addresses": [9], "claims_conceded": ["search-failure-equivalence"], "claims_opened": ["mirror-fixed-lines-parallel"], "falsifier": "A verified orbit-by-orbit triangle count for a mirror family (f fixed + 2p reflected pairs, f+2p=14) that honors the C(f,2) vertex deficit and the no-two-fixed-lines-per-triangle constraint and reaches 54 would refute this.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 11 - PythagorAss - 2026-08-18T12:17:21Z
+
+Turn 11. Taking Euclidn't's fixed-line constraint as correct, then routing around it entirely rather than paying the tax.
+
+The claim that fixed lines are mutually parallel, cost C(f,2) crossings, and can never co-border a triangle together is right — parallel lines don't intersect, and a triangle needs three pairwise-intersecting sides, so no triangle can use two fixed lines as sides. I'm not disputing it. But it's a constraint on f > 0. It disappears entirely if f = 0.
+
+Set f = 0, p = 7: the mirror family with no fixed lines at all, just seven reflected pairs, f + 2p = 14 satisfied. This isn't a retreat from the debt owed since turn 1 — it's the same parametrization, just picking the corner of it that dodges the objection instead of fighting it.
+
+First consequence: no tax. Euclidn't's own framing — central symmetry loses 7 vertices (turn 9), mirror symmetry loses C(f,2) vertices (turn 10) — implicitly suggested symmetric families always pay something. At f=0 that's false. No two lines here are forced parallel: each pair (ℓᵢ, ℓᵢ') is a reflection pair, generically not parallel to each other or to any other line or pair, and I can choose the 7 angles generically to keep it that way. So V = C(14,2) = 91 exactly, the full generic count. A symmetric family need not start poorer.
+
+Second, and this is the real content: with f=0, self-symmetric triangles are impossible, which pins down parity exactly rather than just bounding it. A triangle fixed setwise by the reflection has either all three vertices on the axis (degenerate, three lines concurrent on A — excluded, we're keeping this simple) or exactly one vertex on A with the other two swapped. A vertex lies on A only if it's an axis-crossing of some pair (ℓᵢ, ℓᵢ'), since A itself isn't one of our 14 lines. For the other two vertices to be swapped by the reflection, the side connecting them must be a single line mapping to itself — meaning that line is perpendicular to A, i.e. a fixed line. There are none. So no triangle can have exactly one axis vertex and a mirror-symmetric opposite side either. Self-symmetric triangles are therefore impossible outright, not just rare: T_fixed = 0, identically, for every arrangement in this subfamily, not as a bound but as a structural fact from the absence of fixed lines.
+
+That forces T = 2·T_pairs for any arrangement in this family — total triangle count is always even, with no exceptions and no counting needed to establish it. This matches the parity constraint from turn 1 automatically, but now for a specific, cleanly parametrized reason rather than a filter applied after the fact. It also tells us something turn 1 didn't: this family structurally cannot produce 53. If the true value at k=14 is 53, no f=0 mirror arrangement is the witness — the search there should stop. If it's 54, this family is exactly where to look, since 54 = 2·27 is achievable in principle by parity alone.
+
+The target is now concrete: 27 mirror-pair triangle-orbits among 7 reflected line-pairs, with V=91 available. I don't have that orbit count yet — the honest gap is real geometry, not arithmetic, and I'm not claiming I've cleared 54. Next turn's job is to actually place the 7 pairs (choose the 7 axis-crossing points and 7 angle-pairs) and count orbits directly, or show a sub-bound that caps T_pairs below 27 for this family specifically.
+
+<!-- meta
+{"addresses": [10], "claims_conceded": [], "claims_opened": ["mirror-f0-family"], "falsifier": "an identity showing T_pairs <= 26 forced for every f=0, p=7 mirror arrangement at k=14 would kill this specific family, though not the general prior.", "tier": "none", "verifier_runs": []}
+-->
