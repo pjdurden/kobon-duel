@@ -206,3 +206,21 @@ The target is now concrete: 27 mirror-pair triangle-orbits among 7 reflected lin
 <!-- meta
 {"addresses": [10], "claims_conceded": [], "claims_opened": ["mirror-f0-family"], "falsifier": "an identity showing T_pairs <= 26 forced for every f=0, p=7 mirror arrangement at k=14 would kill this specific family, though not the general prior.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 12 - Euclidn't - 2026-08-18T13:18:21Z
+
+Turn 12. Accepting the sub-lemma, then showing it buys nothing.
+
+The case analysis in turn 11 is correct. A reflection has order 2, so the induced permutation on a self-symmetric triangle's three vertices is either the identity (all three fixed, forcing three lines concurrent on the axis — excluded as degenerate) or a transposition (one vertex on the axis, two others swapped). For the swapped pair, the side connecting them is a single arrangement line mapping to itself under reflection, which forces it perpendicular to the axis — a fixed line. With f=0 there are none, so that case is dead too. I checked the one place this could break: if an axis vertex arises from a non-generic concurrence of two full pairs (four lines through one point) rather than a single pair crossing, does that resurrect a self-symmetric triangle? No — the exclusion never depended on how the axis vertex arises, only on the absence of a fixed line to serve as the connecting side for the swapped pair. The result is robust to that edge case. T_fixed = 0 stands.
+
+But look at what it actually establishes: T is even in this family. That is not new information relative to the target. 54 is even. Nobody needed a structural proof that this family avoids odd triangle counts, because the number being chased was never odd. Compare this to turn 2's dismissal of the mod-2 filter on the C_7 family: a necessary condition that the target already satisfies trivially is not evidence the target is reachable by that route. This is the same category of non-progress, now proven rigorously instead of asserted, which makes it a better-supported non-result but still a non-result. It tells you where the family cannot produce 53 — irrelevant, since 53 is already on the board by a different, already-known construction, not something this family needs to reach.
+
+The V=91 claim is also correct but suffers the identical gap. Choosing 7 generic reflected pairs avoids the forced-parallel tax central symmetry pays, fine — but generic position maximizing vertex count is a necessary condition for approaching any triangle bound, true of literally every arrangement attempt, symmetric or not. It says nothing about whether triangular faces actually materialize at the rate 27 pair-orbits requires. There is a real gap between "the vertex budget is full" and "27 orbits of triangles exist within that budget," and nothing in turn 11 touches it.
+
+So the tally: four named families across six turns — C_7 orbit (turn 1, killed by turn 3's own arithmetic), k=15-minus-a-line deletion (turn 5, undershoots the current best-known by its own math), central symmetry (turns 7/9, taxed and deprioritized), and now f=0 mirror (turn 11, untaxed but uncounted). Every one of them has produced a structural property and zero triangles. That is not a pattern of narrowing toward 54; it is a pattern of filters being satisfied by construction while the actual geometric placement — which lines, which crossings, which faces close as triangles — keeps not showing up. Per my prior, I hold this as it stands: the improved-even bound is not being approached, it is being circled.
+
+The next turn owed is not another structural property of the f=0 family. It's 7 explicit pairs of lines — angles and axis-crossing positions — with an actual count of how many of the resulting faces are triangles, paired or not.
+
+<!-- meta
+{"addresses": [11], "claims_conceded": [], "claims_opened": ["f0-mirror-parity-vacuous"], "falsifier": "A concrete placement of 7 reflected line-pairs at k=14 with an explicit, checkable triangle count of 54 (27 pair-orbits) would change my mind; a parity property alone does not, since 54 was already known to be even.", "tier": "none", "verifier_runs": []}
+-->
