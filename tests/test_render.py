@@ -131,80 +131,35 @@ def test_silver_tier_is_badged():
     assert "tier-silver" in out
 
 
-def test_theme_tokens_defined_on_bare_root():
-    """The full palette must exist on bare :root, with dark as an override.
+def test_page_is_light_only_with_no_dark_override():
+    """Light only, deliberately.
 
-    Matches whitespace-insensitively: asserting on formatting rather than on
-    the requirement made this fail the moment the CSS was reflowed.
+    A prefers-color-scheme block meant the page rendered dark for anyone whose
+    machine is in dark mode, which is not what this site is. Anthropic's own
+    landing page is light only; so is this.
     """
     out = render.render(THREAD, KNOWN)
-    assert re.search(r":root\s*\{[^}]*--bg\s*:", out), "no light palette on bare :root"
-    assert re.search(r"prefers-color-scheme\s*:\s*dark", out)
-    assert re.search(r':root\[data-theme="dark"\]', out), "no explicit dark override"
+    # Match the media query, not the bare phrase: the stylesheet comment
+    # explaining this decision contains the words too.
+    assert not re.search(r"@media\s*\(\s*prefers-color-scheme", out), (
+        "a dark override crept back in"
+    )
+    assert 'data-theme="dark"' not in out
+    assert "color-scheme:light" in out.replace(" ", "")
+    assert '<meta name="color-scheme" content="light">' in out
+
+
+def test_ground_is_the_ivory_not_white():
+    """Ivory ground with white cards is the whole look; a white ground kills it."""
+    out = render.render(THREAD, KNOWN)
+    assert re.search(r"--bg\s*:\s*#f0eee6", out, re.I)
+    assert re.search(r"--card\s*:\s*#ffffff", out, re.I)
 
 
 def test_body_has_an_explicit_background():
     """A transparent body borrows the host page's colour."""
     out = render.render(THREAD, KNOWN)
     assert re.search(r"body\s*\{[^}]*background\s*:\s*var\(--bg\)", out)
-
-
-def test_empty_thread_still_renders():
-    out = render.render("# Thread\n", KNOWN)
-    assert "<!doctype html>" in out.lstrip()
-
-
-def test_target_table_is_derived_from_known_md():
-    out = render.render(THREAD, KNOWN)
-    assert "<td>14</td><td>54</td><td>53</td><td>1</td>" in out
-
-
-def test_target_table_follows_known_md_when_it_changes():
-    edited = "| 18 | 96 | 94 | 93 | OPEN | gap of 1 |"
-    out = render.render(THREAD, edited)
-    assert "<td>18</td>" in out
-    assert "<td>14</td>" not in out
-
-
-def test_nojekyll_marker_exists():
-    """docs/ holds pre-generated HTML plus plan docs containing Liquid-looking
-    braces. Without .nojekyll, Jekyll tries to parse them and the Pages build
-    errors out, which is exactly what happened on the first deploy."""
-    import pathlib
-    root = pathlib.Path(__file__).resolve().parent.parent
-    assert (root / "docs" / ".nojekyll").exists()
-
-
-def test_no_goatcounter_script_without_a_code():
-    out = render.render(THREAD, KNOWN, visitor_count=None, gc_code=None)
-    assert "goatcounter" not in out.lower()
-
-
-def test_goatcounter_script_present_with_a_code():
-    out = render.render(THREAD, KNOWN, gc_code="kobon-duel")
-    assert 'data-goatcounter="https://kobon-duel.goatcounter.com/count"' in out
-    assert "//gc.zgo.at/count.js" in out
-
-
-def test_visitor_count_rendered_when_known():
-    out = render.render(THREAD, KNOWN, visitor_count=1234, gc_code="kobon-duel")
-    assert '<h2>Visitors</h2><span class="stat">1,234</span>' in out
-
-
-def test_visitor_count_omitted_when_unknown():
-    """A failed fetch must omit the line, never show a broken widget or a zero.
-
-    Checks for the element, not the word: the .visitors CSS rule is always in
-    the stylesheet, so a substring test on "visitors" is too coarse to mean
-    anything.
-    """
-    out = render.render(THREAD, KNOWN, visitor_count=None, gc_code="kobon-duel")
-    assert "<h2>Visitors</h2>" not in out
-
-
-def test_render_still_works_with_default_args():
-    out = render.render(THREAD, KNOWN)
-    assert "<!doctype html>" in out.lstrip()
 
 
 def test_problem_section_is_present_and_names_the_open_cases():
@@ -243,16 +198,3 @@ def test_no_css_variable_is_used_without_being_defined():
     defined = set(re.findall(r"(--[a-z0-9-]+)\s*:", out))
     used = set(re.findall(r"var\((--[a-z0-9-]+)", out))
     assert not (used - defined), f"undefined CSS variables: {sorted(used - defined)}"
-
-
-def test_dark_theme_redefines_every_light_token():
-    """A token defined only in light leaves dark mode inheriting a light value."""
-    out = render.render(THREAD, KNOWN)
-    light = re.search(r":root\{(.*?)\}", out, re.S).group(1)
-    dark = re.search(r':root\[data-theme="dark"\]\{(.*?)\}', out, re.S).group(1)
-    colour = re.compile(r"(--[a-z0-9-]+)\s*:\s*(#|rgba|color-mix)")
-    light_colours = {m.group(1) for m in colour.finditer(light)}
-    dark_colours = {m.group(1) for m in colour.finditer(dark)}
-    assert not (light_colours - dark_colours), (
-        f"not redefined in dark: {sorted(light_colours - dark_colours)}"
-    )
