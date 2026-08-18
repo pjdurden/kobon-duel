@@ -112,12 +112,20 @@ AGREEMENT_RE = re.compile(
 )
 
 
-def validate_meta(meta: dict) -> list:
-    """Structural errors in a meta trailer. Empty list means well-formed."""
+def validate_meta(meta: dict, speaker: str = None) -> list:
+    """Structural errors in a meta trailer. Empty list means well-formed.
+
+    The referee carries one extra required key, `tweet`: its turn is what the
+    daily build-in-public post is written from, so a missing field means no
+    tweet that day and should be visible rather than silent.
+    """
     errors = []
-    for key in REQUIRED_META:
+    required = REQUIRED_META + (("tweet",) if speaker == "REFEREE" else ())
+    for key in required:
         if key not in meta:
             errors.append(f"missing required meta key: {key}")
+    if speaker == "REFEREE" and "tweet" in meta and not isinstance(meta["tweet"], str):
+        errors.append("tweet must be a string")
     if "tier" in meta and meta.get("tier") not in TIERS:
         errors.append(f"tier must be one of {TIERS}, got {meta.get('tier')!r}")
     for key in _LIST_KEYS:
@@ -167,7 +175,9 @@ def check_grounding(turn: Turn) -> list:
 
 def apply_gate(turn: Turn, allow_gold: bool = False) -> Turn:
     """Run every mechanical check, recording violations on the turn."""
-    turn.violations.extend(f"MALFORMED_META: {e}" for e in validate_meta(turn.meta))
+    turn.violations.extend(
+        f"MALFORMED_META: {e}" for e in validate_meta(turn.meta, turn.speaker)
+    )
     turn.meta, tier_violations = gate_tier(turn.meta, allow_gold)
     turn.violations.extend(tier_violations)
     turn.violations.extend(check_grounding(turn))

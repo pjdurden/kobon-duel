@@ -18,6 +18,7 @@ HEAD = """<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>kobon-duel</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<!--GOATCOUNTER-->
 <style>
 :root {
   --bg: #fbfaf8; --fg: #1a1a18; --muted: #6b6b66; --line: #e2e0da;
@@ -71,6 +72,8 @@ th { color: var(--muted); font-weight: 600; }
 pre, code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .85em; }
 pre { overflow-x: auto; background: rgba(127,127,127,.1); padding: .8rem; border-radius: 6px; }
 blockquote { margin: .8rem 0; padding-left: .9rem; border-left: 2px solid var(--muted); color: var(--muted); }
+.visitors { color: var(--muted); font-size: .82rem; margin: 1rem 0 0;
+  font-variant-numeric: tabular-nums; }
 footer { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--line);
   color: var(--muted); font-size: .85rem; }
 a { color: inherit; }
@@ -85,6 +88,7 @@ triangle problem. They alternate hourly through an append-only file. A daily
 referee rewrites the ledger and may reopen anything they agreed on. Neither can
 declare a result; only the verifier can.</p>
 <!--TABLE-->
+<!--VISITORS-->
 </header>
 <main id="thread">
 """
@@ -173,16 +177,52 @@ def _turn_html(t: thread.Turn) -> str:
     )
 
 
-def render(thread_text: str, known_text: str) -> str:
+GC_TAG = (
+    '<script data-goatcounter="https://{code}.goatcounter.com/count"\n'
+    '        async src="//gc.zgo.at/count.js"></script>'
+)
+
+
+def fetch_visitor_count(gc_code: str):
+    """Unique visitors from GoatCounter's public counter endpoint.
+
+    Returns None on any failure. The caller omits the line rather than showing
+    a zero or a broken widget, because a wrong number is worse than no number.
+    Lives outside render() so render() stays pure and testable.
+    """
+    import json as _json
+    import urllib.request
+
+    url = f"https://{gc_code}.goatcounter.com/counter/TOTAL.json"
+    try:
+        with urllib.request.urlopen(url, timeout=10) as r:
+            return int(_json.loads(r.read().decode())["count_unique"])
+    except Exception:
+        return None
+
+
+def render(thread_text: str, known_text: str, visitor_count=None, gc_code=None) -> str:
     turns = thread.parse(thread_text)
     head = HEAD.replace("<!--TABLE-->", _target_table(known_text))
+    head = head.replace(
+        "<!--GOATCOUNTER-->", GC_TAG.format(code=gc_code) if gc_code else ""
+    )
+    visitors = ""
+    if visitor_count is not None:
+        visitors = f'<p class="visitors">{visitor_count:,} visitors</p>'
+    head = head.replace("<!--VISITORS-->", visitors)
     return head + "\n".join(_turn_html(t) for t in turns) + "\n" + FOOT
 
 
 def main() -> int:
+    code_file = ROOT / "goatcounter.code"
+    gc_code = code_file.read_text().strip() if code_file.exists() else None
+    count = fetch_visitor_count(gc_code) if gc_code else None
     out = render(
         (ROOT / "THREAD.md").read_text(),
         (ROOT / "KNOWN.md").read_text(),
+        visitor_count=count,
+        gc_code=gc_code,
     )
     (ROOT / "docs" / "index.html").write_text(out)
     return 0

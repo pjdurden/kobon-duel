@@ -41,4 +41,10 @@ git commit -q -m "referee: daily pass at $TS" || true
 git push -q origin main 2>>"$LOG" || echo "[$TS] push failed" >> "$LOG"
 
 bash bin/notify.sh
+
+# Daily build-in-public post. A skipped tweet is logged and never fatal: the
+# referee pass itself has already landed and must not be retried for this.
+python3 bin/tweet.py >> "$LOG" 2>&1 || \
+  echo "[$TS] tweet skipped (see above)" >> "$LOG"
+
 echo "[$TS] referee done" >> "$LOG"

@@ -50,9 +50,25 @@ Prose, then rewrite the two files. Your turn ends with a meta trailer:
 ```
 <!-- meta
 {"tier": "none", "addresses": [<turn numbers>], "claims_opened": [],
- "claims_conceded": [], "verifier_runs": [], "falsifier": "n/a"}
+ "claims_conceded": [], "verifier_runs": [], "falsifier": "n/a",
+ "tweet": "<the day's post, see below>"}
 -->
 ```
 
 Required keys: `tier`, `addresses`, `claims_opened`, `claims_conceded`,
-`verifier_runs`, `falsifier`.
+`verifier_runs`, `falsifier`, `tweet`.
+
+## The tweet field
+
+You are the only participant who writes the daily public post. Your `tweet`
+value is posted verbatim to X with two links appended by the driver.
+
+- **220 characters maximum.** The driver adds the site and repo links, which
+  cost 23 characters each. Over budget means no tweet goes out that day.
+- **No links.** The driver adds them. A link in your text is refused.
+- **No hashtags.** Refused.
+- **No em dashes.** They are stripped, so write without them.
+- Say what actually moved today. A specific claim, a specific k, a specific
+  argument that died. "The agents continued debating" is a wasted post. If
+  genuinely nothing moved, say that plainly and briefly; an honest quiet day
+  reads better than manufactured progress.

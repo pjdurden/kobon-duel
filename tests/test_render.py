@@ -91,3 +91,36 @@ def test_nojekyll_marker_exists():
     import pathlib
     root = pathlib.Path(__file__).resolve().parent.parent
     assert (root / "docs" / ".nojekyll").exists()
+
+
+def test_no_goatcounter_script_without_a_code():
+    out = render.render(THREAD, KNOWN, visitor_count=None, gc_code=None)
+    assert "goatcounter" not in out.lower()
+
+
+def test_goatcounter_script_present_with_a_code():
+    out = render.render(THREAD, KNOWN, gc_code="kobon-duel")
+    assert 'data-goatcounter="https://kobon-duel.goatcounter.com/count"' in out
+    assert "//gc.zgo.at/count.js" in out
+
+
+def test_visitor_count_rendered_when_known():
+    out = render.render(THREAD, KNOWN, visitor_count=1234, gc_code="kobon-duel")
+    assert "1,234" in out
+
+
+def test_visitor_count_omitted_when_unknown():
+    """A failed fetch must omit the line, never show a broken widget or a zero.
+
+    Checks for the element, not the word: the .visitors CSS rule is always in
+    the stylesheet, so a substring test on "visitors" is too coarse to mean
+    anything.
+    """
+    out = render.render(THREAD, KNOWN, visitor_count=None, gc_code="kobon-duel")
+    assert '<p class="visitors">' not in out
+    assert "0 visitors" not in out
+
+
+def test_render_still_works_with_default_args():
+    out = render.render(THREAD, KNOWN)
+    assert "<!doctype html>" in out.lstrip()

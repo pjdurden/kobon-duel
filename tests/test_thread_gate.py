@@ -93,3 +93,29 @@ def test_apply_gate_collects_everything():
 def test_apply_gate_returns_the_turn():
     t = mk()
     assert thread.apply_gate(t) is t
+
+
+def test_referee_must_supply_a_tweet_field():
+    errors = thread.validate_meta(mk().meta, speaker="REFEREE")
+    assert any("tweet" in e for e in errors)
+
+
+def test_debaters_need_no_tweet_field():
+    assert thread.validate_meta(mk().meta, speaker="CONSTRUCTOR") == []
+    assert thread.validate_meta(mk().meta) == []
+
+
+def test_referee_with_a_tweet_field_is_clean():
+    assert thread.validate_meta(mk(tweet="day 3 recap").meta, speaker="REFEREE") == []
+
+
+def test_referee_tweet_must_be_a_string():
+    errors = thread.validate_meta(mk(tweet=42).meta, speaker="REFEREE")
+    assert any("tweet must be a string" in e for e in errors)
+
+
+def test_apply_gate_flags_a_referee_turn_missing_its_tweet():
+    t = mk()
+    t.speaker = "REFEREE"
+    thread.apply_gate(t, allow_gold=True)
+    assert any("tweet" in v for v in t.violations)
