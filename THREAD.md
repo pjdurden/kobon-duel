@@ -260,3 +260,25 @@ I'm not calling this a kill. A non-generic tie in an axis-bisected sector is the
 <!-- meta
 {"addresses": [13], "claims_conceded": [], "claims_opened": ["case-a-generic-cap-14"], "falsifier": "A concrete coordinate placement of any single reflected pair exhibiting an elementary Case-A triangle in an axis-bisected sector, with the arrangement verified simple there (no coincident tie), would falsify the generic exclusion and restore up to 28.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 15 - PythagorAss - 2026-08-18T16:19:21Z
+
+Turn 15. A concession, a strengthening of the very argument I'm conceding to, and a pivot forced by the accumulated pattern rather than by this turn alone.
+
+Euclidn't's core claim in turn 14 is correct, and I checked it independently with coordinates rather than taking the group-theoretic argument on faith:
+
+> "generically, no Case-A triangle can occupy an axis-bisected sector at all"
+
+Set the axis at angle 0, p_i at the origin, boundary rays at ±θ. A third line ℓ_j crossing both rays hits ray θ at distance a and ray −θ at distance b. Its mirror ℓ_j' — present in the arrangement, since f=0 means no line lacks a partner — hits ray θ at distance b and ray −θ at distance a, by the reflection swapping the two rays. For ℓ_j's triangle to be nested inside ℓ_j''s (or vice versa), you need a≤b and b≤a simultaneously, forcing a=b. So generically a≠b, the two candidate triangles cross each other instead of nesting, and the actual elementary face touching p_i is a quadrilateral bounded by pieces of ℓ_i, ℓ_j, ℓ_j', ℓ_i' — never a triangle. That's a concrete confirmation of the abstract self-symmetry argument, not just an acceptance of it.
+
+Second, I can close the one door Euclidn't left open. Turn 14 flagged the a=b tie as a possible escape via non-generic placement. But a=b forces ℓ_j and ℓ_j' to cross both boundary rays at identical distances — meaning they pass through the same two points, hence are the same line. That line would satisfy ℓ_j=ℓ_j', which is only possible for a line fixed by the reflection, i.e. a fixed line. There are none under f=0. So the tie isn't a rare configuration to aim for — it's impossible outright, the same way self-symmetric triangles were impossible outright in turn 11. The Case-A ≤ 7 orbit cap isn't generic for this family; it's unconditional for every f=0 mirror arrangement, full stop, regardless of how the 7 axis-crossing points or 7 angle-pairs are chosen.
+
+I'm conceding the family isn't rescued by clever placement — no choice of angles gets Case A above 7 orbits, so Case B must supply ≥40 of the 54 triangles, every time. I'm not conceding k=14 itself; turn 14 proves something about this specific parametrized family, not about the case in general, and Euclidn't hasn't shown Case B is capped below 40.
+
+But I should stop pretending this is a minor setback. Count the pattern honestly: C_7 orbit symmetry, killed by its own arithmetic. Central symmetry, taxed 7 vertices, deprioritized. f>0 mirror, taxed C(f,2) vertices and barred from co-bordering triangles. f=0 mirror, untaxed on vertices but now capped at 7 Case-A orbits out of 27 needed — the steepest tax yet, hitting triangles directly instead of vertices. Four symmetry-driven families, four increasingly specific structural penalties. That's not coincidence; symmetry keeps costing exactly where triangles get counted.
+
+So the real content of the agenda's item 1 — do k=10, 12, 16 share a structural feature the near-misses lack — has been sitting unaddressed for fifteen turns while I generated symmetric candidates on paper. The direct test is available and I haven't run it: what is the actual symmetry group of the known-optimal constructions at k=10 (25), k=12 (38), and k=16 (72)? If those optima are asymmetric or only trivially symmetric, that's independent evidence the tax is real and generalizes, and the productive move is dropping symmetry entirely in favor of a direct asymmetric construction at k=14. If instead one of them is built on a nontrivial symmetry group that somehow avoids this tax, that tells me which mechanism to copy. Next turn: pull the actual k=16 optimal construction and report its symmetry group, not another proposed family.
+
+<!-- meta
+{"addresses": [14], "claims_conceded": ["case-a-mirror-cap-7-orbits-unconditional"], "claims_opened": ["symmetry-tax-pattern-across-families", "check-k10-12-16-symmetry-groups"], "falsifier": "the actual known-optimal construction at k=10, 12, or 16 has a nontrivial symmetry group (rotation, reflection, or multi-fold) without a matching structural tax, showing the pattern in turns 3/9/10/14 doesn't generalize", "tier": "none", "verifier_runs": []}
+-->
