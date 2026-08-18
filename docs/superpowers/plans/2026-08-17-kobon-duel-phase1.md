@@ -927,6 +927,18 @@ def test_theme_tokens_defined_on_bare_root():
 def test_empty_thread_still_renders():
     out = render.render("# Thread\n", KNOWN)
     assert "<!doctype html>" in out.lstrip()
+
+
+def test_target_table_is_derived_from_known_md():
+    out = render.render(THREAD, KNOWN)
+    assert "<td>14</td><td>54</td><td>53</td><td>1</td>" in out
+
+
+def test_target_table_follows_known_md_when_it_changes():
+    edited = "| 18 | 96 | 94 | 93 | OPEN | gap of 1 |"
+    out = render.render(THREAD, edited)
+    assert "<td>18</td>" in out
+    assert "<td>14</td>" not in out
 ```
 
 - [ ] **Step 2: Run test to verify it fails**
@@ -945,6 +957,7 @@ from __future__ import annotations
 import html
 import json
 import pathlib
+import re
 import sys
 
 import thread
@@ -1025,12 +1038,7 @@ a { color: inherit; }
 triangle problem. They alternate hourly through an append-only file. A daily
 referee rewrites the ledger and may reopen anything they agreed on. Neither can
 declare a result; only the verifier can.</p>
-<table>
-<tr><th>k</th><th>best upper bound</th><th>best known</th><th>gap</th></tr>
-<tr><td>14</td><td>54</td><td>53</td><td>1</td></tr>
-<tr><td>18</td><td>94</td><td>93</td><td>1</td></tr>
-<tr><td>20</td><td>117</td><td>116</td><td>1</td></tr>
-</table>
+<!--TABLE-->
 </header>
 <main id="thread">
 """
@@ -1094,9 +1102,32 @@ def _turn_html(t: thread.Turn) -> str:
     )
 
 
+OPEN_ROW_RE = re.compile(
+    r"^\|\s*(\d+)\s*\|\s*\d+\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|\s*OPEN\s*\|",
+    re.MULTILINE,
+)
+
+
+def _target_table(known_text: str) -> str:
+    """Build the header table from KNOWN.md so the site cannot drift from it."""
+    rows = OPEN_ROW_RE.findall(known_text)
+    if not rows:
+        return ""
+    body = "".join(
+        f"<tr><td>{k}</td><td>{ub}</td><td>{best}</td>"
+        f"<td>{int(ub) - int(best)}</td></tr>"
+        for k, ub, best in rows
+    )
+    return (
+        "<table><tr><th>k</th><th>best upper bound</th>"
+        "<th>best known</th><th>gap</th></tr>" + body + "</table>"
+    )
+
+
 def render(thread_text: str, known_text: str) -> str:
     turns = thread.parse(thread_text)
-    return HEAD + "\n".join(_turn_html(t) for t in turns) + "\n" + FOOT
+    head = HEAD.replace("<!--TABLE-->", _target_table(known_text))
+    return head + "\n".join(_turn_html(t) for t in turns) + "\n" + FOOT
 
 
 def main() -> int:
@@ -1641,6 +1672,7 @@ def test_ingest_strips_code_fences_around_meta():
     t = take_turn.ingest(raw, 1, "CONSTRUCTOR", "ts", False)
     assert t.meta["tier"] == "none"
     assert not any("MALFORMED_META" in v for v in t.violations)
+    assert "```" not in t.body
 ```
 
 - [ ] **Step 2: Run test to verify it fails**
@@ -1801,8 +1833,11 @@ TS="$(date -u +%FT%TZ)"
 echo "[$TS] turn start, speaker=$SPEAKER model=$MODEL" >> "$LOG"
 
 PROMPT="$(python3 bin/take_turn.py "$SPEAKER")"
+# Debate turns produce text only. Plan mode is wrong here: it steers the model
+# toward an ExitPlanMode-shaped response instead of an argument. Write tools are
+# blocked instead, so a turn can never mutate the repo behind the driver's back.
 RESPONSE="$(printf '%s' "$PROMPT" | claude -p --model "$MODEL" \
-    --permission-mode plan 2>>"$LOG")"
+    --disallowed-tools "Write,Edit,NotebookEdit" 2>>"$LOG")"
 
 if [ -z "${RESPONSE// }" ]; then
   echo "[$TS] empty response, skipping turn" >> "$LOG"
@@ -2086,9 +2121,9 @@ buzzes the phone."
 - Consumes: `bin/take_turn.py`, `bin/commit_turn.py`, `agents/referee.md`.
 - Produces: a daily REFEREE turn with `allow_gold=True`, and permission for the model to rewrite `LEDGER.md` and `AGENDA.md`.
 
-Note the permission difference: debate turns run `--permission-mode plan`
-because they only produce text. The referee must write two files, so it runs
-with edit access scoped to the repo.
+Note the permission difference: debate turns block the write tools because they
+only produce text. The referee must write two files, so it runs with edit access
+scoped to the repo.
 
 - [ ] **Step 1: Write bin/referee.sh**
 
@@ -2343,9 +2378,9 @@ python3 -m pytest tests/ -v
 python3 bin/render.py
 git add -A
 git commit -m "docs: README"
+git branch -M main
 gh repo create pjdurden/kobon-duel --public --source=. --remote=origin \
   --description "Two adversarial Claude sessions arguing about the Kobon triangle problem"
-git branch -M main
 git push -u origin main
 ```
 
@@ -2420,3 +2455,21 @@ git push origin main
 Exact verifier, `KNOWN.md` reproduction gate, annealing baseline, agent tool
 access, the gold path. Until then the referee may only mark gold for a checked
 impossibility proof, never for a claimed construction.
+
+## Spec requirements deliberately not covered by this plan
+
+Two items from spec section 10 and 12 have no task here, on purpose:
+
+- **BRONZE weekly digest.** The spec defines it as quiet with no push
+  notification, so it delivers nothing phase 1 needs. Deferred until there is
+  enough thread to digest.
+- **Stall detection after three consecutive stalled days.** Requires a working
+  ledger history to measure against, which does not exist until the referee has
+  run for several days. Deferred.
+
+One spec error-handling item is dropped rather than deferred:
+
+- **Parking a dirty tree to a `wip/` branch.** This was carried over from
+  `nano-daily.sh`, where it matters because that pipeline aborts on a dirty
+  tree. This driver runs `git add -A` and commits whatever it finds, so there is
+  no abort to rescue. Remove the item from the spec rather than implement it.
