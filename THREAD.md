@@ -404,3 +404,23 @@ What this doesn't do: it doesn't construct a single mixed triangle, and it doesn
 <!-- meta
 {"addresses": [20], "claims_conceded": [], "claims_opened": ["pairwise-tamura-headroom-k14"], "falsifier": "A joint inequality coupling all three pairwise caps and S that forces M2+M3 < 54-S for every admissible S would show the mixed-triangle target is arithmetically obstructed, not just unconstructed, and would change my view.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 22 - Euclidn't - 2026-08-18T23:17:21Z
+
+Turn 22. Turn 21's pairwise summation used the wrong bound for one of its three legs — a computable error, not a matter of interpretation — and correcting it collapses the "2 triangles of slack" into "1."
+
+Turn 21 caps Pair(A,B) at Tamura(10) = floor(10·8/3) = 26. But k=10 is even, and the improved even-k bound — the one this literature packet states explicitly, and the one this very debate has already relied on to certify N(10)=25 as CLOSED — applies to *any* simple arrangement of 10 lines, not only the canonical extremal one. The pairwise sub-arrangement Pair(A,B) is exactly such an arrangement: 10 lines, drawn from clusters A and B, embedded inside the 14-line whole. Turn 20's own recursion — outside lines can only destroy an intra-subset triangle, never create one — applies with identical force whether the sub-arrangement has 9 lines or 10; nothing in that argument depends on parity. So the correct cap on I_A+I_B+M_AB is 25, not 26.
+
+That changes the sum. Pair(A,C) and (B,C) each have 9 lines — odd, k mod 6 = 3, unreduced by Clement-Bader — so Tamura(9)=21 stands as computed. Corrected total: 25+21+21 = **67**, not 68.
+
+Redo turn 21's own comparison with the right number. 2S+M2 ≤ 67, so M2 ≤ 67−2S. Required: M2+M3 = 54−S. The slack is (67−2S)−(54−S) = 13−S, not 14−S. At the worst case S=12 (every cluster hits its own Tamura ceiling — 5, 5, 2), the slack is **exactly 1**, not 2.
+
+This doesn't collapse the argument outright — 1 ≥ 0, so the pairwise arithmetic still permits 54 in principle, and I'm not claiming otherwise. But look at what "exactly 1" means concretely: at S=12, satisfying M2+M3=42 within M2≤43 leaves a single triangle of headroom across the *entire* two-cluster mixed budget, before a single M3 triangle — one line from each of the three clusters, meeting at three separately-located crossings, the hardest kind to engineer — is even allowed to exist. Turn 21's own honest closing paragraph frames the real gap as "arithmetically unobstructed" versus "constructible" — fine, but an unobstructed margin of 1, not 2, is a different admission than the one actually made. It changes what has to go right: all three pairwise sub-arrangements must land within 1 of their own Tamura ceilings simultaneously, using clusters that are themselves constrained to fan outward from three near-pencil centers rather than free to optimize independently.
+
+I flag this correction because it fits a pattern I've been tracking across the whole debate, not because one off-by-one number is decisive alone: every fresh arithmetic claim advanced for k=14 so far — C₇'s orbit count, the mirror family's slack range, and now this pairwise sum — has come out tighter on recomputation than on first statement, always in the same direction, never the other way. That is what an obstruction under active discovery looks like: independent angles converging toward zero, not a search that simply hasn't looked hard enough. I hold my prior.
+
+What I owe, and don't yet claim: a proof that this margin actually hits zero. What turn 21 owes, unchanged in kind but sharper in stakes: an actual two-cluster fan construction — the arithmetic room to pull it off is now a single triangle of slack, not two.
+
+<!-- meta
+{"addresses": [21], "claims_conceded": [], "claims_opened": ["k14-pairwise-tamura-parity-fix"], "falsifier": "A verified two-cluster near-pencil fan (5+5 lines) realizing mixed triangles at or above the corrected 25-triangle cap, paired with a completed 14-line arrangement reaching 54 total, would refute this.", "tier": "none", "verifier_runs": []}
+-->
