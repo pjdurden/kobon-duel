@@ -162,3 +162,27 @@ Concretely, the object I owe: a mirror family with f fixed lines (perpendicular 
 <!-- meta
 {"addresses": [8], "claims_conceded": [], "claims_opened": ["central-symmetry-parallel-tax"], "falsifier": "A completed exhaustive SAT run over the k=14 table space (reported, not assumed) returning UNSAT for 54 would refute the search-failure reading; a verified 53-or-54 orbit count from the f+2p mirror family, or from any family, would settle the case in my favor.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 10 - Euclidn't - 2026-08-18T11:19:21Z
+
+Turn 10. One concession, one narrow correction, and a new structural constraint the promised mirror family has to survive before any orbit count of it counts as progress.
+
+Concession first.
+
+> "Failing to finish counting is not the same event as searching and coming up empty."
+
+That's airtight and I'm taking it. Calling three turns of named-but-uncompleted human proposals a "second independent data point" alongside Savchuk's SAT run conflated an incomplete search with a completed negative result. I'm retracting the "second data point" framing specifically — it overstated what three unfinished sketches establish. What survives without that framing: PythagorAss has now named three families (C_7 orbit, k=15-minus-a-line deletion, central symmetry) and none has produced a number at or above 54. That's a plain tally, not evidence of exhaustion, and I'll hold it to that lower standard going forward.
+
+On the literature-reading correction: noted, and probably right — the packet lists Savchuk's confirmed results as k=23, 27, 11 only, and says nothing explicit about 14/18/20 being run to a terminated verdict. Fair textual read. But it cuts less than it sounds. My prior was never "the SAT solver looked here and failed" — it was "a dedicated solver failing is weak evidence for absence," which already assumed the weaker, uncertain-completion reading. Correcting me to an even weaker reading of the SAT evidence doesn't touch the prior; it removes a stronger reading I wasn't relying on.
+
+Now the new content, aimed at the debt carried across five turns (1, 3, 5, 7, 9) without delivery: the mirror family with f fixed lines and 2p reflected pairs, f + 2p = 14.
+
+Here is a constraint that has to survive before any orbit count of it is meaningful. Take the mirror axis A, not itself one of the 14 lines — if it were, it would just be one more line, not a symmetry-fixed structural feature. A line ℓ among the 14 is fixed by the reflection iff reflecting it across A returns ℓ to itself. A line at angle θ to A reflects to angle −θ; these coincide mod π only at θ = 0 or θ = π/2. θ = 0 means ℓ = A, excluded. So every fixed line is perpendicular to A. Consequence: all f fixed lines are mutually parallel. Parallel lines never cross, and a triangle's three sides must pairwise intersect, so no two fixed lines can both be sides of the same triangle. Every triangle in this family uses at most one fixed line as a side.
+
+This has teeth proportional to f, and it costs vertices outright too: C(f,2) crossings that generic position would have are simply gone — the same style of tax PythagorAss just computed for central symmetry (7 lost crossings there). At f=2 this is negligible, one lost vertex, so a small-f mirror family isn't killed by this alone. But it means the orbit-by-orbit count owed next turn cannot assign fixed lines the same triangle-generating role as paired lines. Any accounting that lets two fixed lines co-border a triangle is wrong on its face, not merely unverified — it's a category error in the count, not a rounding issue.
+
+So the concrete ask, sharper than "deliver a number": when the count arrives, it must respect (a) C(f,2) missing crossings among the f fixed lines, and (b) zero triangles with two fixed-line sides. A count that ignores either isn't a near-miss — it's uncounted, and I'll treat it as fiction per the brief until it's redone honoring both constraints.
+
+<!-- meta
+{"addresses": [9], "claims_conceded": ["search-failure-equivalence"], "claims_opened": ["mirror-fixed-lines-parallel"], "falsifier": "A verified orbit-by-orbit triangle count for a mirror family (f fixed + 2p reflected pairs, f+2p=14) that honors the C(f,2) vertex deficit and the no-two-fixed-lines-per-triangle constraint and reaches 54 would refute this.", "tier": "none", "verifier_runs": []}
+-->
