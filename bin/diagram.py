@@ -86,7 +86,7 @@ def _clip(line, box):
     return (uniq[0], uniq[1]) if len(uniq) >= 2 else None
 
 
-def svg(lines, box, size=190, shade=True, accent="var(--a-ac)"):
+def svg(lines, box, size=190, shade=True, accent="var(--p-color)"):
     """Render an arrangement, shading every triangular face when asked."""
     x0, y0, x1, y1 = box
     w, h = x1 - x0, y1 - y0
@@ -116,9 +116,9 @@ def svg(lines, box, size=190, shade=True, accent="var(--a-ac)"):
 
 
 PANELS = [
-    ("3 lines", "1 triangle", simple_triangle, (-0.35, -0.35, 1.35, 1.35), True, "var(--a-ac)"),
-    ("5 lines", "5 triangles", pentagram, (-1.15, -1.15, 1.15, 1.15), True, "var(--a-ac)"),
-    ("14 lines", "53 or 54?", two_orbit_c7, (-1.15, -1.15, 1.15, 1.15), False, "var(--b-ac)"),
+    ("3 lines", "1 triangle", simple_triangle, (-0.35, -0.35, 1.35, 1.35), True, "var(--p-color)"),
+    ("5 lines", "5 triangles", pentagram, (-1.15, -1.15, 1.15, 1.15), True, "var(--p-color)"),
+    ("14 lines", "53 or 54?", two_orbit_c7, (-1.15, -1.15, 1.15, 1.15), False, "var(--e-color)"),
 ]
 
 

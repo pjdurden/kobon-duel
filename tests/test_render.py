@@ -34,14 +34,32 @@ def test_output_is_a_full_html_document():
 
 def test_every_turn_appears():
     out = render.render(THREAD, KNOWN)
-    assert out.count('class="turn') == 2
+    assert out.count('class="msg ') == 2
 
 
 def test_speaker_classes_are_distinct():
     """Classes use slugs, not display names: "Euclidn't" has an apostrophe."""
     out = render.render(THREAD, KNOWN)
-    assert "turn pythagorass" in out
-    assert "turn euclidnt" in out
+    assert "pythagorass" in out
+    assert "euclidnt" in out
+
+
+def test_pythagorass_sits_left_and_euclidnt_right():
+    """Chat convention: one speaker per side, so the exchange reads at a glance."""
+    out = render.render(THREAD, KNOWN)
+    assert 'class="msg left pythagorass"' in out
+    assert 'class="msg right euclidnt"' in out
+
+
+def test_referee_is_centred_not_sided():
+    ref = THREAD + (
+        "\n## Turn 3 - REFEREE - 2026-08-18T12:00:00Z\n\nruling\n\n"
+        '<!-- meta\n{"tier": "none", "addresses": [], "claims_opened": [],'
+        ' "claims_conceded": [], "verifier_runs": [], "falsifier": "x",'
+        ' "tweet": "t"}\n-->\n'
+    )
+    out = render.render(ref, KNOWN)
+    assert 'class="msg center referee"' in out
 
 
 def test_display_names_are_shown_verbatim():
@@ -50,10 +68,27 @@ def test_display_names_are_shown_verbatim():
     assert "Euclidn&#x27;t" in out or "Euclidn't" in out
 
 
-def test_newest_turn_is_rendered_first():
-    """The whole point of the ordering: no scrolling to reach the live argument."""
+def test_turns_are_in_chat_order_oldest_first():
+    """Chat order, newest at the bottom.
+
+    The panel scrolls itself to the bottom on load, so the live argument is
+    still the first thing seen. Reverse-chronological was tried and reads
+    wrong in a chat idiom.
+    """
     out = render.render(THREAD, KNOWN)
-    assert out.index('id="turn-2"') < out.index('id="turn-1"')
+    assert out.index('id="turn-1"') < out.index('id="turn-2"')
+
+
+def test_thread_lives_in_a_scrollable_panel():
+    out = render.render(THREAD, KNOWN)
+    assert re.search(r"\.chat\{[^}]*overflow-y:\s*auto", out)
+    assert re.search(r"\.chat\{[^}]*height:", out)
+
+
+def test_panel_scrolls_itself_to_the_newest_turn():
+    out = render.render(THREAD, KNOWN)
+    assert "scrollHeight" in out
+    assert 'id="jump"' in out
 
 
 def test_every_turn_has_a_linkable_anchor():
@@ -96,7 +131,7 @@ def test_theme_tokens_defined_on_bare_root():
     the requirement made this fail the moment the CSS was reflowed.
     """
     out = render.render(THREAD, KNOWN)
-    assert re.search(r":root\s*\{[^}]*--paper\s*:", out), "no light palette on bare :root"
+    assert re.search(r":root\s*\{[^}]*--bg\s*:", out), "no light palette on bare :root"
     assert re.search(r"prefers-color-scheme\s*:\s*dark", out)
     assert re.search(r':root\[data-theme="dark"\]', out), "no explicit dark override"
 
@@ -104,7 +139,7 @@ def test_theme_tokens_defined_on_bare_root():
 def test_body_has_an_explicit_background():
     """A transparent body borrows the host page's colour."""
     out = render.render(THREAD, KNOWN)
-    assert re.search(r"body\s*\{[^}]*background\s*:\s*var\(--paper\)", out)
+    assert re.search(r"body\s*\{[^}]*background\s*:\s*var\(--bg\)", out)
 
 
 def test_empty_thread_still_renders():
@@ -187,3 +222,30 @@ def test_repo_link_is_in_the_top_bar():
     out = render.render(THREAD, KNOWN)
     bar = out[out.index('class="bar"'):out.index('class="wrap"')]
     assert "github.com/pjdurden/kobon-duel" in bar
+
+
+def test_no_css_variable_is_used_without_being_defined():
+    """Regression guard.
+
+    Renaming the palette once left the diagram shading pointing at --a-ac,
+    which no longer existed, so the triangles silently rendered black. An
+    undefined var() fails at computed-value time and is invisible in tests
+    that only check for substrings.
+    """
+    out = render.render(THREAD, KNOWN, visitor_count=7, gc_code="kobon-duel")
+    defined = set(re.findall(r"(--[a-z0-9-]+)\s*:", out))
+    used = set(re.findall(r"var\((--[a-z0-9-]+)", out))
+    assert not (used - defined), f"undefined CSS variables: {sorted(used - defined)}"
+
+
+def test_dark_theme_redefines_every_light_token():
+    """A token defined only in light leaves dark mode inheriting a light value."""
+    out = render.render(THREAD, KNOWN)
+    light = re.search(r":root\{(.*?)\}", out, re.S).group(1)
+    dark = re.search(r':root\[data-theme="dark"\]\{(.*?)\}', out, re.S).group(1)
+    colour = re.compile(r"(--[a-z0-9-]+)\s*:\s*(#|rgba|color-mix)")
+    light_colours = {m.group(1) for m in colour.finditer(light)}
+    dark_colours = {m.group(1) for m in colour.finditer(dark)}
+    assert not (light_colours - dark_colours), (
+        f"not redefined in dark: {sorted(light_colours - dark_colours)}"
+    )
