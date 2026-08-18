@@ -40,9 +40,20 @@ def test_briefs_require_the_meta_trailer_keys():
             assert key in body, f"{f} does not document meta key {key}"
 
 
-def test_seed_thread_is_parseable_and_constructor_goes_first():
+def test_live_thread_is_parseable_and_alternation_is_well_formed():
+    """THREAD.md grows, so assert invariants, not a fixed state.
+
+    The original version asserted CONSTRUCTOR was next, which was only true
+    while the thread was empty. That tested the clock, not the code.
+    """
     turns = thread.parse(read("THREAD.md"))
-    assert thread.next_speaker(turns) == "CONSTRUCTOR"
+    assert thread.next_speaker(turns) in thread.SPEAKERS
+    numbers = [t.number for t in turns]
+    assert numbers == sorted(numbers), "turn numbers must be monotonic"
+    assert len(set(numbers)) == len(numbers), "turn numbers must be unique"
+    debaters = [t.speaker for t in turns if t.speaker in thread.SPEAKERS]
+    for a, b in zip(debaters, debaters[1:]):
+        assert a != b, "debaters must alternate"
 
 
 def test_literature_cites_savchuk():
