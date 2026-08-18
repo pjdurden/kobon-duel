@@ -50,6 +50,12 @@ def build_prompt(speaker, turns, known, literature, ledger, agenda, brief):
 
 _FENCE_RE = re.compile(r"```[a-zA-Z]*\s*\n(.*?)```", re.DOTALL)
 
+# Models sometimes prepend a harness aside as an HTML comment ("Using no
+# skill: ..."). It is invisible once rendered but it is not part of the
+# argument, so it does not belong in the transcript. Strip every comment that
+# is not the meta trailer.
+_STRAY_COMMENT_RE = re.compile(r"<!--(?!\s*meta\b)[\s\S]*?-->", re.MULTILINE)
+
 
 def ingest(raw: str, number: int, speaker: str, timestamp: str,
            allow_gold: bool) -> thread.Turn:
@@ -58,7 +64,7 @@ def ingest(raw: str, number: int, speaker: str, timestamp: str,
     Models wrap the trailer in a code fence often enough that unwrapping is
     cheaper than retrying.
     """
-    text = raw.strip()
+    text = _STRAY_COMMENT_RE.sub("", raw).strip()
     if "<!-- meta" not in text:
         text = _FENCE_RE.sub(lambda m: m.group(1), text)
     else:

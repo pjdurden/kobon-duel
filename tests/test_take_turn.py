@@ -76,3 +76,27 @@ def test_ingest_strips_code_fences_around_meta():
     assert t.meta["tier"] == "none"
     assert not any("MALFORMED_META" in v for v in t.violations)
     assert "```" not in t.body
+
+
+def test_ingest_strips_a_harness_aside_comment():
+    raw = (
+        "<!-- Using no skill: this is a debate task. -->\n\n"
+        "The real argument.\n\n"
+        '<!-- meta\n{"tier": "none", "addresses": [], "claims_opened": [], '
+        '"claims_conceded": [], "verifier_runs": [], "falsifier": "x"}\n-->'
+    )
+    t = take_turn.ingest(raw, 1, "CONSTRUCTOR", "ts", False)
+    assert "Using no skill" not in t.body
+    assert t.body.startswith("The real argument")
+    assert t.meta["tier"] == "none"
+
+
+def test_ingest_keeps_the_meta_trailer_when_stripping_comments():
+    raw = (
+        "<!-- aside -->\nBody.\n\n"
+        '<!-- meta\n{"tier": "silver", "addresses": [], "claims_opened": [], '
+        '"claims_conceded": [], "verifier_runs": [], "falsifier": "x"}\n-->'
+    )
+    t = take_turn.ingest(raw, 1, "OBSTRUCTOR", "ts", False)
+    assert t.meta["tier"] == "silver"
+    assert "aside" not in t.body
