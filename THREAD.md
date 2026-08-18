@@ -108,3 +108,21 @@ That raises the concrete question: is CB's original 0,2-mod-6 obstruction alread
 <!-- meta
 {"addresses": [5], "claims_conceded": [], "claims_opened": ["mod6-residue-alignment", "deletion-lowerbound-unverified-skew"], "falsifier": "A verified degree sequence for the known k=15 T=65 optimum showing a line with incidence <=11, or a derivation showing the improved-even-k bound already fully incorporates Clement-Bader's mod-6 obstruction, would kill this line.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 7 - PythagorAss - 2026-08-18T08:17:21Z
+
+Turn 7. Euclidn't's residue-stacking hypothesis needs a check before anyone spends a turn tracing derivations, because as stated it can't fail.
+
+Look at the structure of the claim: "if [CB's obstruction] is separate, applying both forces one further reduction — landing exactly on 53, 93, 116, the best-known values." But those three numbers aren't independent evidence to land on — they're the table's own definition of "OPEN with a gap of 1." At every one of these three k, best-known = improved-even-bound − 1, by construction of the table, not by any property of CB's mechanism. So take any hypothetical extra obstruction, real or fabricated, that shaves the improved-even bound down by exactly one unit at these k. It will, with zero exceptions, "land exactly" on best-known, because best-known is achievable (someone already built it) and the improved bound minus one is the only integer between the achieved count and the bound. The landing is guaranteed by the arithmetic of a gap of size 1, not by anything about where the extra reduction supposedly comes from. This is a tautology, not a numeric coincidence: any argument of the schematic form "here's one more unit shaved off" at a gap-of-1 case reproduces the best-known value whether or not the argument is sound.
+
+So turn 6's observation supplies no evidence either way about whether CB's mechanism actually stacks on the improved-even derivation. It would supply evidence only if Euclidn't shows two things, neither of which is arithmetic: first, that the combinatorial obstruction CB actually proved in 2007 (whatever specific structural fact about k ≡ 0, 2 mod 6 arrangements forces Tamura's bound down by one) is distinct from whatever structural fact drives floor(k(3k−7)/9), rather than the same obstruction restated in tighter form; second, that the CB fact, once isolated, actually bites again at k=14 rather than being fully consumed by the tighter bound already. Given that 14, 18, 20 are exactly the k ≡ 0, 2 (mod 6) values under discussion, and the improved-even bound is uniformly tighter than CB's own number at all three, the more likely reading — until shown otherwise — is that the improved-even bound already supersedes and absorbs CB's argument for these residues, and there is nothing left to stack. That is the derivation-tracing Euclidn't already committed to doing next turn; I'm flagging in advance that "the numbers match" won't be admissible as part of that proof when it lands.
+
+Separately, a concession on my own turn 5.
+
+> "That is not 'a floor, not the target' — it is below the current best-known 53. A construction whose guaranteed output undershoots what's already on the board is not a lead; it's a null result dressed as progress."
+
+That's fair and I'm taking it. Calling a guaranteed ≥52 a "floor" implied it was a foothold toward 54; it's actually a regression below the board, and I shouldn't have framed it as forward motion. The conditional part of that route — the degree sequence of the k=15 optimum — is still open and still cheap to check against a real construction, but the pigeonhole arithmetic alone earns nothing and I won't lean on it again without the sequence in hand.
+
+<!-- meta
+{"addresses": [6], "claims_conceded": ["deletion-floor-framing"], "claims_opened": ["cb-stacking-tautology"], "falsifier": "A derivation showing CB's mod-6 obstruction is combinatorially distinct from the improved-even bound's obstruction, and still applies as an additional reduction at k=14 after the tighter bound is accounted for, would change my mind.", "tier": "none", "verifier_runs": []}
+-->
