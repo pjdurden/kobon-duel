@@ -40,3 +40,23 @@ At k = 14 this gives N(14) ≤ ⌊2·14·13/3⌋ = ⌊364/3⌋ = 121. That is fa
 <!-- meta
 {"addresses": [1], "claims_conceded": [], "claims_opened": ["edge-triangle-incidence-bound-k14", "mod2-weak-filter-vs-mod7"], "falsifier": "an explicit orbit-by-orbit triangle list for the order-2 mirror family reaching 54 with no interior crossings would falsify the weak-filter framing and force me to engage the construction directly.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 3 - PythagorAss - 2026-08-18T04:18:21Z
+
+Turn 3. Euclidn't's critique of the mirror-symmetry result is correct, and I'm conceding the narrow point without abandoning the direction.
+
+> "A filter that eliminates 7/8 of the range is doing work; a filter that eliminates half is doing almost nothing."
+
+That's airtight: 28 even values survive in [0,54], versus 8 multiples of 7. Passing a coin-flip filter is not progress toward a construction, and presenting the mirror case as if it were symmetric evidence to the C_7 case in turn 1 overstated it. Correcting that here.
+
+But there's a sharper move sitting one step past where turn 1 stopped, answering a question Euclidn't hasn't asked yet: is the C_7 death sentence specific to my two-orbit construction, or does it kill every 14-line arrangement carrying order-7 rotational symmetry, no matter how the lines are distributed into orbits or what extra symmetry is layered on top? It's the latter, and the proof is cheap.
+
+Take any 14-line arrangement whose symmetry group G contains C_7 — this covers not just my two 7-line orbits but also the full dihedral group D_7 of order 14 (7 rotations + 7 reflections), or any group with C_7 as a subgroup. Turn 1 established: a nontrivial rotation of order 7 cannot fix a triangle's vertex set (its only fixed point is the center, and a 3-cycle is impossible on a 3-element set under a 7-cycle). So under the C_7 action alone, no triangle has stabilizer containing the rotation subgroup. That means in the larger group G, no triangle's G-stabilizer can contain C_7 either — a bigger stabilizer would restrict to a C_7-fixing stabilizer inside C_7 itself, already ruled out. Concretely, if G = D_7, the only possible stabilizer orders are those that don't contain the rotation subgroup: trivial (orbit size 14) or a single reflection (orbit size 7). Both 7 and 14 are multiples of 7. So for any D_7-symmetric — or more generally any C_7-containing-symmetric — 14-line arrangement, T = 7a + 14b for nonnegative integers a, b, forcing T ≡ 0 (mod 7) unconditionally, independent of how the 14 lines split into orbits.
+
+54 mod 7 = 5. So it isn't just my specific two-orbit construction that's dead — the entire class of 14-line arrangements admitting order-7 rotational symmetry, with or without reflections stacked on top, cannot reach 54. That forecloses a strictly larger space than turn 1 claimed, including the obvious refinement ("add a mirror to the C_7 family to fix it up") — it doesn't help, because the obstruction lives in the C_7 subgroup alone and no supergroup escapes a subgroup obstruction.
+
+What survives: symmetry groups containing no element of order 7. The order-2 mirror-only family from turn 1 qualifies, and Euclidn't is right that surviving mod-2 alone proves nothing. So the next turn owes an actual orbit-by-orbit triangle count for a specific mirror arrangement — a construction, not another residue check.
+
+<!-- meta
+{"addresses": [2], "claims_conceded": ["mod2-residue-weak-evidence"], "claims_opened": ["c7-supergroup-obstruction-k14"], "falsifier": "A 14-line arrangement whose symmetry group contains an order-7 rotation and that has exactly 54 triangles would falsify this; the stabilizer argument forces all triangle orbits under such a group to size 7 or 14, both multiples of 7, and 54 is not.", "tier": "none", "verifier_runs": []}
+-->
