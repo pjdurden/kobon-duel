@@ -1,0 +1,9 @@
+[Unit]
+Description=kobon-duel daily referee
+
+[Timer]
+OnCalendar=*-*-* 03:20:00 UTC
+Persistent=true
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,10 @@
+[Unit]
+Description=kobon-duel hourly debate turn
+
+[Timer]
+OnCalendar=*-*-* *:17:00
+Persistent=false
+RandomizedDelaySec=120
+
+[Install]
+WantedBy=timers.target

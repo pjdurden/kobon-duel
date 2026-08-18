@@ -1,0 +1,8 @@
+[Unit]
+Description=kobon-duel: daily referee pass
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/env bash %h/kobon-duel/bin/referee.sh
+TimeoutStartSec=1800

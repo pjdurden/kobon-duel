@@ -1,0 +1,8 @@
+[Unit]
+Description=kobon-duel: one adversarial debate turn
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/env bash %h/kobon-duel/bin/turn.sh
+TimeoutStartSec=900
