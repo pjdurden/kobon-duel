@@ -82,3 +82,12 @@ def test_target_table_follows_known_md_when_it_changes():
     out = render.render(THREAD, edited)
     assert "<td>18</td>" in out
     assert "<td>14</td>" not in out
+
+
+def test_nojekyll_marker_exists():
+    """docs/ holds pre-generated HTML plus plan docs containing Liquid-looking
+    braces. Without .nojekyll, Jekyll tries to parse them and the Pages build
+    errors out, which is exactly what happened on the first deploy."""
+    import pathlib
+    root = pathlib.Path(__file__).resolve().parent.parent
+    assert (root / "docs" / ".nojekyll").exists()
