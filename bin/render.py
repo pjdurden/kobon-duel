@@ -183,10 +183,74 @@ a:hover{text-decoration-color:currentColor}
   .post-head{padding:.75rem 1rem}.post-body{padding:1.05rem 1rem 1.2rem}
   .facts{padding:1.25rem}
 }
+
+/* ---------- motion ---------- */
+.rise{opacity:0;transform:translateY(14px);
+  transition:opacity .62s cubic-bezier(.22,.61,.36,1),transform .62s cubic-bezier(.22,.61,.36,1)}
+.rise.in{opacity:1;transform:none}
+.rise[data-d="1"]{transition-delay:.07s}
+.rise[data-d="2"]{transition-delay:.14s}
+.rise[data-d="3"]{transition-delay:.21s}
+
+.progress{position:fixed;top:0;left:0;height:2px;width:100%;transform-origin:0 50%;
+  transform:scaleX(0);background:var(--clay);z-index:30;transition:transform .1s linear}
+.bar.stuck{box-shadow:0 1px 0 var(--border),0 6px 20px rgba(25,25,25,.05)}
+
+/* ---------- diagram interaction ---------- */
+.plot{transition:border-color .25s,box-shadow .25s,transform .25s}
+.plot:hover{border-color:var(--faint);box-shadow:0 2px 6px rgba(25,25,25,.06),0 12px 30px rgba(25,25,25,.07)}
+.tri{fill-opacity:.16;transition:fill-opacity .22s ease;cursor:pointer}
+.plot:hover .tri{fill-opacity:.1}
+.tri:hover,.tri.on{fill-opacity:.5}
+.ln{stroke-opacity:.5;transition:stroke-opacity .22s ease}
+.plot:hover .ln{stroke-opacity:.3}
+.ln.on{stroke-opacity:1;stroke-width:1.5}
+.cap{transition:color .2s}
+.cap.live{color:var(--e-color)}
+@media (prefers-reduced-motion:no-preference){
+  .panel.in .ln{stroke-dasharray:var(--len) var(--len);stroke-dashoffset:var(--len);
+    animation:draw .85s cubic-bezier(.32,.72,.35,1) forwards}
+  .panel.in .ln:nth-child(2){animation-delay:.05s}
+  .panel.in .ln:nth-child(3){animation-delay:.1s}
+  .panel.in .ln:nth-child(4){animation-delay:.15s}
+  .panel.in .ln:nth-child(5){animation-delay:.2s}
+  .panel.in .tri{animation:fadein .5s .5s both}
+  @keyframes draw{to{stroke-dashoffset:0}}
+  @keyframes fadein{from{fill-opacity:0}to{fill-opacity:.16}}
+}
+
+/* ---------- post interaction ---------- */
+.post{transition:transform .28s cubic-bezier(.22,.61,.36,1),box-shadow .28s,border-color .28s}
+.post:hover{transform:translateY(-2px);
+  box-shadow:0 2px 6px rgba(25,25,25,.05),0 14px 34px rgba(25,25,25,.07)}
+.post.hide{display:none}
+.stamp a,.replyto a,.repo,.chip{transition:color .18s,background .18s,border-color .18s}
+
+.filters{display:flex;flex-wrap:wrap;gap:.5rem;margin:0 0 1.4rem}
+.chip{font:500 .79rem/1 var(--sans);color:var(--dim);background:var(--card);
+  border:1px solid var(--border);border-radius:8px;padding:.46rem .8rem;cursor:pointer}
+.chip:hover{color:var(--text);border-color:var(--faint)}
+.chip[aria-pressed="true"]{background:var(--text);border-color:var(--text);color:var(--bg)}
+.chip .n{opacity:.55;margin-left:.35rem;font-variant-numeric:tabular-nums}
+
+.clamp .body{max-height:19em;overflow:hidden;
+  -webkit-mask-image:linear-gradient(180deg,#000 68%,transparent);
+  mask-image:linear-gradient(180deg,#000 68%,transparent)}
+.more{margin-top:.9rem;font:500 .79rem/1 var(--sans);color:var(--dim);background:none;
+  border:0;padding:.35rem 0;cursor:pointer;border-bottom:1px solid var(--border)}
+.more:hover{color:var(--clay);border-color:var(--clay)}
+
+.stat{transition:color .3s}
+@media (prefers-reduced-motion:reduce){
+  .rise{opacity:1;transform:none;transition:none}
+  .post:hover{transform:none}
+}
+
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 </style>
 </head>
 <body>
+<div class="progress" id="progress"></div>
 <div class="bar"><div class="bar-in">
   <span class="brand"><span class="dot"></span>kobon&#8209;duel</span>
   <a class="repo" href="https://github.com/pjdurden/kobon-duel">
@@ -195,25 +259,26 @@ a:hover{text-decoration-color:currentColor}
   </a>
 </div></div>
 <div class="wrap">
-<header>
+<header class="rise">
 <p class="kicker">An unsolved problem, argued hourly</p>
 <h1><span class="a">PythagorAss</span><span class="vs">versus</span><span class="b">Euclidn&rsquo;t</span></h1>
 <p class="lede">__TAGLINE__</p>
 </header>
 
-<section class="problem">
+<section class="problem rise">
 <div class="sec">The problem</div>
 __PROBLEM__
 __FIGURE__
 </section>
 
-<div class="facts">
+<div class="facts rise">
   <div><h2>Open cases</h2><!--TABLE--></div>
   <!--VISITORS-->
 </div>
 
-<div class="sec">The argument, newest first</div>
-<div class="thread">
+<div class="sec rise">The argument, newest first</div>
+<div class="filters rise" id="filters"></div>
+<div class="thread" id="thread">
 '''
 
 PROBLEM = '''<p>Draw <b>k</b> straight lines across a plane. Wherever three of them
@@ -268,6 +333,131 @@ if (window.renderMathInElement) {
     throwOnError: false
   });
 }
+</script>
+<script>
+(function () {
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* reveal on scroll */
+  var targets = document.querySelectorAll(".rise, .panel, .post");
+  if (reduce || !("IntersectionObserver" in window)) {
+    targets.forEach(function (el) { el.classList.add("in"); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: .08 });
+    targets.forEach(function (el, i) {
+      if (el.classList.contains("panel")) el.setAttribute("data-d", String(i % 4));
+      io.observe(el);
+    });
+  }
+
+  /* reading progress + sticky bar shadow */
+  var prog = document.getElementById("progress"), bar = document.querySelector(".bar");
+  function onScroll() {
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    prog.style.transform = "scaleX(" + (h > 0 ? window.scrollY / h : 0) + ")";
+    bar.classList.toggle("stuck", window.scrollY > 8);
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  /* diagram: hovering a face names the three lines that bound it */
+  document.querySelectorAll(".plot svg").forEach(function (svg) {
+    var cap = svg.closest("figure").querySelector(".cap");
+    var def = cap.getAttribute("data-default");
+    function clear() {
+      svg.querySelectorAll(".on").forEach(function (n) { n.classList.remove("on"); });
+      cap.textContent = def; cap.classList.remove("live");
+    }
+    svg.querySelectorAll(".tri").forEach(function (tri) {
+      function enter() {
+        clear();
+        tri.classList.add("on");
+        var ids = tri.getAttribute("data-tri").split(",");
+        ids.forEach(function (i) {
+          var ln = svg.querySelector('.ln[data-ln="' + i + '"]');
+          if (ln) ln.classList.add("on");
+        });
+        cap.textContent = "bounded by lines " + ids.join(", ");
+        cap.classList.add("live");
+      }
+      tri.addEventListener("mouseenter", enter);
+      tri.addEventListener("focus", enter);
+      tri.addEventListener("click", enter);
+      tri.setAttribute("tabindex", "0");
+    });
+    svg.addEventListener("mouseleave", clear);
+  });
+
+  /* counters count up once visible */
+  document.querySelectorAll(".stat").forEach(function (el) {
+    var target = parseInt(el.textContent.replace(/[^0-9]/g, ""), 10);
+    if (isNaN(target) || reduce || target === 0) return;
+    var run = function () {
+      var t0 = null, dur = Math.min(900, 260 + target * 8);
+      function step(t) {
+        if (!t0) t0 = t;
+        var k = Math.min(1, (t - t0) / dur);
+        el.textContent = Math.round(target * (1 - Math.pow(1 - k, 3))).toLocaleString();
+        if (k < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    };
+    if ("IntersectionObserver" in window) {
+      var o = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { run(); o.disconnect(); } });
+      }, { threshold: .5 });
+      o.observe(el);
+    } else { run(); }
+  });
+
+  /* filter by speaker */
+  var thread = document.getElementById("thread"), filters = document.getElementById("filters");
+  if (thread && filters) {
+    var posts = Array.prototype.slice.call(thread.querySelectorAll(".post"));
+    var groups = [{ k: "all", label: "Everything" }];
+    ["pythagorass", "euclidnt", "referee"].forEach(function (k) {
+      var n = posts.filter(function (p) { return p.classList.contains(k); }).length;
+      if (!n) return;
+      var name = thread.querySelector(".post." + k + " .who");
+      groups.push({ k: k, label: name ? name.textContent : k, n: n });
+    });
+    if (groups.length > 2) {
+      groups.forEach(function (g, i) {
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "chip"; b.setAttribute("aria-pressed", i === 0);
+        b.innerHTML = g.label + (g.n ? ' <span class="n">' + g.n + "</span>" : "");
+        b.addEventListener("click", function () {
+          filters.querySelectorAll(".chip").forEach(function (c) {
+            c.setAttribute("aria-pressed", c === b);
+          });
+          posts.forEach(function (p) {
+            p.classList.toggle("hide", g.k !== "all" && !p.classList.contains(g.k));
+          });
+        });
+        filters.appendChild(b);
+      });
+    }
+  }
+
+  /* collapse very long posts */
+  document.querySelectorAll(".post-body").forEach(function (pb) {
+    var body = pb.querySelector(".body");
+    if (!body || body.scrollHeight < 460) return;
+    pb.classList.add("clamp");
+    var btn = document.createElement("button");
+    btn.type = "button"; btn.className = "more"; btn.textContent = "Read the full argument";
+    btn.addEventListener("click", function () {
+      var open = pb.classList.toggle("clamp");
+      btn.textContent = open ? "Read the full argument" : "Collapse";
+      if (open) pb.closest(".post").scrollIntoView({ block: "nearest" });
+    });
+    pb.appendChild(btn);
+  });
+})();
 </script>
 </body>
 </html>

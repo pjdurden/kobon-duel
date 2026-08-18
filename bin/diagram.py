@@ -98,18 +98,25 @@ def svg(lines, box, size=190, shade=True, accent="var(--p-color)"):
         f'role="img" aria-hidden="true" preserveAspectRatio="xMidYMid meet">'
     ]
     if shade:
-        for _, _, _, verts in verify.triangles(lines):
+        for i, j, k, verts in verify.triangles(lines):
             pts = " ".join(f"{sx(p[0]):.2f},{sy(p[1]):.2f}" for p in verts)
-            parts.append(f'<polygon points="{pts}" fill="{accent}" fill-opacity=".2"/>')
-    for ln in lines:
+            # data-tri names the three lines bounding this face, so hovering it
+            # can say which lines are responsible rather than just glowing.
+            parts.append(
+                f'<polygon class="tri" data-tri="{i + 1},{j + 1},{k + 1}" '
+                f'points="{pts}" fill="{accent}"/>'
+            )
+    for n, ln in enumerate(lines):
         seg = _clip(ln, box)
         if seg:
             (ax, ay), (bx, by) = seg
+            length = ((bx - ax) ** 2 + (by - ay) ** 2) ** 0.5 / (x1 - x0) * size
             parts.append(
-                f'<line x1="{sx(ax):.2f}" y1="{sy(ay):.2f}" '
+                f'<line class="ln" data-ln="{n + 1}" '
+                f'x1="{sx(ax):.2f}" y1="{sy(ay):.2f}" '
                 f'x2="{sx(bx):.2f}" y2="{sy(by):.2f}" '
-                f'stroke="currentColor" stroke-width=".9" stroke-opacity=".55" '
-                f'stroke-linecap="round"/>'
+                f'stroke="currentColor" stroke-width=".9" stroke-linecap="round" '
+                f'style="--len:{length:.1f}"/>'
             )
     parts.append("</svg>")
     return "".join(parts)
@@ -134,8 +141,9 @@ def figure() -> str:
         cells.append(
             f'<figure class="panel{"" if shade else " panel-open"}">'
             f'<div class="plot">{svg(lines, box, shade=shade, accent=accent)}</div>'
-            f"<figcaption><b>{label}</b><span>{caption}</span></figcaption>"
-            f"</figure>"
+            f'<figcaption><b>{label}</b>'
+            f'<span class="cap" data-default="{caption}">{caption}</span>'
+            f"</figcaption></figure>"
         )
     return f'<div class="figure">{"".join(cells)}</div>'
 

@@ -93,9 +93,15 @@ def test_no_reply_line_on_an_opening_post():
 
 
 def test_page_is_not_a_fixed_height_scroll_container():
+    """The thread scrolls with the page, not inside a panel.
+
+    Asserts the container, not the string "scrollHeight": the collapse control
+    legitimately measures element heights.
+    """
     out = render.render(THREAD, KNOWN)
-    assert "scrollHeight" not in out
+    assert not re.search(r"\.chat\{[^}]*overflow-y:\s*auto", out)
     assert 'id="jump"' not in out
+    assert 'class="thread"' in out or 'id="thread"' in out
 
 
 def test_every_turn_has_a_linkable_anchor():
@@ -198,3 +204,30 @@ def test_no_css_variable_is_used_without_being_defined():
     defined = set(re.findall(r"(--[a-z0-9-]+)\s*:", out))
     used = set(re.findall(r"var\((--[a-z0-9-]+)", out))
     assert not (used - defined), f"undefined CSS variables: {sorted(used - defined)}"
+
+
+def test_reveal_and_progress_hooks_are_present():
+    out = render.render(THREAD, KNOWN)
+    assert 'id="progress"' in out
+    assert "IntersectionObserver" in out
+    assert 'class="rise' in out
+
+
+def test_motion_is_disabled_under_reduced_motion():
+    """Every animation must have a reduced-motion escape."""
+    out = render.render(THREAD, KNOWN)
+    assert "prefers-reduced-motion: reduce" in out.replace("(prefers-reduced-motion:reduce)", "(prefers-reduced-motion: reduce)")
+    assert re.search(r"@media\s*\(prefers-reduced-motion:reduce\)\{[^}]*\.rise", out)
+
+
+def test_triangles_carry_the_lines_that_bound_them():
+    """Hovering a face should be able to name its three lines."""
+    out = render.render(THREAD, KNOWN)
+    assert re.search(r'class="tri" data-tri="\d+,\d+,\d+"', out)
+    assert re.search(r'class="ln" data-ln="\d+"', out)
+
+
+def test_filter_and_collapse_controls_are_wired():
+    out = render.render(THREAD, KNOWN)
+    assert 'id="filters"' in out
+    assert "Read the full argument" in out
