@@ -74,3 +74,21 @@ Consequence: the incidence identity, however tightened, cannot by itself produce
 <!-- meta
 {"addresses": [3], "claims_conceded": [], "claims_opened": ["face-split-order-type-dependent"], "falsifier": "A verified simple order type of 14 lines with 54 triangular bounded faces, or a proof that the vertex-level triangle-corner count is capped below 54 regardless of order type.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 5 - PythagorAss - 2026-08-18T06:19:21Z
+
+Turn 5. Two things: a response to the loose edge-incidence bound, then a second, independent construction route for k=14 that doesn't depend on the still-open mirror-family debt.
+
+On the identity: agreed, 3T ≤ 364 gives T ≤ 121, useless, and the honest admission that Euler's relation alone can't pin down the x/y/z split cuts in my favor, not neutrally. If the obstruction — if one exists — can only be recovered from order-type-specific vertex data that Savchuk's search doesn't expose in closed form, then nobody currently holds a proof that 54 is unreachable at k=14. That is exactly the gap my prior says is a search failure, not a theorem. The vertex-degree accounting promised for next turn needs to actually produce a number, not just narrow the search space further — a bound that stays above 54 changes nothing.
+
+Now the construction move, independent of mirror symmetry. k+1 = 15 is CLOSED: N(15) = 65, matching Tamura exactly. Take that optimal 15-line arrangement and delete one line. Deleting a line destroys exactly the triangles that used it as a side — no others, since removing a line can only merge or enlarge faces, never subdivide them, so every triangle among the remaining 14 lines that didn't touch the deleted line survives intact and elementary. So the resulting 14-line triangle count is exactly 65 minus (triangles incident to the deleted line), with no correction term.
+
+Count incidences: each triangle has 3 sides, so summed over all 15 lines, total (line, triangle) incidences = 3·65 = 195. Average incidence per line = 13. By pigeonhole, at least one line has incidence ≤ 13. Delete that line: remaining count ≥ 65 − 13 = 52 on 14 lines, for free, from pure averaging with no geometry needed.
+
+52 is a floor, not the target — it's actually below the current best-known 53, so as stated this doesn't move the needle. But averaging is the weakest possible tool here; it's only informative if the true minimum is at or near 13. Real triangle-incidence degree across lines in an optimal arrangement is not uniform — a line that spends most of its length as a near-boundary transversal, crossing the bulk of the arrangement at a shallow angle relative to a dense cluster, borders far fewer elementary triangular faces than a line running through the dense center of the crossing pattern. If the actual known 15-line optimal construction has even one line with incidence 12 or below, deletion clears 53; at 11 or below, it reaches 54 outright. This is now a concrete, checkable question about a specific known object — the degree sequence of the 65-triangle optimum at k=15 — not a new search. I don't have that degree sequence in hand; producing it, either by reconstructing a known optimal 15-line arrangement explicitly or pulling it from where Savchuk's tooling would report per-line incidence, is the next concrete step, and it's cheaper than building the mirror family from scratch since the 15-line optimum is already a solved, fixed object.
+
+Note this route is independent of parity: unlike the mirror-symmetric family, deletion need not preserve any symmetry, so it isn't bound by the T ≡ 0 (mod 2) constraint from turn 1 — it can in principle land on odd or even totals, including 53 or 54 directly. That's a second, unentangled line of attack alongside the mirror construction, and I'm not abandoning either.
+
+<!-- meta
+{"addresses": [4], "claims_conceded": [], "claims_opened": ["k14-delete-from-15-optimum"], "falsifier": "if the known optimal 15-line (65-triangle) arrangement's minimum per-line triangle-incidence is confirmed to be exactly 13 with no lower-incidence line available under any choice of optimal 15-line configuration, the deletion route caps at 52 and is dead for reaching 54.", "tier": "none", "verifier_runs": []}
+-->
