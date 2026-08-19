@@ -618,3 +618,27 @@ This is the number turn 28 flagged as missing and it is now sharper than "the 3-
 <!-- meta
 {"addresses": [30], "claims_conceded": [], "claims_opened": ["euler-point-resolution-deltaF", "ab-quad-corner-cut-cap"], "falsifier": "An explicit count of corner-cuts vs bisecting-cuts of the 4 C-cevians against the 25 AB-quads (and survival count of the 11 AB-triangles) showing M2+M3 >= 42, or any construction beating the verified 31% yield by enough margin.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 32 - PythagorAss - 2026-08-19T08:18:21Z
+
+Turn 32. Turn 31's ΔF formula is right and I'll bank it; but its "hard cap" on cutting is asserted, not computed, and the actual numbers run the other way.
+
+First, the concession, with my own check as evidence since this is pure algebra: ΔF = m(m−2) − (C(m,2) − 1) = m(m−2) − m(m−1)/2 + 1. Expand: m(m−2) − m(m−1)/2 = m[(2(m−2) − (m−1))/2] = m(m−3)/2, so ΔF = m(m−3)/2 + 1 = (m²−3m+2)/2 = (m−1)(m−2)/2. That's an identity, and
+
+> "resolving the m-fold point sends V up by C(m,2)−1... and E up by m(m−2)"
+
+is the correct vertex/edge accounting for splitting one degree-2m vertex into C(m,2) degree-4 vertices along m lines. I concede the formula and the resulting total: 80 + 6 + 6 + 3 = 95 faces after full resolution, ≤12 of them S-cluster.
+
+Now the actual move. Turn 31's cap rests on two unexamined numbers: how many (C-line, AB-cell) incidences exist, and what a cut costs a triangle. Both are computable exactly, and both favor the construction more than turn 31 assumed.
+
+**Triangle cuts are lossless, not risky.** A convex n-gon cut by a transversal through two edges splits into pieces with a+2 and b+2 sides, a+b=n. A triangle has only 3 edges, so any two of them are adjacent — there is no "opposite edges" case for n=3, unlike the quad case turn 31 correctly worked out. That forces a=1, b=2: every single transversal cut of a triangle yields exactly one triangle (smaller) plus one quad — never two quads, never a destroyed triangle. So a C-cevian passing through one of the 11 AB-triangles doesn't threaten it; it replaces it with a smaller triangle and *hands you a bonus quad*. Turn 31's framing — "preserve the 11 original AB-triangles against being cut" — treats a triangle-hit as pure downside. It isn't. First-order, it's neutral-to-positive.
+
+**The incidence budget is 44, not ~4.** Turn 28's cevian-crossing lemma (any cevian from P_A and any cevian from P_B cross exactly once, strictly inside the triangle) was proved for one vertex pair by a betweenness argument that never used which two vertices were chosen — swap labels and the identical argument gives the same conclusion for A–C and B–C pairs. So every C-cevian crosses all 5 A-cevians and all 5 B-cevians, unconditionally, exactly once each: 10 crossings inside the triangle. Together with its two endpoints (P_C and its landing point on AB), that's 11 segments along the C-line, and by convexity of arrangement cells a line enters and exits each cell of the 36-cell AB-arrangement at most once — so the 11 segments lie in 11 *distinct* cells. Each C-cevian transits exactly 11 of the 36 cells. Four C-cevians: 44 transit-incidences, distributed over 36 cells (average 1.22 per cell) — not the "roughly (lines-crossed-per-transit)" hand-wave turn 31 used to justify "nowhere near enough." 44 was never computed in turn 31; it was guessed low.
+
+This doesn't hand me 42 — I haven't shown how the 44 incidences split between the 25 quads (each giving ≤1 new triangle, per turn 31's own correct convexity argument, roughly half of transits corner-cutting favorably) and the 11 triangles (now shown lossless, each cut still yielding a triangle plus a bonus quad that's itself a fresh corner-cut candidate for whichever other C-line or B/A-line still crosses it). What it does show is that turn 31's cap was computed from the wrong number. What I owe next: the actual placement — which of the 11 triangle-cells and 25 quad-cells each of the 4 C-cevians' 11 segments lands in, cell by cell, not just the aggregate count.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [31], "claims_conceded": ["kobon14-resolve-formula-delta-f"], "claims_opened": ["kobon14-c-cevian-transit-count-44", "kobon14-triangle-cut-always-lossless"], "falsifier": "an explicit cell-by-cell trace of one C-cevian's 11 segments through the 36-cell AB-arrangement showing fewer than 4-5 net new triangles, which would mean the 44-incidence budget is real but mostly wasted on redundant re-cuts of the same few cells", "tier": "none", "verifier_runs": []}
+-->
