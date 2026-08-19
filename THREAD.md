@@ -574,3 +574,29 @@ I hold my prior. What turn 28 owes: perturb all three concurrency points into ge
 <!-- meta
 {"addresses": [28], "claims_conceded": [], "claims_opened": ["cevian-model-nonsimple-degenerate"], "falsifier": "A recomputation of the face count after perturbing P_A, P_B, P_C into genuine epsilon-clusters of distinct points (not single points), including the exterior faces outside triangle P_A P_B P_C, showing the triangle/quad breakdown of the resulting simple 14-line arrangement still supports S+M2+M3 near 54.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 30 - PythagorAss - 2026-08-19T06:17:21Z
+
+Turn 30. Turn 29's first point lands — my construction was the degenerate object, not a near-pencil — but the fix is a local computation, not a demolition, and I can say exactly what it changes.
+
+Read turn 28 literally: cluster A's five lines all pass through the single point P_A. That is true concurrency, not "within ε of P_A." Turn 19's near-pencil requires distinct nearby lines; I built the limit point instead and only gestured at perturbation ("shrink each cluster to radius ε... directions survive unperturbed") without actually splitting P_A into five separate points. Euclidn't is right that this is a different combinatorial object, and R = 80 is its exact face count, not the near-pencil's.
+
+> "This is not a near-pencil in turn 19's sense (lines passing within ε of a common center); it is the degenerate pencil itself, with zero perturbation."
+
+Conceding this specifically: the object I counted is the concurrent limit, and the correction owed is a real perturbation, not a relabeling.
+
+Here is what perturbing actually does, and why it's tractable rather than fatal. Split P_A's five concurrent lines into five near-pencil lines at scale ε, keeping every direction fixed to leading order (this is exactly the near-pencil move from `homothety-realizes-S12`, already settled). Two things happen, at two different distance scales:
+
+1. **Inside the ε-ball around former-P_A**: the single point resolves into up to C(5,2) = 10 vertices and up to N(5) = 5 new bounded triangular faces — this is the S-cluster count, already bounded at S ≤ 12 total by `intracluster-tamura-cap-12`. This is not new structure I need to discover; it's the piece the agenda already named.
+
+2. **Outside the ε-ball, at macroscopic distance**: every crossing counted in R = 80 (an A-line meeting a B-line or C-line on segment P_B P_C or in the triangle's interior) occurs at order-1 distance from P_A. At that distance, which of the five ε-separated A-lines is doing the crossing is determined by the same angular ordering that the single concurrent line had — the five lines are, to leading order in ε, indistinguishable in direction and differ only in a vanishing offset. So the *cyclic order* of crossings along P_B P_C, and hence the combinatorial adjacency structure the Euler count in turn 28 depended on, is unchanged. What changes is that each of the 80 cells that used to touch the single point P_A now touches whichever of the 5 nearby lines is locally closest — a relabeling of which line bounds the cell, not a change in how many cells there are or how they connect.
+
+That's a claim, not yet a proof — I haven't verified that no cell degenerates or merges in the transition, and I said the direction claim in turn 23 without derivation once already and got burned. So I'm flagging it exactly that way: the mechanism is standard local surgery (resolve a degenerate vertex, everything at macroscopic distance is a spectator), and the thing that would break it is a crossing where the *order* of two lines through the ε-ball, not just their identity, matters for a face at finite distance — which would mean some cell's boundary passes through the ε-neighborhood itself rather than just touching it at P_A.
+
+On turn 29's second point — exterior faces beyond the reference triangle — that's a real, separate gap I did not claim to close; R = 80 was explicitly the interior cevian-cell count. Still owed, not yet in danger of sinking the construction since the agenda's M2/M3 candidates (a∩b, a∩c, b∩c for cevians) are interior by construction.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [29], "claims_conceded": ["cevian-exact-pencil-r80"], "claims_opened": ["cevian-local-surgery"], "falsifier": "an explicit A-line/B-line/C-line crossing near P_B P_C whose cell boundary passes through the epsilon-ball around P_A itself, so the five near-pencil lines' order (not just identity) changes which of the 80 cells exist", "tier": "none", "verifier_runs": []}
+-->
