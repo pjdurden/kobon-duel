@@ -722,3 +722,23 @@ I hold my prior.
 <!-- meta
 {"addresses": [35], "claims_conceded": ["cevian-wall-formula-invalid-all-pq"], "claims_opened": ["degenerate-arrangement-real-face-budget-63", "same-cluster-vertex-triangles-uncounted"], "falsifier": "an exact classification of the 63 real degenerate-arrangement faces showing a hard cap below 42 candidates for M2/M3 triangles regardless of how the 9 free lines (beyond the three pencils' fixed directions) are placed", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 37 - Euclidn't - 2026-08-19T13:18:21Z
+
+Turn 37. Before touching turn 36's new category, I independently re-derived 63 from scratch, by a route that doesn't reuse turn 31's subtraction trick, because a formula that fails a sanity check once (turn 34's p=q=1, p=q=2 catches) deserves a second, unrelated check before anyone builds on it again.
+
+Direct computation, no backward-subtraction: for the degenerate 14-line arrangement with concurrency points of multiplicity 5, 5, 4 and all cross-cluster intersections generic, count vertices and edges line-by-line. Cross-cluster pairs: C(14,2) − [C(5,2)+C(5,2)+C(4,2)] = 91 − 26 = 65 simple vertices, plus the 3 concurrency points: V = 68. Each cluster-A line carries 1 point (P_A) plus 9 distinct crossings with the 9 outside lines = 10 points = 11 edges; same for cluster B; each cluster-C line carries 1 point (P_C) plus 10 outside crossings = 11 points = 12 edges. E = 5(11) + 5(11) + 4(12) = 158. These match turn 36's ΔE/ΔV values exactly, by an independent route. Using the arrangement-graph identity V − E + F = 1 (verified at k=14 baseline: 91 − 196 + 106 = 1, not the usual 2, since unbounded rays each contribute only one endpoint), F_total = 1 − 68 + 158 = 91, minus 2k = 28 unbounded faces gives bounded = 63. Confirmed, independently, not just algebraically consistent with itself. `degenerate-arrangement-63-faces` is solid; I'm not disputing it.
+
+Now the actual move, on turn 36's own new observation:
+
+> "some of those 63 faces can have P_A itself as a vertex, bounded by two A-lines meeting there plus a third line from elsewhere... a category R's taxonomy (M2, M3, S) never named."
+
+This category is real, but it sits in direct tension with the S-cluster credit turn 36 is still banking. A P-vertex triangle needs two same-cluster lines to actually share a common crossing point — it only exists while the cluster is *left concurrent*. But `homothety-realizes-S12`, the settled result giving S = 12, requires the opposite: it realizes N(5) = 5 inside cluster A by shrinking an already-*resolved*, generic 5-line optimal arrangement into an epsilon-ball. A fully concurrent 5-pencil has zero intra-cluster triangles — any two of five lines through one point meet nowhere else, so no three A-lines form a nondegenerate triangle, S = 0 in that state, not 12. You cannot have S = 12 (which needs the cluster already spread into general position at epsilon scale) and simultaneously have P_A stand as a single shared vertex for a batch of mixed triangles (which needs the cluster still concurrent). Whichever P_A actually is in the final construction, one of these two credits — the 12-triangle S budget or the undefined P-vertex bonus — is unavailable, and turn 36 has counted neither state explicitly enough to say how many of the 63 faces are which.
+
+Concretely, once cluster A is resolved into 5 general-position lines to bank its 5 triangles, P_A no longer exists as a point; it becomes a small cloud of C(5,2) = 10 nearby crossings, and any face that used to have "P_A" as one vertex either survives with a *different* nearby vertex (the exact survival-criterion question turn 36 already flagged as unanswered) or is destroyed. So the P-vertex category isn't a free addition to the 63; it's a claim about the *unresolved* arrangement that has to be re-derived, face by face, against the *resolved* one before it can be added to anything. Until that's done, the 42-of-63 target still rests on zero verified triangles in this specific structure — the ratio 66.7% is a target, not a count, and the one new mechanism offered this turn is not yet compatible with the S = 12 turn 36 is still spending in the same sentence.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [36], "claims_conceded": [], "claims_opened": ["degenerate-arrangement-63-faces-independently-verified", "p-vertex-triangles-conflict-with-s12-resolution"], "falsifier": "An explicit accounting of the 63 faces by resolution-state (fully resolved, giving S=12 with zero P-vertex triangles, versus left concurrent, giving P-vertex triangles with S=0) that reaches 42+S from one consistent state, with an exact face-by-face triangle count, would refute this.", "tier": "none", "verifier_runs": []}
+-->
