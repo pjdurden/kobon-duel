@@ -760,3 +760,25 @@ I hold my prior.
 <!-- meta
 {"addresses": [37], "claims_conceded": [], "claims_opened": ["pvertex-is-m2-not-s-conflict", "pvertex-sector-count-28"], "falsifier": "if the sector-closure criterion turns out to fail (multiple outside lines routinely split single sectors) for most of the 28 candidate sectors, the P-vertex category contributes near zero and I'd need a different source for the 42 mixed triangles", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 39 - Euclidn't - 2026-08-19T15:18:02Z
+
+Turn 39. Turn 38's rebuttal to my false-dilemma claim survives my own re-derivation, and the mechanism it introduces is stronger than it was stated — strong enough to name the real bottleneck.
+
+First, the concession, on the merits, worked out independently rather than taken on faith:
+
+> "S=12 lives at epsilon scale, strictly *inside* the cloud of 10 nearby crossings that P_A becomes. The P-vertex face lives at macroscopic scale, touching that cloud from outside."
+
+I checked this by convexity: a candidate sector face closed by line L at points X (on ray a) and Y (on ray b) is a triangle P_A-X-Y, and a straight line M can only breach that triangle's interior by crossing two of its three sides — since X-Y is L's own segment, M would need a second crossing on segment P_A-X or P_A-Y, which is exactly what "L is nearest on both rays" rules out. So the sector-closure criterion is not just necessary, it's sufficient, and no other cluster-A line can intrude on a foreign sector, because in the degenerate picture every A-line meets every other A-line only at P_A itself. My turn-37 tension is dead. I concede `mirror` — no, correction: I concede the specific point turn 37 raised about S and P-vertex faces conflicting; there is no double count, no undefined state. Retracted.
+
+Now the sharper move. Turn 38 offered 28 as a bound on "candidate P-vertex triangle slots" — phrased as if it caps one sub-category of M2 among others. It caps all of M2, exhaustively, and the reason is sitting in a claim already SETTLED in the ledger. `homothety-realizes-S12` doesn't just assert N(5) is achieved near P_A — it does so by literally shrinking the entire 5-line optimal arrangement, crossings and all, into an epsilon-ball around P_A via homothety. That means every pairwise crossing among cluster-A lines, all C(5,2)=10 of them, lies strictly inside that ball, by construction, not by estimate. So for *any* M2 triangle — two lines from one cluster plus one outside line — the vertex formed by the two same-cluster lines is forced into the epsilon-ball around that cluster's center. There is no way to build an M2 triangle whose same-cluster vertex sits anywhere else. Every M2 triangle is therefore a P-vertex triangle of exactly the kind turn 38 just enumerated, and the sector count is not a partial tally — it is the ceiling on the whole category.
+
+So: M2 ≤ 10 + 10 + 8 = 28, full stop, contingent only on the near-pencil/homothety construction both sides have already signed off on.
+
+Combine with `intracluster-tamura-cap-12` (S ≤ 12, settled): S + M2 ≤ 40. Since S + M2 + M3 = 54 is the target, this forces **M3 ≥ 14** — not "42 mixed triangles somewhere in M2+M3," which was always the softer framing, but a hard floor on M3 alone, independent of how the 28 M2 slots resolve. That's new pressure the agenda's item 1 didn't have when it was written: M3's candidate pool is 100 triples, so 14 survivors is not obviously impossible on its face, and I won't claim otherwise. But the burden has now moved entirely onto the one count neither side has produced. The exact-pencil M3 survival criterion — is P_A inside or outside segment [a∩b, a∩c] — was owed before this turn and is owed more urgently now: without it, nobody knows if 14 of 100 survive or 3 of 100 survive.
+
+I hold my prior, on tighter grounds than I had it yesterday.
+
+<!-- meta
+{"addresses": [38], "claims_conceded": ["mirror-vertex-tension-t37-false-dilemma"], "claims_opened": ["m2-exhaustively-capped-28"], "falsifier": "An explicit M3 survival count (or a valid formula) showing at least 14 of the 100 candidate M3 triples survive perturbation for some realizable direction assignment would remove this pressure and I'd need a new obstruction.", "tier": "silver", "verifier_runs": []}
+-->
