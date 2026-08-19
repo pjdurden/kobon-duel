@@ -660,3 +660,25 @@ I hold my prior.
 <!-- meta
 {"addresses": [31, 32], "claims_conceded": [], "claims_opened": ["cevian-diagram-exceeds-bounded-face-budget"], "falsifier": "A recomputation of R for the true 14-line arrangement (no P_A-P_B/P_B-P_C/P_C-A boundary edges, lines extended to infinity in both directions) that yields interior-plus-exterior bounded faces summing to at most 78 after resolution, with the triangle/quad/M2/M3 breakdown redone on that corrected structure.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 34 - PythagorAss - 2026-08-19T10:19:21Z
+
+Turn 34. Turn 33's diagnosis is right, and I can make it airtight with a smaller counterexample than the one offered — using turn 28's own worked case.
+
+> "P_A P_B, P_B P_C, and P_C P_A are not among the 14 Kobon lines... Treating it as a wall is exactly equivalent to secretly adding 3 extra lines to the arrangement."
+
+This is the correct diagnosis, and here is the proof that it's fatal, not just suspicious. Turn 28 itself computed and "checked" the degenerate two-pencil formula at p = q = 1: "t=3, quad=1, total 4, matches the two-cevian picture directly." But p = q = 1 means exactly one line through P_A and one line through P_B — that is, **two real lines, full stop**. Two actual infinite lines have zero bounded faces; the settled identity `k14-bounded-face-budget-24`'s general form, bounded faces = (k−1)(k−2)/2, gives 0 at k=2. R predicts 4, with 3 of them triangles. The gap isn't a rounding artifact of concurrency — p=1 and q=1 have no concurrency to resolve at all. The entire excess is the phantom wall: R counts the region between the two lines and the fictitious segment P_A–P_B as three bounded "triangles" that are, on the real two-line arrangement, three of the four genuinely unbounded quadrants continuing off to infinity.
+
+It gets worse at a case with no degenerate points either. Take p = q = 2, r = 0: two lines through P_A, two through P_B. Since only two lines pass through each point, P_A and P_B aren't multiple points in any nontrivial sense — this is just a fully generic simple arrangement of k = 4 lines. Its bounded-face count is forced, by the same invariant, to be exactly (4−1)(4−2)/2 = 3. R gives 1+2+2+4 = 9. Off by a factor of 3, with zero concurrency anywhere in sight. The overcounting isn't a side effect of resolving multiple points — it was baked into R from the start, at every (p,q), because the formula counts regions of a walled-in triangle, not regions of the actual unbounded lines.
+
+So I concede outright: R = 80, the resolved total of 95, the 11/25 triangle-quad split, and the 44-incidence transit budget are all invalid. They were computed for a 17-line diagram (14 real lines plus 3 imaginary walls), not the 14-line Kobon arrangement. Everything built on them since turn 28 needs to be redone against real crossings only.
+
+What survives, and what doesn't. The crossing lemma itself — any A-cevian and B-cevian meet exactly once, at a point strictly between P_A and its landing point — is a statement about two real infinite lines and is untouched; it doesn't depend on the wall. What doesn't survive is treating that crossing as sitting inside a bounded cell: without a wall along P_B–P_C, a face that turn 28 called "interior" may in fact extend past that segment and out to infinity, merging with what the walled model called a separate exterior region, or with another "interior" cell on the far side. The face-merging turn 29 asked about and I waved off ("no correspondence to which of these 80 cells... live outside the triangle entirely") is exactly where the true count differs from R, and by a large factor per the p=q=2 check, not a small correction.
+
+Next turn's target, stated honestly as owed rather than done: recompute V, E, F directly from the real crossing set of two full pencils (p lines through P_A, q lines through P_B, no landing-point or corner fictions), get an exact formula, and validate it against (k−1)(k−2)/2 at k=p+q before trusting any triangle/quad split from it.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [33], "claims_conceded": ["walled-cevian-facecount-invalid"], "claims_opened": ["walled-cevian-facecount-invalid"], "falsifier": "A direct hand recount of a real (wall-free) two-full-pencil arrangement, at any p,q with p+q=k, matching R's prediction rather than (k-1)(k-2)/2, would restore the model; I checked p=q=1 (predicts 4, true value 0) and p=q=2 (predicts 9, true value 3) and both fail.", "tier": "none", "verifier_runs": []}
+-->
