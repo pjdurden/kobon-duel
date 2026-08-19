@@ -442,3 +442,23 @@ I hold my prior. What I owe, unchanged from turn 21 and now sharper: an actual s
 <!-- meta
 {"addresses": [22], "claims_conceded": ["pairwise-AB-cap-25-not-26"], "claims_opened": ["near-pencil-S-anticorrelation"], "falsifier": "a proof that genuine near-pencil clusters are forced toward their own Tamura ceiling (S near 12) rather than away from it, without reintroducing a structural tax from turns 14-18", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 24 - Euclidn't - 2026-08-19T01:18:21Z
+
+Turn 24. Turn 23's load-bearing claim is a direction, asserted but not computed — and the smallest available test case points the other way.
+
+Turn 23 argues that near-pencils are "close to the opposite of an extremal triangle-packing arrangement," and that realized S for a genuine near-pencil "should sit well below 12, not at it." No derivation is offered — only an appeal to intuition about compressed wedges starving face-spreading. Before that intuition gets to set the operating regime for this family, it should survive the smallest case where it's actually checkable.
+
+Take m=3: three lines through a near-common point, perturbed just enough to avoid true concurrency. This is the textbook picture — a tiny triangle sitting at the former point of concurrency, bounded by the three near-parallel-at-that-point segments. That configuration produces exactly 1 bounded triangular face at the center. Tamura(3) = floor(3·1/3) = 1. The near-pencil doesn't fall short of its ceiling here — it hits it exactly. This is the standard "near-miss triangle" construction, and it is the opposite of what turn 23's intuition predicts: compression toward a point is precisely what manufactures the triangle in this case, not what starves it.
+
+I'm not claiming this settles m=4 or m=5 — it doesn't, and I want to be precise about what it does and doesn't show. What it shows is that "compressed toward a point" and "far from its Tamura ceiling" are not the same property, even qualitatively, at the one scale where the claim is free to check. Turn 23's argument needs the direction to hold as m grows past 3, and the reasoning offered — wedges are thin, extremal arrangements want spread crossings — doesn't distinguish the m=3 case, where it's simply false, from m=4 or m=5, where it might become true. Nothing in turn 23 explains why the mechanism should flip sign between m=3 and m=5.
+
+This matters for the arithmetic, not just the rhetoric. Turn 22 established slack = 13−S, tight at exactly 1 when S=12 (the 5,5,4-cluster ceiling). Turn 23's entire response to that tightening was to argue S won't actually reach 12 — that the family naturally operates at low S, where slack is generous. If near-pencils instead trend toward their Tamura ceilings, the way the m=3 case suggests rather than away from them, then S trending toward 12 is back on the table, and the exactly-1 regime is where this construction actually lives, not a corner it avoids. That's a much harder needle to thread: every one of the three clusters would need to land at or extremely near its own Tamura maximum simultaneously, while also supplying the 42 mixed triangles the same lines are needed for.
+
+So here is the concrete thing turn 23 owes, sharpened from "an actual count" to a specific computation: take the proposed 5-line near-pencil, perturbed from a common center with the outward-fanning requirement turn 19 specified, and count I directly — not by analogy to m=3, and not by an unproven direction claim, but by drawing the local picture and counting bounded triangular faces the way the m=3 case was just counted. Until that number exists, "should sit well below 12" is exactly the kind of unverified count this debate has repeatedly found unable to survive recomputation.
+
+I hold my prior. The pattern stands: every fresh directional or quantitative claim advanced for k=14 has either shrunk under scrutiny or, as here, been contradicted by the smallest checkable instance of its own reasoning.
+
+<!-- meta
+{"addresses": [23], "claims_conceded": [], "claims_opened": ["near-pencil-intra-cluster-direction"], "falsifier": "an explicit count of I for the proposed 5-line (or 4-line) near-pencil geometry showing it substantially below its Tamura ceiling would confirm the low-S direction and reopen the generous-slack reading of turn 22's bound.", "tier": "none", "verifier_runs": []}
+-->
