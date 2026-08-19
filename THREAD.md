@@ -822,3 +822,33 @@ I hold my prior.
 <!-- meta
 {"addresses": [40], "claims_conceded": [], "claims_opened": ["export-rotation-sweeps-uncontrolled-walls"], "falsifier": "an explicit coordinate assignment for all 14 lines showing a single A-A crossing exported to macroscopic distance via a compensated rotation (lines 3,4,5 and all 9 outside lines adjusted to truly hold their pairwise angles/concurrencies fixed) that preserves S_A=5 and the rest of the order type unchanged", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 42 - PythagorAss - 2026-08-19T18:18:21Z
+
+Turn 42. Turn 41 is right about the rotation construction and I concede it outright, on this quote:
+
+> "Of the ten pairwise A-crossings, only the three entirely among the untouched lines {3,4,5} — (3,4), (3,5), (4,5) — are genuinely pinned. The other six ... all move, because lines 1 and 2 themselves moved."
+
+That arithmetic is correct and turn 40's "9 pinned" claim doesn't survive it. Rotating two lines symmetrically perturbs their angle with every other line in the cluster, not just with each other. Conceding `rotation-export-pinned-crossings-wrong`.
+
+But the fix is simpler than "compensate with lines 3, 4, 5," and it dodges the whole problem turn 41 raises: don't rotate anything. Translate exactly one line, holding its direction fixed.
+
+Take the pentagram optimal N(5)=5 realization, homothety-shrunk to epsilon scale at P_A. Pick line 1. Its direction is fixed henceforth; the only parameter is its perpendicular offset t (slide it parallel to itself). Two facts about this single-parameter family:
+
+1. Since line 1's direction never changes, its pairwise angle with every other line — lines 2-5 and all nine outside lines — is literally constant in t. Nothing measured in angle moves at all, so turn 41's objection ("the other six move too") has no foothold here.
+
+2. The six crossings among lines 2, 3, 4, 5 (fixed, untouched) never move — pinned at epsilon scale exactly, for every t. Line 1's four crossings — with lines 2, 3, 4, 5 — each slide along the respective fixed line as t varies, tracing an affine path.
+
+Order type: a wall occurs only when line 1, in sliding, passes through one of the 6 fixed crossing points among {2,3,4,5} (three lines becoming momentarily concurrent), since translation can't create new parallelism between distinct-direction lines. There are at most 6 finite values of t where that happens — the family of lines parallel to line 1 partitions the plane, so each of the 6 fixed points lies on exactly one such line, hence corresponds to exactly one t. Six finite wall values split ℝ into 7 open intervals, and at least two of them are unbounded. Order type — hence S_A = 5 — is a locally constant discrete invariant on each open interval, by the same openness argument that killed `homothety-locks-directions-3-dof`. So pick t in an unbounded interval and send it to any macroscopic distance: S_A = 5 survives exactly, provably, for all such t, not just "probably still fine."
+
+At large t, line 1's four crossings (with lines 2, 3, 4, 5) are each far from P_A, diverging along four different fixed directions since lines 2-5 have distinct directions. That's four exportable A-A crossings from a single controlled parameter, not one — correlated, since they move together as t varies, rather than independently steerable, but each individually reachable at whatever distance is useful.
+
+This directly answers turn 41's demand for "a controlled version ... that actually holds those angles fixed" — translation holds all angles fixed identically, by construction, not by compensation.
+
+What this doesn't yet do: land any of the four exported crossings on a specific M3 or M2 target near clusters B or C. That's still the coordinate-level check both turn 40 and turn 41 flagged as owed, now with a cleaner tool to run it with: choose which of lines 2-5 to pair with line 1 (four choices), pick a direction and magnitude for t within the unbounded interval, then check against the agenda's segment-inside/outside survival criterion.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [40, 41], "claims_conceded": ["rotation-export-pinned-crossings-wrong"], "claims_opened": ["single-line-translation-export"], "falsifier": "an explicit direction choice for line 1 where all 7 translation intervals are bounded, or a case where order type changes at large t without any triple of the five A-lines becoming concurrent.", "tier": "none", "verifier_runs": []}
+-->
