@@ -782,3 +782,25 @@ I hold my prior, on tighter grounds than I had it yesterday.
 <!-- meta
 {"addresses": [38], "claims_conceded": ["mirror-vertex-tension-t37-false-dilemma"], "claims_opened": ["m2-exhaustively-capped-28"], "falsifier": "An explicit M3 survival count (or a valid formula) showing at least 14 of the 100 candidate M3 triples survive perturbation for some realizable direction assignment would remove this pressure and I'd need a new obstruction.", "tier": "silver", "verifier_runs": []}
 -->
+
+## Turn 40 - PythagorAss - 2026-08-19T16:17:21Z
+
+Turn 40. Turn 39's M2 ≤ 28 is honestly scoped — it says "contingent only on the near-pencil/homothety construction both sides have already signed off on" — and that contingency is exactly where it breaks.
+
+> "every pairwise crossing among cluster-A lines, all C(5,2)=10 of them, lies strictly inside that ball, by construction, not by estimate."
+
+True of the homothety realization. False as a property of "any construction achieving S_A=5." Homothety is a sufficient witness for `homothety-realizes-S12`, not the only one, and the near-pencil family has a degree of freedom the argument quietly closes off: within-cluster angular separation.
+
+Here is the escape, concretely. The optimal N(5)=5 arrangement is a fixed order type — a discrete combinatorial object. `homothety-locks-directions-3-dof` (killed, but for the right reason) already established that realization space for a fixed order type is an open set in the space of line coordinates: you can continuously deform any one realization, including its directions, and stay in the same combinatorial cell as long as you don't cross a wall (a triple becoming concurrent, a pair becoming parallel). Take the pentagram realization of N(5)=5, homothety-shrunk to epsilon scale near P_A as in the settled construction. Now perturb: pick two of the five A-lines and rotate them toward each other, closing their mutual angle toward zero, while holding every other pairwise angle and every triple's concurrency status fixed. This stays inside the open realization cell right up to the wall (angle = 0), so the order type — and therefore S_A = 5 — survives unchanged for any angle short of that wall. But the crossing point of that one near-parallel pair moves as 1/sin(theta) from P_A. Send theta small enough and that single crossing leaves the epsilon-ball entirely, out to whatever macroscopic distance you like, while the other 9 of the 10 pairwise crossings stay pinned near P_A (their angles weren't touched).
+
+So the "forced into the ball, by construction" claim is a property of one construction, not of the achievability of S=12. A near-pencil realizing S_A=5 can have one A-A crossing sitting anywhere in the plane, including at a location chosen to interact usefully with cluster B or C — which is precisely a candidate M2 vertex that the 10-sector count at P_A never enumerated, because that count only covers crossings that stayed near P_A.
+
+This kills the derivation of M2 ≤ 28 as stated, and with it M3 ≥ 14 as a forced floor — both were downstream of treating homothety as the only realization. It does not hand back a construction; I want to be precise about what this turn earns. It reopens the search space turn 39 had just closed, and it points at a concrete new mechanism: a same-cluster crossing deliberately exported to macroscopic range is a free parameter nobody has used yet. Whether such an exported crossing can actually be landed on, say, an M3 candidate segment identified by the survival criterion the agenda has been asking for since turn 19 — that's the next real question, and it's a construction question, not a counting one.
+
+What's owed, honestly: pick one specific exported crossing (say, between two A-lines) and check whether it can be positioned to coincide with, or lie usefully near, a B-C crossing or a genuine M3 vertex, without destroying the 9 crossings that must stay near P_A for S_A=5 to survive perturbation. That is a coordinate-level check, not a counting argument, and it's the first genuinely new construction lever either side has put on the table since turn 19.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [39], "claims_conceded": [], "claims_opened": ["near-parallel-escape-breaks-m2-cap-28"], "falsifier": "a proof that every order-type-preserving deformation of the N(5)=5 witness realization keeps all C(5,2) pairwise angles bounded away from zero by a margin fixed independent of epsilon, which would re-close the ball and restore M2 <= 28.", "tier": "none", "verifier_runs": []}
+-->
