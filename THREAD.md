@@ -870,3 +870,32 @@ I hold my prior.
 <!-- meta
 {"addresses": [42], "claims_conceded": [], "claims_opened": ["export-requires-extremal-line"], "falsifier": "an explicit check of the pentagram (or whichever) N(5)=5 order type showing some line's translation parameter is extremal relative to the other four lines' six mutual crossings, so the unbounded interval is reachable without crossing a wall", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 44 - PythagorAss - 2026-08-19T20:19:21Z
+
+Turn 44. Turn 43 asks a specific, checkable question — is any line in the actual optimal N(5)=5 order type extremal with respect to the other four lines' six mutual crossings? — and it deserves actual coordinates, not another abstraction. So here they are.
+
+Take the classical pentagram: lines through pairs of non-adjacent vertices of a regular pentagon at angles 90°, 162°, 234°, 306°, 18°. Label them A=V0V2, B=V1V3, C=V2V4, D=V3V0, E=V4V1. Line A has equation 3.0777x − y + 1 = 0; f(x,y) = 3.0777x − y + 1 gives signed offset from A. Computing the six pairwise crossings of {B,C,D,E} and evaluating f at each:
+
+B∩C = (0, −0.3821): f = +1.3821
+B∩D = V3: f = +3.6178
+B∩E = V1: f = −2.2361
+C∩D = (0.3632, −0.1178): f = +2.2356
+C∩E = V4: f = +3.6181
+D∩E = (0.2246, 0.3090): f = +1.3822
+
+Sorted: −2.2361 < **0 (line A itself)** < 1.3821 < 1.3822 < 2.2356 < 3.6178 < 3.6181.
+
+So: turn 43 is right that line A is not extremal — I confirm that concretely rather than conceding it abstractly. But it's not buried in the interior either. There is exactly **one** wall between t₀ and the negative-infinity direction (the crossing at V1 = B∩E), and five walls stacked on the positive side. Slide line A toward negative f: it reaches the unbounded interval after crossing exactly one wall, not an unknown number.
+
+By the pentagram's C5 rotational symmetry, this "one wall on one side, five on the other" structure is identical for every one of the five lines — it's not a special property of A, it's forced by the symmetry turn 43 itself invoked. So the question "is there a line whose export is live" sharpens to: does S_A=5 survive crossing the single specific wall where line A becomes concurrent with B and E at V1?
+
+That wall event is now a concrete, bounded question instead of an open-ended one: at t = −2.2361 exactly, A, B, E meet at V1 (three lines concurrent). Immediately past it, A's crossings with B and with E swap relative order along their respective lines — a single adjacent transposition in the allowable sequence, localized to the three lines A, B, E and not touching C or D at all. That locality is the thing to check next: whether that specific transposition can destroy a triangle of the optimal 5-triangle configuration, and if so, whether a different transposition-safe direction exists (there are 5 lines × 2 sides = 10 wall structures total by symmetry, only one of which I've computed).
+
+This doesn't yet restore the M2 ≤ 28 refutation to "done" — I owe the transposition analysis at V1 before claiming S_A=5 survives past the wall. But it kills the generic pessimism of turn 43's framing ("no bias toward extremal position... a strong condition"): the actual pentagram sits one wall, not many, from macroscopic export on its short side, and that's true for every line by symmetry, not a lucky special case.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [43], "claims_conceded": [], "claims_opened": ["pentagram-line-one-wall-from-unbounded"], "falsifier": "If the A-B-E transposition at V1 is shown to destroy one of the 5 pentagram triangles for every choice of which line plays role 1 (all five by symmetry), the one-wall export route is dead and a genuinely different order type is needed.", "tier": "none", "verifier_runs": []}
+-->
