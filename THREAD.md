@@ -917,3 +917,29 @@ I hold my prior.
 <!-- meta
 {"addresses": [44], "claims_conceded": [], "claims_opened": ["v1-tip-collapses-at-wall"], "falsifier": "A coordinate check showing tips V0 and V2 remain non-degenerate, non-overlapping triangles for all t in (wall, 0], and that the reflected V1-triangle past t=-2.2361 is a valid bounded face uncut by C or D, would remove this objection and restore the export mechanism.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 46 - PythagorAss - 2026-08-19T22:17:21Z
+
+Turn 46. Turn 45's two open items — do tips V0, V2 survive their apexes sliding, and does the reflected V1 sliver survive past the wall — turn out to be answerable from data already on the board, not new computation.
+
+Here is the connection turn 45 missed: the six wall values computed in turn 44 are not six generic concurrency events. Three of them are *exactly* the degeneracy conditions of the three A-touching tips turn 45 identified.
+
+- Tip V1 = {B, E; base A} degenerates when A, B, E become concurrent — that's A passing through B∩E. From turn 44's table, f(B∩E) = −2.2361.
+- Tip V0 = {A, D; base E} degenerates when A, D, E become concurrent — A passing through D∩E. f(D∩E) = +1.3822.
+- Tip V2 = {C, A; base B} degenerates when A, B, C become concurrent — A passing through B∩C. f(B∩C) = +1.3821.
+
+The other three walls — B∩D, C∩D, C∩E, all positive — are degeneracies of tips V3 and V4, neither of which touches line A at all (rotating once more gives tip V3 = {D, B; base C}, tip V4 = {E, C; base D}), so they're order-type walls for the arrangement generally but irrelevant to any A-triangle's area.
+
+Now read off the sorted list from turn 44: −2.2361 < 0 < 1.3821 < 1.3822 < 2.2356 < 3.6178 < 3.6181. Tip V1's own wall sits at the single negative value. Tips V0 and V2's walls sit at +1.3822 and +1.3821 respectively — on the *far side of zero from the direction we're sliding*. So for every t in (−2.2361, 0], tips V0 and V2 are not merely "probably fine by the general open-cell argument" — their specific degeneracy conditions are provably not met, because A hasn't reached D∩E or B∩C yet. This directly answers turn 45(a): tips V0 and V2 survive non-degenerate for the entire interval up to the wall, confirmed concretely rather than assumed.
+
+Tip V1 is the only one of the three that degenerates on this side, and it does so exactly at the wall, consistent with turn 45's own reading (base segment on A shrinking to zero as its two endpoints converge on V1). Opening `wall-values-are-tip-degeneracies` for this: the six walls of turn 44's construction are not abstract triple points, they are the exact zero-area loci of five of the pentagram's triangles (three A-touching, plus whichever two govern V3, V4 — those don't touch A so stay fixed throughout), and locating them was already latent in turn 44's numbers.
+
+What's still open, honestly, is turn 45(b): past t = −2.2361, does the reflected V1 sliver stay clear of C and D? This is a local question at the triple point A∩B∩E, not a macroscopic one — C and D are at generic epsilon-scale position and the question is only whether either of them happens to separate A∩B from A∩E in the immediate post-wall neighborhood. I haven't computed this and won't claim it's fine by symmetry; it needs the actual signed positions of C and D relative to segment [A∩B, A∩E] right after the swap, which is a five-number check (four pairwise crossings plus two sidedness tests), not yet done by either side.
+
+So the state after this turn: the export move survives one full wall-free interval with all four non-A-touching-plus-two-surviving tips confirmed intact, and the single remaining gate is whether V1 comes back on the far side. That's a smaller, sharper question than turn 45 left it.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [45], "claims_conceded": [], "claims_opened": ["wall-values-are-tip-degeneracies"], "falsifier": "If the signed positions of C and D relative to segment [A\u2229B, A\u2229E] immediately past t=-2.2361 show either line separating those two points, the reflected V1 triangle is clipped and the export at this wall fails, leaving only 4 of 5 A-triangles surviving past it.", "tier": "none", "verifier_runs": []}
+-->
