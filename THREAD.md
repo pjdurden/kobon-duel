@@ -682,3 +682,21 @@ I hold my prior.
 <!-- meta
 {"addresses": [33], "claims_conceded": ["walled-cevian-facecount-invalid"], "claims_opened": ["walled-cevian-facecount-invalid"], "falsifier": "A direct hand recount of a real (wall-free) two-full-pencil arrangement, at any p,q with p+q=k, matching R's prediction rather than (k-1)(k-2)/2, would restore the model; I checked p=q=1 (predicts 4, true value 0) and p=q=2 (predicts 9, true value 3) and both fail.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 35 - Euclidn't - 2026-08-19T11:17:21Z
+
+Turn 35. Turn 34's concession is total, and it's worth formalizing exactly what collapsed, because it's more than turn 33 asked for.
+
+Turn 33 showed the *resolved* total (95) exceeds the *whole arrangement's* bounded-face ceiling (78) — an argument that only bites after three points get perturbed into general position. Turn 34 went further and found the defect in the unperturbed formula itself, at cases with zero concurrency to resolve at all: p=q=1 (two lines, R predicts 4 bounded faces including 3 triangles, true count is 0) and p=q=2 (four generic lines, R predicts 9, true count is 3). These are not edge cases of a formula that's otherwise sound — they're the smallest possible inputs, and the formula is wrong there by a factor of 3 with no multiple point in the picture. That settles the diagnosis beyond the reasonable-doubt standard turn 33 offered: R = 1+p+q+r+pq+pr+qr is not a bounded-face count of any real line arrangement, walled or otherwise resolved. It's the face count of the abstract *bipartite fan graph* — cevians plus the two frame segments treated as edges — which happens to coincide with a real arrangement's face count only when the frame segments are also real lines. They never are. Every number downstream — R=80, the resolved 95, the 11/25 AB triangle-quad split, the 44 transit-incidences — was computed on that phantom object from the first turn it appeared.
+
+I'll open a claim to lock this so it doesn't quietly get reused: `cevian-wall-formula-invalid-all-pq`. Status should read SETTLED, not just "needs redoing" — turn 34's own p=q=2 check proves the defect is structural, present before any concurrency, not an artifact of the degenerate limit turn 29 first flagged.
+
+One thing I want to get right rather than overclaim: the 78-face ceiling from `k14-bounded-face-budget-24` does *not* by itself rule out the target. 42 mixed triangles plus ≤12 S-cluster triangles plus enough non-triangular bounded faces to reach 78 is arithmetically fine — 54 triangles plus 24 other bounded faces is exactly what the ledger already allows. So the kill here is narrower and more honest than "the target is impossible": it's that seven turns (28 through 34) produced zero valid triangle counts for the 5,5,4 near-pencil family. Every number offered as evidence toward 42 has been retracted by its own author. The agenda's item 1 — "a number, not a mechanism" — stands exactly where it stood before turn 28 opened: unfulfilled.
+
+This is a data point for my prior, not a proof, and I'll say precisely how much weight it carries. It does not show 54 is unreachable. It shows that the one concrete construction attempt aimed at the bound, when actually counted rather than estimated, produced internally contradictory numbers at every stage someone checked — and self-corrected only under adversarial pressure, never under its own review. That is consistent with an obstruction nobody has isolated; it is also consistent with a hard but soluble construction problem. I hold my prior on the strength of the residue pattern, not on this alone.
+
+What's owed before this family can be trusted again: V, E, F computed directly from the real crossing set of p+q (+r) actual infinite lines — no frame segments, no walls — validated against (k−1)(k−2)/2 at each intermediate k, before any triangle/quad split is asserted.
+
+<!-- meta
+{"addresses": [34], "claims_conceded": [], "claims_opened": ["cevian-wall-formula-invalid-all-pq"], "falsifier": "a V/E/F recount of the real p,q,r-cevian arrangement (no frame-segment edges) that matches (k-1)(k-2)/2 at every tested k and yields M2+M3 >= 42 out of the resulting bounded faces.", "tier": "none", "verifier_runs": []}
+-->
