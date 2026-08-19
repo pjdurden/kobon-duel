@@ -852,3 +852,21 @@ I hold my prior.
 <!-- meta
 {"addresses": [40, 41], "claims_conceded": ["rotation-export-pinned-crossings-wrong"], "claims_opened": ["single-line-translation-export"], "falsifier": "an explicit direction choice for line 1 where all 7 translation intervals are bounded, or a case where order type changes at large t without any triple of the five A-lines becoming concurrent.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 43 - Euclidn't - 2026-08-19T19:18:21Z
+
+Turn 43. Turn 42's six-wall computation is correct as far as it goes, but it silently assumes something that has not been checked and is not free: that the starting position of line 1 already sits in one of the two unbounded intervals.
+
+Walk through what "the six wall values" actually are. They are the six values of t at which line 1, sliding parallel to itself, passes through one of the six fixed pairwise crossings of lines 2, 3, 4, 5. In the homothety-shrunk realization both sides have signed off on, lines 2, 3, 4, 5 are themselves confined to an epsilon-ball around P_A, so all six of those pairwise crossings are within O(epsilon) of P_A. That means all six wall values of t are clustered within O(epsilon) of P_A too — and so is line 1's actual starting offset t₀, since line 1 also belongs to the epsilon-shrunk cluster before any sliding begins. So t₀ is not some free choice sitting comfortably outside the cluster of walls; it is one more point embedded in the same tight cluster as the six walls it needs to get past.
+
+This matters because of what "at least two of them are unbounded" conceals: five of the seven intervals are bounded, and only the two extreme ones — the ones beyond the largest and smallest wall values — reach macroscopic range for free. Whether t₀ lands in the plane's arrangement, generically speaking has no bias toward extremal position, being extremal is a special combinatorial fact about line 1's role in the specific optimal order type, not a default. If line 1 sits between two of the six wall values in the sorted order — which for a symmetric, well-spread optimal 5-line configuration is the generic case, since an "extremal" line would need all six mutual crossings of the other four lines lying entirely to one side of it along its own direction, a strong condition — then reaching either unbounded interval requires crossing at least one wall en route.
+
+And crossing a wall is not a free move. A wall, by turn 42's own definition, is exactly the event where line 1 becomes concurrent with an existing crossing of two of lines 2–5, i.e., three A-lines meeting at a point. That is precisely the kind of event that changes the order type of the 5-line sub-arrangement — which is the only thing `homothety-realizes-S12` guarantees stays at 5. Nothing in turn 42 says what S_A becomes on the far side of a concurrency wall; the whole argument for "S_A=5 survives, provably, not just probably" is stated only for motion *within* a single open interval. If t₀'s interval is bounded, the claim as stated simply does not reach macroscopic t at all — the provable region stops at the nearest wall, still at epsilon scale.
+
+So the real question, unaddressed by either turn, is combinatorial and specific: in the actual optimal N(5)=5 order type (the pentagram or whatever realization is in use), is there a line whose removal-and-reinsertion parameter t₀ is extremal with respect to the other four lines' six mutual crossings? If yes for some choice of "line 1" among the five, the export move is live starting from that line. If no — if every line in the optimal order type is interior to the cluster of walls formed by the other four — then the single-parameter translation move turn 42 built cannot reach macroscopic range without first crossing a wall of unknown consequence, and the whole exporting mechanism needs to restart from a wall-crossing analysis nobody has attempted.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [42], "claims_conceded": [], "claims_opened": ["export-requires-extremal-line"], "falsifier": "an explicit check of the pentagram (or whichever) N(5)=5 order type showing some line's translation parameter is extremal relative to the other four lines' six mutual crossings, so the unbounded interval is reachable without crossing a wall", "tier": "none", "verifier_runs": []}
+-->
