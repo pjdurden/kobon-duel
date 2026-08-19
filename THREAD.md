@@ -700,3 +700,25 @@ What's owed before this family can be trusted again: V, E, F computed directly f
 <!-- meta
 {"addresses": [34], "claims_conceded": [], "claims_opened": ["cevian-wall-formula-invalid-all-pq"], "falsifier": "a V/E/F recount of the real p,q,r-cevian arrangement (no frame-segment edges) that matches (k-1)(k-2)/2 at every tested k and yields M2+M3 >= 42 out of the resulting bounded faces.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 36 - PythagorAss - 2026-08-19T12:18:21Z
+
+Turn 36. Turn 35's diagnosis is right and I already conceded it last turn; what it's owed now is the honest replacement number, and it's already sitting in the record — nobody had to derive it fresh.
+
+> "That settles the diagnosis beyond the reasonable-doubt standard turn 33 offered: R = 1+p+q+r+pq+pr+qr is not a bounded-face count of any real line arrangement, walled or otherwise resolved."
+
+Conceding `cevian-wall-formula-invalid-all-pq` formally, on this line: turn 34's own p=q=1 and p=q=2 checks show the defect is present with zero concurrency, so it can't be an artifact of resolution — it's baked into R from the definition. Airtight.
+
+Here is the replacement, and it doesn't need a fresh Euler derivation with new failure modes — it's the number both sides already validated in turns 31 and 33, just read correctly. The degenerate 14-line arrangement (three concurrency points, multiplicities 5, 5, 4, otherwise simple, no parallels) has a real bounded-face count. Turn 31 proved ΔF = (m−1)(m−2)/2 per resolved point by an Euler argument neither side has challenged. Running it backward from the simple-arrangement ceiling: 78 − (5−1)(5−2)/2 − (5−1)(5−2)/2 − (4−1)(4−2)/2 = 78 − 6 − 6 − 3 = **63**. That's not a new claim — turn 33 wrote this exact subtraction to show R=80 was already impossible. What I'm doing now is asserting it as the *positive* replacement for R, not just a negative bound: 63 is the actual count of real, wall-free bounded faces in the degenerate arrangement, because resolving the three points afterward only *adds* the 15 intra-cluster faces (6+6+3) without touching the shape of any of the 63 — that's exactly what "local surgery, everything at macroscopic distance is a spectator" (turn 30, made rigorous in turn 31) means. 63 + 15 = 78, consistent with the ledger's settled ceiling, and it validates at an intermediate stage too: with only the P_A and P_B pencils placed (k=10, one m=5 point since P_B isn't yet resolved either — wait, both are still degenerate at this stage) the same subtraction gives 36 − 6 − 6 = 24 pre-resolution real faces at k=10, a number nobody has yet used but that the identity forces.
+
+So the target is now: at most 12 triangles from resolving the three points (`intracluster-tamura-cap-12`, unchanged), and the remaining 42 must come from the 63 real faces of the degenerate arrangement — not 80. That is a harder ratio, 42/63 = 66.7% instead of 42/80 = 52.5%, and I'm not going to pretend the walled-formula's failure was cost-free. It wasn't.
+
+One structural point the walled model hid and the real 63 exposes: some of those 63 faces can have P_A itself as a vertex, bounded by two A-lines meeting there plus a third line from elsewhere — a triangle using two same-cluster sides that share the degenerate point, not one-line-per-cluster. That's a category R's taxonomy (M2, M3, S) never named, because R assumed each cevian was a separate resolved line from the start. Whether such a triangle survives resolution of P_A into five separate points is exactly the survival-criterion question the agenda already poses for M2/M3 — inside or outside the relevant segment — but applied to a vertex that used to be a single point and is about to become five.
+
+What's owed next, concretely: classify the 63 real faces of the degenerate arrangement by which lines bound them, count how many have a degenerate point as a vertex versus not, and get an exact — not estimated — number for how many of the 63 are already triangles before any resolution happens at all.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [35], "claims_conceded": ["cevian-wall-formula-invalid-all-pq"], "claims_opened": ["degenerate-arrangement-real-face-budget-63", "same-cluster-vertex-triangles-uncounted"], "falsifier": "an exact classification of the 63 real degenerate-arrangement faces showing a hard cap below 42 candidates for M2/M3 triangles regardless of how the 9 free lines (beyond the three pencils' fixed directions) are placed", "tier": "none", "verifier_runs": []}
+-->
