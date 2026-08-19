@@ -600,3 +600,21 @@ I hold my prior.
 <!-- meta
 {"addresses": [29], "claims_conceded": ["cevian-exact-pencil-r80"], "claims_opened": ["cevian-local-surgery"], "falsifier": "an explicit A-line/B-line/C-line crossing near P_B P_C whose cell boundary passes through the epsilon-ball around P_A itself, so the five near-pencil lines' order (not just identity) changes which of the 80 cells exist", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 31 - Euclidn't - 2026-08-19T07:19:21Z
+
+Turn 31. Turn 30's local-surgery claim can be made rigorous — I'll supply the proof it was missing — but the rigorous version proves less than turn 30 needs, and turn 28's own exact 2-pencil formula now tells us where the real shortfall is.
+
+**The rigorous version of turn 30's claim.** Resolving an m-fold point into general position, with everything else in the arrangement held fixed, changes bounded face count by exactly ΔF = (m−1)(m−2)/2, independent of what the rest of the arrangement looks like. Proof: concurrency at a point never changes the number of distinct line directions, so it never changes unbounded face count (2k for k lines, no parallels) — all of ΔF lands in bounded faces. Euler's relation V−E+F=2 holds before and after (the graph stays connected). Resolving the m-fold point sends V up by C(m,2)−1 and, since the m lines' mutual crossings go from one shared degree-2m vertex to C(m,2) degree-4 vertices, sends E up by m(m−2). So ΔF = ΔE−ΔV = m(m−2) − (C(m,2)−1) = (m−1)(m−2)/2. Check at m=3: three concurrent lines (6 edges, 1 vertex, 0 bounded faces) resolve to a triangle (9 edges, 3 vertices, 1 bounded face) — ΔF=1=(2)(1)/2 ✓. So turn 30's "relabeling, not restructuring" instinct is correct, and provably so: total interior bounded faces after fully resolving all three pencils = 80 + (5−1)(5−2)/2 + (5−1)(5−2)/2 + (4−1)(4−2)/2 = 80+6+6+3 = **95**, of which at most 12 are the S-cluster triangles.
+
+That leaves 83 non-S faces of which 80 come from the pre-resolution cross-cluster structure. This is where turn 28's own exact result becomes a weapon against the target, not for it.
+
+**The AB-only sub-case is now fully solved, by PythagorAss's own hand.** At (p,q,r)=(5,5,0): R=1+5+5+25=36, split exactly as t=p+q+1=11 triangles and pq=25 quadrilaterals, "no other polygon shapes." That's a triangle yield of 11/36 ≈ 31% in the cleanest possible 2-pencil sub-structure — verified, not estimated. For the full construction to reach M2+M3=42 out of the 80 cross-cluster faces, cluster C's four lines have to more than double that yield by cutting into the 25 AB-quads.
+
+Here is the hard cap on how much cutting can help. Every arrangement cell is convex, so a single line crosses any given cell in at most two boundary points. A convex quadrilateral cut by a transversal splits into exactly two pieces: if the transversal exits through two *adjacent* edges, one piece is a triangle (corner cut) and the other a pentagon; if through two *opposite* edges, both pieces are quadrilaterals — zero new triangles. So **each (C-line, AB-cell) incidence produces at most one new triangle**, and roughly half the generic cut orientations produce none at all. With only 4 C-lines transiting a 5×5 grid of 25 quads, the number of incidences is bounded by roughly (lines-crossed-per-transit), not by cell count — nowhere near enough independent corner-cuts to turn 25 quads into anywhere near 25 extra triangles, let alone also preserve the 11 original AB-triangles against being cut themselves by the same 4 lines.
+
+This is the number turn 28 flagged as missing and it is now sharper than "the 3-way split": how many of the 25 AB-quadrilaterals does each C-cevian corner-cut versus bisect-into-quads, and how many of the 11 AB-triangles survive a C-cevian passing through them. Until that count exists, 31% is the only verified yield on the table, and 42/80 = 52.5% is the target. I hold my prior.
+
+<!-- meta
+{"addresses": [30], "claims_conceded": [], "claims_opened": ["euler-point-resolution-deltaF", "ab-quad-corner-cut-cap"], "falsifier": "An explicit count of corner-cuts vs bisecting-cuts of the 4 C-cevians against the 25 AB-quads (and survival count of the 11 AB-triangles) showing M2+M3 >= 42, or any construction beating the verified 31% yield by enough margin.", "tier": "none", "verifier_runs": []}
+-->
