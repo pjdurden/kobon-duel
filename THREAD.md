@@ -484,3 +484,25 @@ What I owe, unchanged in substance: the actual direction assignment realizing bo
 <!-- meta
 {"addresses": [24], "claims_conceded": ["near-pencil-S-well-below-12"], "claims_opened": ["m3-degenerate-evidence", "near-pencil-scale-offset-direction-decoupling"], "falsifier": "a proof that a cluster line's perpendicular offset (fixing local intra-cluster combinatorics) cannot be chosen independently of its direction once that same line is required to hit specific far-field crossings with two other clusters", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 26 - Euclidn't - 2026-08-19T03:18:21Z
+
+Turn 26. Turn 25's "separable parameters" claim rests on a specific factual error about what a homothety does to line directions — and correcting it recovers most of the tight-margin problem turn 25 thought it had dissolved.
+
+First, the narrow concession. Turn 25's core geometric move — take an arrangement realizing Tamura(n) exactly, scale it toward P by a similarity transformation — does preserve every incidence and every bounded face, so S=n_i per cluster is achievable in isolation, ignoring the rest of the arrangement. That part is correct plane geometry and I concede it without qualification: a homothety (scale-and-translate) is a similarity, similarities preserve combinatorial type, so the shrunk copy really does realize the full triangle count of whatever optimal small arrangement was chosen.
+
+But look at what turn 25 claims comes free with that:
+
+> "Nothing in the scaling construction pins direction to any particular value; the shrink-and-translate can be composed with any rotation of the whole local picture, and each individual line's long-range trajectory is a free choice independent of the tiny local offset that fixes intra-cluster incidences."
+
+This is not correct, and it's checkable directly from what a homothety does. A homothety centered at P maps every line to a line *parallel to itself* — scaling about a point never changes a line's direction, only its distance from the center. So the shrunk 5-line cluster has exactly the same five directions as the original optimal 5-line arrangement, up to whatever single rigid rotation you compose with the homothety. That rotation is one scalar, θ_A, applied to the whole cluster at once — it rotates all five lines by the same amount, preserving their pairwise angular gaps. It is not five independent directional choices. The optimal 5-line arrangement realizing Tamura(5)=5 has some fixed set of pairwise angles (whatever specific construction achieves N(5)=5 — the classical optimum is essentially unique up to similarity and reflection); once you fix which optimal arrangement you're shrinking, those relative angles are locked, and the *only* freedom left for aiming that cluster's lines outward is the single rotation θ_A, plus the two translation coordinates that place the cluster's center.
+
+So across the three clusters, realizing S=12 by this method buys exactly **3 rotational degrees of freedom** (θ_A, θ_B, θ_C) and 6 translational ones (cluster centers) for the whole outward-fanning problem — not, as turn 25 states, "each individual line's long-range trajectory... a free choice." Fourteen lines' worth of aiming has collapsed to three scalars the moment S is pinned to its ceiling in all three clusters simultaneously. That is the opposite of the separability turn 25 argued for: S=12 and outward fanning are coupled through these three angles, not independent budgets.
+
+This matters directly for turn 22's margin-1 arithmetic. Whether 3 rotational parameters suffice to place enough AB/AC/BC crossings that survive as uncut triangular faces — under the constraint that each survives the other 11 lines cutting through it — is now the live question, and it is a much narrower search space than "assign each line's direction freely," which is what turn 25's construction was implicitly relying on to make 42 mixed triangles sound like a routine placement problem.
+
+I hold my prior. The pattern continues: each fresh claim for k=14, examined at the level of what the construction actually supplies rather than what it's asserted to supply, turns out to hand over less freedom than advertised. What I owe next: whether 3 rotational scalars are provably insufficient to hit the required mixed count — I don't have that proof yet. What turn 25 owes: an explicit θ_A, θ_B, θ_C assignment (not a freedom claim) that plausibly produces surviving mixed triangles anywhere near 42, or an account of where the extra directional freedom actually comes from if not this construction.
+
+<!-- meta
+{"addresses": [25], "claims_conceded": ["scaled-subarrangement-achieves-S-in-isolation"], "claims_opened": ["cluster-direction-dof-lock"], "falsifier": "an explicit angle assignment (theta_A, theta_B, theta_C) under this scaled-cluster construction that yields a plausible path to ~42 surviving mixed triangles, or a demonstration that more than one rotational dof per cluster is actually available", "tier": "none", "verifier_runs": []}
+-->
