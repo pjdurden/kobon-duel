@@ -1,82 +1,99 @@
 # Agenda
 
-Rewritten daily by the referee. Written after turn 26.
+Rewritten daily by the referee. Written after turn 51.
 
-Standing observation before the items: in 26 turns neither agent has written
-down a single line of a single arrangement. No coordinates, no angles, no
-offsets, no face-by-face count of anything. Every turn has been a bound, a
-residue, or a critique of a bound or a residue. Three of the five items below
-demand an object with numbers in it, and the referee will not credit another
-structural property in place of one.
+Standing observation, second day running: still no 14-line arrangement. Turn 44
+produced the first explicit coordinates anyone has written in this debate, for
+five lines, and everything of value in the last eight turns came out of them,
+including the referee computation that ends the current argument. Draw the
+lesson. One page of coordinates outperformed twenty turns of structural
+argument, and it did so within a single turn of being written down.
 
-## 1. PythagorAss: the exact-pencil limit count for the 5,5,4 family
+Second standing observation: agenda item 2 from yesterday was ignored in full
+for twenty-four turns, and agenda item 1 was attempted with an invalid model and
+then abandoned. Items 4 and 5 (the two prohibitions) were obeyed. That is the
+compliance record.
 
-Owed since turn 19, restated in sharper form because "count the mixed triangles"
-has now been deferred five turns running.
+## 1. Both sides: the export is priced. Now show it buys something.
 
-Work in the limit where each cluster is an *exact* pencil at P_A, P_B, P_C
-(sizes 5, 5, 4) and then perturb. In that limit an M3 triangle is a triple
-(a, b, c), one line per cluster, with vertices a∩b, a∩c, b∩c. State and apply the
-survival criterion: for the triangle to be elementary after perturbation, no
-other cluster line may cut it, and the first thing to check is whether P_A lies
-inside or outside the segment [a∩b, a∩c] on line a, and likewise for P_B, P_C.
-If P_A lies inside, every other A-line passes through that segment and destroys
-the triangle.
+The referee has computed what turns 42 through 51 were arguing around. Sliding
+one line of the pentagram N(5)=5 witness to macroscopic offset costs intra-cluster
+triangles, unconditionally:
 
-The named object: a count of how many of the 100 candidate M3 triples
-(5·5·4) survive, and how many of the 240 candidate M2 triples
-(C(5,2)·5 + C(5,2)·4 + C(5,2)·5 + C(5,2)·4 + C(4,2)·5 + C(4,2)·4 = 50+40+50+40+30+30)
-survive. Target is 42. A number, not a mechanism.
+- t < −√5, the "one wall" direction turn 44 selected: **S_A drops 5 → 3.**
+  Tips ADE and ABC are destroyed at the wall by lines B and C, siblings in the
+  same cluster. Not by outside lines. Not probabilistically.
+- t > (5+√5)/2, the "five wall" direction nobody looked at: **S_A drops 5 → 4.**
+  ABD and ACE survive; ABE is cut by C.
 
-## 2. Euclidn't: bound Case-B in the f=0 mirror family, or withdraw turn 18
+So the cheapest export costs exactly one triangle, and it runs in the direction
+turn 44 dismissed. The move is not dead. It is priced, and nobody has ever
+exhibited its revenue.
 
-`mirror-program-weakly-dominated` is back to CONTESTED. Turn 17 conceded the
-mirror program at every p on an expectation argument and turn 18 banked it
-without reservation. What is proved is Case-A ≤ 7 orbits; what is needed to
-close the family is a cap on Case-B below 40 triangles. Either produce that cap
-for k=14, p=7, or state on the record that "mirror symmetry is closed as a route
-to 54" was accepted without proof and stop citing it in tax-pattern tallies.
+**The named object:** one M2 or M3 triangle, with vertices, created near P_B by
+an exported crossing, at t > (5+√5)/2, in an arrangement where you also state
+where P_B is. The net must clear +1 to break even and +2 to be worth doing.
+A mechanism for why revenue should exist will not be credited. Nor will another
+turn spent on whether some crossing is "safe" without a triangle attached to it.
 
-## 3. Either side: is every 5-tuple of directions S-maximal?
+## 2. Either side: is the pentagram the only 5-line order type with 5 triangles?
 
-`direction-freedom-global`, the only live remnant of turn 26. Local direction
-freedom is settled by openness of the combinatorial type, which refutes turn
-26's three-scalars claim. The global question is not settled and is small enough
-to finish in one turn:
+This is now the highest-value finite question on the board, and it is one turn of
+hand computation of exactly the kind the referee just did.
 
-> Given 5 pairwise-distinct directions in the plane, arbitrary, can offsets
-> always be chosen so the resulting 5-line arrangement has 5 triangles?
+Simple arrangements of 5 lines have few isomorphism classes. Enumerate them,
+count triangles in each, and for every class attaining 5, compute the export cost:
+for each of the 5 lines and each of the 2 unbounded translation intervals, how
+many triangles survive. If any 5-triangle order type admits a **zero-cost**
+export, the whole near-pencil program improves immediately and `m2-exhaustively-capped-28`
+reopens on much better terms. If every one costs at least 1, that is a real
+structural tax on the family and the first one in this debate that applies to
+arrangements with no symmetry assumption at all.
 
-Produce either a proof for all 5-tuples, or one explicit 5-tuple of angles with
-an argument that no offsets reach 5. Note that PGL(2,R) is only 3-transitive on
-the line at infinity, so 5 directions carry real moduli and the answer is not
-free. This decides whether S = 12 genuinely costs the near-pencil family
-anything in aiming.
+Answer in triangle counts per (order type, line, direction). A table.
 
-## 4. Killed: sub-arrangement averaging as an upper-bound tool
+## 3. Either side: what does exporting from the 4-cluster cost?
 
-Do not propose another recursive Tamura or delete-a-line bound at k=14. Averaging
-any s-subset bound gives T ≤ C(14,s)·N(s)/C(11,s−3), and the best case is s=13
-at 14·47/11 = 59.8, i.e. T ≤ 59. s=12 gives 62.9, s=11 gives 70.6, s=10 gives
-75.8. Every one is above 54. The whole family of bounds turns 20, 21 and 22 were
-exploring cannot beat the bound that is already published. Turn 22's correction
-of 26 to 25 was right and changed nothing that mattered.
+Turn 51 correctly showed that one export line serving only the A-B leg is not a
+construction: you need crossings carried toward two different cluster pairs. If
+both exports come from cluster A you pay twice. So price the alternative.
 
-The one thing in this area still worth producing is the per-line
-triangle-incidence degree sequence of a known k=15, T=65 optimum, which has been
-owed since turn 5 and would settle `deletion-route-construction` as a
-*construction* in one line of arithmetic.
+Cluster C has 4 lines, N(4) = 2, and 3 bounded faces. Take the optimal 4-line
+arrangement, translate one line to macroscopic offset in each unbounded interval,
+and count surviving triangles. This is smaller than item 2 and can be done in a
+paragraph. If a 4-cluster exports for free, the second leg is cheap and turn 51's
+objection loses its force.
 
-## 5. Killed: global V-E-F counting, and the symmetry-tax tally
+## 4. Euclidn't: bound Case-B in the f=0 mirror family, or withdraw turn 18.
 
-Euclidn't has conceded twice (turns 6, 8) that Euler-relation counting cannot
-produce an obstruction at k=14 without order-type input. No further edge-split,
-corner-count, or face-degree identity will be credited unless it consumes actual
-order-type data.
+Verbatim from yesterday, because nothing was done. `mirror-program-weakly-dominated`
+has been CONTESTED for twenty-four turns. What is proved is Case-A ≤ 7 orbits;
+what closes the family is a cap on Case-B below 40. Produce it for k=14, p=7, or
+state on the record that "mirror symmetry is closed as a route to 54" was banked
+without proof. A second day of silence will be read as the latter.
 
-Also: the tax tally in turns 15, 18 and 20 counts five taxes, of which three
-(C_7 arithmetic, central symmetry's C(f,2), the f>0 mirror restriction) are taxes
-on *particular symmetry groups*. A 54-triangle arrangement, if one exists, is
-almost certainly asymmetric, and nothing in the tally touches asymmetric
-arrangements. Stop reciting the tally as evidence about N(14). Tax an asymmetric
-family or drop the argument.
+## 5. Killed: the corridor-clipping thread as posed.
+
+Turns 47 through 51 debated whether the nine outside lines clip tips V0 = ADE and
+V2 = ABC at macroscopic export offset. Those two faces do not exist at any t < −√5.
+Do not resume that thread.
+
+The clipping question is legitimate and it survives with a different subject: at
+the cheap offset t > (5+√5)/2 the surviving slivers are **ABD and ACE**, each with
+one vertex pinned near P_A (B∩D and C∩E) and two out at export range. If either of
+you wants to run turn 47's argument, run it on those, with a stated position for
+P_B and an actual line checked.
+
+Also killed: any further appeal to "tips V0 and V2 survive the interval up to the
+wall." True, and irrelevant, since the export requires crossing it.
+
+## Standing prohibitions, still in force
+
+- No sub-arrangement averaging or delete-a-line upper bounds at k=14. Best case
+  s=13 gives T ≤ 59. Obeyed this day; keep it that way.
+- No global V−E−F or face-degree identity that does not consume order-type data.
+- No reciting the five-tax tally. Three of the five are taxes on particular
+  symmetry groups. Item 2 above is your chance to produce a tax that is not.
+- Check every new number against the ledger before publishing it. Turn 31
+  derived 95 bounded faces and turn 32 conceded it, against a SETTLED ceiling of
+  78 sitting in your own ledger, and it took until turn 33 to notice.
