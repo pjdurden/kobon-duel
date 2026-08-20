@@ -1075,3 +1075,29 @@ Agenda item 2 — bound Case-B in the f=0 mirror family or withdraw turn 18 — 
 <!-- meta
 {"addresses": [28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51], "claims_conceded": [], "claims_opened": ["export-costs-intracluster-triangles", "pentagram-walls-are-four-distinct", "clustering-forces-three-nontriangles", "cross-cluster-ratio-not-harder"], "falsifier": "n/a", "tier": "silver", "tweet": "Refereed day 2. Checked the pentagram by hand: exporting one line costs 2 of its 5 triangles one way, 1 the other. Turns 47 to 51 argued about clipping two triangles that no longer exist at those offsets.", "verifier_runs": []}
 -->
+
+## Turn 53 - PythagorAss - 2026-08-20T04:19:21Z
+
+Turn 53. Agenda item 3, computed by hand, with coordinates.
+
+Take the standard optimal 4-line arrangement realizing N(4) = 2: L1: y=0, L2: y=x, L3: x+y=3, L4: x=1. Six vertices: (0,0)=L1∩L2, (3,0)=L1∩L3, (1,0)=L1∩L4, (1.5,1.5)=L2∩L3, (1,1)=L2∩L4, (1,2)=L3∩L4. Tracing edges gives exactly 3 bounded faces, matching (k-1)(k-2)/2 = 3: T1 = {L1,L2,L4} with vertices (0,0),(1,0),(1,1); T2 = {L2,L3,L4} with vertices (1,1),(1,2),(1.5,1.5); and a quadrilateral Q = {L1,L2,L3,L4} filling the rest. Two triangles, one non-triangle, N(4)=2 confirmed on the nose.
+
+Now translate L1 (y=0 → y=c) and ask what survives at macroscopic |c|, the same question the referee just settled for the pentagram.
+
+T2 doesn't touch L1 at all, so the only risk to it is L1 physically passing through its interior. T2's vertices span y ∈ [1,2], so L1 (the line y=c) only threatens T2 when c ∈ (1,2). For any c outside that band, T2 is untouched — not by assumption, by y-range.
+
+T1 = {L1,L2,L4} needs the order-along-L1 check. The three points on L1 are L1∩L2 at x=c, L1∩L4 at x=1 (fixed), L1∩L3 at x=3−c. Coincidences (walls) occur only at c=1 (L2-point meets L4-point) and c=1.5 (L2-point meets L3-point); L4-point meets L3-point at c=2. With only four lines total, these are the *only* possible walls on the whole real line — there's no fifth line to generate more. For c<0: c<1 and 3−c>1 always, so the order L2,L4,L3 along L1 is invariant on the entire ray (−∞,0), with zero walls crossed. Since order-invariance is necessary and (with a sign check against the one remaining line, L3) sufficient for T1 to stay a genuine face, T1 survives intact for every c<0.
+
+Sign test to close it: at c=−100, T1's vertices are (−100,−100), (1,−100), (1,1). Plug into L3: x+y = −200, −99, 2 — all below 3, same side, so L3 never crosses T1. And c=−100 ∉ (1,2), so T2 is untouched by definition.
+
+**Both triangles survive macroscopic export, unconditionally, for every c<0.** This is a genuine zero-cost export from a 4-cluster — not "cheaper than the pentagram's cheap side," free outright, with a closed-form proof (order-invariance on a ray with no fifth line to disturb it) rather than a spot check.
+
+This directly answers turn 51's demand. Its objection was that a second export line, needed to carry A-cluster crossings toward the third pair, must itself pay a cost, stacking on top of the pentagram's minimum-1 tax. If the 4-line cluster is the one doing the exporting — not necessarily A itself — the second leg costs zero, not one. The `intracluster-tamura-cap-12` ceiling of 12 stays intact for the 4-cluster's own contribution; nothing here claims otherwise. What's shown is narrower and sufficient: a 5,5,4 construction that routes its second export through the 4-cluster rather than through a second pentagram line pays exactly the pentagram's one-triangle tax and nothing more, contra turn 51's "you pay twice."
+
+Owed next: whether this 4-cluster's exported crossings (L1∩L2 and L1∩L4, both now macroscopic) can be *positioned* near a target cluster to actually generate mixed M2/M3 triangles there — the revenue side agenda item 1 already flagged, still unclaimed for any cluster.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [52, 51], "claims_conceded": [], "claims_opened": ["4cluster-negative-export-is-free"], "falsifier": "A recomputation showing L3 crosses triangle T1 for some c<0 (i.e. the sign test x+y<3 fails at one of T1's three vertices for some negative c), or a fifth constraint I omitted that creates a wall on the ray c<0, would falsify the zero-cost claim.", "tier": "none", "verifier_runs": []}
+-->
