@@ -1101,3 +1101,23 @@ I hold my prior.
 <!-- meta
 {"addresses": [52, 51], "claims_conceded": [], "claims_opened": ["4cluster-negative-export-is-free"], "falsifier": "A recomputation showing L3 crosses triangle T1 for some c<0 (i.e. the sign test x+y<3 fails at one of T1's three vertices for some negative c), or a fifth constraint I omitted that creates a wall on the ray c<0, would falsify the zero-cost claim.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 54 - Euclidn't - 2026-08-20T05:18:21Z
+
+Turn 54. I checked turn 53's coordinates by hand. The order-invariance argument is right, and the sign test closes it: for T1 = {L1,L2,L4}, the three points on L1 sit at x = c, x = 1, x = 3−c, and c < 1 < 3−c holds on the entire ray c < 0 with no crossing among them — no wall on that ray, since with only four lines there is no fifth line to generate one. And L3 stays on the same side (x+y < 3) at all three vertices for every c < 0, confirmed independently at c = −100. I'll concede that specific, narrow fact:
+
+> "Both triangles survive macroscopic export, unconditionally, for every c<0."
+
+That's airtight for the isolated 4-line arrangement, and it is a real correction to my own default expectation from the pentagram case — a cluster export need not cost a triangle intrinsically. Conceding it.
+
+But "zero-cost export" is doing more work in turn 53's framing than the computation supports, and the gap is the mirror image of what killed turns 47–51. There, intra-cluster walls turned out to be the whole story and outside-line exposure was moot. Here, turn 53 has shown intra-cluster walls are absent — which means, if anything is going to kill T1 or T2 at macroscopic offset, it can only be an outside line. That question is not addressed at all, and it is now the entire remaining risk, not a residual one.
+
+Trace what the export actually requires. The point of translating L1 is to carry a crossing toward a target cluster — otherwise nothing is bought. Look at T1's edge along L1 itself: it runs from (c,c) to (1,c), a horizontal segment at height y = c with length |1−c|, growing without bound as c → −∞. This is not a needle collapsing toward a point the way the pentagram's exported crossings did; it is a long, low, horizontal corridor sweeping the entire strip c ≤ x ≤ 1 at height y = c. For the export to deliver revenue, a target cluster has to sit near line L1's new position — near height y ≈ c — which is exactly where this segment lives. Any cluster placed there to catch the exported crossing puts its own several lines crossing height y ≈ c somewhere in that strip, and unless every one of them is positioned to cross outside the interval [c, 1] on L1, or outside the interior of T1 specifically, T1's long edge gets cut.
+
+This is not a hypothetical worry, it's the same mechanical question turn 44 through the referee's turn 52 resolved for the pentagram, just relocated: does a target cluster's own lines cross the exported triangle's long edge inside the triangle's span, or outside it? Turn 53 proved the *isolated* 4-line arrangement is clean, which was never in doubt — three or four lines in general position with no fifth line obviously have no internal wall. What it hasn't shown, and explicitly flags as owed, is the case that matters: L1 translated *and* a target cluster actually placed where the export needs it. Zero-cost in vacuum is not zero-cost in the 14-line construction; that's the same distinction the referee drew between "safe for the interval up to the wall" and "safe past it."
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [53], "claims_conceded": ["4cluster-isolated-export-zero-wall"], "claims_opened": ["4cluster-sliver-untested-against-target"], "falsifier": "an explicit target-cluster placement near the translated L1, with all of the target cluster's own lines checked against T1's and T2's edges by sign test, showing both survive", "tier": "none", "verifier_runs": []}
+-->
