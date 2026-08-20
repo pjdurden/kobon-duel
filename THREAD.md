@@ -1374,3 +1374,27 @@ S = 11, priced. Turn 63's triangle is safe at s=1 and dead for s below 0.362 —
 <!-- meta
 {"addresses": [63], "claims_conceded": [], "claims_opened": ["homothety-margin-not-scale-invariant-E-cuts-below-s362"], "falsifier": "A recomputation showing E's homothety image (y = -0.75 - 0.690983s) does not enter the triangle's y-range [-1,-0.75] for s down to whatever epsilon the full siting actually requires, i.e. an error in the threshold s* = 0.25/0.690983 \u2248 0.3618.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 65 - PythagorAss - 2026-08-20T16:19:21Z
+
+Turn 65. Turn 64's kill is correct and I checked it independently: the homothety used in turn 63 was centered at O = A′∩D′, and since A′, D′ both pass through O they're invariant lines under that homothety — the triangle {L1,A′,D′} literally never moves. Meanwhile E′, sitting below O at distance 0.690983, moves toward O and its y-coordinate y(s) = −0.75 − 0.690983s crosses L1's height y=−1 at s = 0.25/0.690983 ≈ 0.3618, entering the triangle's y-band for every smaller s — exactly the range needed to satisfy the epsilon-ball siting. Conceding:
+
+> "The triangle stays put; E moves toward it; they meet at a computable, finite s well short of 'arbitrarily small.'"
+
+Correct, and it's a real structural fact about centering the homothety at the apex of the frozen pair, not a numerical slip.
+
+The fix is to change the center, not patch the same one. Center the homothety at O′ = A′∩L1 instead — a vertex of the *target triangle itself*, already sitting on L1. Since O′ ∈ A′ and O′ ∈ L1, both A′ and L1 are invariant under this homothety; D′, B′, C′, E′ all move toward O′.
+
+O′ = A′∩L1: solving 3.077684x+5.405368 = −1 gives x = −6.405368/3.077684 = −2.08151, so O′ = (−2.08151, −1).
+
+Track the triangle. V1 = O′ itself (fixed). V2(s) = D(s)∩L1: since L1 is invariant, V2(s) stays on L1 (y=−1) for every s, sliding along it toward O′ as s→0 (D(s) is a line parallel to D′, distance from O′ scaled by s, so V2(s)→O′). V3(s) = A′∩D(s): A′ is fixed, D(s)→ a line through O′ as s→0, so V3(s)→O′ too. At s=1, V3(1) = A′∩D′ = (−2,−0.75), y=−0.75. So the triangle's y-range at parameter s is [−1, y_{V3}(s)] with y_{V3}(s) interpolating from −0.75 (s=1) down to −1 (s=0) — the whole triangle collapses to the single point O′, monotonically, and its y-band stays inside [−1,−0.75] throughout.
+
+Now check E. E′'s offset from O′: E′ is horizontal at y=−1.440983, and O′ has y=−1, so the offset is −1.440983−(−1) = −0.440983 — E sits *below* L1, on the far side from the triangle's interior, which occupies y≥−1. Under the homothety, E(s) is horizontal at y = −1 + s(−0.440983) = −1 − 0.440983s. For every s ∈ (0,1], this is strictly less than −1. E(s) never reaches y=−1, let alone the triangle's band [−1,−0.75]. Unlike the O-centered version, there is no crossing s to solve for — the sign of E's offset relative to O′ (below the frozen line L1, same side as before, never crossing it) rules the crossing out structurally, not just outside some window. This is the same kind of exact, no-limit argument turn 63 used for the native-scale check, now extended to hold at every s down to 0.
+
+What I haven't done: check B′ and C′ against this new center the same way — they have nonzero slope, so it's turn 60's wedge criterion at O′, not a one-line inequality. That computation is owed next, and until it's done this is a partial result: E is cleared for the full shrink range, D and A are the triangle's own sides, and two of five cluster lines remain unchecked at this specific center.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [64], "claims_conceded": ["homothety-at-apex-O-lets-E-cut-triangle"], "claims_opened": ["recentered-homothety-clears-E-fully"], "falsifier": "an exact computation showing B' or C' crosses the triangle's interior for some s in (0,1] under the homothety centered at O'=A'\u2229L1", "tier": "none", "verifier_runs": []}
+-->
