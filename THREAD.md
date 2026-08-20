@@ -1029,3 +1029,21 @@ I hold my prior.
 <!-- meta
 {"addresses": [49], "claims_conceded": [], "claims_opened": ["translation-crossings-diverge-generically"], "falsifier": "if the pentagram's actual pairwise angles give sin(theta_DE), sin(theta_DB), or sin(theta_DC) close enough to zero that two of the four export-crossings land within epsilon of each other or of P_B/P_C at the required macroscopic t*, the divergence argument fails and turn 49's corridor risk is live again", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 51 - Euclidn't - 2026-08-20T03:18:21Z
+
+Turn 51. Turn 50's linear-divergence tool is correct as a local fact — two points sliding along two non-parallel fixed lines under a common translating third line separate at a rate governed by their angle, and that rate is nonzero for any two of B, C, D, E since no two pentagram lines are parallel. I'm not disputing the mechanism. I'm disputing the premise that lets it conclude "safe."
+
+Turn 50 banks "P_C already placed off lines D and E" (imported from turn 48) to argue A∩E lands in territory nothing reaches. But look at what the construction actually needs, not just what it has shown so far. The whole reason turn 42 introduced translating A was to manufacture mixed M2/M3 triangles between the A-cluster and the B-cluster, via A∩D landing near P_B. That mechanism was never advertised as A-B-only — the 5,5,4 split needs mixed triangles across **all three** pairs, A-B, A-C, and B-C, to have any hope of reaching 42 mixed triangles (`intracluster-tamura-cap-12` forces >= 42 mixed, settled since turn 20). A construction that only exports A-crossings toward P_B and leaves P_C isolated from the pentagram entirely is not the construction anyone has been defending; it would forfeit the A-C contribution outright.
+
+So: something has to carry A-cluster crossings toward P_C too, by the identical logic that sent D toward P_B. The candidates are exactly B, C, D, E — the four lines A crosses. D is taken. That leaves B, C, E as the only lines available to serve the A-C leg. Turn 48 and turn 50 both used **E** as the example of a "safe, off-to-the-side, generically placed" crossing precisely because nothing was asking it to do any work. But if the construction needs a second export line, and E is a live candidate for that role, then "P_C placed off line E" is not a free, costless choice available to the defense — it is either (a) a concession that E is *not* the A-C export line, in which case B or C must be, and the same divergence-and-safety argument owed for D now has to be redone for whichever of B or C is chosen, or (b) if E genuinely is meant to double as the A-C export line, then A∩E is not landing in empty space at all — it is *supposed* to land near P_C, which is exactly the exposed, contested region turn 49 flagged, not the safe periphery turn 50 described.
+
+Turn 50 never says which of B, C, E does the A-C job. Without that naming, "P_C is off D and E, so A∩E is safe" and "the A-C mixed triangles come from somewhere" cannot both be freely assumed — at most one of the four A-crossings gets to be genuinely idle, because at least two of the four (one for the B-leg, one for the C-leg) are doing load-bearing work, and a third (the pinned D∩E-type vertices) needs checking on its own terms per triangle. The safety argument for the "unused" crossings was only ever demonstrated for a crossing that turn 50 itself never confirmed was actually unused.
+
+What's owed now: name the A-C export line among {B, C, E}, produce its own t*-and-target derivation the way turn 48 did for D, and confirm it doesn't collide with the D-leg's own off-target crossings (D's non-D-target crossings sweep the same way A's did). Opening `export-mechanism-needs-second-line` for this. Until two distinct, named, mutually-compatible export lines are on the board, "the corridor is empty" describes a construction that only serves one of the two cluster pairs it needs.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [50], "claims_conceded": [], "claims_opened": ["export-mechanism-needs-second-line"], "falsifier": "PythagorAss names two distinct lines among B, C, D, E as the A-B and A-C export lines respectively, derives both target offsets, and shows the four resulting off-target crossings avoid P_B's epsilon-ball, P_C's epsilon-ball, and each other.", "tier": "none", "verifier_runs": []}
+-->
