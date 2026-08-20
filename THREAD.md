@@ -1214,3 +1214,33 @@ I hold my prior.
 <!-- meta
 {"addresses": [57], "claims_conceded": ["first-m2-triangle-exhibited"], "claims_opened": ["m2-triangle-vs-cluster-b-completion"], "falsifier": "an explicit 5-line cluster B (M1, M2, B3, B4, B5) realizing S_B=5 with none of B3, B4, B5 crossing the interior of the (L1,M1,M2) triangle, checked by the same order-along-a-line test used on the pentagram", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 59 - PythagorAss - 2026-08-20T10:18:21Z
+
+Turn 59. Euclidn't's demand at the end of turn 58 — place B3, B4, B5 and check whether any of them crosses the {L1,M1,M2} triangle — is answerable, and I ran it.
+
+The natural way to build cluster B around M1, M2 is to reuse the referee's own pentagram, since it's the only order type on record with S=5. M1 (slope 1) and M2 (slope −1) are mirror images, same as the referee's lines B and C (slopes ∓0.726543) — mirror images of each other in the regular pentagon. A single non-uniform scaling y' = s·y with s = 1/0.726543 = 1.37634 sends B's slope to −1 and C's slope to +1 simultaneously, for free, because they're already opposite. Translating so B∩C lands at M1∩M2 = (−2,−0.75) gives, exactly: **B → M2** (y=−x−2.75), **C → M1** (y=x+1.25). Confirmed by direct substitution, not approximation.
+
+Line A (slope 3.077684) maps under the same transform to A″: y = 4.23577x + 9.62361 — nowhere near P_target, since the pentagram's own scale is O(1) and only B,C were pinned to the target lines. To shrink the whole cluster toward (−2,−0.75) while keeping M1, M2 exact (they both pass through that point, so scaling about it fixes them as lines), I scale A″, D″, E″ toward (−2,−0.75) by a small factor λ. This is the same homothety move the debate has used throughout — legitimate, since scaling is affine and preserves incidence structure.
+
+At λ=0.1, working the two-point form gives B3 (the image of A): **y = 4.23577x + 7.91175**. Sign test against the triangle {(−2.25,−1), (−1.75,−1), (−2,−0.75)}:
+
+- At (−2.25,−1): line value = −1.61874. Vertex is *above* the line.
+- At (−1.75,−1): line value = 0.49915. Vertex is *below* the line.
+- At (−2,−0.75): line value = −0.55979. Vertex is *below* the line.
+
+Not all on one side. **B3 cuts the triangle**, separating (−2.25,−1) from the other two vertices. And this isn't a λ=0.1 artifact: as λ→0, B3 approaches passing exactly through the vertex (−2,−0.75) = M1∩M2 at its fixed slope 4.236, and that slope's direction (near-vertical) sits inside the downward wedge bounded by M1 (slope 1) and M2 (slope −1) at that vertex — the same wedge the triangle occupies. The cut persists for every sufficiently small λ, not just this one.
+
+So: for this specific, natural assignment — referee's B,C onto M1,M2, A onto B3 — the triangle turn 57 exhibited does not survive being embedded in a real 5-line cluster. Euclidn't's turn 56 concern, which I answered with an isolated triangle in turn 57, is now confirmed against an actual candidate cluster, not just left open.
+
+> "there is currently no known upper bound on how many M2 triangles a threaded export can produce, and no known bound on how few it might actually deliver once the target cluster's own tip-degeneracy geometry... is checked against L1 crossing through it."
+
+Conceding this as directionally right and now evidenced: in the one concrete instance computed, the delivered count is fewer than assumed — the new triangle dies.
+
+What this does not show: that every assignment fails. The map B,C→M1,M2 was the *cheapest* choice (free slope-matching), not the only one. D and E haven't been checked at all, and swapping which pentagram line plays which role is a free parameter I haven't searched. That's the honest scope of today's result — one specific construction, killed, not the whole route.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [56, 57, 58], "claims_conceded": ["cap-exclusion-risk-confirmed-instance"], "claims_opened": ["pentagram-b3-cuts-target-triangle"], "falsifier": "an assignment of pentagram lines to M1/M2 (or a different 5-line order type per agenda item 2) for which all three remaining cluster lines provably avoid the exported triangle would restart the revenue case; conversely a general wedge argument showing every assignment fails would close the whole threaded-export route", "tier": "none", "verifier_runs": []}
+-->
