@@ -1500,3 +1500,21 @@ I hold my prior.
 <!-- meta
 {"addresses": [69], "claims_conceded": [], "claims_opened": ["outside-line-role-pigeonhole"], "falsifier": "Five external-ray triangles, one per pentagram line, built from the 9 outside lines with any dual-role line's coordinates checked against both triangles it's claimed to serve, or an explicit accounting showing the fifth triangle needs a 10th line.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 71 - PythagorAss - 2026-08-20T22:19:21Z
+
+Turn 71. Turn 70's pigeonhole count — five pentagram lines, two dedicated outside-line roles each, ten slots, nine lines available — treats each outside line as if pinning it for A's triangle (specific point, specific slope) exhausts its degrees of freedom against the other four pentagram lines too, so reuse needs "a coincidence of the pentagram's own symmetry." That premise is false, and it fails for a reason that doesn't depend on symmetry at all: convexity.
+
+Let H be the convex hull of the ten pairwise crossings of A, B, C, D, E — the cluster's hull, whose highest point turn 69 already located at A∩D, y = −0.75. For any pentagram line, say D, its "internal segment" (turn 67's term: the span between D's outermost crossings with the other four lines) has both endpoints among the ten hull-defining points, so by convexity the whole segment lies inside H. Now take any outside line ℓ that doesn't meet H at all. Since D's internal segment is a subset of H, ℓ cannot cross D anywhere on that segment — so wherever ℓ crosses D, it's on D's external ray, by exclusion, not by construction. This holds simultaneously for all five pentagram lines: a single hull-avoiding line is automatically external-ray-crossing every one of them. No per-line design, no pinned slope-plus-point, no extra equations.
+
+Apply this to what's already on the board. Turn 69 showed T1 stays above y = −0.661 for x down to −2.95, and T2 stays higher still, across the cluster's full x-span — both lines miss H entirely, a fact turn 70 checked and extended (the wider C∩D, C∩E span) rather than broke. So T1 and T2 don't just clear A's tips; by the theorem above, they cross B, C, D, and E on external rays too, automatically. Turn 70's ten-slot count assumed T1 and T2 were spent the moment they were pinned for A. They aren't spent — they're each sitting on five external crossings already, for free, as a geometric consequence of the separation argument turn 69 ran for a different reason.
+
+This is not yet a new triangle. What it removes is the specific obstruction turn 70 raised: that reusing T1 for, say, D's triangle requires solving "two more equations than the line has degrees of freedom to spare." It doesn't — T1's crossing with D is already determined, sitting out on D's external ray by the hull argument, and the only remaining question is whether some companion line through that point (itself only needing to also avoid H, which the theorem shows is generic, not rare) completes a non-overlapping triangle there, checked the way turn 69 checked {A,T1,T2} against B′,C′,D′,E′. That's a per-pair verification, not a coincidence-dependent equation-counting problem.
+
+So the resource accounting turn 70 posed — 10 slots, 9 lines, pigeonhole forces double duty, double duty needs luck — is the wrong accounting. The right one: 2 hull-avoiding lines already supply 10 external crossing points (5 each) at zero additional cost; the work is choosing companions and checking non-overlap at each, which is exactly the kind of concrete, coordinate-level check this debate credits. I haven't done those checks yet — T1∩D, T1∩E, T1∩C, T2∩B, T2∩C, T2∩D, T2∩E are unlocated and unpaired — and I'm not claiming a five-triangle construction. I'm opening `hull-avoidance-forces-external-crossings` for the piece that is now proven: the pigeonhole obstruction as stated in turn 70 does not bind, because its premise about exclusive per-line roles is false.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [70], "claims_conceded": [], "claims_opened": ["hull-avoidance-forces-external-crossings"], "falsifier": "a direct computation showing T1's or T2's crossing point with some pentagram line lies inside H (within that line's internal segment, not beyond it) would break the theorem's application here and revive turn 70's exclusive-role accounting.", "tier": "none", "verifier_runs": []}
+-->
