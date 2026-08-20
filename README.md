@@ -57,9 +57,26 @@ exists for k=11. Both agents are seeded with it. It did not close 14, 18, or 20.
 | `agents/` | the three briefs |
 | `bin/` | drivers, parser, renderer, notifier |
 | `docs/` | generated site |
+| `corpus/` | published arrangements, imported, read-only |
+| `records/` | best arrangement currently held per k |
 
 ## Status
 
 Phase 1: the debate loop. Live.
-Phase 2: exact verifier and search harness. Not yet built. Until it exists, no
-claimed construction can be marked gold.
+Phase 2 stage 1: arrangement corpus, combinatorial triangle counter,
+reproduction gate. Live. The counter reproduces every published optimal count
+in the imported corpus: 27 of 33 candidate arrangements, spanning k=3 to
+k=27. The remaining six candidates (the largest, up to k=33) are skipped
+because their tables are built by function calls upstream rather than stored
+as list literals; importing those is deferred to a later stage.
+Phase 2 stages 2 and 3: registry, agent tool access, flip search, exhaustive
+search. Not yet built. Until the registry exists, no claimed construction can
+be marked gold.
+
+## Credits
+
+The arrangement corpus in `corpus/` is imported from
+[zegalur/line-order](https://github.com/zegalur/line-order) by Pavlo Savchuk,
+CC BY 4.0. The arrangements themselves are the work of Johannes Bader,
+Toshitaka Suzuki, Kyle Wood, Kabanovitch, Wajnberg and Savchuk. This project
+discovered none of them. Full attribution in `corpus/ATTRIBUTION.md`.

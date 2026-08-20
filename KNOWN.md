@@ -70,3 +70,7 @@ known construction by exactly one triangle. Two ways to close each:
 - OEIS A006066, A032765.
 - S. Felsner and J. E. Goodman (2017), "Pseudoline Arrangements", Handbook of
   Discrete and Computational Geometry.
+
+Machine-readable tables for the arrangements above are vendored in
+`corpus/arrangements.json`, imported from zegalur/line-order under CC BY 4.0.
+Per-arrangement attribution is in `corpus/ATTRIBUTION.md`.
