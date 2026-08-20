@@ -1244,3 +1244,25 @@ I hold my prior.
 <!-- meta
 {"addresses": [56, 57, 58], "claims_conceded": ["cap-exclusion-risk-confirmed-instance"], "claims_opened": ["pentagram-b3-cuts-target-triangle"], "falsifier": "an assignment of pentagram lines to M1/M2 (or a different 5-line order type per agenda item 2) for which all three remaining cluster lines provably avoid the exported triangle would restart the revenue case; conversely a general wedge argument showing every assignment fails would close the whole threaded-export route", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 60 - Euclidn't - 2026-08-20T11:19:21Z
+
+Turn 60. Turn 59's kill of {L1,M1,M2} via B3 is correct, and I want to finish the computation it left explicitly open — "D and E haven't been checked at all" — because it doesn't help the construction.
+
+First, isolate the mechanism turn 59 actually used, since it generalizes. The triangle's apex is at M1∩M2 = (−2,−0.75), with M1 leaving the apex toward (−2.25,−1) at angle 225° and M2 leaving it toward (−1.75,−1) at angle 315°. The triangle's interior wedge at that vertex is the angular range (225°,315°) — the downward cone between the two edges, 90° wide. Any third line through (or, for small λ, passing near) that vertex has two opposite rays at line-orientation φ and φ+180 (mod 360). It cuts the triangle iff either ray lands in (225°,315°), which reduces to: φ mod 180 ∈ (45°,135°). Translating to slope: a line through the apex cuts the triangle iff |slope| > 1 (or vertical); it misses iff |slope| < 1. This is exact, not approximate — I re-derived it from the two edge directions, not from turn 59's numeric example.
+
+Now check it against B3 first, as a sanity check: slope 4.2358, |slope|>1, cuts. Matches turn 59's sign test exactly. Good, the criterion reproduces their result.
+
+Apply it to D. In the referee's original coordinates, D has slope −3.077684 — the exact mirror of A's 3.077684. Under turn 59's map (y′=sy with s=1.37634, which scales all slopes by s and fixes the sign), D's image has slope −3.077684 × 1.37634 = −4.2358, the exact negative of B3's slope. |−4.2358| > 1: D″ also cuts the triangle, by the identical continuity argument turn 59 used for A ("the cut persists for every sufficiently small λ, not just this one λ") — D approaches passing through the same apex as λ→0, from the mirror-symmetric direction, and lands in the same forbidden 90° cone by the symmetric case of the criterion above.
+
+Now E, for completeness: the referee's reference data gives E as the horizontal line y = 0.309017, slope 0 — not 0.309017 as a slope, a constant. Slope 0 has |slope| < 1: E is safe by the criterion. One of the three remaining lines clears the vertex.
+
+So the full picture for this specific, cheapest assignment: of the three pentagram lines still needed to complete cluster B (A, D, E), two of them — A and D, the steep mirror pair — kill the manufactured triangle in the same way, independently verified by the wedge criterion rather than a second numeric coincidence. Only E survives contact with this vertex, and E surviving this one check says nothing about whether E, embedded with A″,D″ and M1,M2, still delivers S_B = 5 elsewhere in the cluster — that arithmetic hasn't been touched.
+
+This is the pattern I predicted at the top of this debate, holding under a fourth successive round of concrete computation: every time a number gets attached to this construction, the total goes down, not up. Turn 57 exhibited one triangle. Turn 59 killed it with one cluster line. This turn kills it a second, independent way and shows the "safe window" at that vertex — |slope| < 1 — is narrow relative to the pentagram's own spread of directions (3.08, −3.08, ±0.73, 0), so most of the cluster's own lines are structurally disposed to cut anything manufactured near one of its vertices. That is closer to a counting obstruction than a coincidence.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [59], "claims_conceded": [], "claims_opened": ["wedge-safety-criterion-third-line", "d-line-also-cuts-t57-triangle"], "falsifier": "an exhibited 5-line cluster (all 10 pairwise crossings placed) that both scores S_B=5 among itself and leaves the turn-57 triangle, or any other new M2/M3 triangle, uncut by all three of A, D, and E in their mapped positions", "tier": "none", "verifier_runs": []}
+-->
