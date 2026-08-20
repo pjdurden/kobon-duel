@@ -1292,3 +1292,23 @@ I hold my prior.
 <!-- meta
 {"addresses": [60], "claims_conceded": ["wedge-cut-criterion-exact", "bc-to-m1m2-construction-dead"], "claims_opened": ["pentagram-equal-spacing-escapes-wedge-cut"], "falsifier": "if the conformal rotation needed to keep an adjacent 36-degree pair non-parallel to L1 also forces one of A, D, or B within 36 degrees of the wedge boundary for every valid theta, or if instantiated coordinates put P_target/L1 back inside T1 or T2's bounding box, the escape fails and I retract this route.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 62 - Euclidn't - 2026-08-20T13:19:21Z
+
+Turn 62. Turn 61's fix is real progress on the wedge problem specifically, and the angular arithmetic checks out: rotating the pentagram by θ=10° gives ray directions 10°, 46°, 82°, 118°, 154°, 190°, 226°, 262°, 298°, 334° — ten rays evenly spaced 36° apart, a consequence of the pentagram's directions being equally spaced mod 180° in the first place. I verified the specific claim:
+
+> "the nearest other line to any adjacent-pair wedge boundary is exactly one more 36° step away, never inside a 36°-wide arc that starts at the boundary"
+
+Correct — 82° sits a clean 36° past the wedge's far edge at 46°, no knife-edge, and the same holds at the opposite wedge (190°,226°) by the 180°-symmetry of the ray set. Conceding this as `wedge-spacing-arithmetic-correct`: the angular mechanism that kills turn 60's triangle does not touch an adjacent-pair wedge built this way.
+
+But notice what turn 61 actually did in the paragraph that produces this result: it stopped citing M1, M2 — the specific numeric lines from turn 57, checked against T1, T2, L2, L3, L4 — and started over with an abstract rotated pentagram at unspecified position. Nothing in the θ=10° construction is sited. There is no P_target, no c, no x0, no epsilon. Turn 61 says as much in its own closing line: "actual coordinates for this rotated placement (P_target siting, L1 non-parallel check, bounding-box safety vs T1/T2 redone for the new geometry)" is still owed. That is not a residual detail — it is the entire apparatus turns 53 through 56 built and is required before this triangle can be shown to exist anywhere useful. Right now this is a triangle shape argument, not a triangle.
+
+And the shape itself is worse than turn 61's presentation suggests. E sits at only 10° from horizontal specifically because θ=10° was chosen for one reason alone — to avoid E∥L1 — with no attention to what a small angle between E and L1 does to the triangle's geometry. Take apex E∩C at height δ above L1 (δ=0.25, matching turn 57's scale). A line through the apex at angle φ meets y=c at horizontal distance δ/tan(φ) from the apex. For C at 46°: δ/tan(46°) = 0.25/1.0355 ≈ 0.241. For E at 10°: δ/tan(10°) = 0.25/0.1763 ≈ 1.418 — roughly six times further out. The triangle isn't the compact, roughly-square object turns 57–60 checked against T1/T2/L2/L3/L4; it's a long sliver with one short leg near the apex and one leg running nearly six radii out along a direction barely tilted from L1 itself. That elongation runs in exactly the coordinate — horizontal displacement — that the entire bounding-box safety argument (`x < c` for the target ball, `x ≥ c` for T1) is built on. A vertex 1.4 units out from an epsilon-ball centered near P_target is not obviously still inside anyone's safe zone, and nobody has picked x0, c, or epsilon values that accommodate it.
+
+This can likely be tuned — a larger θ shortens E's reach at the cost of moving the wedge, and the wedge-clearance property is robust to θ by the spacing argument just conceded. But "likely tunable" is a mechanism, and my brief's standard, restated in this debate's own agenda item 1, is explicit: a mechanism for why revenue should exist will not be credited. Turn 60's specific triangle is dead by turn 61's own admission. What replaces it is a wedge shape proven safe in isolation and an elongated, unsited triangle whose actual coordinates, whose distance from T1/T2, and whose fit inside any epsilon-ball have not been computed once.
+
+S = 11, priced. Zero triangles beyond the pentagram witness have survived contact with a real cluster after sixteen turns of trying. I hold my prior.
+
+<!-- meta
+{"addresses": [61], "claims_conceded": ["wedge-spacing-arithmetic-correct"], "claims_opened": ["adjacent-pair-wedge-elongation-unsited"], "falsifier": "Explicit coordinates for E-rotated, C-rotated, and L1 (with stated theta, P_target, c, x0, epsilon) that place the {L1,E,C} triangle inside the established safe zone and disjoint from T1 and T2 by the same bounding-box test turns 55-58 used.", "tier": "none", "verifier_runs": []}
+-->
