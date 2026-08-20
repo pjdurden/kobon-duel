@@ -1190,3 +1190,27 @@ I hold my prior.
 <!-- meta
 {"addresses": [56], "claims_conceded": [], "claims_opened": ["first-explicit-m2-triangle"], "falsifier": "If extending {M1,M2} to a full 5-line near-pencil at P_target realizing S_B=5 forces every configuration of the remaining three lines to cut this triangle's interior, the existence claim fails and I retract it.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 58 - Euclidn't - 2026-08-20T09:19:21Z
+
+Turn 58. Turn 57's arithmetic checks out, and it is worth confirming exactly what it establishes before deciding what it doesn't.
+
+I verified the three points by hand: L1∩M1 = (−2.25,−1), L1∩M2 = (−1.75,−1), M1∩M2 = (−2,−0.75). Non-collinear (slopes 0, 1, −1, pairwise distinct), area 0.0625, and I independently checked the disjointness claim against the *other* two lines of the 4-cluster that turn 57 didn't test: L2 (y=x) sits at y ∈ [−2.25,−1.75] over the triangle's x-range, entirely below it; L3 (x+y=3) sits at y ∈ [4.75,5.25], entirely above it; L4 (x=1) is nowhere near x ∈ [−2.25,−1.75]. So the triangle is clean against all four 4-cluster lines, not just the two turn 57 checked against T1/T2. I'll concede the fact as stated:
+
+> "Three distinct points, non-collinear... a genuine triangle, area = (1/2)(0.5)(0.25) = 0.0625, nonzero."
+
+That's airtight, and it is in fact a slightly stronger result than turn 57 claimed, since I've now cleared it against L2 and L3 too. Conceding it as `first-m2-triangle-exhibited`.
+
+But look at where this triangle sits relative to what cluster B still owes. M1 and M2 are only 2 of the 5 lines a real cluster B needs to post S_B = 5. Turn 57 says this outright and calls it the next step. I want to name why that step is not a formality — it is the load-bearing one, and this specific triangle is the worst possible place to leave it unchecked.
+
+The triangle's vertices span x ∈ [−2.25,−1.75], y ∈ [−1,−0.75] — a region of radius roughly 0.3 around P_target = (−2,−1). Turn 55 established P_target by choosing epsilon < c−x0 = 1 and turn 57 in practice used δ = 0.25 to place M1, M2 within that radius of P_target. For cluster B to realize S_B = 5 at all, its argument is the homothety one from `homothety-realizes-S12`: shrink an optimal 5-line witness into a ball around P_target so all 10 pairwise crossings sit inside it. M1 and M2 are already inside that ball by construction — their own crossing with each other is at (−2,−0.75), 0.25 from P_target. The new triangle is not near the ball, it is *in* the ball, occupying a meaningful fraction of the same small disk that B3, B4, B5 must also cross through to generate B's own five triangles.
+
+That is exactly the configuration the pentagram episode already taught this debate is dangerous: a line threading through a cluster's interior at the scale where the cluster's own internal wall structure lives, checked against everything except the cluster's own remaining lines. Turn 44's line A survived against nine outside lines at any offset — its casualties came entirely from B and C, its own siblings, at the wall. Here the threat to the new triangle isn't the nine lines elsewhere in the arrangement; it's B3, B4, B5, which by construction have to pass within the same epsilon of P_target to make S_B = 5 possible in the first place.
+
+So the claim on the table — "at least one M2 triangle is geometrically realizable" — is true and small. The claim it's being offered in service of — that cluster B can bank both S_B = 5 and this triangle — is unverified, and the obstruction is not a residual worry, it's the specific next computation turn 57 named and didn't run: place B3, B4, B5, and check whether any of them crosses this 0.0625-area triangle. Until that's done, S = 11 (priced) plus one triangle that hasn't been checked against the cluster it's supposed to sit next to is not 12, let alone 13.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [57], "claims_conceded": ["first-m2-triangle-exhibited"], "claims_opened": ["m2-triangle-vs-cluster-b-completion"], "falsifier": "an explicit 5-line cluster B (M1, M2, B3, B4, B5) realizing S_B=5 with none of B3, B4, B5 crossing the interior of the (L1,M1,M2) triangle, checked by the same order-along-a-line test used on the pentagram", "tier": "none", "verifier_runs": []}
+-->
