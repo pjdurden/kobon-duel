@@ -71,9 +71,10 @@ optimum from k = 3 to k = 33. The entries this project depends on:
 |---|---|---|---|
 | `kobon_14_53tri` | 14 | 53 | Johannes Bader |
 | `kobon_15_5_rot_symmetry` | 15 | 65 | Toshitaka Suzuki |
-| `kobon_18_93tri` | 18 | 93 | per gallery |
-| `kobon_20_116tri` | 20 | 116 | per gallery |
-| the remaining ~26 entries | 3 to 33 | various | per gallery |
+| `kobon_18_93tri` | 18 | 93 | Johannes Bader |
+| `kobon_20_116tri` | 20 | 116 | Kyle Wood, based on the n=19 solution |
+| `kobon_13_m_sym_47tri` | 13 | 47 | Kabanovitch |
+| the remaining 27 entries | 3 to 33 | various | attribution taken verbatim from each gallery `entry_title` |
 
 **Attribution is a hard requirement, not a courtesy.** CC BY 4.0 obliges it and
 the artifact is public. Every imported arrangement carries its original
@@ -213,6 +214,14 @@ Deterministic, so the same arrangement always yields the same id, an agent
 cannot fabricate an id that resolves, and re-running a known arrangement
 deduplicates rather than accumulating.
 
+### 6.8b `records/`
+
+One JSON file per k holding the best arrangement currently held, in both
+representations where available, with its triangle count and provenance: either
+a corpus attribution or a registry run id. Seeded from the corpus at stage 1 so
+gate layer 2 has something to check before any search has run, then advanced by
+the search.
+
 ### 6.9 `bin/kobon-verify`
 
 The CLI agents invoke. Reads a JSON arrangement on stdin, in either
@@ -234,7 +243,7 @@ runs and the debate never learns anything from it.
 Three layers, proving three different things.
 
 **Layer 1, the counter (fast, in pytest).** The combinatorial table counter must
-reproduce the published triangle count for all ~30 corpus entries, k = 3 to
+reproduce the published triangle count for all 32 corpus entries, k = 3 to
 k = 33. Disagreement anywhere means a bug in the counter, not a discovery. This
 is a far stronger gate than a hand-built fixture set and it is the main reason
 importing the corpus is worth the attribution obligation.
@@ -314,7 +323,7 @@ Following the repo's existing 119-test convention, TDD throughout.
 
 - Table parse and canonicalization, including short rows (parallels) and
   multi-line points.
-- Combinatorial counter against all ~30 corpus entries.
+- Combinatorial counter against all 32 corpus entries.
 - Integer counter agrees with the `Fraction` verifier on random arrangements.
 - Registry ids deterministic, stable under canonicalization, and unique.
 - The gate catches a deliberately corrupted record.
@@ -327,7 +336,7 @@ Following the repo's existing 119-test convention, TDD throughout.
 ## 12. Staging
 
 **Stage 1, one day.** Table representation, combinatorial counter, corpus
-import, reproduction gate layers 1 and 2. Deliverable beyond the code: the
+import, `records/` seeded from the corpus, reproduction gate layers 1 and 2. Deliverable beyond the code: the
 per-line triangle-incidence degree sequence of Suzuki's k = 15, T = 65
 arrangement, written into the ledger, paying a debt outstanding since turn 5.
 
@@ -354,7 +363,7 @@ the most likely to not terminate.
   installing, and by keeping the change to a single added flag.
 - **Table semantics misread.** The degeneracy conventions are documented in
   prose, not formally specified. Mitigated by gate layer 1: a misreading fails
-  loudly against 30 published counts rather than silently producing wrong
+  loudly against 32 published counts rather than silently producing wrong
   research.
 - **Agents ignore the tool.** Possible; they ignored agenda item 2 for
   twenty-four consecutive turns. Mitigated by `UNVERIFIED_COORDINATES` making
@@ -364,7 +373,7 @@ the most likely to not terminate.
 
 Phase 2 is done when:
 
-- The combinatorial counter reproduces all ~30 published counts.
+- The combinatorial counter reproduces all 32 published counts.
 - `python3 -m pytest` is green.
 - A turn citing a fabricated run id gets a violation stamped in public.
 - A turn publishing coordinates without a run id gets a violation stamped.
