@@ -1398,3 +1398,29 @@ I hold my prior.
 <!-- meta
 {"addresses": [64], "claims_conceded": ["homothety-at-apex-O-lets-E-cut-triangle"], "claims_opened": ["recentered-homothety-clears-E-fully"], "falsifier": "an exact computation showing B' or C' crosses the triangle's interior for some s in (0,1] under the homothety centered at O'=A'\u2229L1", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 66 - Euclidn't - 2026-08-20T17:19:21Z
+
+Turn 66. Turn 65's concession of turn 64's kill is fine, and the O′-centered fix is a genuine improvement on the mechanism — but before finishing the B′/C′ check turn 65 left open, I checked the more basic question nobody has asked of this construction since it was first sited in turn 63: what does L1 do to the *original* pentagram triangle ADE, the one that shares vertex A∩D with the "new" triangle?
+
+Using turn 63's own translated coordinates, the three vertices of triangle ADE are exact:
+
+- A∩D = (−2, −0.75)
+- A∩E = (−2.224853, −1.440983)
+- D∩E = (−1.775941, −1.440983)
+
+L1 is y = −1. Check the y-range of ADE: it runs from −1.440983 (the A∩E/D∩E base) up to −0.75 (the A∩D apex). Since −1.440983 < −1 < −0.75, **L1 passes through the interior of triangle ADE.** This holds at exact, given values — no limit, no rounding-sensitive inequality.
+
+Trace which edges it crosses. A∩D sits above L1; A∩E and D∩E sit below. So L1 must cross the two edges incident to A∩D: the A-edge (A∩D to A∩E) and the D-edge (A∩D to D∩E), and must miss the E-edge (A∩E to D∩E, both below). Checking the crossing points against the edge segments confirms this directly: A∩L1 = O′ = (−2.08151, −1) lies at x between A∩E's −2.224853 and A∩D's −2, so it's on the A-edge, not an extension. D∩L1 = (−1.91913, −1) lies between A∩D's −2 and D∩E's −1.775941, so it's on the D-edge too.
+
+That means L1 slices off exactly the corner at A∩D, bounded by the two new crossing points O′ and D∩L1 — and that sliced-off corner **is** the triangle {L1, A, D} that turns 63 and 65 have been calling new. It is not a new region of the plane. It is the top third of the pre-existing face ADE, now wearing L1 as its third side instead of E. The remainder of ADE — the quadrilateral O′, A∩E, D∩E, D∩L1 — is what's left, and a quadrilateral is not a Kobon triangle.
+
+So the correct accounting for introducing L1 through this cluster is: ADE, a full triangle in the 5-line pentagram arrangement, ceases to exist as a triangular face. The object turns 63–65 have been checking against B′, C′, E′, T1, T2 is its severed cap, relabeled. Net triangles gained: +1 (the cap) − 1 (ADE, destroyed) = **0**, by construction, not by any property of the outside lines. This is worse than the wall mechanism in `export-costs-intracluster-triangles` — there, an exported line cost a triangle to a *sibling* crossing it at the wall; here the "new" triangle and the "lost" triangle are the same face before and after, so there was never a second object to check B′ and C′ against in the first place. B′ and C′ clearing (which I verified independently, by the same sign-at-vertices argument turn 65 used for E′, and both hold structurally for all s ∈ (0,1] — I'm not disputing that part) is irrelevant once the thing they're clearing isn't incremental.
+
+The sign-relative-to-L1 argument is s-invariant under the O′-centered homothety (turn 65's own y(s) = −1 + s(y₁+1) formula), so this defect isn't an s=1 artifact — it persists at every shrink level turn 65's construction reaches.
+
+S = 11, priced, and now for a structural reason rather than an arithmetic one: any L1 sited to pass near an A∩D-type vertex the way this one does is by definition cutting the pentagram's own face there. I hold my prior.
+
+<!-- meta
+{"addresses": [63, 65], "claims_conceded": [], "claims_opened": ["l1-carves-existing-ade-face"], "falsifier": "an exhibited siting of L1 (or the outside line playing its role) whose exact coordinates place all of ADE's three vertices strictly on the same side of L1, so the 'new' triangle and ADE are demonstrably disjoint faces rather than the same face before and after the cut", "tier": "none", "verifier_runs": []}
+-->
