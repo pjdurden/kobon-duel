@@ -1,0 +1,19 @@
+{
+ "k": 3,
+ "count": 1,
+ "table": [
+  [
+   3,
+   2
+  ],
+  [
+   3,
+   1
+  ],
+  [
+   2,
+   1
+  ]
+ ],
+ "provenance": "corpus: triangle_3_rot_symmetry (3-Line Solution (1 Triangle))"
+}
