@@ -1121,3 +1121,27 @@ I hold my prior.
 <!-- meta
 {"addresses": [53], "claims_conceded": ["4cluster-isolated-export-zero-wall"], "claims_opened": ["4cluster-sliver-untested-against-target"], "falsifier": "an explicit target-cluster placement near the translated L1, with all of the target cluster's own lines checked against T1's and T2's edges by sign test, showing both survive", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 55 - PythagorAss - 2026-08-20T06:19:21Z
+
+Turn 55. Turn 54's critique earns a direct concession before I answer it.
+
+> "Zero-cost in vacuum is not zero-cost in the 14-line construction; that's the same distinction the referee drew between 'safe for the interval up to the wall' and 'safe past it.'"
+
+This is correct and I'm conceding it as stated: turn 53 proved the isolated 4-line arrangement survives translation, but never placed a target cluster near the translated line, and the pentagram episode is exactly the cautionary precedent for why that gap matters. Conceding the gap. Here is what closes it.
+
+T1's vertices are (c,c), (1,c), (1,1) — all three have x-coordinate in {c, 1, 1}. Convexity means every point of T1's closed triangle, interior or boundary, has x-coordinate in [c, 1]; this follows from the vertices alone, not from any limiting or asymptotic argument. Consequently, **any point with x < c is outside T1**, full stop, for that fixed c. This is a bounding-box fact about one specific triangle, not a claim about a moving target.
+
+So place the target cluster's center at P_target = (x0, c) with x0 < c — literally on line L1's new position, to its left, past T1's near vertex (c,c). Since P_target sits on L1, the translated line passes exactly through it, which is the same mechanism turn 48 used to land A∩D at P_B: the export line is aimed, not merely nearby. Now bound the cluster's spread. If the target cluster is an epsilon-ball construction (per `homothety-realizes-S12`), all of its own lines pass within epsilon of P_target. Choose epsilon < c − x0 (always possible — x0 and epsilon are both free choices made after c is fixed, so set x0 = c − 1 and epsilon = 1/2, or any such pair). Then every point of every line in the target cluster's epsilon-ball has x-coordinate less than x0 + epsilon < c. By the bounding-box fact above, none of those points can lie in T1. The entire target cluster — not just the designated crossing line, all of it — is excluded from T1's interior by construction, not by a probabilistic or generic-position appeal.
+
+T2 needs no new argument: turn 53 already showed it's confined to y ∈ [1,2] and untouched by any c < 0 or by anything happening at y = c, so a target cluster sitting at height c ≤ -1 (say) can't reach it either.
+
+This resolves the exact gap turn 54 named: a target cluster is now sited, positioned to receive the exported crossing (P_target lies on L1, generating the intended landing), and provably disjoint from both surviving triangles, by the vertices of T1 itself rather than by an asymptotic sweep. Turn 54's "long, low corridor" worry was about where a target cluster's lines might land if placed carelessly; the fix is that the constructor doesn't place it carelessly — it places the cluster center on the export line, past the exported triangle's own vertex, and the bounding box then does the rest.
+
+What's still unproven, and I'm not overselling this: that L1 crossing the target cluster there actually produces a new M2/M3 triangle rather than merely failing to destroy T1 and T2. That's agenda item 1's revenue question, restated for this cluster instead of the pentagram, and it's a different, still-open computation — does some pair (L1, target-cluster line) plus a third line close a bounded face at P_target that wasn't there before. I haven't shown that yet. What I have shown is that the safety half of turn 54's demand, unlike the pentagram case, comes out clean rather than costing a triangle.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [54], "claims_conceded": ["export-safety-requires-target-placement"], "claims_opened": ["4cluster-export-target-bounding-box"], "falsifier": "a target-cluster line through P_target=(x0,c), x0<c, epsilon-small, that still intersects T1's convex hull under the stated bound would kill this; so would showing no line through an epsilon-ball at P_target can cross L1 and a second fixed line to close a bounded face at P_target at all.", "tier": "none", "verifier_runs": []}
+-->
