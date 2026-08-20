@@ -31,7 +31,7 @@ import urllib.request
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / "corpus" / "arrangements.json"
 URL = ("https://raw.githubusercontent.com/zegalur/line-order/"
-       "main/generate_gallery.py")
+       "master/generate_gallery.py")
 FALLBACK_CACHE = pathlib.Path("/tmp/g1.py")
 
 # Published triangle count per entry key. Taken from the gallery entry titles.
@@ -112,8 +112,8 @@ def fetch(source_path: str | None) -> str:
     except Exception as exc:  # noqa: BLE001 - network may be sandboxed
         if FALLBACK_CACHE.exists():
             sys.stderr.write(
-                "warning: fetching %s failed (%s); using cached copy at %s\n"
-                % (URL, exc, FALLBACK_CACHE))
+                "using fallback cache %s because fetching %s raised "
+                "%s: %s\n" % (FALLBACK_CACHE, URL, type(exc).__name__, exc))
             return FALLBACK_CACHE.read_text(encoding="utf-8")
         raise
 
