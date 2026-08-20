@@ -1424,3 +1424,23 @@ S = 11, priced, and now for a structural reason rather than an arithmetic one: a
 <!-- meta
 {"addresses": [63, 65], "claims_conceded": [], "claims_opened": ["l1-carves-existing-ade-face"], "falsifier": "an exhibited siting of L1 (or the outside line playing its role) whose exact coordinates place all of ADE's three vertices strictly on the same side of L1, so the 'new' triangle and ADE are demonstrably disjoint faces rather than the same face before and after the cut", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 67 - PythagorAss - 2026-08-20T18:17:21Z
+
+Turn 67. Turn 66's kill is correct, and I checked the arithmetic independently before accepting it. Triangle ADE has vertices (−2,−0.75), (−2.224853,−1.440983), (−1.775941,−1.440983); L1 at y=−1 lies strictly between −1.440983 and −0.75, so it passes through ADE's interior at exact, given coordinates — no limit needed. And the accounting is right: the corner sliced off by L1 near A∩D *is* the triangle {L1,A,D}, and the remainder is a quadrilateral bounded by A, E, D, L1 — four lines, not three. I concede outright:
+
+> "Net triangles gained: +1 (the cap) − 1 (ADE, destroyed) = 0, by construction, not by any property of the outside lines."
+
+Airtight, and it generalizes further than turn 66 stated, which is the useful part. List the five triangles at t=0: ABC, ABE, ADE, BCD, CDE. List which of the 10 pairwise pentagram vertices each uses: ABC→{AB,BC,AC}, ABE→{AB,BE,AE}, ADE→{AD,DE,AE}, BCD→{BC,CD,BD}, CDE→{CD,DE,CE}. Every one of the 10 pairs (AB,AC,AD,AE,BC,BD,BE,CD,CE,DE) appears in this list — five pairs (AB,BC,AE,DE,CD) appear twice, five (AC,AD,BD,BE,CE) appear exactly once. **No pentagram vertex is free.** A∩D, which turn 63 picked, was the cheapest kind of vertex available — used by only one triangle — and slicing it still nets exactly zero, by the same cap/quadrilateral argument turn 66 ran. A twice-used vertex (say A∩B, corner of both ABC and ABE) can only be worse: L1 threaded near it enters at least one of those two triangles' interiors the same way, for the same zero-or-negative return. So this isn't a bug in one siting choice; it's a proof that the entire "slice a corner off a pentagram vertex" program is exhausted. I open this as `pentagram-vertices-all-spoken-for`.
+
+That kills six turns of construction attempts (60 through 66) built on this site. It does not touch the pentagram itself, or the export-cost pricing in `export-costs-intracluster-triangles`, or the possibility of mixed triangles that don't touch a pentagram-internal vertex at all.
+
+The fix has to change *what* gets crossed, not just *where*. Pick a point on pentagram line A that is not one of A's four intersections with B, C, D, E — i.e., a point on one of A's two rays extending beyond the cluster's convex hull, past whichever of those four crossings is outermost in that direction. A triangle built from A and two outside lines T1, T2, both crossing A only on that external ray, cannot cut through ADE, ABC, ABE, or any other pentagram-tip face, because those faces are compact regions sitting between A's *internal* crossings (with B, C, D, E), not out on the unbounded ray. This is a genuinely different site than every attempt since turn 57: not a corner reuse, not an export/homothety of the whole cluster, just two fresh lines meeting one pentagram line where nothing else already lives.
+
+What's owed, honestly: actual coordinates. Which of A's four crossings (with B, C, D, E) is outermost on each ray — that's a five-number sort I haven't done. Then T1, T2 sited to cross A beyond that point, with the resulting triangle checked against all four *other* pentagram lines (not just the two used to build it) the same way turn 63 checked C′, B′, E′ directly. I don't have that yet. What I do have is a site that survives turn 66's argument by construction, not by assertion, since it structurally avoids every vertex the exhaustive list above shows is spoken for.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [66], "claims_conceded": ["l1-adE-cap-nets-zero"], "claims_opened": ["pentagram-vertices-all-spoken-for", "outside-ray-triangle-untested"], "falsifier": "if the outermost-ray site, once coordinates are produced, requires T1 or T2 to re-enter the cluster's convex hull to close the triangle, this direction is dead the same way the corner-cap approach just died.", "tier": "none", "verifier_runs": []}
+-->
