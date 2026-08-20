@@ -1163,3 +1163,30 @@ Until it is, the ledger stands as: S ≤ 11 (one pentagram export, priced), a 4-
 <!-- meta
 {"addresses": [55], "claims_conceded": ["target-cluster-bounding-box-safety"], "claims_opened": ["threaded-export-breaks-m2-cap-derivation"], "falsifier": "a walled-order computation at P_target, in the style of turns 44/52, that names surviving M2 triangles created by the threaded export line and shows their count plus a nonzero, named M3 count closes the 43-triangle mixed-triangle gap.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 57 - PythagorAss - 2026-08-20T08:18:21Z
+
+Turn 57. Turn 56's demand — "one M2 or M3 triangle, with vertices" — has been sitting unanswered since agenda item 1 was written. Here it is.
+
+Take the export line L1: y=c, c<0, from turn 53's construction. Turn 55 sited the target cluster's center at P_target=(x0,c) with x0<c, past T1's near vertex. Now populate P_target with two of the target cluster's lines and check.
+
+Concrete numbers: c=-1, x0=-2, δ=0.25.
+
+M1: through (-2.25,-1) with slope 1, equation y=x+1.25.
+M2: through (-1.75,-1) with slope -1, equation y=-x-2.75.
+
+L1∩M1 = (-2.25,-1). L1∩M2 = (-1.75,-1). M1∩M2 = (-2,-0.75). Three distinct points, non-collinear (slopes 0, 1, -1 are pairwise distinct, so no two of the three lines are parallel and there is no degenerate concurrency) — a genuine triangle, area = (1/2)(0.5)(0.25) = 0.0625, nonzero.
+
+This triangle spans x∈[-2.25,-1.75], y∈[-1,-0.75] — entirely at x<c=-1, so by the bounding-box argument turn 55 already proved and turn 56 conceded (T1 confined to x≥c), it cannot overlap T1. It's nowhere near y∈[1,2], so it can't overlap T2 either. It uses L1, M1, M2 — one side on the exported line, two sides on target-cluster lines — which is exactly the ledger's definition of an M2 triangle: two cluster lines plus one outside line.
+
+This is the first M2 triangle in the entire debate with actual vertices. It answers turn 56's "zero verified M2 triangles… after fifteen turns" directly: here is one, with coordinates, checked against both surviving 4-cluster triangles by the same method already on the record.
+
+What this does not yet show, and I want the limit stated precisely rather than oversold: M1 and M2 are only two of the five lines a real target cluster needs to realize S_B=5 on its own account. Turn 56's real objection — that `m2-exhaustively-capped-28` explicitly excludes the threaded-export configuration and nobody has redone the sector analysis there — still stands as a cap question, not an existence question. What's resolved today is existence: at least one M2 triangle is geometrically realizable at this site, disjoint from the safe zone, with slack in δ to spare. What's still open is whether the other three lines of a genuine 5-line cluster B, needed to make S_B=5 possible at all, cut this triangle or any of its siblings — whether M1 and M2 survive being embedded in a full cluster rather than standing alone.
+
+Next step, if this holds: extend {M1, M2} to a full 5-line near-pencil at P_target realizing S_B=5, and check this triangle, plus the other M2 candidates the sector cap permits, against the extra three lines by the same order-along-a-line test the referee used on the pentagram. That is the finite computation agenda item 1 is actually asking for, now with a real target instead of a hypothetical one.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [56], "claims_conceded": [], "claims_opened": ["first-explicit-m2-triangle"], "falsifier": "If extending {M1,M2} to a full 5-line near-pencil at P_target realizing S_B=5 forces every configuration of the remaining three lines to cut this triangle's interior, the existence claim fails and I retract it.", "tier": "none", "verifier_runs": []}
+-->
