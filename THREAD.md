@@ -1312,3 +1312,41 @@ S = 11, priced. Zero triangles beyond the pentagram witness have survived contac
 <!-- meta
 {"addresses": [61], "claims_conceded": ["wedge-spacing-arithmetic-correct"], "claims_opened": ["adjacent-pair-wedge-elongation-unsited"], "falsifier": "Explicit coordinates for E-rotated, C-rotated, and L1 (with stated theta, P_target, c, x0, epsilon) that place the {L1,E,C} triangle inside the established safe zone and disjoint from T1 and T2 by the same bounding-box test turns 55-58 used.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 63 - PythagorAss - 2026-08-20T14:19:21Z
+
+Turn 63. Turn 62's kill of the θ=10° construction stands — it was never sited, and the elongation problem (E's leg reaching ~1.4 units from the apex, six times the triangle's own scale) is real. I'm not defending it. Here is the fix, with exact coordinates instead of an angular sketch.
+
+The elongation came from choosing E (0° native) as a wedge line, forcing a rotation to dodge E∥L1. Don't use E. Use **A and D directly** — native slopes 3.077684 and −3.077684, angles 72° and 108°, symmetric about vertical, the pair of the five *farthest* from horizontal. No rotation needed; neither is parallel to L1 (y=c).
+
+Natively, A∩D = (0,1) (solve 3.077684x+1 = −3.077684x+1). Translate the whole pentagram by (−2,−1.75) so this apex lands at (−2,−0.75), same site turn 57 used. Under pure translation — an isometry, no scaling — every slope and all five triangles of S=5 survive exactly; this is simpler than turn 59's non-uniform scale, which is what broke that construction's angles in the first place.
+
+Translated lines, computed directly:
+- A′: y = 3.077684x + 5.405368
+- D′: y = −3.077684x − 6.905368
+- C′: y = 0.726543x − 0.67888
+- B′: y = −0.726543x − 3.585052
+- E′: y = −1.440983 (horizontal, constant)
+
+Triangle {L1, A′, D′} at L1: y=−1: A′ gives x=−2.0815, D′ gives x=−1.9192. Vertices (−2.0815,−1), (−1.9192,−1), (−2,−0.75) — base width 0.163, versus turn 57's 0.5. Tighter box, so it's a subset of the region turn 58 already cleared against L2, L3, L4.
+
+Now the three remaining lines, checked exactly rather than by wedge angle alone:
+- C′ meets L1 at x = −0.442 — margin 1.48 from the triangle's right edge.
+- B′ meets L1 at x = −3.558 — margin 1.48 from the left edge.
+- E′ sits at y=−1.441, below the triangle's entire y-range [−1,−0.75]; it doesn't reach the triangle at all.
+
+Both margins exceed 18× the triangle's own half-width. This isn't the λ→0 continuity argument turn 59 needed — these are the actual native-scale crossing points, computed once, with no limit to take.
+
+The remaining gap, stated precisely: this cluster's own span (B′ to C′ is 3.1 units wide) is not yet inside an epsilon-ball satisfying turn 55's siting (epsilon < c−x0 = 1). Fix: homothety about the apex (−2,−0.75) with factor s<1 — the same move turn 25's `homothety-realizes-S12` licenses, applied here to translation output instead of raw pentagram output. Homothety preserves all angles exactly and scales every distance, including both margins above, by the same s. The margin-to-triangle-size ratio (currently ~18:1) is scale-invariant, so it survives at any s, all the way to arbitrarily small epsilon. That derivation is mechanical, not yet written out with a chosen s.
+
+I concede turn 62's diagnosis of the prior construction:
+
+> "Nothing in the θ=10° construction is sited... Right now this is a triangle shape argument, not a triangle."
+
+Correct, and it's why I dropped it rather than patched it. What's new this turn is a triangle with exact vertices, checked against all three remaining pentagram lines by direct substitution rather than the angular criterion alone, with margins an order of magnitude larger than the failed construction's.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [62], "claims_conceded": ["theta10-construction-unsited"], "claims_opened": ["ad-wedge-exact-clearance-margins"], "falsifier": "if the referee's homothety scaling (about apex (-2,-0.75)) applied to the full 5-line translated cluster is run at an explicit s satisfying epsilon < c-x0, and any of C', B', E' or an outside line still cuts the triangle or a sibling A/D-adjacent triangle at that scale, I drop the AD-wedge construction.", "tier": "none", "verifier_runs": []}
+-->
