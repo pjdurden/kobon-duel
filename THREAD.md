@@ -1482,3 +1482,21 @@ I hold my prior.
 <!-- meta
 {"addresses": [68], "claims_conceded": [], "claims_opened": ["external-ray-triangle-verified"], "falsifier": "if any pairwise crossing among A,B,C,D,E has y > -0.75 (i.e. A\u2229D is not actually the cluster ceiling), the band-separation argument for T1/T2 clearing all five tip triangles fails and needs a direct per-triangle recheck.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 70 - Euclidn't - 2026-08-20T21:18:21Z
+
+Turn 70. I checked turn 69's arithmetic independently before deciding how to respond to it. Q1, Q2 sit on A' exactly as claimed; T1, T2's intersection R is correctly solved; and the separation argument is actually stronger than what was written down. Turn 69 only verified T1 against the cluster's *leftmost* vertex (B∩E, x=−2.95) and asserted the rest by extrapolation. I computed the two vertices it skipped — C∩D at (−1.637,−1.867) and C∩E at (−1.050,−1.441) — which push the cluster's true x-span to [−2.951, −1.050], wider than what was checked. But T1 has positive slope, so its minimum on any interval is at the left end, and T1(−2.95) = −0.661 already clears −0.75; T2 has negative slope, so its minimum is at the right end, and T2(−1.050) = 2.378 clears it by miles. The wider span doesn't break the argument. `external-ray-triangle-verified` holds under my own check, not just the original author's.
+
+So I'm not attacking the arithmetic. I'm attacking what it's evidence for. One triangle, {A,T1,T2}, for two new lines, is a single data point. The question this debate has to answer is whether the mechanism *scales* — because a construction that produces +1 mixed triangle once, at a cost that hasn't been shown to be repeatable, does not move S=11 toward the ≥42 mixed triangles that `intracluster-tamura-cap-12` requires.
+
+Here is the concrete obstruction turn 69 didn't check, and it's arithmetic, not hand-waving. The full benefit of this mechanism requires every one of the 5 pentagram lines — A, B, C, D, E — to get its own external-ray triangle, each consuming two dedicated outside lines with a specific slope and offset fixed by that pentagram line's crossing geometry. That's 5 lines × 2 roles = 10 role-slots. But the 5,5,4 split gives exactly 9 outside lines total (the other cluster's 5 plus the third cluster's 4). By pigeonhole, at least one outside line must serve as T1 or T2 for **two different pentagram lines at once**.
+
+That's not automatically fatal — a line is infinite and can sit in many triangles — but it is not automatically free either, and nobody has checked it. Once an outside line is fixed to serve as, say, A's T1 (slope +1, offset through Q1 = (−1.5, 0.789)), its full equation is pinned. For it to *also* serve as, say, D's T1 or T2, it must independently pass through D's external-ray point at D's required slope — and D's crossing structure (D is A's mirror pair, slope −3.077684) puts its external ray in a different location with a different required geometry. A single fixed line satisfying two independent point-plus-approach constraints for two different pentagram lines is two more equations than the line has degrees of freedom to spare, once its role for A is already spent. Either it works by a coincidence of the pentagram's own symmetry (worth checking, since the construction has 5-fold near-symmetry), or it doesn't and the ninth line is short.
+
+So the actual owed object is not another single-triangle check. It's: exhibit **all five** external-ray triangles simultaneously, with the 9 outside lines assigned to roles, at least one line shown in a dual role with coordinates verified against both triangles it's claimed to build, or a stated proof that the fifth pentagram line's triangle is unreachable within the 9-line budget. Until that exists, "S=11 plus one verified mixed triangle" is the honest count, not "the mixed-triangle program works."
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [69], "claims_conceded": [], "claims_opened": ["outside-line-role-pigeonhole"], "falsifier": "Five external-ray triangles, one per pentagram line, built from the 9 outside lines with any dual-role line's coordinates checked against both triangles it's claimed to serve, or an explicit accounting showing the fifth triangle needs a 10th line.", "tier": "none", "verifier_runs": []}
+-->
