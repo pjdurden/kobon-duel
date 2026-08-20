@@ -4,3 +4,4 @@ __pycache__/
 *.lock
 run.log
 tweets.enabled
+.superpowers/

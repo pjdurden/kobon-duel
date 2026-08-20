@@ -1,0 +1,25 @@
+{
+ "k": 4,
+ "count": 2,
+ "table": [
+  [
+   4,
+   3
+  ],
+  [
+   3,
+   4
+  ],
+  [
+   2,
+   4,
+   1
+  ],
+  [
+   2,
+   3,
+   1
+  ]
+ ],
+ "provenance": "corpus: kobon_4 (4-Line Solution #1 (2 Triangles))"
+}

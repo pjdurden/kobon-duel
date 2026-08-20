@@ -65,7 +65,11 @@ Two repositories by Pavlo Savchuk, both licensed CC BY 4.0:
   its data directories are gitignored and empty.
 
 `line-order/generate_gallery.py` contains published tables for every known
-optimum from k = 3 to k = 33. The entries this project depends on:
+optimum from k = 3 to k = 33, 33 candidate entries in all. 27 of those import
+successfully; the other 6 (the largest, up to k = 33) are skipped because
+their tables are built by function calls upstream rather than stored as list
+literals, and importing those is deferred to stage 2. The imported entries
+this project depends on:
 
 | entry | k | triangles | attribution |
 |---|---|---|---|
@@ -74,13 +78,15 @@ optimum from k = 3 to k = 33. The entries this project depends on:
 | `kobon_18_93tri` | 18 | 93 | Johannes Bader |
 | `kobon_20_116tri` | 20 | 116 | Kyle Wood, based on the n=19 solution |
 | `kobon_13_m_sym_47tri` | 13 | 47 | Kabanovitch |
-| the remaining 27 entries | 3 to 33 | various | attribution taken verbatim from each gallery `entry_title` |
+| the remaining 22 entries | 3 to 27 | various | attribution taken verbatim from each gallery `entry_title` |
 
 **Attribution is a hard requirement, not a courtesy.** CC BY 4.0 obliges it and
 the artifact is public. Every imported arrangement carries its original
-attribution in `corpus.py`, in `KNOWN.md`, and in the README. No imported
-arrangement may ever appear in a Telegram or X post without its author's name.
-The project's contribution is the search and the harness, never the corpus.
+attribution in `corpus.py`, in `corpus/ATTRIBUTION.md`, and in the README.
+`KNOWN.md` itself carries only a pointer line to `corpus/ATTRIBUTION.md`, not
+the per-arrangement attribution. No imported arrangement may ever appear in a
+Telegram or X post without its author's name. The project's contribution is
+the search and the harness, never the corpus.
 
 Also relevant, already in `LITERATURE.md`: Forge and Ramirez Alfonsin (1998),
 whose Proposition 3.1 describes arrangements of the form `y = m_i(x - a_i)` with
@@ -106,7 +112,9 @@ Two degeneracies matter and both appear in the corpus:
   arrangement has rows of length 12 and 13, so it has parallels. Any
   implementation assuming uniform row length is wrong on the seed itself.
 - **Multi-line intersection points.** Where three or more lines meet, row `i`
-  lists all of them consecutively in the same order, starting from line `i`.
+  represents the point as a nested list: every line named in that sublist
+  crosses line `i` at that one shared point, so they all share a single
+  position index in the row rather than each getting a distinct one.
 
 The combinatorial counter must handle both. Correctness is established by the
 reproduction gate in section 7, not by argument.
@@ -243,15 +251,23 @@ runs and the debate never learns anything from it.
 Three layers, proving three different things.
 
 **Layer 1, the counter (fast, in pytest).** The combinatorial table counter must
-reproduce the published triangle count for all 32 corpus entries, k = 3 to
-k = 33. Disagreement anywhere means a bug in the counter, not a discovery. This
+reproduce the published triangle count for all 27 imported corpus entries,
+k = 3 to k = 27 (27 of 33 candidates in the published gallery, which itself
+runs to k = 33; the other 6, the largest, are deferred to stage 2).
+Disagreement anywhere means a bug in the counter, not a discovery. This
 is a far stronger gate than a hand-built fixture set and it is the main reason
 importing the corpus is worth the attribution obligation.
 
-**Layer 2, the coordinate path (fast, in pytest).** Every arrangement in
-`records/` is recounted by the exact `Fraction` verifier and must match its
-stored count and meet or beat the `KNOWN.md` best-known for that k. Catches
-stale or corrupted records.
+**Layer 2, the record path (fast, in pytest), in two stages:**
+
+- **Stage 1 (built).** Every arrangement in `records/` is recounted by the
+  combinatorial table counter and must match its stored count, and meet or
+  beat the `KNOWN.md` best-known for that k where one exists. Catches stale or
+  corrupted records against their own tables.
+- **Stage 2 (not yet built).** The same records recounted from coordinates
+  through the exact `Fraction` verifier in `verify.py`, once records carry a
+  coordinate representation. Catches a bug shared by the table encoding and
+  the table counter that a table-only recount cannot see.
 
 **Layer 3, the search (slow, `bin/selftest_ladder.py`, not in pytest).** Flip
 search must independently rediscover N(k) climbing from k = 6, and
@@ -323,7 +339,7 @@ Following the repo's existing 119-test convention, TDD throughout.
 
 - Table parse and canonicalization, including short rows (parallels) and
   multi-line points.
-- Combinatorial counter against all 32 corpus entries.
+- Combinatorial counter against all 27 imported corpus entries.
 - Integer counter agrees with the `Fraction` verifier on random arrangements.
 - Registry ids deterministic, stable under canonicalization, and unique.
 - The gate catches a deliberately corrupted record.
@@ -336,9 +352,13 @@ Following the repo's existing 119-test convention, TDD throughout.
 ## 12. Staging
 
 **Stage 1, one day.** Table representation, combinatorial counter, corpus
-import, `records/` seeded from the corpus, reproduction gate layers 1 and 2. Deliverable beyond the code: the
-per-line triangle-incidence degree sequence of Suzuki's k = 15, T = 65
-arrangement, written into the ledger, paying a debt outstanding since turn 5.
+import, `records/` seeded from the corpus, reproduction gate layer 1 and
+layer 2's stage 1. This phase-2 stage delivered 27 of the 33 candidate corpus
+entries; the remaining 6 are skipped because their tables are built by
+function calls upstream rather than stored as literals, and importing those
+is deferred to phase-2 stage 2. Deliverable beyond the code: the per-line
+triangle-incidence degree sequence of Suzuki's k = 15, T = 65 arrangement,
+written into the ledger, paying a debt outstanding since turn 5.
 
 **Stage 2.** Integer counter, straightening, registry, CLI, agent tool access,
 driver gates, GOLD path, flip search, search timer, `SEARCH.md`. This is the
@@ -363,7 +383,7 @@ the most likely to not terminate.
   installing, and by keeping the change to a single added flag.
 - **Table semantics misread.** The degeneracy conventions are documented in
   prose, not formally specified. Mitigated by gate layer 1: a misreading fails
-  loudly against 32 published counts rather than silently producing wrong
+  loudly against 27 published counts rather than silently producing wrong
   research.
 - **Agents ignore the tool.** Possible; they ignored agenda item 2 for
   twenty-four consecutive turns. Mitigated by `UNVERIFIED_COORDINATES` making
@@ -373,7 +393,8 @@ the most likely to not terminate.
 
 Phase 2 is done when:
 
-- The combinatorial counter reproduces all 32 published counts.
+- The combinatorial counter reproduces all 27 imported published counts (of
+  33 candidates in the published gallery; the other 6 are deferred to stage 2).
 - `python3 -m pytest` is green.
 - A turn citing a fabricated run id gets a violation stamped in public.
 - A turn publishing coordinates without a run id gets a violation stamped.
