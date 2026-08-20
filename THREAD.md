@@ -961,3 +961,29 @@ I hold my prior.
 <!-- meta
 {"addresses": [46], "claims_conceded": [], "claims_opened": ["tip-v0-v2-balloon-to-macroscopic"], "falsifier": "An explicit target t and B/C-line pairing for line A's export, with all nine outside lines checked against segments [D\u2229E,A\u2229D], [D\u2229E,A\u2229E], [B\u2229C,A\u2229C], [B\u2229C,A\u2229B] and shown clear, would remove this obstruction.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 48 - PythagorAss - 2026-08-20T00:18:21Z
+
+Turn 48. Turn 47's ballooning claim is correct, and I concede it on this quote:
+
+> "The triangle doesn't shrink, rotate, or stay put — it balloons into a long thin sliver stretching from near P_A all the way out to wherever A has gone."
+
+That's airtight: D∩E is untouched by the translation, while A∩D and A∩E are — by definition — two of the four crossings turn 42 set out to export. V0 necessarily stretches exactly as far as A goes, because two of its three vertices *are* the export targets. Same for V2 with lines B, C. This isn't collateral damage sitting alongside the mechanism; it's the same motion viewed from a different triangle. Good to have that nailed down precisely rather than left as "probably fine."
+
+But "sitting in the flight path of the nine outside lines" overstates what's actually exposed, and the overstatement is doing the work in turn 47's "default expectation is that at least one line crosses."
+
+Trace what's actually in the corridor. The sliver's two long edges are segments of lines D and E — both fixed, both infinite, both untouched by the translation. Every other line in the 14-line arrangement is one of three things: a cluster-A sibling (B, C — irrelevant to D and E's own sliver), one of the five P_B-cluster lines, confined by the homothety construction to an epsilon-ball around P_B, or one of the four P_C-cluster lines, confined near P_C. None of those lines has any reason to pass near the *middle* of the corridor unless a cluster center sits there.
+
+So place P_C off lines D and E entirely — a generic-position choice, free at construction time, costs nothing. Then P_C's lines threaten the sliver only where they cross D or E, and since they're confined near P_C, and P_C isn't near D or E, any such crossing sits far from the corridor's midsection.
+
+That leaves P_B, and here the geometry is forced rather than chosen: to land A∩D near P_B at all — the whole point of the export — line D itself has to pass near P_B. So D passes close to both P_A and P_B, and every P_B-cluster line, also passing near P_B, crosses D *near P_B*, not in the empty middle. Two lines both close to a common point intersect close to that point, absent near-parallelism. So all five P_B-line crossings with D cluster right on top of the target point A∩D — not spread across the corridor's length.
+
+That converts turn 47's "nine lines in the flight path" into a smaller, local, already-familiar question: among the five P_B-lines' crossings with D, all landing within epsilon of A∩D, what is their order relative to A∩D along line D? If A∩D sits outside the interval spanned by those five local crossings, V0's D-edge survives untouched all the way to the target; if it sits inside, the wall-crossing analysis turns 44–46 already ran for the pentagram's own internal walls applies again here, just centered at P_B instead of P_A.
+
+I haven't computed that order — it's a finite, five-point sidedness check at P_B, not yet done by either side, and it is the actual successor to what turn 47 raised. Opening `corridor-danger-is-local-not-global` for the reduction; the local order-type check at P_B is the item still owed, not a diffuse nine-line risk spread across an otherwise empty corridor.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [47], "claims_conceded": ["sliver-balloons-to-export-target"], "claims_opened": ["corridor-danger-is-local-not-global"], "falsifier": "an explicit P_B-cluster order type in which, for every choice of which cluster-A line is translated and which line it targets, at least one of the five local D-crossings (or E-crossings) necessarily falls between P_A and the target point whenever line D passes near P_B at all.", "tier": "none", "verifier_runs": []}
+-->
