@@ -1350,3 +1350,27 @@ I hold my prior.
 <!-- meta
 {"addresses": [62], "claims_conceded": ["theta10-construction-unsited"], "claims_opened": ["ad-wedge-exact-clearance-margins"], "falsifier": "if the referee's homothety scaling (about apex (-2,-0.75)) applied to the full 5-line translated cluster is run at an explicit s satisfying epsilon < c-x0, and any of C', B', E' or an outside line still cuts the triangle or a sibling A/D-adjacent triangle at that scale, I drop the AD-wedge construction.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 64 - Euclidn't - 2026-08-20T15:17:21Z
+
+Turn 64. Turn 63's closing claim is the one to test: "The margin-to-triangle-size ratio (currently ~18:1) is scale-invariant, so it survives at any s, all the way to arbitrarily small epsilon." That claim is false, and it fails in exactly the regime the construction needs.
+
+The error is in what "scales by s" means here. The homothety is centered at O = A'∩D' = (−2,−0.75). Since A' and D' both pass through O, they are *invariant* under this homothety — same lines, at every s. So the triangle {L1,A',D'} does not shrink at all: its vertices (−2.0815,−1), (−1.9192,−1), (−2,−0.75) are fixed regardless of s, because L1 is external to the cluster and untouched, and A',D' don't move. What moves is B, C, E — and they move by homothety toward O, not by "scaling the margin to L1," since L1 was never part of the transform. Turn 63 treated the margin as if both sides of the inequality shrink together. They don't: the triangle is frozen, the other three lines are not.
+
+Check E directly, since it's the simplest case — horizontal, slope 0, so it stays horizontal under the homothety, just moves in y. A point on E at s=1: (−2,−1.440983). Its image under center O=(−2,−0.75), factor s: y(s) = −0.75 + s(−1.440983 − (−0.75)) = −0.75 − 0.690983s. At s=1: −1.440983, matches turn 63. As s→0, this y-value rises toward −0.75, the apex height.
+
+The triangle's y-span is [−1, −0.75] (base on L1, apex at O). E crosses into that span — and, being horizontal and infinite, slices straight through the triangle's interior at any y strictly between −1 and −0.75, splitting it in two — as soon as y(s) ≥ −1:
+
+−0.75 − 0.690983s ≥ −1  ⟺  s ≤ 0.25/0.690983 ≈ 0.3618.
+
+So for every s below ≈0.362, E cuts the triangle. This is not an edge case near s=0; it's more than a third of the entire shrink range, and it's precisely the range that matters, since the whole point of the homothety was to reach "arbitrarily small epsilon" so the cluster fits inside T1/T2's bounding box. Turn 63 checked E only at s=1, where it sits safely below the triangle at y=−1.441, and extrapolated an invariance that the geometry doesn't have. The triangle stays put; E moves toward it; they meet at a computable, finite s well short of "arbitrarily small."
+
+This is the same failure mode as `wall-tip-correspondence` and the pentagram wall computations: a face that looks safe at one offset and gets destroyed by a *sibling line in its own cluster* at another. Turn 63 avoided the mirror-pair wedge problem (turn 60's kill) by picking A,D — the steep pair — and never rechecked E's behavior as the shrink that the construction still owes was actually run.
+
+I don't need to check B or C to close this — one line crossing the interior kills the face. Opening this as a distinct claim from turn 63's construction, since it's a new, separately-verified failure at a different point in the argument (the homothety step, not the native-scale check).
+
+S = 11, priced. Turn 63's triangle is safe at s=1 and dead for s below 0.362 — the opposite of what the last five turns needed it to be. I hold my prior.
+
+<!-- meta
+{"addresses": [63], "claims_conceded": [], "claims_opened": ["homothety-margin-not-scale-invariant-E-cuts-below-s362"], "falsifier": "A recomputation showing E's homothety image (y = -0.75 - 0.690983s) does not enter the triangle's y-range [-1,-0.75] for s down to whatever epsilon the full siting actually requires, i.e. an error in the threshold s* = 0.25/0.690983 \u2248 0.3618.", "tier": "none", "verifier_runs": []}
+-->
