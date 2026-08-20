@@ -1005,3 +1005,27 @@ I hold my prior.
 <!-- meta
 {"addresses": [48], "claims_conceded": [], "claims_opened": ["three-of-four-crossings-unhandled"], "falsifier": "an explicit check showing A's crossings with B, C, and E \u2014 under the same translation that sends A\u2229D near P_B \u2014 all land within a provably safe local neighborhood (of P_A, P_B, or P_C) rather than strung along the open corridor, with no outside line crossing V0, V2, or the reflected V1 sliver", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 50 - PythagorAss - 2026-08-20T02:18:02Z
+
+Turn 50. Turn 49 is right on the fact and wrong on the implication. Let me take the fact first, cleanly.
+
+> "Turn 48 resolved 1 of 4 export crossings and, in doing so, resolved 0 of the 3 triangle-defining vertices that actually needed clearing."
+
+This is accurate. Turn 48 only traced A∩D. I'm conceding that specific factual gap — A∩E, A∩B, A∩C were named and then dropped. But the implication turn 49 draws — that these three are "strung out along the open corridor... exposed to whichever of the nine outside lines happen to cross near them" — doesn't follow from the fact that they're unresolved. It follows only if their landing points are actually near the corridor's dangerous midsection, and that's a computable question turn 49 didn't compute either.
+
+Here's the tool that answers it. A is translating rigidly — same direction, changing offset t — so its intersection with any fixed line X moves *linearly* in t: parametrize X as p_X + s·v_X, and the intersection point satisfies s(t) = (t − f(p_X)) / (∇f · v_X), where ∇f is A's normal direction. This is turn 48's D-argument generalized: for D, we get to *choose* P_B's location along D specifically, since D is one fixed pentagram direction and the constructor places clusters wherever's convenient. That's the move already banked. Apply the same s(t) formula to E: at the same t* that sends A∩D to P_B, A∩E sits at s_E(t*) — a specific point on line E, generically *not* equal to P_B, because D and E are non-parallel fixed directions from the same pentagram order type. The two points A∩D and A∩E, both linear in t, separate from each other at rate proportional to t·sin(angle between D and E). By the time A∩D has traveled the full P_A–P_B distance R, A∩E has traveled a comparable distance but along a *different ray* — off the direct P_A–P_B corridor by an amount that's itself macroscopic (order R·sin θ_{DE}, not epsilon).
+
+That's the resolution turn 49 is owed: A∩E isn't "in the corridor," it's off to the side of it, at macroscopic distance from both P_A and P_B, in territory that is empty unless something was deliberately built there. Nothing was — P_B's cluster is confined to an epsilon-ball around P_B by the homothety construction (`homothety-realizes-S12`), so it doesn't reach out to a point at distance ~R·sin θ_{DE} away from P_B. P_C was already placed off lines D and E (turn 48). So the only way A∩E gets cut is if some outside line was independently routed through that specific off-corridor point — which nobody has done, and which the constructor can trivially avoid by generic placement, exactly as with P_C in turn 48.
+
+The same divergence argument applies to V2's A∩B, A∩C and the V1-sliver's A∩B, A∩E: each pair separates from the D-target at its own rate governed by the pentagram's fixed pairwise angles, landing at four *distinct* macroscopic points scattered around the plane, not clustered in one exposed corridor. Four points, not "a corridor" — that's the correction to turn 49's picture.
+
+What's still genuinely owed, and I'm not claiming it's free: the actual numeric angles θ_{DE}, θ_{DB}, θ_{DC} from the pentagram construction, to confirm none of the four export-crossings accidentally lands near P_C or near each other (two of the four coinciding would reintroduce exactly the danger turn 49 raised). That's a finite trig computation from turn 44's coordinates, not yet done by either side — sharper than turn 49's diffuse "nine lines in the flight path," because it's now four specific points to locate, not a length of corridor to police.
+
+Opening `translation-crossings-diverge-generically` for this reduction.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [49], "claims_conceded": [], "claims_opened": ["translation-crossings-diverge-generically"], "falsifier": "if the pentagram's actual pairwise angles give sin(theta_DE), sin(theta_DB), or sin(theta_DC) close enough to zero that two of the four export-crossings land within epsilon of each other or of P_B/P_C at the required macroscopic t*, the divergence argument fails and turn 49's corridor risk is live again", "tier": "none", "verifier_runs": []}
+-->
