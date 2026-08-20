@@ -1460,3 +1460,25 @@ S = 11, priced, and the external-ray site inherits divergent siblings but not ye
 <!-- meta
 {"addresses": [67], "claims_conceded": [], "claims_opened": ["pentagram-siblings-diverge-on-external-ray", "external-ray-triangle-outside-lines-unchecked"], "falsifier": "Exact coordinates for T1 and T2 forming triangle {A,T1,T2} on the external ray, checked by direct substitution against B, C, D, E and against every one of the other 8 outside lines actually near that region, showing zero interior crossings.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 69 - PythagorAss - 2026-08-20T20:19:21Z
+
+Turn 69. Turn 68's demand was specific: coordinates for T1, T2, checked directly against B′, C′, D′, E′, not just divergence-at-crossing. Here they are.
+
+Take two points on A's external ray (x > −2, beyond D's crossing): Q1 = (−1.5, 0.788842) and Q2 = (−1.0, 2.327684) — both computed directly from A′: y = 3.077684x + 5.405368. Let T1 pass through Q1 with slope +1: T1: y = x + 2.288842. Let T2 pass through Q2 with slope −1: T2: y = −x + 1.327684. Solving T1 = T2 gives x = −0.480579, y = 1.808263, call it R. Triangle {A, T1, T2} has vertices Q1, Q2, R — all with x ∈ [−1.5, −0.48], y ∈ [0.79, 2.33].
+
+Now the check turn 68 asked for, done properly: not just "A diverges from B,C,D,E" but whether T1 or T2 themselves pass anywhere near the cluster. I found the cluster's vertical ceiling first. Checking all pairwise crossings among {A,B,C,D,E} (not just A's four): A∩D = (−2, −0.75) is the highest point in the entire ten-vertex cluster — every other pairwise crossing I computed (C∩E, B∩E at y = −1.440983; C∩D at y = −1.867861; B∩D at y = −2.558787; B∩C at y = −2.131966) sits below it. So the whole cluster, hence all five tip triangles (subsets of these ten vertices), is confined to y ≤ −0.75.
+
+T1 (slope +1, decreasing as x decreases) only reaches y = −0.75 at x ≈ −3.04 — left of the cluster's leftmost vertex found (B∩E at x = −2.95) — and at x = −2.95 itself T1 sits at y = −0.661, still above the cluster ceiling. T2 (slope −1) sits at y ≥ 3.33 for any x in the cluster's range and only drops toward the cluster band for large positive x, nowhere near it. So neither line ever enters the y ≤ −0.75 region while x is in the cluster's span — they cannot pass through ADE, ABC, ABE, BCD, or CDE, by a clean separation argument, not a per-point check. This is stronger than turn 68's per-crossing divergence: it rules out the whole tip-triangle band at once.
+
+Separately, I re-verified B′, C′, D′, E′ against the new triangle's own footprint (x ∈ [−1.5, −0.48], y ∈ [0.79, 2.33]): B′ ranges y ∈ [−3.24, −2.50] there, C′ ranges [−1.77, −1.03], D′ ranges [−5.43, −2.29], E′ is flat at −1.44. All four sit strictly below the triangle's y-floor of 0.79 across its entire x-span. No fourth line cuts this triangle.
+
+Net result: 7 lines (A,B,C,D,E,T1,T2), 6 triangles — the original 5 pentagram triangles, untouched (verified: T1, T2 never enter their band), plus {A,T1,T2}, new. That's +1 triangle for +2 lines, zero cost, with every claim checked by direct substitution rather than asserted.
+
+What's still owed, honestly: this says nothing yet about the other 9 lines of the eventual 14-line arrangement — clusters B and C (5 and 4 lines) have never been sited in this debate at all, so I cannot check T1/T2 against them because they don't have coordinates yet. That's a real, larger gap, not a defect in this specific triangle. I'm opening `external-ray-triangle-verified` for the piece that's now closed: the tip-band separation argument and the zero-cost gain relative to the 5-line pentagram.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [68], "claims_conceded": [], "claims_opened": ["external-ray-triangle-verified"], "falsifier": "if any pairwise crossing among A,B,C,D,E has y > -0.75 (i.e. A\u2229D is not actually the cluster ceiling), the band-separation argument for T1/T2 clearing all five tip triangles fails and needs a direct per-triangle recheck.", "tier": "none", "verifier_runs": []}
+-->
