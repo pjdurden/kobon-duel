@@ -4,7 +4,6 @@ Usage: python3 bin/degree_sequence.py <corpus-key>
 """
 from __future__ import annotations
 
-import json
 import pathlib
 import sys
 
@@ -13,15 +12,14 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 # by default. pytest gets this from pytest.ini; a bare script does not.
 sys.path.insert(0, str(ROOT))
 
-from kobon import table  # noqa: E402
+from kobon import corpus, table  # noqa: E402
 
 
 def main(argv) -> int:
     if len(argv) != 2:
         sys.stderr.write(__doc__)
         return 2
-    entries = {e["key"]: e for e in json.loads(
-        (ROOT / "corpus" / "arrangements.json").read_text())["entries"]}
+    entries = corpus.by_key()
     key = argv[1]
     if key not in entries:
         sys.stderr.write("unknown key %r; known keys:\n  %s\n"

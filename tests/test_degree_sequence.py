@@ -1,11 +1,6 @@
-import json
-import pathlib
+from kobon import corpus, table
 
-from kobon import table
-
-ROOT = pathlib.Path(__file__).resolve().parent.parent
-ENTRIES = {e["key"]: e for e in
-           json.loads((ROOT / "corpus" / "arrangements.json").read_text())["entries"]}
+ENTRIES = corpus.by_key()
 
 
 def test_each_triangle_contributes_three_incidences():
@@ -27,3 +22,9 @@ def test_k15_optimum_degree_sum_is_consistent():
     deg = table.incidence_degrees(t)
     assert table.count(t) == 65
     assert sum(deg.values()) == 195
+    # The sum alone would also pass a bug that redistributes degrees between
+    # lines while preserving the total. The published arrangement has
+    # 5-rotational symmetry, so pin the actual distribution too: every line
+    # sits on exactly 13 triangles.
+    assert set(deg.values()) == {13}
+    assert len(deg) == 15

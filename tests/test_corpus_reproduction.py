@@ -3,15 +3,11 @@
 A disagreement here is a bug in us, not a discovery. This is the single test
 that licenses every other number this project will ever produce.
 """
-import json
-import pathlib
-
 import pytest
 
-from kobon import table
+from kobon import corpus, table
 
-ROOT = pathlib.Path(__file__).resolve().parent.parent
-ENTRIES = json.loads((ROOT / "corpus" / "arrangements.json").read_text())["entries"]
+ENTRIES = corpus.entries()
 
 
 @pytest.mark.parametrize("entry", ENTRIES, ids=lambda e: e["key"])
@@ -26,4 +22,7 @@ def test_the_gate_covers_the_three_open_cases():
 
 
 def test_the_gate_is_not_vacuous():
-    assert len(ENTRIES) >= 20
+    # Exact, not a floor: this is the project's only external ground truth,
+    # so entries silently disappearing from the corpus must fail the gate
+    # loudly rather than leave it merely "still large enough" and green.
+    assert len(ENTRIES) == 27

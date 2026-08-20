@@ -1,21 +1,18 @@
 """Seed records/ from the published corpus, best entry per k."""
 from __future__ import annotations
 
-import json
 import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from kobon import records, table  # noqa: E402
+from kobon import corpus, records, table  # noqa: E402
 
 
 def main() -> int:
-    entries = json.loads(
-        (ROOT / "corpus" / "arrangements.json").read_text())["entries"]
     best = {}
-    for e in entries:
+    for e in corpus.entries():
         counted = table.count(e["table"])
         if counted != e["count"]:
             sys.stderr.write("refusing to seed %s: counted %d, published %d\n"

@@ -1,21 +1,13 @@
-import json
-import pathlib
-
-ROOT = pathlib.Path(__file__).resolve().parent.parent
-DATA = ROOT / "corpus" / "arrangements.json"
-
-
-def load():
-    return json.loads(DATA.read_text())
+from kobon import corpus
 
 
 def test_corpus_file_exists_and_parses():
-    data = load()
-    assert "entries" in data and "skipped" in data
+    assert corpus.entries()
+    assert isinstance(corpus.skipped(), list)
 
 
 def test_corpus_has_the_open_cases():
-    entries = {e["key"]: e for e in load()["entries"]}
+    entries = corpus.by_key()
     for key, k, count in [
         ("kobon_14_53tri", 14, 53),
         ("kobon_18_93tri", 18, 93),
@@ -28,12 +20,12 @@ def test_corpus_has_the_open_cases():
 
 
 def test_every_entry_has_k_rows_and_an_attribution():
-    for e in load()["entries"]:
+    for e in corpus.entries():
         assert len(e["table"]) == e["k"], e["key"]
         assert e["title"].strip(), e["key"]
 
 
 def test_skipped_entries_are_recorded_not_hidden():
     """A corpus that silently drops entries reads as complete when it is not."""
-    for s in load()["skipped"]:
+    for s in corpus.skipped():
         assert s["key"] and s["reason"]
