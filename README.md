@@ -64,8 +64,8 @@ exists for k=11. Both agents are seeded with it. It did not close 14, 18, or 20.
 
 Phase 1: the debate loop. Live.
 Phase 2 stage 1: arrangement corpus, combinatorial triangle counter,
-reproduction gate. Live. The counter reproduces every published optimal count
-in the imported corpus: 27 of 33 candidate arrangements, spanning k=3 to
+reproduction gate. Live. The counter reproduces every published best-known
+count in the imported corpus: 27 of 33 candidate arrangements, spanning k=3 to
 k=27. The remaining six candidates (the largest, up to k=33) are skipped
 because their tables are built by function calls upstream rather than stored
 as list literals; importing those is deferred to a later stage.
@@ -78,5 +78,5 @@ be marked gold.
 The arrangement corpus in `corpus/` is imported from
 [zegalur/line-order](https://github.com/zegalur/line-order) by Pavlo Savchuk,
 CC BY 4.0. The arrangements themselves are the work of Johannes Bader,
-Toshitaka Suzuki, Kyle Wood, Kabanovitch, Wajnberg and Savchuk. This project
-discovered none of them. Full attribution in `corpus/ATTRIBUTION.md`.
+Toshitaka Suzuki, Kyle Wood, Kabanovitch, Wajnberg, Honma and Savchuk. This
+project discovered none of them. Full attribution in `corpus/ATTRIBUTION.md`.

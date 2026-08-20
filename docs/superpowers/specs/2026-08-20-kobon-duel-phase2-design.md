@@ -82,9 +82,11 @@ this project depends on:
 
 **Attribution is a hard requirement, not a courtesy.** CC BY 4.0 obliges it and
 the artifact is public. Every imported arrangement carries its original
-attribution in `corpus.py`, in `KNOWN.md`, and in the README. No imported
-arrangement may ever appear in a Telegram or X post without its author's name.
-The project's contribution is the search and the harness, never the corpus.
+attribution in `corpus.py`, in `corpus/ATTRIBUTION.md`, and in the README.
+`KNOWN.md` itself carries only a pointer line to `corpus/ATTRIBUTION.md`, not
+the per-arrangement attribution. No imported arrangement may ever appear in a
+Telegram or X post without its author's name. The project's contribution is
+the search and the harness, never the corpus.
 
 Also relevant, already in `LITERATURE.md`: Forge and Ramirez Alfonsin (1998),
 whose Proposition 3.1 describes arrangements of the form `y = m_i(x - a_i)` with

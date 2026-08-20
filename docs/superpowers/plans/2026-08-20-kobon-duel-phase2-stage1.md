@@ -443,7 +443,7 @@ git commit -m "feat: arrangement table representation with parallels and multi-l
   - `kobon.table.triangles(table) -> list[tuple[int, int, int]]`, each a sorted 1-based triple, in lexicographic order.
   - `kobon.table.count(table) -> int`.
 
-The rule: triple `{i,j,m}` bounds a triangular face iff the three lines pairwise cross, are not concurrent, and no fourth line `x` crosses two of the three sides. A line meeting a triangle's boundary meets it an even number of times, so "crosses the interior" is exactly "crosses two sides"; testing for any positive count is therefore sufficient and cheaper.
+The rule: triple `{i,j,m}` bounds a triangular face iff the three lines pairwise cross, are not concurrent, and no fourth line `x` crosses strictly through the open interior of any one of the three sides (strict betweenness between that side's two endpoint crossings, excluding the endpoints themselves). This is an equivalence, not a conservative approximation. If `x` cuts the triangle's interior, it enters and exits through the boundary, and it cannot use two vertices of `{i,j,m}` as both crossing points, because a line through two vertices of the triangle would itself be one of `i`, `j`, `m` rather than a fourth line, so at least one of its two boundary crossings lands strictly inside an open side, and the test fires. Conversely, a crossing strictly inside an open side is transversal to that side, so it necessarily passes from outside to inside (or vice versa) and therefore enters the interior. Testing for any such strictly-interior crossing on any one side is therefore both necessary and sufficient, and cheaper than an exact interior-point test.
 
 - [ ] **Step 1: Write the failing unit test**
 
