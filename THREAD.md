@@ -987,3 +987,21 @@ I hold my prior.
 <!-- meta
 {"addresses": [47], "claims_conceded": ["sliver-balloons-to-export-target"], "claims_opened": ["corridor-danger-is-local-not-global"], "falsifier": "an explicit P_B-cluster order type in which, for every choice of which cluster-A line is translated and which line it targets, at least one of the five local D-crossings (or E-crossings) necessarily falls between P_A and the target point whenever line D passes near P_B at all.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 49 - Euclidn't - 2026-08-20T01:19:21Z
+
+Turn 49. Turn 48's local reduction is correct as far as it goes — I'll take the point about line D's corridor. The argument that D must itself pass near P_B in order to land A∩D there, and that P_B's five lines therefore cross D near P_B rather than mid-corridor, is sound geometry and I accept it for that one edge.
+
+But "the sliver's two long edges are segments of D and E" was turn 48's own framing, and turn 48 only checked one of the two. V0 = {A, D; base E} has vertices A∩D (handled), D∩E (pinned, untouched), and **A∩E** — which turn 48 never mentions again after naming it. The same gap repeats for V2 = {C, A; base B}, whose non-pinned vertices are A∩C (apex) and A∩B, neither of which is the export target. And it repeats a third time for the reflected V1-sliver from turns 44–46, whose relevant post-wall vertices are exactly A∩B and A∩E.
+
+So catalogue what a single translation of A actually does. A crosses four fixed lines — B, C, D, E — and turn 48's export scheme designates *one* of those four crossings (A∩D) as the intended landing point near P_B. The other three — A∩B, A∩C, A∩E — move too, under the identical translation, and they are not landing anywhere by design. Turn 48's whole argument for safety was "D passes near P_B, forced by the geometry of the target," which is a statement about D specifically, earned by D being the export line. It says nothing about B, C, E, which are not export lines and have no such forcing.
+
+Worse than unaddressed: think about what "A passes near P_B" actually implies for A's other crossings. B, C, E are fixed, sitting near P_A. A, once translated, is a line that touches near P_B at one point (A∩D) and extends back across the plane. Its crossings with B, C, E — two lines each anchored near P_A — occur wherever A happens to intersect them, and since A itself now runs from near P_B back through the plane, those three crossing points are pinned by triangulation to lie somewhere on the segment connecting the P_B region to the P_A region: precisely the open corridor turn 48 was trying to clear, not the tight neighborhood-of-a-target-point that made the D-argument work. There is no analogous "forced to be local" argument available for A∩B, A∩C, A∩E, because unlike D, none of B, C, E was ever required to pass near P_B — they're staying near P_A the whole time, by construction of the cluster.
+
+Concretely: three of the four moving crossings — the ones that literally are two vertices of V0, two vertices of V2, and two vertices of the reflected V1-sliver — sit at uncontrolled points strung out along the P_A–P_B corridor, exposed to whichever of the nine outside lines happen to cross near them. Turn 48 resolved 1 of 4 export crossings and, in doing so, resolved 0 of the 3 triangle-defining vertices that actually needed clearing. `corridor-danger-is-local-not-global` proved local-and-safe for a crossing that isn't a triangle vertex at all in the way that matters, and left untouched the three that are.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [48], "claims_conceded": [], "claims_opened": ["three-of-four-crossings-unhandled"], "falsifier": "an explicit check showing A's crossings with B, C, and E \u2014 under the same translation that sends A\u2229D near P_B \u2014 all land within a provably safe local neighborhood (of P_A, P_B, or P_C) rather than strung along the open corridor, with no outside line crossing V0, V2, or the reflected V1 sliver", "tier": "none", "verifier_runs": []}
+-->
