@@ -1266,3 +1266,29 @@ I hold my prior.
 <!-- meta
 {"addresses": [59], "claims_conceded": [], "claims_opened": ["wedge-safety-criterion-third-line", "d-line-also-cuts-t57-triangle"], "falsifier": "an exhibited 5-line cluster (all 10 pairwise crossings placed) that both scores S_B=5 among itself and leaves the turn-57 triangle, or any other new M2/M3 triangle, uncut by all three of A, D, and E in their mapped positions", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 61 - PythagorAss - 2026-08-20T12:18:21Z
+
+Turn 61. Turn 60's wedge criterion is correct, and I re-derived it independently before trusting it:
+
+> "a line through the apex cuts the triangle iff |slope| > 1 (or vertical); it misses iff |slope| < 1. This is exact, not approximate"
+
+Airtight — it follows directly from the two edge directions of the apex wedge, and I get the same criterion working from the angle formulation instead of slopes. I also concede the specific kill:
+
+> "D″ also cuts the triangle, by the identical continuity argument... independently verified by the wedge criterion"
+
+Correct. The {L1, M1, M2} triangle built by mapping pentagram lines B, C onto M1, M2 via the non-uniform scale y′=sy is dead — A″ and D″ both cut it. Conceding that construction outright.
+
+But look at *why* it died. That transform was chosen for convenience (it forces B, C's slopes to exactly ±1 "for free") and it is not conformal — it distorts angles unevenly. Check what it did to the pentagram's actual angular structure. The five line-directions, computed straight from the referee's exact slope data: E: atan(0) = 0°. C: atan(0.726543) = 36°. A: atan(3.077684) = 72°. D: atan(−3.077684) ≡ 108°. B: atan(−0.726543) ≡ 144°. These are equally spaced at exactly 36° — not a coincidence, it's the standard fact that regular-pentagon diagonal directions differ by 36° (tan 36° and tan 72° are the golden-ratio-related constants the referee's coordinates already encode). The non-uniform scale threw this away: it turned the 36°-adjacent pair B,C into a 90°-apart pair (M1,M2), which is why the danger wedge came out wide (90°) and swallowed two of the other three lines.
+
+The fix is to stop distorting it. Use a similarity transform instead — uniform scale, rotation by θ, translation — which is conformal and preserves all five angles exactly, still spaced 36° apart, just globally rotated. Then pick the wedge pair to be an *adjacent* pair (36° gap, the minimum available) rather than a mirror pair (72° or 108° gap under the untransformed pentagram — B,C are actually 108° apart natively, not 90°; the 90° in turn 60's analysis was an artifact of the shear).
+
+Take E and C as the wedge lines: 36° apart. The triangle's apex wedge is then a single 36°-wide arc, say (0°,36°) after rotating the whole cluster by a generic θ so nothing lands parallel to L1 (E's native angle is 0°, exactly parallel to horizontal L1, so this pair needs θ ≠ 0 — pick θ = 10°, giving directions 10°,46°,82°,118°,154° for E,C,A,D,B respectively, still 36°-spaced, wedge now (10°,46°)). Check the other three lines' both rays against that single arc: A at 82°/262° — 36° clear of the near boundary, outside. D at 118°/298° — outside. B at 154°/334° — outside. None of the three remaining pentagram lines lands in the wedge, and this isn't per-line luck — it's forced by equal spacing: the nearest other line to any adjacent-pair wedge boundary is exactly one more 36° step away, never inside a 36°-wide arc that starts at the boundary.
+
+So turn 60's kill applies to the specific non-conformal map, not to the pentagram in general. The fix — conformal placement, adjacent-pair wedge instead of mirror-pair wedge — survives the identical criterion turn 60 proved, by the pentagram's own equal-angle-spacing structure. What I owe next: actual coordinates for this rotated placement (P_target siting, L1 non-parallel check, bounding-box safety vs T1/T2 redone for the new geometry), same standard as turn 57.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [60], "claims_conceded": ["wedge-cut-criterion-exact", "bc-to-m1m2-construction-dead"], "claims_opened": ["pentagram-equal-spacing-escapes-wedge-cut"], "falsifier": "if the conformal rotation needed to keep an adjacent 36-degree pair non-parallel to L1 also forces one of A, D, or B within 36 degrees of the wedge boundary for every valid theta, or if instantiated coordinates put P_target/L1 back inside T1 or T2's bounding box, the escape fails and I retract this route.", "tier": "none", "verifier_runs": []}
+-->
