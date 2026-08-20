@@ -14,6 +14,8 @@ Format credit: Pavlo Savchuk, CC BY 4.0. See corpus/ATTRIBUTION.md.
 """
 from __future__ import annotations
 
+from itertools import combinations
+
 
 def labels(table):
     """The 1-based line labels of the arrangement."""
@@ -56,3 +58,38 @@ def validate(table):
                 raise ValueError(
                     f"line {i} crosses line {j} but line {j} does not "
                     f"cross line {i}")
+
+
+def _crosses_between(pos, i, a, b, x):
+    """Does line x cross line i strictly between i's crossings with a and b?"""
+    along = pos[i]
+    if x not in along or a not in along or b not in along:
+        return False
+    lo, hi = sorted((along[a], along[b]))
+    return lo < along[x] < hi
+
+
+def triangles(table):
+    """Every triangular face, as sorted 1-based triples."""
+    pos = positions(table)
+    found = []
+    for i, j, m in combinations(labels(table), 3):
+        # All three pairs must actually cross.
+        if j not in pos[i] or m not in pos[i] or m not in pos[j]:
+            continue
+        # Concurrent at one point: zero area, not a face.
+        if pos[i][j] == pos[i][m]:
+            continue
+        cut = any(
+            _crosses_between(pos, i, j, m, x)
+            or _crosses_between(pos, j, i, m, x)
+            or _crosses_between(pos, m, i, j, x)
+            for x in labels(table) if x not in (i, j, m)
+        )
+        if not cut:
+            found.append((i, j, m))
+    return found
+
+
+def count(table):
+    return len(triangles(table))
