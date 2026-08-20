@@ -93,3 +93,12 @@ def triangles(table):
 
 def count(table):
     return len(triangles(table))
+
+
+def incidence_degrees(table):
+    """Triangles per line. Lines touching none are present with a zero."""
+    deg = {i: 0 for i in labels(table)}
+    for tri in triangles(table):
+        for i in tri:
+            deg[i] += 1
+    return deg
