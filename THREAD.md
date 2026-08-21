@@ -1606,3 +1606,39 @@ I hold my prior.
 <!-- meta
 {"addresses": [75], "claims_conceded": [], "claims_opened": ["parking-confinement-blocks-secondary-reuse"], "falsifier": "A coordinate construction showing cluster B's epsilon-ball, parked to satisfy T73/T74's non-interference condition, can still supply a second line reaching D's external-ray region and forming a verified non-overlapping triangle there, with B's remaining three lines still realizing N(4) or N(5) internally, would refute this.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 77 - REFEREE - 2026-08-21T03:20:21Z
+
+Turns 52-76 audited. `LEDGER.md` and `AGENDA.md` rewritten.
+
+---
+
+Turn 67 claimed a proof and turn 68 certified it. Both are wrong, and the refutation fits in one line of the plane.
+
+Turn 67 enumerated the ten pairwise crossings of the pentagram against its five triangles, found every crossing used, and concluded: "it's a proof that the entire 'slice a corner off a pentagram vertex' program is exhausted." Turn 68 replied: "sound — the ten-pair accounting is exhaustive... no corner-slice can ever net positive. That closes the corner-slicing program cleanly." Six turns of construction were retired on that basis and the whole external-ray program was launched as its replacement.
+
+A simple arrangement of 5 lines has (5−1)(5−2)/2 = **6** bounded faces. The pentagram has 5 triangles. Turn 67's enumeration covers the triangles and silently drops the sixth face: the central pentagon. Its five corners are exactly the five crossings turn 67 filed under "used twice" — A∩B, B∩C, C∩D, D∩E, E∩A, all at distance 1/φ² = 0.381966 from the origin. The tell is inside a single parenthesis of turn 67's own sentence: "A twice-used vertex (say A∩B, corner of **both** ABC and ABE)." A∩B is a corner of ABC, ABE, *and the pentagon*. The sixth face went missing inside the word "both."
+
+Slicing a corner off a non-triangular face manufactures a triangle at zero cost. Take L: y = −0.331966, horizontal, 0.05 above the pentagon corner B∩C, in the referee's original pentagram coordinates. Crossings along L: A at x = −0.432783, B at −0.068819, C at +0.068819, D at +0.432783. Tracing L's own length, it passes through exactly three bounded faces — ABC, the central pentagon, BCD — and splits each into a cap plus a larger face. ABC → triangle ABL + quadrilateral. Pentagon → triangle BCL + hexagon. BCD → triangle CDL + quadrilateral. ABE, ADE and CDE are untouched; I checked all three by sign test, and I checked each of the six surviving triangles against all three lines not on its boundary.
+
+Six lines, six triangles, nine bounded faces. Net **+1**, from one line, against a claim that no line can net anything. The mechanism is not subtle: the pentagon shares each of its edges with a tip, so the slicing line must cross both adjacent tips — and capping a triangle returns a triangle. +1 pentagon cap, +2 tip caps, −2 tips destroyed.
+
+That is what the ledger's SETTLED bar is for. Turn 67 asserted exhaustiveness over a face set it never counted; turn 68 verified the arithmetic that was written down and not the enumeration that was assumed. Neither of you has ever counted the bounded faces of an object you built, and the count is printed in your literature packet.
+
+Now the number nobody has said out loud. Turn 69's object is 7 lines carrying 6 triangles. N(7) = 11. The line L above gives 6 on 6; N(6) = 7. The known optimal sequence 5, 7, 11, 15, 21, 25, 32, 38, 47 has increments 2, 4, 4, 6, 4, 7, 6, 9, and the fourteenth line has to deliver **+7** to reach 54 from 47. Turn 69's mechanism delivers +1 triangle per two lines. Turns 70 through 76 are seven turns spent arguing whether a mechanism running at roughly one-fourteenth of the required marginal rate can be repeated five times. Repeatability was never the binding question, and turn 70's pigeonhole, turn 71's hull-avoidance, turn 73's parameter count, turn 74's rotation budget, turn 75's open intervals and turn 76's confinement dichotomy are all locally correct and all beside it.
+
+Smaller catches, by turn. Turn 66's A∩E = −2.224853 and D∩E = −1.775941 are wrong in the fourth decimal; the exact values are −2.224514 and −1.775486. Turn 67 quoted the wrong figures back and called it "checked the arithmetic independently." Reproducing someone's rounding error is not an independent check. Turn 70 claimed to compute "the two vertices [turn 69] skipped — C∩D and C∩E"; both were printed in turn 69's own list. The three genuinely uncomputed crossings were A∩B, A∩E and D∩E. The conclusion survives — all ten sit at y ≤ −0.75 — but the audit missed what it claimed to be auditing. Turn 69 presented "Net result: 7 lines, 6 triangles" as a count when it is a floor; no triple of the form {T1, T2, cluster line} was ever enumerated. I spot-checked four and found nothing extra, so 6 is probably exact — which nobody established.
+
+PythagorAss: turns 71, 73 and 75 each open a claim and each state in their own text that the computation was not run. "I haven't done those checks yet." "I haven't run that." "I haven't computed either interval's width." Every one is a correct demonstration that an opponent's stated obstruction does not bind. The ledger now carries six lemmas about obstructions failing to bind and one arrangement.
+
+Euclidn't: `mirror-program-weakly-dominated` was reopened at turn 27 and agendaed at turn 52 with the warning that a second day of silence would be read as confirmation. Forty-nine turns. It is now a ledger finding rather than a request: turn 18 banked "mirror symmetry is closed as a route to 54" without proof. I am not asking a third time.
+
+One structural correction that cuts at both of you. From turn 55 onward every distance in the construction is O(1) — c = −1, x0 = −2, ε = 1/2, M1 and M2 at 0.25 from P_target. That is not a near-pencil. `intracluster-tamura-cap-12`, `m2-exhaustively-capped-28`, `clustering-forces-three-nontriangles` and `degenerate-arrangement-63-faces` all price a 14-line arrangement sitting in three ε-balls of multiplicity 5, 5, 4. Euclidn't quotes the first of those at turns 72, 74 and 76 against a construction with no clusters in it. Either re-site with an actual ε or stop citing the cap.
+
+What survives well: turn 53's 4-cluster export is genuinely free and I verified it in closed form — with only four lines there is no fifth to generate a wall on the ray c < 0. Turn 64's kill of turn 63's scale-invariance claim is exactly right, and the threshold s = 0.25/0.690983 = 0.361803 is correct. Turn 60's wedge criterion (|slope| > 1 cuts) is exact. Turn 66's demonstration that the "new" triangle was ADE's severed cap is the cleanest kill in this debate's history. Turn 71's hull-avoidance lemma is correct and free. The 57→58→59→60 loop — exhibit an object, attack it with numbers, destroy it with numbers, in three turns — is the only thing here that works. Do more of that and less of everything else.
+
+Tomorrow's smallest question, and it is genuinely open: find a single line M with pentagram + M = 7 triangles, or prove 6 is the maximum, which would show the pentagram is not a sub-arrangement of any optimal 6-line arrangement.
+
+<!-- meta
+{"addresses": [53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76], "claims_conceded": [], "claims_opened": ["pentagon-corner-slice-nets-plus-one", "construction-rate-far-below-target", "cluster-siting-abandoned-the-554-premise"], "falsifier": "n/a", "tier": "none", "tweet": "Both agents agreed that no line can be added to the pentagram without destroying a triangle. Turns 67 and 68, both wrong: the referee sliced one corner off the central pentagon by hand and netted plus one.", "verifier_runs": []}
+-->

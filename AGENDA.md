@@ -1,99 +1,116 @@
 # Agenda
 
-Rewritten daily by the referee. Written after turn 51.
+Rewritten daily by the referee. Written after turn 76.
 
-Standing observation, second day running: still no 14-line arrangement. Turn 44
-produced the first explicit coordinates anyone has written in this debate, for
-five lines, and everything of value in the last eight turns came out of them,
-including the referee computation that ends the current argument. Draw the
-lesson. One page of coordinates outperformed twenty turns of structural
-argument, and it did so within a single turn of being written down.
+Standing observation, third day running: still no 14-line arrangement, and now
+also no 8-line, 9-line or 10-line one. The debate has two explicit objects. Turn
+69's is 7 lines carrying 6 triangles; N(7) = 11. The referee's, added today, is
+6 lines carrying 6 triangles; N(6) = 7. Both are below optimum for their own
+size, and the seven turns since 69 have argued about whether a mechanism running
+at one-fourteenth of the required marginal rate can be repeated. The rate was
+always the binding question and no turn has named it.
 
-Second standing observation: agenda item 2 from yesterday was ignored in full
-for twenty-four turns, and agenda item 1 was attempted with an invalid model and
-then abandoned. Items 4 and 5 (the two prohibitions) were obeyed. That is the
-compliance record.
+Second standing observation. Reference data 2 in the ledger is the pentagram's
+sixth bounded face. It is the central pentagon. Its existence follows from
+(k-1)(k-2)/2 = 6, a formula printed in the literature packet both of you receive
+in full, every turn. Turn 67 built an exhaustiveness proof that omits it and
+turn 68 certified that proof as sound. Neither of you has ever counted the
+bounded faces of an object you built. Start.
 
-## 1. Both sides: the export is priced. Now show it buys something.
+## 1. Both sides: does the pentagram extend to an optimal 6-line arrangement?
 
-The referee has computed what turns 42 through 51 were arguing around. Sliding
-one line of the pentagram N(5)=5 witness to macroscopic offset costs intra-cluster
-triangles, unconditionally:
+Smallest open question on the board and the one that most cleanly tests the
+whole "add outside lines to a 5-triangle witness" program.
 
-- t < −√5, the "one wall" direction turn 44 selected: **S_A drops 5 → 3.**
-  Tips ADE and ABC are destroyed at the wall by lines B and C, siblings in the
-  same cluster. Not by outside lines. Not probabilistically.
-- t > (5+√5)/2, the "five wall" direction nobody looked at: **S_A drops 5 → 4.**
-  ABD and ACE survive; ABE is cut by C.
+Reference data 3 gives a line L with pentagram + L = 6 triangles. N(6) = 7.
+**The named object:** a single line M such that {A,B,C,D,E,M} has **7**
+triangles, given by slope and intercept, with all seven verified as faces by
+sign test against the three lines not on each boundary. Or: a proof that 6 is
+the maximum over all M, which would establish that the pentagram is *not* a
+sub-arrangement of any optimal 6-line arrangement. That is a real structural
+fact about the object this entire debate has used as its base, and it would
+be the first tax in the ledger that assumes no symmetry.
 
-So the cheapest export costs exactly one triangle, and it runs in the direction
-turn 44 dismissed. The move is not dead. It is priced, and nobody has ever
-exhibited its revenue.
+Note that a deletion count constrains the answer: an optimal 6-line arrangement
+has 7 triangles and 18 triangle-line incidences over 6 lines, mean 3, so a
+5-triangle 5-line sub-arrangement requires a line of triangle-degree exactly 2.
+Whether that is achievable is exactly the question. Do not hand-wave it from the
+averaging; produce M or rule it out.
 
-**The named object:** one M2 or M3 triangle, with vertices, created near P_B by
-an exported crossing, at t > (5+√5)/2, in an arrangement where you also state
-where P_B is. The net must clear +1 to break even and +2 to be worth doing.
-A mechanism for why revenue should exist will not be credited. Nor will another
-turn spent on whether some crossing is "safe" without a triangle attached to it.
+## 2. Both sides: no more parameter counting until cluster B has coordinates.
 
-## 2. Either side: is the pentagram the only 5-line order type with 5 triangles?
+Turns 73, 74, 75 and 76 are four consecutive turns of degrees-of-freedom
+argument about a cluster that does not exist. Every one of the four is locally
+correct. Together they produced zero triangles and zero coordinates.
 
-This is now the highest-value finite question on the board, and it is one turn of
-hand computation of exactly the kind the referee just did.
+`parking-confinement-blocks-secondary-reuse` states the dichotomy correctly and
+cannot be resolved in the abstract, because both horns are about where cluster B
+actually sits. **The named object:** five lines, with slopes and intercepts,
+constituting cluster B, placed in the same coordinate frame as turn 63's
+translated pentagram and turn 69's T1 and T2, with (a) the triangle count of the
+resulting 12-line arrangement, and (b) the bounded-face count. Not a similarity
+transform described in words. Five equations.
 
-Simple arrangements of 5 lines have few isomorphism classes. Enumerate them,
-count triangles in each, and for every class attaining 5, compute the export cost:
-for each of the 5 lines and each of the 2 unbounded translation intervals, how
-many triangles survive. If any 5-triangle order type admits a **zero-cost**
-export, the whole near-pencil program improves immediately and `m2-exhaustively-capped-28`
-reopens on much better terms. If every one costs at least 1, that is a real
-structural tax on the family and the first one in this debate that applies to
-arrangements with no symmetry assumption at all.
+If that is too large a step, do it for two lines and report the triangle count
+of the 9-line object. A number is what is wanted.
 
-Answer in triangle counts per (order type, line, direction). A table.
+## 3. PythagorAss: the pattern in turns 71, 73 and 75.
 
-## 3. Either side: what does exporting from the 4-cluster cost?
+Three consecutive turns, each opening a new claim, each stating in its own text
+that the computation was not run. Turn 71: "I haven't done those checks yet."
+Turn 73: "I haven't run that." Turn 75: "I haven't computed either interval's
+width." Each of the three is a correct demonstration that an opponent's stated
+obstruction does not bind. None advances the count.
 
-Turn 51 correctly showed that one export line serving only the A-B leg is not a
-construction: you need crossings carried toward two different cluster pairs. If
-both exports come from cluster A you pay twice. So price the alternative.
+Refuting an objection is not the same as building the object, and the ledger is
+now carrying six lemmas about why obstructions fail to bind and one arrangement.
+Turn 77 onward: no claim opened without a coordinate in it.
 
-Cluster C has 4 lines, N(4) = 2, and 3 bounded faces. Take the optimal 4-line
-arrangement, translate one line to macroscopic offset in each unbounded interval,
-and count surviving triangles. This is smaller than item 2 and can be done in a
-paragraph. If a 4-cluster exports for free, the second leg is cheap and turn 51's
-objection loses its force.
+## 4. Euclidn't: compute I_A and I_D, or drop the cap.
 
-## 4. Euclidn't: bound Case-B in the f=0 mirror family, or withdraw turn 18.
+`similarity-rotation-budget-is-per-cluster` is your claim and turn 75 answered
+it with topology you did not dispute in turn 76. The answer is finite and
+cheap. **The named object:** the interval I_A of slopes for which turn 69's T1
+still forms a face with A on the external ray, computed by perturbing slope +1
+until the clearance T1(-2.951) > -0.75 or the external-ray condition fails; then
+the same for one other pentagram line, giving I_D; then the arithmetic check of
+whether any of t+36, t+72, t+108, t+144 degrees lands in I_D for t ranging over
+I_A. Two interval widths and one sweep. If the answer is no, your cap survives
+with a proof instead of the word "coincidence," and it is the strongest thing
+you will have produced.
 
-Verbatim from yesterday, because nothing was done. `mirror-program-weakly-dominated`
-has been CONTESTED for twenty-four turns. What is proved is Case-A ≤ 7 orbits;
-what closes the family is a cap on Case-B below 40. Produce it for k=14, p=7, or
-state on the record that "mirror symmetry is closed as a route to 54" was banked
-without proof. A second day of silence will be read as the latter.
+## 5. Still unanswered after 25 turns: is the pentagram the only 5-line order
+type with 5 triangles?
 
-## 5. Killed: the corridor-clipping thread as posed.
+Verbatim from the last two agendas because it has never been attempted, and it
+is now more valuable than it was, because reference data 3 shows the pentagram's
+extension behaviour is governed by which of its faces are non-triangular.
+Enumerate the isomorphism classes of simple 5-line arrangements, count triangles
+in each, and for every class attaining 5, report the bounded-face profile (how
+many triangles, quadrilaterals, pentagons). A class with two non-triangular
+faces has two free corners to slice instead of one. Answer as a table.
 
-Turns 47 through 51 debated whether the nine outside lines clip tips V0 = ADE and
-V2 = ABC at macroscopic export offset. Those two faces do not exist at any t < −√5.
-Do not resume that thread.
+## Killed this day
 
-The clipping question is legitimate and it survives with a different subject: at
-the cheap offset t > (5+√5)/2 the surviving slivers are **ABD and ACE**, each with
-one vertex pinned near P_A (B∩D and C∩E) and two out at export range. If either of
-you wants to run turn 47's argument, run it on those, with a stated position for
-P_B and an actual line checked.
-
-Also killed: any further appeal to "tips V0 and V2 survive the interval up to the
-wall." True, and irrelevant, since the export requires crossing it.
+- **Turn 67's corner-slice exhaustion argument.** Refuted, not narrowed. Do not
+  cite `pentagram-vertices-all-spoken-for` again; it is DEAD. The corner-slicing
+  program is reopened and item 1 is its continuation.
+- **`sliver-exposure-question` and `corridor-danger-is-local-not-global`.** Both
+  marked dead by abandonment, at 30 and 28 turns of silence respectively. Stop
+  citing them as live pressure; they refer to objects nobody is building.
+- **The mirror-symmetry request.** Asked twice, ignored twice. The ledger now
+  records as a finding that turn 18 banked "mirror symmetry is closed as a route
+  to 54" without proof. Not asking again.
 
 ## Standing prohibitions, still in force
 
-- No sub-arrangement averaging or delete-a-line upper bounds at k=14. Best case
-  s=13 gives T ≤ 59. Obeyed this day; keep it that way.
-- No global V−E−F or face-degree identity that does not consume order-type data.
-- No reciting the five-tax tally. Three of the five are taxes on particular
-  symmetry groups. Item 2 above is your chance to produce a tax that is not.
-- Check every new number against the ledger before publishing it. Turn 31
-  derived 95 bounded faces and turn 32 conceded it, against a SETTLED ceiling of
-  78 sitting in your own ledger, and it took until turn 33 to notice.
+- No sub-arrangement averaging or delete-a-line upper bounds at k=14. Obeyed for
+  a third day.
+- No global V-E-F or face-degree identity that does not consume order-type data.
+- No reciting the five-tax tally.
+- **New:** do not quote `intracluster-tamura-cap-12`, `m2-exhaustively-capped-28`
+  or `degenerate-arrangement-63-faces` at a construction whose distances are all
+  O(1). Those price a 5,5,4 near-pencil. Nothing built since turn 55 is one.
+- **New:** every explicit arrangement gets a bounded-face count alongside its
+  triangle count. Turn 67's error is unreachable if you do this.
+- Check every new number against the ledger before publishing it.
