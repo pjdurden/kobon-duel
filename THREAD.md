@@ -1924,3 +1924,23 @@ I hold my prior.
 <!-- meta
 {"addresses": [89, 90], "claims_conceded": [], "claims_opened": ["simple-line-load-bearing-verification-burden"], "falsifier": "A named line move \u2014 target non-triangular face, the full list of triangles currently resting on that line, and a check that each survives the move \u2014 yielding 54 triangles on 14 lines would change my mind.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 92 - PythagorAss - 2026-08-21T18:18:36Z
+
+Turn 92. Before responding to turn 91's estimate, I pulled line 5's actual row from the corpus rather than reasoning about it in the abstract — `corpus/arrangements.json` line 1195 onward gives it directly:
+
+`[4, 7, 2, 6, 12, 10, 13, 9, 14, 8, 1, 11, 3]` — 13 entries, confirming turn 90's count and matching every other line's presence except itself.
+
+Thirteen crossings on a single line produce exactly 14 intervals: the first interval (before the first entry, "4") and the last interval (after the last entry, "3") are unbounded rays running off to infinity in each direction. The 12 interior intervals — between consecutive entries in that list — are the bounded segments. This is exact and needs no reconstruction: it falls straight out of the row length, no wiring-diagram simulation required. Only these 12 bounded segments can ever be a side of a bounded face, triangular or not; the two rays can only border unbounded regions.
+
+This is where turn 91's arithmetic needs correcting, not just stress-testing. Turn 91 wrote: "every simple line has 14 wedges and only ~2 are free of a triangle by this count" — comparing an estimated ~12 triangle-incidences against a denominator of 14, as if each segment offers exactly one slot. But a segment has two sides, and both can independently border different faces. The correct denominator for "candidate slots a bounded face could occupy" isn't 14 wedges, and it isn't even 12 bounded segments — it's 12 segments × 2 sides = 24 face-adjacency slots (fewer only to the extent some of those sides face an unbounded region instead, which turn 91 hasn't shown for line 5 and neither have I). Even granting turn 91's own estimate of ~12 known-triangle incidences on line 5 at face value, that consumes at most 12 of 24 slots, leaving roughly 12 unaccounted for — not the "~2" turn 91's framing produced. The "~2 free" number came from conflating segment-count with slot-count and assuming one triangle saturates a segment entirely (both sides), which isn't how adjacency works: a segment with a known triangle on one side says nothing about its other side.
+
+I want to be precise about what this does and doesn't fix. It does not produce a triangle, and it does not tell us whether any of those ~12 open slots actually borders one of the 22 non-triangular bounded faces from turn 89/90 rather than an unbounded region — that still needs the real reconstruction, which I'm not attempting this turn because getting it wrong under time pressure is worse than not attempting it (the local rotation at each of line 5's 13 crossing vertices depends on relative slope order, which the row alone doesn't fix without also pinning the initial sweep permutation — a genuine unsolved step here, not a formality). What this correction does establish is that turn 91's "close to certain" framing for why line 5's "clean elimination" branch is unlikely was resting on an arithmetic conflation, not on a demonstrated saturation of line 5's actual capacity. The search space turn 90 proposed is larger than turn 91 sized it, on turn 91's own input numbers.
+
+Next turn's actual job, unchanged from turn 90's commitment: resolve the rotation-direction ambiguity at line 5's vertices (or find a shortcut around it) well enough to say, for at least one of the 12 bounded segments, which of its two sides is non-triangular.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [91], "claims_conceded": [], "claims_opened": ["line5-bounded-segment-slot-recount"], "falsifier": "A completed wiring-diagram reconstruction showing all ~12 known triangle-incidences on line 5 sit on distinct bounded segments whose other side faces an unbounded region, not a non-triangular bounded face, would restore turn 91's pessimism and close this slot.", "tier": "none", "verifier_runs": []}
+-->
