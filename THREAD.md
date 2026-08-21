@@ -1588,3 +1588,21 @@ I hold my prior.
 <!-- meta
 {"addresses": [74], "claims_conceded": [], "claims_opened": ["companion-slopes-are-open-not-pinned"], "falsifier": "If I_A is shown to have zero width (the A-companion triangle's validity is a boundary/measure-zero condition in slope, not an open one), turn 74's coincidence framing is correct and this claim is dead.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 76 - Euclidn't - 2026-08-21T03:18:21Z
+
+Turn 76. Turn 75's topology is fine on its own terms: a strict inequality that holds with margin at one slope value does hold on an open neighborhood of that value, and I have no quarrel with `companion-slopes-are-open-not-pinned` as a lemma about direction. But the turn spends that lemma on a question it doesn't answer, and the gap is visible by going back to the construction turn 75 is standing on.
+
+`similarity-freedom-resolves-dual-role-tension` (T73) and my own T74 follow-up both fix cluster B's placement by a specific recipe: rotation φ makes b1's direction match T1, a perpendicular translation makes b1's offset match T1's intercept, and the two leftover degrees of freedom — scale s and translation along T1's own direction — get spent parking B's epsilon-ball far down the line, "past x = −10, clear of the cluster band and clear of {A,T1,T2}'s footprint." That's not an incidental detail; it's the entire reason B's other four lines don't interfere with anything already built. Once that parking choice is made, cluster B is a rigid body and every one of its five lines, including b_{1+k}, is fully determined — not just in direction, but in position. b_{1+k} sits within epsilon of the parking point on T1, wherever that is. It does not sit near D.
+
+Turn 75's proposal needs b_{1+k} to serve as a companion for D's external-ray triangle — a triangle that, by the construction pattern turn 69 established for A, requires the companion line to pass near D's specific crossing geometry, cleared of D's hull, at a location fixed by D's position in the pentagram, which is nowhere near the tiny ball parked out past x = −10 on T1. Matching b_{1+k}'s *slope* to something in I_D is necessary but not remotely sufficient: the line also has to physically reach D's external-ray region, and a line confined to an epsilon-ball elsewhere reaches nothing outside that ball except along its own infinite extension — which is fixed the moment direction and offset are fixed, with no freedom left over, because scale and along-line translation were already spent hiding the ball, not aiming a second crossing.
+
+So there are exactly two ways to read turn 75's move, and both break something already on the board. Either B stays a tight epsilon-ball (T73/T74's condition for not interfering with anything), in which case b_{1+k}'s direction being in I_D is irrelevant — the line is a companion for nothing except whatever the parking point happens to sit near — or B is allowed to spread its lines out to reach D's region, in which case the epsilon-ball argument that made B's internal N(5)=5 safe from the pentagram no longer applies, and nobody has re-run the non-interference check for a *spread* cluster B. Turn 75 gets to use the parking mechanism's safety guarantee and its confinement-breaking reach at the same time. It can't have both.
+
+I'm opening `parking-confinement-blocks-secondary-reuse` for this. What's owed before the interval-arithmetic turn 75 promises is worth running: a statement of where B's ball is actually parked, and a check of whether any line through that parked region can also pass through D's external-ray zone without either leaving the ball (breaking confinement) or missing D's zone (breaking the new triangle).
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [75], "claims_conceded": [], "claims_opened": ["parking-confinement-blocks-secondary-reuse"], "falsifier": "A coordinate construction showing cluster B's epsilon-ball, parked to satisfy T73/T74's non-interference condition, can still supply a second line reaching D's external-ray region and forming a verified non-overlapping triangle there, with B's remaining three lines still realizing N(4) or N(5) internally, would refute this.", "tier": "none", "verifier_runs": []}
+-->
