@@ -1710,3 +1710,21 @@ I hold my prior.
 <!-- meta
 {"addresses": [78, 79], "claims_conceded": ["parallel-offset-yield-bounded-by-exposed-segments"], "claims_opened": ["exterior-wedge-fails-across-two-apexes"], "falsifier": "A verified line whose direction lies inside two of the pentagram's five 36-degree exterior-wedge spans (mod 180) simultaneously would revive the double-apex mechanism; the five spans [72,108],[108,144],[144,180],[0,36] equiv,[36,72] are pairwise disjoint, so no single slope satisfies two at once, and I'd need that structural fact broken to reopen it.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 81 - Euclidn't - 2026-08-21T07:18:21Z
+
+Turn 81. Turn 80's double-apex failure is more useful than it looks, because it closes a case that matters for counting, not just for construction. Put it together with turn 78's failed pentagon+apex combination and the referee's original pentagon-corner slice, and every one of the pentagram's 10 vertices — the 5 tip apexes and the 5 pentagon corners, exactly the "used once" / "used twice" split from reference data 2 — has now been tested for a zero-cost triangle, and every combination test of two vertices with one line has failed.
+
+That's not a coincidence to wave at; it has a reason, and turn 80 stated it precisely: the technique only works when the slicing line's direction falls inside the ~36° angular window belonging to the specific vertex it's cutting, and the five apex windows ([72°,108°], and by the 5-fold symmetry of `pentagram-directions-equally-spaced`, four more at 36° offsets) are pairwise disjoint mod 180°, together spanning at most 180° total with the pentagon-edge directions interleaved between them. A single line has one direction. It can sit inside at most one window. So it can zero-cost-slice at most one vertex, full stop — that's not an unproven conjecture anymore, it's what turns 78 and 80 jointly verified by direct computation at two different window pairs (V0-apex vs V0/V1-edge, and V0-apex vs V1-apex).
+
+That gives an exact ceiling on this entire research program, not an estimate. Ten vertices, one free triangle each, one line each, no combinations. k=14 has 5 pentagram lines and 9 lines left to spend. Even in the best case — spend every one of the 9 remaining lines on a distinct zero-cost corner slice, touching 9 of the 10 available vertices — the total is 5 (base pentagram) + 9 (one per added line) = **14 triangles on 14 lines**. The target is 54. This mechanism, maxed out, misses by 40.
+
+I want to be precise about what this does and doesn't prove. It caps the *corner-slicing* mechanism specifically — triangles formed by one added line plus two pentagram edges at a shared vertex. It says nothing about triangles formed entirely among the 9 outside lines themselves, or mixed triangles using two outside lines and one pentagram line at a non-vertex crossing. Turn 80's pivot to "a genuinely transversal line" is, correctly, an admission that the corner-slicing well is dry and the remaining budget has to come from somewhere else entirely — general position crossings among the outside lines, not symmetry-aligned slices at pentagram vertices.
+
+That reframes what's actually owed. The 9 outside lines, taken alone with no pentagram interaction at all, cap out at N(9) = 21 by the known table. Even granting every one of those 21 for free plus the pentagram's 5 plus all 10 corner slices — which is already double-counting since the corner slices use pentagram edges the N(9)=21 count doesn't touch — the arithmetic doesn't come close to 54 without a mechanism nobody in this debate has attempted: triangles built from crossings that involve *no* pentagram vertex and *no* pentagram-parallel direction at all. Thirty turns have been spent on a base object whose entire zero-cost yield is now provably 14.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [80], "claims_conceded": [], "claims_opened": ["corner-slicing-program-capped-at-14"], "falsifier": "a single line, or a small set of outside lines, shown to zero-cost-slice two or more of the pentagram's 10 vertices at once (breaking the one-window-per-line disjointness), or a verified triangle among the outside lines that reuses a corner-slice line without destroying its corner triangle, would raise the 14-triangle ceiling and undercut this cap.", "tier": "none", "verifier_runs": []}
+-->
