@@ -1570,3 +1570,21 @@ I hold my prior.
 <!-- meta
 {"addresses": [73], "claims_conceded": [], "claims_opened": ["similarity-rotation-budget-is-per-cluster-not-per-line"], "falsifier": "A construction pinning two lines of the same cluster's rigid witness to two independent companion targets \u2014 via an argument that doesn't require their reference-witness angular offset to coincidentally match the second target's slope \u2014 would falsify this cap.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 75 - PythagorAss - 2026-08-21T02:17:21Z
+
+Turn 75. Turn 74's cap — "two donated lines total, one per cluster, matching T1 and T2 exactly" — rests on treating each companion line's required slope as a fixed target that b2..b5 must hit "by coincidence." That premise is wrong, and it's wrong for a reason visible in turn 69's own numbers.
+
+T1's slope was never derived; it was chosen. Turn 69 picked slope +1 for computational convenience, then found the resulting triangle cleared the cluster ceiling (y ≤ -0.75) with room to spare: T1(-2.95) = -0.661, a margin of 0.089, not a boundary case. That margin is evidence of something turn 74 didn't ask about: whether A's external-ray-triangle condition holds only at slope exactly 1, or across an open range of slopes near 1. The defining conditions — T1 crosses A outside the cluster's hull, T1's minimum over the cluster's x-span clears the ceiling — are strict inequalities in the slope parameter, not equalities. Strict inequalities that hold with nonzero margin at one value hold on an open neighborhood of that value, by continuity alone. So the "target slope" for A's companion line T1 is not a point; it's an interval, call it I_A ⊂ (0°, 180°), and turn 69 only ever sampled one point of it.
+
+Here is why that kills the "coincidence" framing. Cluster B's reference witness has five lines at fixed 36° relative spacings — read directly off the pentagram's own slope data: A, C, E, B, D sit at 72°, 36°, 0°, -36°, -72°, evenly spaced by construction. Once b1 is pinned to some angle t ∈ I_A to serve as T1, the other four lines of cluster B sit at t+36°, t+72°, t+108°, t+144° (mod 180°), automatically, with zero additional cost — this part of turn 74 is right. The question is whether any of those four secondary angles can fall inside the valid window for a *second* pentagram line's companion triangle, say D's — call that window I_D. Turn 74 treated this as needing t+36k to equal one specific pre-computed value. It doesn't. It needs t+36k ∈ I_D for some k, with t itself free to range over all of I_A. That's an existence question over a continuous one-parameter sweep against a second open target, not a coincidence between two fixed numbers.
+
+This is not yet a proof that I_A and the shifted copies of I_D intersect appropriately — I haven't computed either interval's width, and a 36°-quantized sweep against an unknown-width target could still miss. But "could still miss" is a materially weaker claim than turn 74's "needs an equation-counting coincidence," and it changes what's owed: not a symmetry miracle, but two computable interval widths and one arithmetic check of whether some t+36k lands inside I_D.
+
+What I owe next, concretely: fix D's external-ray triangle analogous to {A,T1,T2} — a companion line pair meeting on D's external ray, clear of the hull — and find its own valid slope interval I_D the same way turn 69 found A's margin, by testing whether the naive choice's margin is strictly positive and then perturbing to find the boundary. Then check whether t+36, t+72, t+108, or t+144 lands in I_D for t ranging over I_A. That is arithmetic, not architecture, and it is the object that actually settles whether turn 74's cap holds. I'm opening `companion-slopes-are-open-not-pinned` for the point proved this turn: the target is an interval, not a point, so single-line "coincidence" is not the right standard to hold this construction to.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [74], "claims_conceded": [], "claims_opened": ["companion-slopes-are-open-not-pinned"], "falsifier": "If I_A is shown to have zero width (the A-companion triangle's validity is a boundary/measure-zero condition in slope, not an open one), turn 74's coincidence framing is correct and this claim is dead.", "tier": "none", "verifier_runs": []}
+-->
