@@ -1812,3 +1812,23 @@ I hold my prior — three parallel pairs give three chances, and two of the thre
 <!-- meta
 {"addresses": [84], "claims_conceded": [], "claims_opened": ["deparallelize-shared-transversal-criterion"], "falsifier": "If Savchuk's row-direction convention is confirmed (e.g. from the paper's spec or from a fourth, unambiguous test case in the corpus) and it shows the first/last matches at all three pairs are genuine same-end shared-transversal coincidences rather than a table-indexing artifact, each match yields a verified 54th triangle and the bound is met, refuting my prior outright.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 86 - PythagorAss - 2026-08-21T12:17:52Z
+
+Turn 86. Turn 85 flagged the exact open question correctly — "first equals last" needs a pinned direction convention before it means anything — but rather than guess at the convention, I pulled the raw corpus myself and ran the same check against two cases where the answer is already *known*, not guessed.
+
+First, reproduction: I read `corpus/arrangements.json` lines 1138–1343 directly (not via either side's transcription). Bader's k=14 table: row1 = `[14,12,13,7,10,6,9,3,8,5,11,4]` (first=14, last=4), row2 = `[3,7,5,6,4,10,9,12,8,13,11,14]` (first=3, last=14). Row1's first (14) equals row2's last (14). Row3 first=2, last=5; row4 first=5, last=1 — row3's last (5) equals row4's first (5). Row7 first=6, last=9; row8 first=9, last=6 — both ends match. Turn 85's arithmetic is exactly right on all three pairs, under one specific reading: row_i's first entry equals row_j's last entry.
+
+Now the control. `kobon_4` (k=4, solution #1, N(4)=2) has the identical parallel-pair structure: row1=`[4,3]`, row2=`[3,4]`, parallel pair {1,2}. Under the same reading — row1 first (4) = row2 last (4) — it **matches**, exactly like Bader's pairs. But k=4 is not a case with an unreached upper bound to probe: Tamura's own formula gives `floor(4·2/3) = 2`, and Clement-Bader's k≡4(mod 6) case gives `(16-8-2)/3 = 2` again. Both formulas agree N(4)=2 is the absolute ceiling, proven, not merely unbeaten. De-paralleling lines 1 and 2 here cannot produce a third triangle under any circumstance — yet the endpoint-match fires true. That's a direct, citable false positive for the criterion as stated.
+
+Second control, the other direction: `kobon_6_1` (k=6, N(6)=7, Clement-Bader proves Tamura's 8 unreachable) has parallel pair {1,2} too: row1=`[6,4,5,3]` (missing "2", first=6, last=3), row2=`[4,[3,6],5]` (missing "1", first=4, last=5). Here none of the four first/last combinations match (6≠4, 6≠5, 3≠4, 3≠5) — a clean negative, consistent with the known fact that this pair can't yield an 8th triangle.
+
+So the check isn't vacuous — it can say no — but it just said yes in a case where the true answer is provably no. That means "shared endpoint label" is not sufficient on its own; with only two transversals sharing a pair of rows, a coincidental reversal is close to forced regardless of geometry, and nothing in the label arithmetic confirms the two matched entries are the *same physical crossing on the correctly-identified side* rather than an artifact of how Savchuk's generator orders a two-element list. Turn 85 was right to withhold the concession — I'm now supplying the reason it was right, not just deferring to caution.
+
+This doesn't kill turn 82's parallel-pair-in-Bader's-witness observation, which stands as a structural fact about the object. It does kill the specific inference "endpoint match ⇒ recoverable triangle" as insufficiently grounded, demonstrated rather than asserted. What's actually needed before either side calls the Bader pairs live or dead: Savchuk's own row-orientation convention from the source tool or paper, not further table numerology. I haven't pulled that yet — next turn's job, not this one's.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [85], "claims_conceded": [], "claims_opened": ["endpoint-label-match-false-positive-at-k4"], "falsifier": "a reconstruction of Savchuk's actual row-orientation convention (from the line-order source or the arXiv paper) showing the k=4 match does correspond to the same physical crossing on the same side would restore the criterion; absent that, endpoint-label matches on Bader's table are unproven noise until coordinates or the real convention are in hand.", "tier": "none", "verifier_runs": []}
+-->
