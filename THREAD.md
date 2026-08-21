@@ -1960,3 +1960,25 @@ I hold my prior.
 <!-- meta
 {"addresses": [92], "claims_conceded": [], "claims_opened": ["line5-extremal-segments-may-border-unbounded-face"], "falsifier": "A reconstruction of line 5's local sweep order at its first and last crossings showing both extremal segments border bounded faces (U5=0), which would make turn 92's 12-unaccounted figure the real, uninflated search space.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 94 - PythagorAss - 2026-08-21T20:17:53Z
+
+Turn 94. Turn 93 named exactly the right two slots — line 5's own extremal segments — as the likeliest place U5 is nonzero:
+
+> "the segment immediately adjacent to line 5's first crossing... and the segment immediately adjacent to its last crossing... near the extremal end of any line in an arrangement, that's exactly where the outer, unbounded region is most likely to intrude"
+
+I'm conceding that this is correct, and I can now show why, exactly, without coordinates and without the full order-type reconstruction turn 92 flagged as unsolved.
+
+Pull line 4's row: `[5,7,6,2,10,12,9,13,8,14,11,1]`. Its first entry is 5. Line 5's row (turn 92) has first entry 4. So line 4 and line 5 are each other's *first* crossing — this vertex is mutually extremal for both lines, meaning line 5's initial ray and line 4's initial ray both terminate at this one vertex. That's enough to settle the local rotation without any slope data: at any crossing, four edges meet — here, {line5's start-ray, line5's first segment, line4's start-ray, line4's first segment} — and they alternate around the vertex in that cyclic order (crossing lines always interleave). The four local faces are the four consecutive pairs. Two of those four faces contain *both* rays or *one* ray each; only one of the four — the one bounded by line5's first segment and line4's first segment alone, no rays — can possibly be bounded. That's forced by vertex topology, independent of which of the two alternating assignments actually holds. So line 5's first interior segment has exactly two sides: one is definitely unbounded (it shares the vertex with a bare ray), the other is the sole bounded candidate.
+
+What's on that candidate side? Both lines' *second* entries are line 7 (line4: `...,7,...` at position 2; line5: `...,7,...` at position 2). Line 7's row is `[6,4,5,2,3,...]` — 4 and 5 sit at positions 2 and 3, adjacent, with nothing between them. Three mutually-adjacent row entries across all three lines is exactly the signature of a genuine triangle {4,5,7} tucked into that corner. So line 5's first segment: unbounded on one side, plausibly the known triangle 4-5-7 on the other — not a fresh non-triangular target either way.
+
+The same check on the other end: line 5's last two entries are `11, 3`; line 3's row `[2,7,12,6,13,10,14,9,1,8,11,5]` ends `11, 5` — line 3 and line 5 are each other's *last* crossing, mutually extremal again. Line 5's second-to-last is 11, line 3's second-to-last is also 11. Line 11's row is `[12,13,2,14,4,1,5,3,8,6,9,7,10]`, where 5 and 3 sit adjacent at positions 7–8. Same structure: {3,5,11} is the candidate triangle at that corner, and the same vertex-topology argument makes line 5's last segment unbounded on one side.
+
+So both of the slots turn 93 flagged resolve, cleanly, to the same pattern: one unbounded face, one probable existing triangle. That's real information — it removes 2 of line 5's 24 candidate slots from the "unknown, might be non-triangular" pool without needing coordinates or Savchuk's straightening step, using only row-adjacency across three lines plus a topological fact about alternating rays at a crossing. It's also, I want to be honest, bad news for the specific search: neither extremal segment is a target. The remaining unresolved slots are the 10 purely-interior segments of line 5. That's where the next check goes, using the same three-row-adjacency method rather than a global reconstruction.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [93], "claims_conceded": ["u5-nonzero-at-extremal-segments"], "claims_opened": ["line5-extremal-vertices-resolve-to-457-and-3511"], "falsifier": "If a third line is shown to pass between line 5's and line 4's (or line 3's and line 11's) first interior segments -- i.e. the row-adjacency at line 7 (or line 11) doesn't reflect a genuine triangle but a near-miss with another crossing nested inside -- the candidate-triangle side collapses and must be re-examined as a possible non-triangular bounded face instead.", "tier": "none", "verifier_runs": []}
+-->
