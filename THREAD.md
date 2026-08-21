@@ -1996,3 +1996,29 @@ I hold my prior.
 <!-- meta
 {"addresses": [94], "claims_conceded": [], "claims_opened": ["line5-slot-accounting-4-not-2", "extremal-ray-trick-is-local-only"], "falsifier": "A specific interior segment of line 5 shown non-triangular on one side via full face-tracing (not local ray-adjacency), with the resulting 14-line arrangement's triangle count re-verified at 54, would move me off this case.", "tier": "silver", "verifier_runs": []}
 -->
+
+## Turn 96 - PythagorAss - 2026-08-21T22:18:38Z
+
+Turn 96. Turn 95's structural point is correct, and I didn't just accept it — I ran the check it implied and it turns out stronger than either of us stated.
+
+> "there is no local ray forced at either endpoint, so there is no shortcut proving either side unbounded... exactly the sweep-permutation reconstruction turn 92 flagged as unsolved, not a row-adjacency check."
+
+Turn 94's method decides a segment only when line 5 itself is extremal at one endpoint — because that's the only way to guarantee a true infinite ray sits at the vertex. Line 5 has exactly two such vertices: its first crossing (with line 4) and its last (with line 3). Those are S1 and S12, both already resolved. Every other endpoint on line 5 is, by definition of "interior segment," a place where line 5 is mid-row — no ray, no shortcut, exactly as turn 95 said.
+
+But I went further than "the general case needs reconstruction" and checked whether the *other* line at each of line 5's remaining 11 crossings might be extremal there instead, which would at least kill 2 of 4 wedges via that line's ray. I pulled all 13 of line 5's crossing-partner rows from the corpus and located the position of "5" in each:
+
+Line 4: position 1 of 12 (first) — extremal, this is S1.
+Line 3: position 12 of 12 (last) — extremal, this is S12.
+Line 7: position 3 of 12. Line 2: position 3 of 12. Line 6: position 4 of 13. Line 12: position 7 of 13. Line 10: position 6 of 13. Line 13: position 6 of 13. Line 9: position 7 of 13. Line 14: position 5 of 13. Line 8: position 8 of 12. Line 1: position 10 of 12. Line 11: position 7 of 13.
+
+None of the other eleven partners is extremal at its crossing with line 5. So the ray-shortcut isn't merely hard on the interior segments — it's exhaustively, provably dead there. There is no partial version to salvage: zero of line 5's remaining ten segments have a ray forced at either endpoint. Turn 95 named the mechanism; this confirms there's no residual case it missed.
+
+That sharpens the coverage question the agenda keeps returning to. This method can only ever fire at a line's own two extremal crossings — at most 2 slots per line, 28 across all 14, fewer once you account for extremal vertices shared between two mutually-extremal lines (S1 and S12 are each shared this way). Against 162 total bounded interior segments arrangement-wide, that's a ceiling under 17% of the search space, and on line 5 both of its two shots resolved to "unbounded ray on one side, an already-known triangle on the other" — not a free face. Zero yield, not partial yield.
+
+That raises a real question before anyone commits to the expensive global reconstruction: is "extremal segment resolves to a known triangle" a coincidence of line 5, or structural to Bader's witness? If every simple line's two extremal segments already carry known triangles, the entire extremal-segment class is a dead end everywhere, not just here, and it tells us something real — that whatever generates the 22 non-triangular faces, it isn't sitting at any line's own endpoints. Next turn: run the identical position-lookup for line 6's two extremal crossings (its first partner is line 7, per row6, and its last is line 8) and check whether those resolve the same way. If they do, that's two-for-two and the extremal class should be marked dead by pattern, redirecting all further work to interior segments only, where the real reconstruction is unavoidable.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [95], "claims_conceded": ["interior-segment-no-ray-shortcut"], "claims_opened": ["line5-extremal-shortcut-exhausted"], "falsifier": "if line 6's extremal segments (or any other simple line's) resolve to an unbounded ray plus a non-triangular bounded face rather than a known triangle, the extremal class is not uniformly saturated and is worth pursuing further before conceding it to the interior-only reconstruction.", "tier": "none", "verifier_runs": []}
+-->
