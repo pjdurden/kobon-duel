@@ -1770,3 +1770,25 @@ I hold my prior.
 <!-- meta
 {"addresses": [82], "claims_conceded": [], "claims_opened": ["bader-table-reading-needs-spec-verification", "bader-row9-citation-off-by-one"], "falsifier": "A decoded Savchuk table spec confirming a missing entry denotes a parallel pair, combined with identification of the specific bounded face adjacent to pair {1,2}, {3,4}, or {7,8} as non-triangular, would make the de-paralleling perturbation a live construction attempt rather than an open question.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 84 - PythagorAss - 2026-08-21T10:18:21Z
+
+Turn 84. Direct source check, not transcription. I read `corpus/arrangements.json` lines 1134–1343 myself rather than trusting either side's quoted excerpt.
+
+First, the concession turn 83 is owed:
+
+> "That sequence is not row 9. Row 9 in the file... is `8,10,2,12,4,13,5,14,3,1,6,11,7`... The sequence turn 82 quoted is row 10."
+
+Confirmed against the raw file. Row 9 (line 9's list): `8,10,2,12,4,13,5,14,3,1,6,11,7` — 13 entries, values `{1,2,3,4,5,6,7,8,10,11,12,13,14}`, complete, no self-reference, no anomaly. Row 10: `8,9,2,4,12,5,13,3,14,6,1,7,11` — 13 entries, contains "9" because line 10 ordinarily crosses line 9. Turn 82's off-by-one is real. I concede that specific point.
+
+With the citation fixed, I re-verified the whole entry rather than just rows 1–8. All 14 rows, by length: rows 1,2,3,4,7,8 have 12 entries each; rows 5,6,9,10,11,12,13,14 have 13 entries each. Checking set membership row by row (not just counting): row 1 is missing exactly "2", row 2 is missing exactly "1"; row 3 missing "4", row 4 missing "3"; row 7 missing "8", row 8 missing "7". All eight full rows contain every other line label with no omission and no repetition. That's a clean, exhaustive confirmation: exactly three mutual pairs, {1,2}, {3,4}, {7,8}, and nothing else irregular anywhere in the 14-line table. Turn 83's own arithmetic check (176 = 2×88 = 2×(C(14,2)−3)) is consistent with this, but now it's read, not inferred from a total.
+
+Second, and this is new: turn 83 is right that "missing entry = parallel line" needed a spec, not a guess. The spec is sitting in the same file. `kobon_4` (solution #1, 2 triangles) has rows of length 2,2,3,3 — the same short-row pattern, decoding the same way: line 1 misses "2", line 2 misses "1", mutual, one parallel pair. But `kobon_4_2` (solution #2, also 2 triangles, same k) encodes a *different* degeneracy for the same triangle count: its rows are `[4,3,2]`, `[[3,4],1]`, `[[4,2],1]`, `[[2,3],1]` — nested brackets, not omission. That's Savchuk's own notation for a concurrency: line 2's row groups "3" and "4" together because lines 2, 3, 4 all meet at one point, and line 2 still crosses both, it just crosses them coincidentally. No entries are missing in that table at all — every row has full length, because concurrent lines still cross each other, they just share a point. The two mechanisms are visibly distinct in the same file, applied by the same author to solve the same k, which is as close to a decoded spec as we get without the paper: a shortened row means non-crossing (parallel); a nested group means coincident-but-crossing (concurrent). Bader's k=14 table has zero bracket nesting anywhere in its fourteen rows — only the six short rows. That rules out turn 83's alternative reading (that the omissions could be concurrency artifacts) directly, from the corpus's own internal contrast, not from my assertion.
+
+So: `bader-53-witness-is-nonsimple-parallel-built` is now settled, not hypothesized — three parallel pairs, decoded against a same-file control case, with the citation error fixed. What's still unproven, and I won't claim otherwise, is turn 82's actual agenda item: whether any face flanking those three pairs is non-triangular before de-paralleling. That needs the local wiring-diagram structure around lines {1,2}, {3,4}, {7,8} reconstructed from the crossing-order rows, which I have not done yet. That's next turn's computation, with the same table, not a new object.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [82, 83], "claims_conceded": ["bader-row9-citation-error"], "claims_opened": ["bader-parallel-notation-decoded-from-source"], "falsifier": "if reconstructing the wiring diagram around lines {1,2}, {3,4}, or {7,8} from the table's crossing order shows every face flanking all three pairs is already a triangle, the de-paralleling move has no non-triangular face to convert and this whole line dies", "tier": "none", "verifier_runs": []}
+-->
