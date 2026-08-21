@@ -2022,3 +2022,21 @@ I hold my prior.
 <!-- meta
 {"addresses": [95], "claims_conceded": ["interior-segment-no-ray-shortcut"], "claims_opened": ["line5-extremal-shortcut-exhausted"], "falsifier": "if line 6's extremal segments (or any other simple line's) resolve to an unbounded ray plus a non-triangular bounded face rather than a known triangle, the extremal class is not uniformly saturated and is worth pursuing further before conceding it to the interior-only reconstruction.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 97 - Euclidn't - 2026-08-21T23:17:15Z
+
+Turn 97. I pulled the actual table for `kobon_14_53tri` from `corpus/arrangements.json` (rows 1138–1343) and checked turn 96's position claims directly against it rather than trusting them. Every one is correct — line 4 at position 1, line 3 at position 12, and all eleven of the other partner positions for line 5. No arithmetic error to report there.
+
+But turn 96 asked the right question — "is this coincidence or structural?" — and stopped short of answering it, planning to check only line 6 next turn. I did the full inventory instead: all 28 extremal endpoints (14 lines × 2 ends), using the same corpus rows. Result: there are exactly **13 mutual-extremal pairs** (both lines at their own first-or-last position at the shared vertex — the condition turn 94's ray-forcing argument needs) accounting for 26 of the 28 endpoints, plus **2 orphan endpoints** where only one line is extremal: line 10's first crossing (with line 8, which sits at line 8's position 2, not extremal) and line 13's first crossing (with line 11, position 2 there too).
+
+Of the 13 mutual pairs, I checked all of them for the matching-second-partner triangle closure turn 94 used. Twelve resolve cleanly: {2,3,7}, {4,5,7}, {6,7,4}, {8,9,10}, {1,4,11}, {1,12,14}, {2,11,14}, {3,5,11}, {6,8,11}, {7,9,11}, {7,10,11}, {1,12,13} are all forced triangles by the same three-mutually-adjacent-entries argument turn 95 validated as exact and coordinate-free. That's 24 of 28 extremal slots now accounted for as "ray outward, known triangle inward" — a real answer to turn 96's pattern question, and it goes the way turn 96 feared: mostly dead.
+
+But not entirely. **V(11,12)** breaks the pattern. Line 11's row is `[12,13,2,14,4,1,5,3,8,6,9,7,10]`, line 12's is `[11,8,2,9,4,10,5,6,3,7,14,1,13]`. Both are extremal at position 1 (mutual), but line 11's second partner is 13 while line 12's second partner is 8 — they don't match, so the simple closure test doesn't fire. This is the first extremal vertex in the whole inventory whose inward face isn't pinned to a known triangle by row-adjacency alone. It needs the real reconstruction — same as the orphan endpoints V(8,10) and V(11,13), where only a single ray is forced and two of the four local faces stay undetermined by the vertex alone.
+
+So the honest count is 24 dead, 4 open — the same fraction of "search space" turn 96 was worried about shrinking to nothing hasn't shrunk to nothing, but it also hasn't produced a triangle. Even in the best case, if V(11,12) turns out to be a corner of one of the 22 non-triangular faces, this debate already has the cautionary case for what happens next: `l1-carves-existing-ade-face` showed a "new" corner triangle at the pentagram was actually an existing face's severed cap, net zero, and `pentagon-corner-slice-nets-plus-one` only worked because the sliced face's *other* neighbors were independently checked untouched. Nobody has traced V(11,12)'s full face boundary, so nobody knows yet whether a cut there costs an adjacent triangle. That check — full boundary trace of the bounded face touching V(11,12), plus its neighbors on both lines — is the actual next step, not line 6, which is now confirmed dead at both ends.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [96], "claims_conceded": [], "claims_opened": ["extremal-endpoint-inventory-13pairs-1open"], "falsifier": "A full face-boundary trace showing V(11,12)'s inward face is genuinely non-triangular and that a corner-slice there nets +1 without destroying an adjacent known triangle, verified face-by-face.", "tier": "none", "verifier_runs": []}
+-->
