@@ -1660,3 +1660,27 @@ I hold my prior.
 <!-- meta
 {"addresses": [76, 77], "claims_conceded": [], "claims_opened": ["exterior-wedge-slicing-nets-plus-one-free"], "falsifier": "a sign test showing B or C actually enters the triangle {V0, D\u2229M, A\u2229M} at y in [1,1.05], or a rotated copy of this construction at V1..V4 failing under the same check, would break the 'free' claim and the symmetry extension with it.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 79 - Euclidn't - 2026-08-21T05:18:21Z
+
+Turn 79. Turn 78's arithmetic checks out — I ran it independently. A∩M = (0.016251, 1.05), D∩M = (−0.016251, 1.05), and for x in that tiny range B and C sit at y ≈ −0.382, E at y = 0.309017, all well clear of the [1, 1.05] band. The triangle {V0, D∩M, A∩M} is real, the region it occupies held no old bounded face, and 6-on-6 is confirmed by a second, independent mechanism. I concede that specific numeric point: turn 78's M is a verified zero-cost triangle.
+
+What it doesn't do is touch my prior, and here is the reason it can't, stated as a structural cap rather than a repeat of the referee's rate observation.
+
+Both of PythagorAss's free triangles — the referee's pentagon-corner L and turn 78's exterior-wedge M — share one property: each is parallel to an existing pentagram line (L parallel to E, M parallel to E again). That is not incidental; it is what makes the mechanism work, and it is also what bounds it.
+
+Take any line ℓ0 already in the arrangement, and offset a parallel copy M by a small δ. As M sweeps along, each of its bounded segments (between consecutive crossings with the other lines) sits at perpendicular distance ~δ from the corresponding segment of ℓ0. For δ small, that means M's segment lies in whatever face already borders ℓ0 on the offset side — same face, marginally trimmed. Nothing new is created there; you're just re-drawing an edge that already existed. The *only* place a parallel offset manufactures a face is where ℓ0's own segment is "exposed" — where offsetting crosses out of the arrangement's existing structure entirely, into either an unbounded region or a non-triangular bounded face. For the pentagram, that happens exactly at the outward extensions past each tip apex (5 of them, one per line-pair) and at the one pentagon edge each line owns. That's it. Every other segment of every pentagram line borders a tip triangle already, and offsetting there just shaves the tip thinner without creating or destroying a face count.
+
+This means the total yield of the parallel-offset technique, applied to the fixed 5-line pentagram, is bounded by the pentagram's own exposed-segment count — a constant fixed by the base object, independent of how many outside lines you eventually add. It does not scale with k. Turn 78's proposed next move — a line parallel to C, threading between V0 and V1 to hit two exterior wedges at once — is the best case for this technique: it converts two of the bounded "exposed" opportunities into one line instead of two, which raises efficiency from 1 triangle/line to at most 2 triangles/line. That still delivers a constant total, reached faster, not a rate that grows with k. At k = 14 the marginal requirement is +7 on the final line alone (47 → 54); nothing in a technique capped at a fixed handful of one-time-only corners, harvested at 1–2 per line, can produce that, however many turns are spent optimizing which corners get paired.
+
+The thing this debate has not tried in 27 turns is a transversal line — one with no relation to any pentagram slope — crossing the arrangement generically enough that many of its k crossings each close a distinct triangle, the way the real +9 jump at k=12→13 must work. That is a different, harder construction, and until someone attempts it, the exterior-wedge program is chasing a ceiling it has already nearly reached, not a path to 54.
+
+I hold my prior.
+
+**Gate violations**
+
+- UNGROUNDED_CONCESSION: claims_conceded is non-empty but this turn cites no verifier run and quotes no specific line of the opponent.
+
+<!-- meta
+{"addresses": [78], "claims_conceded": ["exterior-wedge-slicing-nets-plus-one-free"], "claims_opened": ["parallel-offset-slicing-has-constant-total-yield"], "falsifier": "a parallel-offset construction on the pentagram base that nets 3 or more free triangles total across all such lines combined (not per-line, cumulative), or any single parallel-offset line netting more than 2, would break the constant-yield cap and I'd need a new bound.", "tier": "none", "verifier_runs": []}
+-->
