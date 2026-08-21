@@ -1728,3 +1728,27 @@ I hold my prior.
 <!-- meta
 {"addresses": [80], "claims_conceded": [], "claims_opened": ["corner-slicing-program-capped-at-14"], "falsifier": "a single line, or a small set of outside lines, shown to zero-cost-slice two or more of the pentagram's 10 vertices at once (breaking the one-window-per-line disjointness), or a verified triangle among the outside lines that reuses a corner-slice line without destroying its corner triangle, would raise the 14-triangle ceiling and undercut this cap.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 82 - PythagorAss - 2026-08-21T08:19:21Z
+
+Turn 82. Turn 81's disjoint-window argument is clean and I'm not going to relitigate it:
+
+> "the five apex windows... are pairwise disjoint mod 180°, together spanning at most 180° total... A single line has one direction. It can sit inside at most one window."
+
+Checked against my own turn-80 numbers (windows [72,108] and [144,180], both tested and both failed for the same line) plus the referee's [0,36]/[36,72] fill-ins, the five windows exactly *partition* the 180° range with no gaps. That means every possible line direction lands in exactly one apex window, always — so no line, at any slope, can zero-cost-slice two apex corners. I concede that specific point: the exterior-apex mechanism caps at one triangle per line, full stop. It doesn't touch my prior, because — as turn 81 itself says — it bounds one narrow mechanism, not the problem.
+
+Rather than keep arguing about what the pentagram-plus-slices program can't do, I checked what's actually sitting in this repo. `corpus/arrangements.json`, vendored from zegalur/line-order and cited in the literature packet, contains named entries for exactly our gap cases, including `kobon_14_53tri`, "14-Line Solution (53 Triangles) by Johannes Bader" — the real best-known witness for k=14, untouched in 81 turns of debate that has been building from a 5-line symmetric seed instead.
+
+The table is 14 rows, one per line, listing the other lines it crosses in order. Row 1: `14,12,13,7,10,6,9,3,8,5,11,4` — 12 entries, missing "2" from {1..14}\{1}. Row 2: `3,7,5,6,4,10,9,12,8,13,11,14` — 12 entries, missing "1". That's a mutual, symmetric omission: line 1 and line 2 don't cross each other. Row 3 (`2,7,12,6,13,10,14,9,1,8,11,5`) is missing "4"; row 4 (`5,7,6,2,10,12,9,13,8,14,11,1`) is missing "3" — same pattern, mutual. Row 7 (`6,4,5,2,3,12,14,13,1,10,11,9`) is missing "8"; row 8 (`9,10,12,2,13,4,14,5,1,3,11,6`) is missing "7" — same pattern again. Row 5 and row 6, by contrast, both have 13 entries and are missing nothing — simple lines.
+
+So on the evidence in rows 1–4 and 7–8, Bader's 53-triangle optimum is **non-simple**, built with at least three parallel pairs: {1,2}, {3,4}, {7,8}. That's my "parallel classes" instinct, already realized in the actual best-known object for this exact case — not a hypothesis I'm proposing, a structural fact about a witness that already scores 53, one short of the target, rather than 47 needing +7. I'm not claiming more than this: row 9 (`8,9,2,4,12,5,13,3,14,6,1,7,11`) includes the label "9" itself, which breaks the row-index-equals-line-label assumption that made rows 1–4/7–8 legible, so I haven't decoded rows 9–14 and won't guess at their format without Savchuk's exact table spec.
+
+This changes what the next move should be. Instead of chasing a 54th triangle from a base that's capped at +1/line (turn 81's proof), the live question is local: does Bader's 53-triangle arrangement have a non-triangular face adjacent to one of these parallel pairs, such that tilting line 2 off its parallelism with line 1 by an infinitesimal angle adds exactly one crossing and splits that face into a triangle plus a remainder, without destroying any of the existing 53? That's a perturbation search on a near-optimal object, not a from-scratch construction, and it's a fundamentally different bet than anything either side has run this debate.
+
+I'm opening `bader-53-witness-is-nonsimple-parallel-built` for what's verified this turn — the three mutual-omission pairs — and leaving the row 9–14 decoding and the perturbation test for the next turn.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [81], "claims_conceded": ["apex-window-disjointness-caps-exterior-mechanism"], "claims_opened": ["bader-53-witness-is-nonsimple-parallel-built"], "falsifier": "if Savchuk's table spec shows row-index does not correspond to line-label (e.g. the row9 self-reference is normal under the real encoding), the three parallel pairs I read off are an artifact of a wrong decoding and I withdraw them until re-derived correctly.", "tier": "none", "verifier_runs": []}
+-->
