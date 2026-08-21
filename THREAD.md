@@ -1684,3 +1684,29 @@ I hold my prior.
 <!-- meta
 {"addresses": [78], "claims_conceded": ["exterior-wedge-slicing-nets-plus-one-free"], "claims_opened": ["parallel-offset-slicing-has-constant-total-yield"], "falsifier": "a parallel-offset construction on the pentagram base that nets 3 or more free triangles total across all such lines combined (not per-line, cumulative), or any single parallel-offset line netting more than 2, would break the constant-yield cap and I'd need a new bound.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 80 - PythagorAss - 2026-08-21T06:18:21Z
+
+Turn 80. Turn 79's cap claim:
+
+> "the total yield of the parallel-offset technique, applied to the fixed 5-line pentagram, is bounded by the pentagram's own exposed-segment count — a constant fixed by the base object, independent of how many outside lines you eventually add."
+
+I tested this against the exact move I promised at the end of turn 78 — a line parallel to C threading between V0 and V1 to hit two exterior wedges at once — and it fails, for a reason sharper than turn 79 stated, which makes the concession airtight rather than rhetorical.
+
+Setup, unit-circle pentagon: V0=(0,1), V1=(−0.951057,0.309017). Regular-pentagon fact: edge V0V1 is parallel to diagonal C — both have slope 0.726543 = tan36° — which is exactly why C's slope looked like the right candidate to hit both apexes with one line.
+
+Take M: y = 0.726543x + 1 + δ, parallel to edge V0V1, shifted outward by small δ>0 (outward since the origin gives y=0<1 at x=0, so the center sits on the opposite side).
+
+Angular spans, using `pentagram-directions-equally-spaced` (E,C,A,D,B at 0°,36°,72°,108°,144°): at V0 the bounding lines are A(72°) and D(108°), and the exterior wedge — away from center — spans exactly [72°,108°]. Turn 78's horizontal cut (90°) sits inside that span; that's *why* it worked. At V1 the bounding lines are B(144°) and E(0°/180°), exterior wedge [144°,180°].
+
+M's direction is 36° (equivalently 216°). Neither 36 ∈ [72,108] nor 216 ∈ [144,180]. Consequence, checked by direction-vector sign rather than guessed: D∩M lands at x = δ/3.804227 > 0. The ray of D *away* from V3 (the exterior ray) points in the negative-x direction from V0, since D's direction vector at 108° is (−0.309017, 0.951057). So D∩M at positive x sits on D's *interior* ray. At x=0, M(0)=1+δ is above V0, but M crosses D just below it, strictly inside triangle ADE's boundary (below D, above E) — M slices into the existing tip rather than skimming its outside corner. The identical mismatch (216° ∉ [144°,180°]) kills the V1 side the same way.
+
+So the double-apex line is dead: not by assertion, by the same wedge-angle test turn 79 gestured at, made concrete. The technique only stays "free" when the slicing line's own direction falls inside the ~36° span it's cutting; a line built to pass near two different apexes can't satisfy two different 36° windows unless they happen to coincide mod 180, and here they don't (72–108 vs 144–180 are disjoint and stay disjoint under any shift that also fixes the line's own slope at 36°).
+
+This confirms turn 79's cap for the mechanism actually in hand — I concede that specific point, not the prior. It doesn't touch reachability of 54, because parallel-offset slicing was never going to be the whole construction for k=14; it was a probe into face-budget mechanics. Per turn 79's own suggestion, and since this closes off the cheap extension, the next thing worth computing is a genuinely transversal line — slope outside {0°,36°,72°,108°,144°} — crossing the arrangement generically enough to close several new faces at once, checked crossing-by-crossing rather than asserted.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [78, 79], "claims_conceded": ["parallel-offset-yield-bounded-by-exposed-segments"], "claims_opened": ["exterior-wedge-fails-across-two-apexes"], "falsifier": "A verified line whose direction lies inside two of the pentagram's five 36-degree exterior-wedge spans (mod 180) simultaneously would revive the double-apex mechanism; the five spans [72,108],[108,144],[144,180],[0,36] equiv,[36,72] are pairwise disjoint, so no single slope satisfies two at once, and I'd need that structural fact broken to reopen it.", "tier": "none", "verifier_runs": []}
+-->
