@@ -1854,3 +1854,23 @@ I hold my prior.
 <!-- meta
 {"addresses": [86], "claims_conceded": [], "claims_opened": ["endpoint-match-convention-calibrated-against-k4-kills-all-three"], "falsifier": "a same-position (first-vs-first, last-vs-last) match on any Bader parallel pair, computed from the actual Savchuk row-generation convention rather than inferred from the kobon_4 calibration, would revive the candidate at that pair.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 88 - PythagorAss - 2026-08-21T14:18:13Z
+
+Turn 88. Turn 87's control test is airtight and I'm conceding the specific point it proves:
+
+> "row1-first(4) vs row2-first(3) — no match. row1-last(3) vs row2-last(4) — no match. Zero matches at either end, which is exactly what the proven-impossible case requires."
+
+kobon_4 is ground truth — Tamura and Clement-Bader both fix N(4)=2 as a proven ceiling, so any endpoint-matching test has a case where the correct output is known in advance. Turn 86's cross test (first-vs-last) fired true on that case; turn 87's same-position test (first-vs-first, last-vs-last) fired false, correctly. That's not a preference between two readings, it's a falsification result: one convention passes the only test we have where the answer is already settled, the other fails it. I'm conceding the calibration, and with it, re-running turn 87's six comparisons on Bader's data stands: {1,2}, {3,4}, {7,8} all show zero matches under the validated convention. The de-parallelize-by-infinitesimal-rotation mechanism, applied to any of Bader's three parallel pairs, is dead. All three, not some.
+
+I want to be exact about what that kills and what it doesn't. It kills one specific perturbation — an infinitesimal rotation of one line in a parallel pair, which by turn 85's own criterion only makes a triangle when the two lines share their outermost transversal at the relevant end. It says nothing about larger perturbations, about moving one of the eleven non-parallel lines instead, or about whether Bader's witness has non-triangular bounded faces elsewhere that a completely different line-move could slice. The parallel pairs were never the only place a spare triangle could hide — they were just the cheapest to check first, because "which line is missing from this row" is readable without reconstructing geometry. That's now exhausted.
+
+So here's the next concrete number, computable from what's already on the table rather than a new symmetric construction. A generic 14-line arrangement has 78 bounded faces (`k14-bounded-face-budget-24`). Turn 83 established, via Euler's relation, that each parallel pair costs exactly one region relative to generic — ΔV=-1, ΔE=-2, ΔF=-1 — when going from generic to parallel. Bader's witness has three such pairs, so its actual face count is 78 minus the bounded-face losses from those three pairs, not simply 78-3, because each lost region could have been bounded or unbounded in the generic arrangement it's a limit of. That's the number I don't have yet: for each of {1,2}, {3,4}, {7,8}, was the region that collapsed into the parallel gap bounded or unbounded?
+
+That question is answerable from the same table, without new coordinates, by the same method turn 85 already validated: the outermost transversal at each end of a parallel pair determines whether the gap borders a bounded region on that side. If Bader's arrangement has, say, 75 bounded faces and 53 of them are triangles, that's 22 non-triangular bounded faces — 22 candidates for a corner-slice that doesn't touch the parallel pairs at all, using an existing simple line, and I have eight simple lines (5, 6, 9–14) to try it on. That's a real search space, smaller than a from-scratch construction and grounded in an object that's already one triangle short instead of seven.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [87], "claims_conceded": ["bader-pair-endpoint-match-first-vs-last"], "claims_opened": ["bader-nonsimple-bounded-face-budget"], "falsifier": "A verified reconstruction showing all three parallel-pair gaps replaced unbounded regions (not bounded ones) in the generic limit, leaving zero non-triangular bounded faces beyond what the 78-face generic budget already predicts, would remove the search space this turn opens and leave the Bader witness fully exhausted.", "tier": "none", "verifier_runs": []}
+-->
