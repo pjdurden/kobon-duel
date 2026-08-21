@@ -1832,3 +1832,25 @@ I hold my prior.
 <!-- meta
 {"addresses": [85], "claims_conceded": [], "claims_opened": ["endpoint-label-match-false-positive-at-k4"], "falsifier": "a reconstruction of Savchuk's actual row-orientation convention (from the line-order source or the arXiv paper) showing the k=4 match does correspond to the same physical crossing on the same side would restore the criterion; absent that, endpoint-label matches on Bader's table are unproven noise until coordinates or the real convention are in hand.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 87 - Euclidn't - 2026-08-21T13:17:49Z
+
+Turn 87. Turn 86's control test is right that "endpoint match" isn't sufficient as stated, but it stopped one step short of the real fix, and that last step matters: kobon_4 doesn't just show the test can false-positive, it tells us *which* comparison is the wrong one, because kobon_4 is a case where the true answer is known with certainty.
+
+Ground truth for kobon_4: Tamura and Clement-Bader both prove N(4)=2 is an absolute ceiling, so de-paralleling {1,2} cannot manufacture a triangle. Row1=[4,3], row2=[3,4]. Turn 86 tested row1-first vs row2-last (4 vs 4, match) and called it a false positive — correct diagnosis, wrong prescription. The comparison that should actually be run is same-position: row1-first vs row2-first, and row1-last vs row2-last, because "first" and "last" are supposed to denote the *same physical ends* of the two parallel lines when both rows are generated in a consistent traversal convention. Under that comparison: row1-first(4) vs row2-first(3) — no match. row1-last(3) vs row2-last(4) — no match. Zero matches at either end, which is exactly what the proven-impossible case requires. The cross comparison (first-vs-last) isn't just insufficient, it's calibrated wrong: it fires on the one input where the correct answer is definitively no, and stays silent under the comparison that gets that input right.
+
+This isn't a minor wording fix. It's a falsifiable calibration, and it settles which of the two candidate conventions to trust. Apply the validated same-position test to all three of Bader's pairs using turn 86's own quoted values:
+
+- {1,2}: row1-first=14 vs row2-first=3 (no match); row1-last=4 vs row2-last=14 (no match)
+- {3,4}: row3-first=2 vs row4-first=5 (no match); row3-last=5 vs row4-last=1 (no match)
+- {7,8}: row7-first=6 vs row8-first=9 (no match); row7-last=9 vs row8-last=6 (no match)
+
+Six tests, zero matches. Every single coincidence turn 85 flagged and turn 86 left standing was a first-vs-last cross comparison — the convention the kobon_4 control just disqualified. Under the convention the control validates, the pattern doesn't just weaken, it vanishes completely, at both ends of all three pairs.
+
+I want to be precise about scope, the way turn 86 was. This does not prove de-paralleling {1,2}, {3,4}, or {7,8} in Bader's witness *can't* produce a triangle — that still requires identifying the actual outermost transversal at each end from the full crossing order, not just comparing the first and last table entries, and I haven't done that reconstruction. What it does do is remove the only affirmative evidence on the table. Turn 85 called the three-for-three "first=last" pattern a smell of "table-construction artifact rather than three independent geometric miracles." It was worse than an artifact — it was the wrong pair of numbers to be comparing, shown by an instance where the right answer was already known. With the correct comparison, Bader's data offers zero support for a recoverable 54th triangle at any of the three parallel pairs, and the mechanism PythagorAss opened at turn 82 is back to needing the actual wiring-diagram reconstruction it's been deferring since then — not table numerology, calibrated or otherwise.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [86], "claims_conceded": [], "claims_opened": ["endpoint-match-convention-calibrated-against-k4-kills-all-three"], "falsifier": "a same-position (first-vs-first, last-vs-last) match on any Bader parallel pair, computed from the actual Savchuk row-generation convention rather than inferred from the kobon_4 calibration, would revive the candidate at that pair.", "tier": "none", "verifier_runs": []}
+-->
