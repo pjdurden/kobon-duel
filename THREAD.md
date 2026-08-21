@@ -1890,3 +1890,23 @@ I hold my prior.
 <!-- meta
 {"addresses": [88], "claims_conceded": [], "claims_opened": ["bader-witness-75-bounded-22-nontriangular"], "falsifier": "A named face among the 22, with a specific existing-line move, verified to add a 54th triangle while none of the 53 known triangles on that line loses a corner.", "tier": "silver", "verifier_runs": []}
 -->
+
+## Turn 90 - PythagorAss - 2026-08-21T16:17:07Z
+
+Turn 90. Before responding to turn 89's face-count claim, I checked whether it's even a claim I need to take on faith — the corpus file both sides have been quoting all debate is sitting in this working directory, and I read it directly.
+
+First, a structural fact that reframes the actual difficulty of turn 89's closing demand. I read the raw JSON entry format for `kobon_14_53tri` and every other entry in the file: each object has exactly `key`, `k`, `count`, `title`, `table`. There is no triangle list, no vertex coordinates, no face enumeration anywhere in the corpus — not for Bader's witness, not for any of the 40-odd other entries. "Name which of the 53 known triangles touch line X" cannot be answered by lookup. It requires reconstructing the wiring diagram from the crossing-order rows and enumerating faces from it — the same kind of computation Savchuk's tool automates, done by hand on one line at a time. That's a real task, not a formality, and it's worth saying plainly before either of us treats it as a one-line check.
+
+Second, I didn't just accept turn 89's arithmetic — I reran it independently, using the circle-compactification form of Euler's relation rather than the bare V−E+F=2 (which doesn't directly apply to an arrangement with 2k unbounded rays; you have to close the rays onto a bounding circle first, add the 2k new boundary vertices and arcs, run Euler there, then subtract the one outer face). From data already confirmed on the ledger — rows 1,2,3,4,7,8 have 12 entries, rows 5,6,9–14 have 13 — the row-length sum is 176, giving V=88 crossings, matching turn 83. Edge pieces: each line with r crossings splits into r+1 segments, so E=176+14=190. Running Euler with the circle trick (V''=V+2k=88+28=116, E''=E+2k=190+28=218, F''=E''−V''+2=104, subtract the 1 outer face) gives total arrangement faces = 103, exactly generic 106 minus 3. That confirms turn 89's ΔF=−1 per pair independently of the topological "unbounded-splits-into-bounded-plus-unbounded" argument — it's forced by the vertex/edge counts alone, not just plausible from the rotation picture. So I'm conceding the headline number, not deferring to it:
+
+> "Bader's actual witness has 75 bounded faces... With 53 triangles given, that's 22 non-triangular bounded faces."
+
+The E/V arithmetic makes this airtight independent of which specific face the rotation argument was tracking. I'm conceding it with my own derivation, not turn 89's.
+
+Third, the actual next step, named rather than deferred. Since the corpus gives no shortcut, I'm committing to a bounded piece of the reconstruction turn 89 correctly demanded: line 5. It's one of the eight simple lines, it's untouched by any of the three parallel pairs, and unlike lines 9–14 it hasn't accumulated three turns of side-arguments already. Next turn: pull line 5's full crossing-order row, walk it to identify its 13 local wedges, and cross-reference against the outermost-transversal method turns 85–87 already validated to determine which of its adjacent faces are bounded and non-triangular. If none of line 5's wedges border a non-triangular face, that's one line eliminated cleanly and I move to line 6. If one does, I owe exactly what turn 89 asked for: naming the triangles resting on line 5's other 12 crossings and checking none of them shares the wedge being sliced.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [89], "claims_conceded": ["bader-witness-22-nontriangular-faces"], "claims_opened": ["corpus-has-no-triangle-enumeration", "bader-75-bounded-independently-reverified-via-circle-euler"], "falsifier": "if line-5's wedge reconstruction shows every non-triangular face it borders is also bordered by a line whose full triangle set is already accounted for elsewhere, the corner-slice program on Bader's witness is dead and I need a fresh construction, not a repair of this one", "tier": "silver", "verifier_runs": []}
+-->
