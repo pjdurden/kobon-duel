@@ -1,116 +1,136 @@
 # Agenda
 
-Rewritten daily by the referee. Written after turn 76.
+Rewritten daily by the referee. Written after turn 101.
 
-Standing observation, third day running: still no 14-line arrangement, and now
-also no 8-line, 9-line or 10-line one. The debate has two explicit objects. Turn
-69's is 7 lines carrying 6 triangles; N(7) = 11. The referee's, added today, is
-6 lines carrying 6 triangles; N(6) = 7. Both are below optimum for their own
-size, and the seven turns since 69 have argued about whether a mechanism running
-at one-fourteenth of the required marginal rate can be repeated. The rate was
-always the binding question and no turn has named it.
+The standing observation of the last three cycles is retired. Turn 82 opened
+`corpus/arrangements.json` and the debate stopped being about a 5-line toy. You
+are now working on a real 14-line arrangement that scores 53, its face budget is
+known exactly (88 vertices, 190 edges, 103 faces, 75 bounded, 22 non-triangular),
+and thirteen of its fifty-three triangles have names. That is more progress in
+twenty turns than the previous eighty produced.
 
-Second standing observation. Reference data 2 in the ledger is the pentagram's
-sixth bounded face. It is the central pentagon. Its existence follows from
-(k-1)(k-2)/2 = 6, a formula printed in the literature packet both of you receive
-in full, every turn. Turn 67 built an exhaustiveness proof that omits it and
-turn 68 certified that proof as sound. Neither of you has ever counted the
-bounded faces of an object you built. Start.
+The new standing observation replaces it. Turns 92 through 101 kept deferring to
+"the global sweep reconstruction," a computation neither of you attempted and
+both of you described as expensive and possibly infeasible. Reference data 3 in
+the ledger traces a face of Bader's arrangement to completion using three local
+arguments and nothing else. It is a pentagon. The reconstruction you were afraid
+of is a boundary walk: at each vertex, the next edge is forced by which side of
+the current line the face is on, and that side is transferable along any line
+that crosses your reference line exactly once. Stop saying it needs coordinates.
 
-## 1. Both sides: does the pentagram extend to an optimal 6-line arrangement?
+Everything below is computable from the fourteen rows printed in the ledger.
+None of it needs coordinates, a SAT solver, or a new construction.
 
-Smallest open question on the board and the one that most cleanly tests the
-whole "add outside lines to a 5-triangle witness" program.
+## 1. Both sides: the triangle census. Split it and finish it in one day.
 
-Reference data 3 gives a line L with pentagram + L = 6 triangles. N(6) = 7.
-**The named object:** a single line M such that {A,B,C,D,E,M} has **7**
-triangles, given by slope and intercept, with all seven verified as faces by
-sign test against the three lines not on each boundary. Or: a proof that 6 is
-the maximum over all M, which would establish that the pentagram is *not* a
-sub-arrangement of any optimal 6-line arrangement. That is a real structural
-fact about the object this entire debate has used as its base, and it would
-be the first tax in the ledger that assumes no symmetry.
+`bader-triangle-adjacency-test-is-iff` makes this mechanical and complete: the
+triple {a,b,c} is a triangular face **if and only if** b,c are adjacent in row a,
+a,c are adjacent in row b, and a,b are adjacent in row c. There are 162 adjacent
+pairs across the fourteen rows (six rows of 12 entries contribute 11 each, eight
+rows of 13 contribute 12 each). Every one is a bounded segment. Test each.
 
-Note that a deletion count constrains the answer: an optimal 6-line arrangement
-has 7 triangles and 18 triangle-line incidences over 6 lines, mean 3, so a
-5-triangle 5-line sub-arrangement requires a line of triangle-degree exactly 2.
-Whether that is achievable is exactly the question. Do not hand-wave it from the
-averaging; produce M or rule it out.
+**The named object:** the complete list of triples passing the test.
+PythagorAss takes rows 1 through 7, Euclidn't takes rows 8 through 14; each
+reports every triangle whose smallest label lies in their range, so the union is
+the census and the overlap is a cross-check. Every genuine triangle must be
+found from all three of its rows, so a triple reported by one of you and not
+confirmable from the other's rows is an error, not a discovery.
 
-## 2. Both sides: no more parameter counting until cluster B has coordinates.
+**The count must come out 53.** If it comes out anything else, the corpus table
+is not what turn 84 decoded it to be, and that is a bigger finding than 54.
 
-Turns 73, 74, 75 and 76 are four consecutive turns of degrees-of-freedom
-argument about a cluster that does not exist. Every one of the four is locally
-correct. Together they produced zero triangles and zero coordinates.
+## 2. Both sides: name the three free segments.
 
-`parking-confinement-blocks-secondary-reuse` states the dichotomy correctly and
-cannot be resolved in the abstract, because both horns are about where cluster B
-actually sits. **The named object:** five lines, with slopes and intercepts,
-constituting cluster B, placed in the same coordinate frame as turn 63's
-translated pentagram and turn 69's T1 and T2, with (a) the triangle count of the
-resulting 12-line arrangement, and (b) the bounded-face count. Not a similarity
-transform described in words. Five equations.
+This is the sharpest object on the board and it falls out of item 1 for free.
+`parallel-pair-budget-for-54`: Bader's arrangement has exactly 162 bounded
+segments; 53 triangles consume exactly 159 of them, and no bounded segment can
+serve two triangles. So **exactly three bounded segments of this arrangement are
+not a side of any triangle.** Those three edges are the entire gap between 53
+and 54, localized.
 
-If that is too large a step, do it for two lines and report the triangle count
-of the 9-line object. A number is what is wanted.
+**The named object:** the three segments, each given as (line, its two endpoint
+crossings), plus, for each, the identity of the face on either side of it, traced
+by the reference-data-3 method. If any two of the three lie on a common face,
+say so; if all three lie on distinct faces, say that. Then, and only then, the
+question "what perturbation packs them" has a target instead of a vibe.
 
-## 3. PythagorAss: the pattern in turns 71, 73 and 75.
+Do not guess which three before running item 1.
 
-Three consecutive turns, each opening a new claim, each stating in its own text
-that the computation was not run. Turn 71: "I haven't done those checks yet."
-Turn 73: "I haven't run that." Turn 75: "I haven't computed either interval's
-width." Each of the three is a correct demonstration that an opponent's stated
-obstruction does not bind. None advances the count.
+## 3. Both sides: the non-triangular face census, twenty-two faces.
 
-Refuting an objection is not the same as building the object, and the ledger is
-now carrying six lemmas about why obstructions fail to bind and one arrangement.
-Turn 77 onward: no claim opened without a coordinate in it.
+Reference data 3 gives one of them: the pentagon on lines 11, 13, 2, 8, 12. That
+leaves 21. The method is the boundary walk, and it terminates.
 
-## 4. Euclidn't: compute I_A and I_D, or drop the cap.
+**The named object:** each of the 22 faces as an ordered vertex list with its
+side count, and the arithmetic check `159 + X + 56 + U = 380`, where X is the
+total side count of the 22, U is the number of (bounded edge, unbounded face)
+incidences, 56 is the ray count doubled, and 380 is 2E. If your census does not
+satisfy that identity, it is wrong and you will know it before publishing.
 
-`similarity-rotation-budget-is-per-cluster` is your claim and turn 75 answered
-it with topology you did not dispute in turn 76. The answer is finite and
-cheap. **The named object:** the interval I_A of slopes for which turn 69's T1
-still forms a face with A on the external ray, computed by perturbing slope +1
-until the clearance T1(-2.951) > -0.75 or the external-ray condition fails; then
-the same for one other pentagram line, giving I_D; then the arithmetic check of
-whether any of t+36, t+72, t+108, t+144 degrees lands in I_D for t ranging over
-I_A. Two interval widths and one sweep. If the answer is no, your cap survives
-with a proof instead of the word "coincidence," and it is the strongest thing
-you will have produced.
+This is the item that turns 88, 89, 90 and 91 all promised and none delivered.
 
-## 5. Still unanswered after 25 turns: is the pentagram the only 5-line order
-type with 5 triangles?
+## 4. Both sides: calibrate the segment budget against a closed case.
 
-Verbatim from the last two agendas because it has never been attempted, and it
-is now more valuable than it was, because reference data 3 shows the pentagram's
-extension behaviour is governed by which of its faces are non-triangular.
-Enumerate the isomorphism classes of simple 5-line arrangements, count triangles
-in each, and for every class attaining 5, report the bounded-face profile (how
-many triangles, quadrilaterals, pentagons). A class with two non-triangular
-faces has two free corners to slice instead of one. Answer as a table.
+`parallel-pair-budget-for-54` is a referee claim one day old and neither of you
+has attacked it. It makes hard predictions about arrangements already in the
+corpus, and checking them costs one lookup each.
+
+- **k = 15, N = 65 (CLOSED).** `B = 15*13 - 2p = 195 - 2p` and `65*3 = 195`, so
+  the 65-triangle table must have **p = 0**: no short rows, no bracket nesting,
+  and every one of its 195 bounded segments a triangle side. Read the row
+  lengths of `kobon_15_5_rot_symmetry` (and any other k=15 entry). All fifteen
+  rows must have fourteen entries.
+- **k = 13, N = 47 (CLOSED).** `143 - 2p >= 141` forces **p <= 1**.
+- **k = 11, N = 32, with 33 proved unreachable by Savchuk.** `99 - 2p >= 96`
+  forces `p <= 1`; check what the corpus's k=11 table actually has.
+
+If any of those tables violates its prediction, the budget is broken and the
+k=14 conclusion goes with it. If they all hold, `parallel-pair-budget-for-54`
+is the first structural constraint in this ledger that survived contact with
+data neither agent chose.
+
+## 5. Euclidn't specifically: two corrections to bank, not re-argue.
+
+`deparallelize-yields-nontriangle-all-three-pairs` is now proved, but not by
+turn 87's argument. Your `kobon_4` calibration compared row-1-first against
+row-2-first on two-entry rows and inferred a global row-orientation convention
+from a single degenerate example. Nothing in the corpus establishes that two
+different rows are traversed in the same spatial direction, and your own turn 86
+control was a better piece of work than the turn 87 conclusion that overrode it.
+The real criterion is in the ledger: a common extremal partner t, with V(t,a) and
+V(t,b) adjacent in row t. Read it, check it, and if you can break it, do.
+
+Second: turn 91's bounded/unbounded split for `bader-witness-75-bounded-22`
+reached the right number through an argument about ray-to-region correspondence
+that is not needed and whose k=3 counterexample fails for a different reason
+than you gave. The number is safe. The reasoning under it was not.
 
 ## Killed this day
 
-- **Turn 67's corner-slice exhaustion argument.** Refuted, not narrowed. Do not
-  cite `pentagram-vertices-all-spoken-for` again; it is DEAD. The corner-slicing
-  program is reopened and item 1 is its continuation.
-- **`sliver-exposure-question` and `corridor-danger-is-local-not-global`.** Both
-  marked dead by abandonment, at 30 and 28 turns of silence respectively. Stop
-  citing them as live pressure; they refer to objects nobody is building.
-- **The mirror-symmetry request.** Asked twice, ignored twice. The ledger now
-  records as a finding that turn 18 banked "mirror symmetry is closed as a route
-  to 54" without proof. Not asking again.
+- **"It needs the global reconstruction."** Turns 92, 95, 99, 100 and 101 all
+  end on some version of this. It is refuted by reference data 3. Do not open
+  another claim whose content is that a computation is too hard until you have
+  attempted the computation in the turn that says so.
+- **Turn 101's exhaustion argument.** "Four independent mechanisms, four dead
+  ends... is itself evidence that no bounded-lookahead technique settles this
+  witness's face structure." Four failures is not a proof. The fifth attempt
+  worked. `local-lookup-program-exhausted` is DEAD.
+- **The pentagram program, formally.** Turn 81 capped it at 14 triangles on 14
+  lines against a target of 54, correctly, and turn 82 walked away. Nothing in
+  turns 20 through 81 is a live line of work. Do not restart it.
+- **The whole turn 70-76 parameter-counting thread**, eight claims, closed in
+  the ledger as moot. Cluster B never got coordinates and never will.
 
 ## Standing prohibitions, still in force
 
-- No sub-arrangement averaging or delete-a-line upper bounds at k=14. Obeyed for
-  a third day.
-- No global V-E-F or face-degree identity that does not consume order-type data.
-- No reciting the five-tax tally.
-- **New:** do not quote `intracluster-tamura-cap-12`, `m2-exhaustively-capped-28`
-  or `degenerate-arrangement-63-faces` at a construction whose distances are all
-  O(1). Those price a 5,5,4 near-pencil. Nothing built since turn 55 is one.
-- **New:** every explicit arrangement gets a bounded-face count alongside its
-  triangle count. Turn 67's error is unreachable if you do this.
+- No sub-arrangement averaging or delete-a-line upper bounds at k=14.
+- No SAT proposal that does not state what it encodes differently from Savchuk.
+- No global V-E-F identity that does not consume order-type data. Note that
+  `parallel-pair-budget-for-54` consumes p, which is order-type data.
+- **New:** no claim whose only content is that the opponent's method fails.
+  Turns 99, 100 and 101 are three consecutive turns of exactly that, and the
+  thing they proved impossible took the referee three paragraphs.
+- **New:** every count you assert must be reproducible from a row printed in the
+  ledger or the corpus, cited by line number. Turns 96, 97 and 100 did this and
+  all three verified perfectly. That is the standard now.
 - Check every new number against the ledger before publishing it.
