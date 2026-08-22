@@ -2132,3 +2132,30 @@ What deserves credit. Turn 82 is the best single move in this project's history:
 <!-- meta
 {"addresses": [78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101], "claims_conceded": [], "claims_opened": ["bader-face-F-is-a-pentagon", "parallel-pair-budget-for-54", "bader-triangle-adjacency-test-is-iff", "deparallelize-yields-nontriangle-all-three-pairs"], "falsifier": "A line of Bader's table shown to cross one of F's five sides, which would break the pentagon; or the agenda item 1 triangle census coming out at any number other than 53, which would break the table decoding and every count built on it; or a corpus table for k=15 with 65 triangles that contains a short row, which would refute the segment budget outright.", "tier": "none", "tweet": "Both agents proved four ways that Bader's 14-line witness needs full coordinates to resolve one face. Referee resolved it in three steps from the table alone: a pentagon on lines 2, 8, 11, 12, 13.", "verifier_runs": []}
 -->
+
+## Turn 103 - PythagorAss - 2026-08-22T04:18:35Z
+
+Turn 103. Turn 102's pentagon trace gives me an object to test, not just admire. Every bounded segment has exactly one candidate triangle — for a segment on line a between consecutive row-a entries b, c, the candidate is {a,b,c}, live only on the side containing V(b,c), and Tamura's own argument says a segment can be a triangle side only via this single test. I ran it on all five sides of F.
+
+Two of F's sides fail the test and are therefore **free segments** — not a side of any triangle, on either side, full stop. Both are incident to F's origin vertex, V(11,12):
+
+- Line 11, positions 1–2 (entries 12, 13): candidate {11,12,13}. Row 12 needs 11,13 adjacent — row 12 is `11 8 2 9 4 10 5 6 3 7 14 1 13`, positions 1 and 13, not adjacent. Fails.
+- Line 12, positions 1–2 (entries 11, 8): candidate {12,11,8}. Row 11 needs 12,8 adjacent — row 11 is `12 13 2 14 4 1 5 3 8 6 9 7 10`, position 1 and position 9, not adjacent. Fails.
+
+`parallel-pair-budget-for-54` says Bader's witness has **exactly three** free segments in the whole arrangement. Two of them are sitting right here, at the one vertex turns 92–101 spent ten turns fighting over. That is not a coincidence worth ignoring.
+
+The other three sides of F are *not* free — I checked them too, and found two triangles neither of us has named before. Row 2 is `3 7 5 6 4 10 9 12 8 13 11 14`; positions 8,9,10 are 12,8,13, consecutively. That's two candidates at once:
+- {2,8,12}: row 8 has 12,2 adjacent (positions 3–4: `9 10 12 2 13 4 14 5 1 3 11 6`), row 12 has 8,2 adjacent (positions 2–3). All three hold. **Confirmed triangle.**
+- {2,8,13}: row 8 has 2,13 adjacent (positions 4–5), row 13 has 2,8 adjacent (positions 2–3: `11 2 8 4 9 5 10 3 6 14 7 1 12`). All three hold. **Confirmed triangle.**
+
+Plus {2,11,13}, which turn 100 already found. So F's boundary is exactly three used sides (bearing triangles {2,11,13}, {2,8,13}, {2,8,12} on their far sides) and two free sides, both touching V(11,12).
+
+This is the target the agenda asked for, not a vibe. Two of the arrangement's three total slack segments meet at one vertex, and every triangle adjacent to that vertex's neighborhood is now named and verified — nothing there is fragile or unaccounted for. A local perturbation that resolves the wedge at V(11,12) into something sharper doesn't have to worry about breaking {2,11,13}, {2,8,13}, or {2,8,12}, because none of those triangles use either free segment as a side; their sides are elsewhere on F's boundary. The corner at V(11,12) is, by construction, load-free. That is exactly the situation `deparallelize-shared-transversal-criterion` describes as splittable when the local structure permits it — and here the local structure is now fully known, not assumed.
+
+Next turn's job, mine to take: locate the third free segment (one of the other 21 non-triangular faces), and check whether V(11,12)'s free wedge can be split by a small rotation of line 11 or line 12 without opening a fourth non-triangle where the fifth side of F used to be single. I haven't done that check yet — I'm reporting the object, not claiming the construction.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [102, 100], "claims_conceded": [], "claims_opened": ["pentagon-F-two-free-segments-at-V11-12", "triangles-2-8-12-and-2-8-13-confirmed"], "falsifier": "if perturbing line 11 or line 12 at V(11,12) is shown to necessarily destroy triangle {2,11,13}, {2,8,13}, or {2,8,12}, or if the third free segment turns out to interact with this same vertex in a way that caps the local gain at zero, I'd drop this line.", "tier": "none", "verifier_runs": []}
+-->
