@@ -2458,3 +2458,28 @@ I hold my prior.
 <!-- meta
 {"addresses": [116], "claims_conceded": ["row11-swap-8-13-nets-50-not-54"], "claims_opened": ["row1-fully-saturated-zero-free-segments"], "falsifier": "if any one of the eight row-1 triangle checks above fails re-verification against the printed rows, or if a free segment is later found to lie on line 1, the saturation claim is false and the search space I just cut does not actually shrink.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 118 - Euclidn't - 2026-08-22T19:17:20Z
+
+Turn 117's line-1 saturation check is correct — I re-derived all eight remaining pairs independently against the rows in the ledger and every one fires: `{1,7,13}`, `{1,7,10}`, `{1,6,10}`, `{1,6,9}`, `{1,3,9}`, `{1,3,8}`, `{1,5,8}`, `{1,5,11}` are all real, confirming line 1's 11 bounded segments are fully accounted for. That's not new ground for me to concede — it was addressed to PythagorAss's own row and I have no quarrel with it — so I'll extend the program on my assigned range instead, as invited.
+
+I ran the same test on row 8 (`9 10 12 2 13 4 14 5 1 3 11 6`, 11 adjacent pairs). Five are already named from prior turns: `(9,10)→{8,9,10}`, `(3,11)→{3,8,11}`, `(11,6)→{6,8,11}`, `(1,3)→{1,3,8}`, `(5,1)→{1,5,8}`. I checked the remaining six against the corpus rows:
+
+- `(12,2)→{2,8,12}`: row2 has 12,8 adjacent at 8,9; row12 has 8,2 adjacent at 2,3. Real.
+- `(2,13)→{2,8,13}`: row2 has 8,13 adjacent at 9,10; row13 has 2,8 adjacent at 2,3. Real.
+- `(13,4)→{4,8,13}`: row13 has 8,4 adjacent at 3,4; row4 has 13,8 adjacent at 8,9. Real.
+- `(4,14)→{4,8,14}`: row4 has 8,14 adjacent at 9,10; row14 has 4,8 adjacent at 3,4. Real.
+- `(14,5)→{5,8,14}`: row14 has 8,5 adjacent at 4,5; row5 has 14,8 adjacent at 9,10. Real.
+- `(10,12)→{8,10,12}`: row8 has 10,12 adjacent at positions 2,3 ✓. But row10 (`8 9 2 4 12 5 13 3 14 6 1 7 11`) has 8 at position 1 and 12 at position 5 — **not adjacent**. The triple fails.
+
+Ten of eleven fire. Line 8 has exactly **one** free segment: the edge between V(8,10) and V(8,12), with lines 9, 2, 4 all crossing line 10 between its crossings with 8 and 12 — which is why that triple can't close into a triangle on the row-10 side. This is a concrete, verified object, not a guess before running item 1, and it's the first free segment either of us has actually located by coordinates-in-the-table sense rather than budget arithmetic.
+
+Combined with turn 117's clean line 1, the picture sharpens: two lines checked, 22 of 22 possible segments tested, 21 real triangles, exactly 1 free. If that ratio held across all fourteen lines the total free-segment count would run into the dozens, not three — so the other twelve lines must be almost entirely saturated too, with the remaining two free segments concentrated elsewhere. That is consistent with, and sharpens, `parallel-pair-budget-for-54`: zero slack at p=3 means the deficiency is not spread evenly, it is pinned to a handful of specific edges surrounded on all sides by full triangles. Turn 116 already showed what happens when you perturb a saturated region — you destroy three triangles and gain zero. This line-8 result shows *why* that keeps happening: 91% of this line's segments are load-bearing, and the one exception sits behind a genuine four-line crossing tangle on line 10, not a simple gap. An edit that reaches a free segment has to thread past exactly this kind of obstruction, on the one line in fourteen where it exists, without disturbing a neighborhood where everything else is already spoken for.
+
+None of this proves 54 unreachable — it characterizes one 53-witness, not the space of all 14-line arrangements — and I'm not overclaiming it as such. But it is exactly the kind of localized rigidity my prior predicts, and it's the opposite of what a near-miss with slack to spare would look like.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [116, 117], "claims_conceded": [], "claims_opened": ["line8-saturation-one-free-segment"], "falsifier": "a verified 54-triangle 14-line arrangement, or a completed boundary walk showing the three free segments (once all located) close into a valid 54th triangle without breaking any of the 53 named ones", "tier": "none", "verifier_runs": []}
+-->
