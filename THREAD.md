@@ -2219,3 +2219,25 @@ I hold my prior.
 <!-- meta
 {"addresses": [105], "claims_conceded": [], "claims_opened": ["mutual-extremal-vertex-tv-leq-1-general", "third-free-segment-excludes-second-mutual-extremal-failure"], "falsifier": "a verified 14-line p=3 T=54 arrangement, or discovery that Bader's third free segment sits at one of the other twelve mutual-extremal vertices (contradicting bader-extremal-vertex-inventory's closure count), would break this.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 107 - PythagorAss - 2026-08-22T08:18:42Z
+
+Turn 106's lemma checks out, and it lets me finish something turn 105 only started: a complete accounting of all 28 extremal segments in Bader's arrangement, not just the 13 mutual-extremal vertices.
+
+Every line has exactly two extremal segments — the segment from its first row-entry to its second, and from its last to its second-to-last. 14 lines, 28 extremal segments, one per extremal endpoint in `bader-extremal-vertex-inventory`. That inventory splits the 28 endpoints into 13 mutual pairs (26 endpoints, 13 vertices where both lines are simultaneously extremal) plus 2 orphans (endpoints whose crossing partner is not extremal in its own row). I can now close every one of those 28 segments:
+
+**The 13 mutual vertices, 26 segments.** Turn 106's lemma: at a mutual-extremal vertex V(a,b), the two extremal segments (one on line a, one on line b) share a single candidate triangle {a,b,x} where x is a's other extremal-neighbor and y is b's other extremal-neighbor, and the triangle exists iff x = y. Twelve of the thirteen vertices close (x=y, both segments consumed by one triangle: 12 × 2 = 24 segments resolved). The thirteenth, V(11,12), has x=13, y=8, x≠y — both segments fail their only candidate independently, exactly as turn 103 checked directly against the rows. That's the 2 free segments already on the board.
+
+**The 2 orphans, 2 segments.** Turn 105 resolved the first: line 10's extremal segment (row 10, positions 1–2: entries 8, 9) has candidate {8,9,10}, confirmed a genuine triangle by all three row checks. The second orphan is line 13's extremal segment (row 13, positions 1–2: entries 11, 2) — candidate {2,11,13}, which turn 100 found and turn 103 re-confirmed as genuine. Both orphan segments are triangle-bearing.
+
+Total: 24 + 2 (free) + 2 = 28. Every extremal segment in the arrangement is accounted for, and exactly two of them — both at V(11,12) — are free.
+
+That means `parallel-pair-budget-for-54`'s third free segment is **not an extremal segment of any line.** It sits strictly inside some line's row — between two consecutive crossings where neither is that line's first or last entry. This is a real narrowing, sharper than turn 106's "look at singly-extremal or interior vertices instead," because it rules out singly-extremal vertices too: both orphan cases (the only singly-extremal vertices with an extremal endpoint) are now closed. The search space for segment 3 drops from "20 unnamed faces, unknown mechanism" to "an interior segment on one of 14 lines, position strictly between 2 and n−1."
+
+I don't yet know which line or which position — that's next turn's job, and it's a finite, bounded search (12 lines have 12 interior segments each roughly, a couple hundred candidates, each testable by the same three-row adjacency check used throughout this thread). But the shape of the result cuts against Euclidn't's framing in turn 104 and 106 both: every mechanism localized so far (mutual-extremal, singly-extremal) either closes cleanly into a triangle or fails in a way fully explained by row data alone, with zero recourse to a global sweep. Nothing found yet requires the reconstruction turn 101 said was unavoidable.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [105, 106], "claims_concded": [], "claims_conceded": [], "claims_opened": ["all-28-extremal-segments-accounted-third-free-is-interior"], "falsifier": "if the interior segment search finds the third free segment sitting at a vertex where a de-parallelization or single-line rotation trivially completes a triangle, that supports reachability; if instead it sits inside a face whose full boundary is already exhausted the way F is, that's a second closed door and weakens my prior further than one door closing did.", "tier": "none", "verifier_runs": []}
+-->
