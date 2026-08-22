@@ -2405,3 +2405,25 @@ I hold my prior.
 <!-- meta
 {"addresses": [114], "claims_conceded": ["signotope-vs-chirotope-5-element-gate"], "claims_opened": ["row11-edit-5-subset-risk-bound-365-of-715"], "falsifier": "if any single one of the 365 at-risk five-line subsets fails the rank-3 exchange axiom against the fixed rows of the other four lines, the row-11 edit is not a valid table and this repair program is dead.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 116 - Euclidn't - 2026-08-22T17:18:23Z
+
+Turn 116. Turn 115's reduction from 2002 to 715 to 365 candidate five-line checks is arithmetically sound — I worked through the block partition myself and the safety criterion (a 4-subset is undisturbed iff it contains zero elements of B={8,13}, or exactly one B-element paired only with C-elements) is exactly right, since those are precisely the pairs whose relative order in row 11 the edit leaves untouched. I'm not conceding it because it isn't wrong; I'm setting it aside, because six turns into this program nobody has checked whether the edit accomplishes anything even if every one of those 365 checks passes.
+
+It doesn't. Using `bader-triangle-adjacency-test-is-iff` (SETTLED) against the untouched rows already in the ledger:
+
+**Original row 11** (`12 13 2 14 4 1 5 3 8 6 9 7 10`) has adjacent pairs `(12,13)`, `(13,2)`, `(3,8)`, `(8,6)` at the swap boundary. The edit (positions 2 and 9 exchanged) breaks all four and replaces them with `(12,8)`, `(8,2)`, `(3,13)`, `(13,6)`.
+
+**Triangles destroyed.** For `(13,2)`: row 2 has 13,11 adjacent at positions 10,11; row 13 has 2,11 adjacent at positions 1,2. All three legs confirmed — `{2,11,13}` is real (it's already named in the ledger) and dies. For `(3,8)`: row 3 has 8,11 adjacent at positions 10,11; row 8 has 3,11 adjacent at positions 10,11. `{3,8,11}` is real (not previously named — a fourteenth triangle, and it dies too). For `(8,6)`: row 6 has 8,11 adjacent at positions 12,13; row 8 has 6,11 adjacent at positions 11,12. `{6,8,11}` is real (already named) and dies. Only `(12,13)` costs nothing: row 12 has 11,13 at positions 1,13 — not adjacent, so `{11,12,13}` was never a triangle.
+
+**Triangles gained: zero.** Check all four candidates against the edited row-11 pairing plus the untouched third row: `{11,12,8}` needs 11,12 adjacent in row 8 — positions 11 and 3, not adjacent. `{11,8,2}` needs 11,2 adjacent in row 8 — positions 11 and 4, not adjacent. `{11,3,13}` needs 11,13 adjacent in row 3 — positions 11 and 5, not adjacent. `{11,13,6}` needs 11,6 adjacent in row 13 — positions 1 and 9, not adjacent. None fire.
+
+The swap boundary only touches these eight pairs — everything else in row 11 is either the A-block (internal order preserved) or the C-block (position untouched) — so this is the complete accounting of every triangle that changes status. Net: **53 − 3 + 0 = 50.**
+
+This is decided entirely from rows already printed in the ledger, by the same local method reference data 3 used, and it doesn't touch the chirotope question at all — it's upstream of it. It doesn't matter whether the edited row 11 turns out to be consistent across all 365 remaining five-line subsets, or whether the result stretches to straight lines. Even in the best case where it passes every remaining check, the object it certifies has 50 triangles, moving three lines away from the target, not one toward it. Six turns of increasingly careful realizability bookkeeping have been spent validating the syntax of an edit whose semantics were never checked.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [115], "claims_conceded": [], "claims_opened": ["row11-swap-edit-nets-negative-three"], "falsifier": "A re-read of any of the eight cited row positions, or of the three-leg adjacency for {2,11,13}, {3,8,11}, {6,8,11}, or of the failure of all four new candidates, that overturns the count changes my conclusion; the chirotope-consistency question turn 115 was pursuing is irrelevant to this point either way.", "tier": "none", "verifier_runs": []}
+-->
