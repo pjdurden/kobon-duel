@@ -2363,3 +2363,21 @@ I hold my prior.
 <!-- meta
 {"addresses": [112], "claims_conceded": ["row11-edit-triggers-30-additional-4line-checks"], "claims_opened": ["check-11-8-2-14-not-a-reversal"], "falsifier": "if a single 4-subset among the 36 (e.g. {11,8,2,14}) is shown inconsistent under the standard rank-3 signotope test, the row-11 transposition is dead and I abandon table-surgery on Bader specifically, though not the k=14 tightness claim itself.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 114 - Euclidn't - 2026-08-22T15:17:30Z
+
+Turn 113's discipline is real — one check run, verdict withheld, no overclaim. But I want to name what kind of check it is, because it changes what "36 checks, all passing" would even mean.
+
+Checking whether {11, 8, 13, x} has a consistent local order — the "lookup against two known local pictures" from turn 111 — is a **4-element consistency test**. That is exactly the object Felsner's handbook chapter, cited by PythagorAss itself in turn 109 for the "four-line consistency condition," calls a **signotope axiom**: a sign pattern on triples of a ground set satisfying a 4-term condition. And the same chapter is where the distinction that matters gets drawn: a signotope satisfying every 4-element consistency condition is **not automatically a chirotope** — not automatically realizable as any pseudoline arrangement at all. The actual rank-3 oriented-matroid exchange axiom (the condition that certifies "this sign data comes from some actual wiring diagram") is stated on **five** elements, not four. Nonrealizable signotopes — sign patterns that pass every 4-tuple test and still correspond to no arrangement of pseudolines — are a known object in exactly this literature, not a hypothetical.
+
+This matters for the program on the table right now. Suppose PythagorAss runs all 36 named checks (or, to be safe, all C(14,4) = 1001 quadruples touching the edited row) and every one of them comes back consistent. That would establish the edited table is a valid **signotope**. It would not yet establish it is a valid **chirotope** — a genuine oriented matroid realizable by some pseudoline arrangement — because the axiom that certifies that is a 5-element condition the quadruple program never tests. And a chirotope is the floor requirement before Savchuk's straightening step or any stretchability question (per the literature packet: "any argument that produces a table owes an account of stretchability") is even in play. Turn 113's own phrase — "the actual rank-3 consistency condition" — undersells this: it isn't the same check run 36 times at larger scale, it's a strictly stronger condition on 5-line subsets that this program, as specified across three turns, has not once mentioned testing.
+
+So the honest ledger entry, if I had to write it today: zero of the 36 four-line checks resolved, zero of the C(14,4) total run, and even a hypothetical clean sweep of all of them would leave the 5-element exchange axiom — the actual gate to "this is a table at all" — completely unaddressed, before stretchability is even asked. That's not a rhetorical point about difficulty; it's that the object being checked (signotope consistency) is provably weaker than the object required (chirotope realizability), and the gap between them is where nonrealizable sign patterns live.
+
+I'm not claiming this particular edit fails the 5-element axiom — I haven't run it, and running it honestly requires picking 5-line subsets that include the touched lines and checking the exchange condition, which nobody has attempted. I am claiming the 36-check program, even completed successfully on its own terms, does not deliver what turns 109-113 have been treating it as delivering: a valid table. The bill just got a second line item.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [113], "claims_conceded": [], "claims_opened": ["quadruple-checks-test-signotope-not-chirotope"], "falsifier": "a citation or proof that for rank-3 sign data restricted to this kind of local edit, consistency on all 4-element subsets already implies the 5-element chirotope exchange axiom, collapsing the two conditions", "tier": "none", "verifier_runs": []}
+-->
