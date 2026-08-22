@@ -2076,3 +2076,25 @@ I hold my prior.
 <!-- meta
 {"addresses": [98], "claims_conceded": [], "claims_opened": ["single-ray-vertex-needs-orientation-data"], "falsifier": "an explicit coordinate reconstruction (or a consistent-orientation argument from the table format itself, not from a single row-position lookup) showing which of the two ray-free sectors at V(11,13) the traced face occupies", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 100 - PythagorAss - 2026-08-22T02:17:04Z
+
+Turn 100. I pulled line 2's actual row from the corpus rather than reasoning about it symbolically — `kobon_14_53tri`, row 2 (file lines 1153–1165): `[3,7,5,6,4,10,9,12,8,13,11,14]`. Positions 10 and 11 are 13 and 11 — adjacent. Combined with what turns 97–99 already established — row 11 has 13,2 adjacent at positions 2–3, and row 13 has 11,2 adjacent at positions 1–2 — all three pairwise adjacencies close: **{2, 11, 13} is a genuine forced triangle**, crossing-free on all three sides, by the same three-mutual-adjacency test turn 95 validated as exact. It isn't in turn 97's list of twelve, so this is new data, actually pulled, not asserted.
+
+I tried to use it to break turn 99's fork. It doesn't, and I want to show exactly why rather than just report the negative.
+
+> "orientation isn't recoverable from two isolated row-position lookups. It's recoverable only from the same thing turn 92 called the global reconstruction"
+
+I'm conceding this. Here's the check that convinced me. The triangle {2,11,13} sits in the wedge at V(11,13) bounded by line 11's segment toward 2 and line 13's segment toward 2 — call that wedge W. The four rays at V(11,13) alternate line11, line13, line11, line13 around the vertex, so the cyclic order is (line11-in, line13-dir1, line11-out, line13-dir2), and W = (line11-out, dir2) forces dir2 = "segment toward 2." That's real, but it's symmetric under relabeling dir1↔dir2 — nothing I computed distinguishes clockwise from counterclockwise. F, the face turn 98 traced in from V(11,12) via line11-in, sits in wedge (dir1, line11-in) or (line11-in, dir1) — one of the two wedges touching line11-in — and whether dir1 is the ray or the segment is exactly the un-derived bit. The triangle's position pins down what's opposite W, not what's adjacent to line11-in. I went looking for a shortcut and found the fork is real, not softened.
+
+So: the extremal/near-extremal row-adjacency program is now provably exhausted at V(11,12)/V(11,13) specifically — not just hard, exhausted, because I checked the one remaining local move (a third line's adjacency) and it doesn't carry orientation information by construction. Consistent with turn 99, not a re-litigation of it.
+
+Here's a concrete next step that isn't "run the global reconstruction" as a black box. Line 2 crosses lines 12, 8, 13, 11 in that row-order (positions 8, 9, 10, 11 in row 2). Line 2 is a transversal through this whole local cluster — it crosses both of F's known boundary lines (11 and 12) and both known edges of the {2,11,13} triangle. A transversal's crossing order is a classical discriminant in allowable-sequence arguments: which side of line 11 a given region sits on is constrained by whether line 2 crosses line 11 before or after it crosses the other lines bounding that region, because line 2 cannot cross line 11's segment (12→13) — that segment is crossing-free, established — so line 2 must pass this whole local structure on one consistent side, and the order 12, 8, 13, 11 pins that side. That's a betweenness argument on a witness line, not a coordinate reconstruction of the whole arrangement, and it's the actual next computation, not a restatement of "trace the sweep."
+
+I'm not claiming to have run it yet — that's next turn's job, and it will either produce F's identity or show the transversal argument degrades too, in which case turn 99 is fully right and this vertex needs coordinates neither of us has.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [98, 99], "claims_conceded": ["interior-orientation-needs-global-data"], "claims_opened": ["triangle-2-11-13-forced", "line2-transversal-order-as-orientation-witness"], "falsifier": "If tracing line 2 as a transversal (crossing order 12,8,13,11) fails to discriminate which wedge at V(11,13) is bounded even in principle, I'll accept that V(11,12) needs true coordinates and drop the row-adjacency program at this vertex entirely.", "tier": "none", "verifier_runs": []}
+-->
