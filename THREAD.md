@@ -2295,3 +2295,29 @@ I hold my prior.
 <!-- meta
 {"addresses": [109], "claims_conceded": [], "claims_opened": ["row11-transposition-disrupts-six-lines-unverified-chirotope"], "falsifier": "A demonstration that the edited row 11, together with consistent edits (if needed) to rows 2, 14, 4, 1, 5, 3, 8, 13, satisfies the four-line consistency check for each of the six displaced lines against {11,8,13}, yielding a genuine table with V(11,12) resolved and no triangle lost elsewhere, would remove this specific objection.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 111 - PythagorAss - 2026-08-22T12:17:20Z
+
+Turn 111. Turn 110's arithmetic is right and I checked it against the actual row before writing this:
+
+> "8's relative order flips against each of {2,14,4,1,5,3}, and independently 13's relative order flips against the same six... That's not one order-swap, it's twelve"
+
+Row 11 is `12 13 2 14 4 1 5 3 8 6 9 7 10`. Positions 3-8 are exactly `2 14 4 1 5 3`. Swapping position 2 (13) with position 9 (8) moves 8 from after all six of those to before all six, and 13 from before all six to after all six — twelve pairwise order changes, not one. Conceded outright; "single transposition" in turn 109 was wrong, and the honest cost is what turn 110 named.
+
+But here's what turn 110's own example gives me for free, and it cuts the search space rather than closing it. Turn 110 computed, from the three *untouched* rows:
+
+- line 2: order of {8,13,11} is 8,13,11
+- line 8: order of {2,13,11} is 2,13,11
+- line 13: order of {2,8,11} is 11,2,8
+
+and noted the edit turns line 11's local order from 13,2,8 to 8,2,13 — an exact reversal with line 2 pinned in the middle. Turn 110 calls this "not resolving cleanly by inspection" and demands "the actual signotope check." That check is not open-ended. **Any four lines in general position realize exactly one of two combinatorial order types** — this is the n=4 case of order-type enumeration for points in general position (convex quadrilateral vs. triangle-plus-interior-point), transferred to lines by the standard point-line duality that Felsner-Goodman's handbook chapter (cited in the literature packet) treats as background. So "check consistency for {2,8,11,13}" is not a search over an unbounded space of arrangements — it's a lookup against two known local pictures, using data that's already fixed by lines 2, 8, and 13, which the edit never touches.
+
+Concretely: since rows 2, 8, and 13 are ground truth and unedited, they pin down which of the two order types {2,8,11,13} realizes *before* line 11 is even consulted — the three fixed rows already over-determine line 11's local order up to at most the one remaining consistent choice (or a contradiction if the fixed data is already inconsistent with any type containing that triple, which it can't be, since Bader's original table is a valid arrangement). The real question is single-valued: given lines 2, 8, 13's fixed mutual data, is 13,2,8 the *only* order line 11 can show, or is 8,2,13 also consistent with a different, equally valid embedding of the same triangle? A reversal with the pivot fixed in the middle is exactly the signature of viewing the same triangle from the opposite side — which is a real, occupiable position in the plane, not an impossibility on its face. I haven't yet nailed down whether "opposite side of triangle {2,8,13}" is geometrically reachable while simultaneously preserving line 11's other twelve crossings (with 14,4,1,5,3,6,9,7,10,12, and the untouched relations to lines 8 and 13 themselves) — that consistency, not the three-line abstraction, is next turn's actual content.
+
+So: turn 110 is right that this needs the real check and not inspection, and I was wrong to call it one swap. But the check is a two-way lookup against a classified, finite set of order types, seeded by fixed data neither of us has to re-derive — not the open bill turn 110's framing suggests.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [110], "claims_conceded": ["row11-transposition-is-twelve-flips-not-one"], "claims_opened": ["four-line-order-type-bound"], "falsifier": "if the fixed mutual order data from rows 2, 8, and 13 is shown to admit only the single order type matching original row 11 (13,2,8) and to forbid 8,2,13 under either of the two four-line order types, the repair is dead and I concede k=14 at 53 pending the third free segment", "tier": "none", "verifier_runs": []}
+-->
