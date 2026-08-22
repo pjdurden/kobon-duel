@@ -2040,3 +2040,23 @@ I hold my prior.
 <!-- meta
 {"addresses": [96], "claims_conceded": [], "claims_opened": ["extremal-endpoint-inventory-13pairs-1open"], "falsifier": "A full face-boundary trace showing V(11,12)'s inward face is genuinely non-triangular and that a corner-slice there nets +1 without destroying an adjacent known triangle, verified face-by-face.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 98 - PythagorAss - 2026-08-22T00:17:12Z
+
+Turn 98. Turn 97's inventory is the most complete accounting either of us has produced this thread, and I'm not disputing any of its 28 entries — I want to use the one open item it left loosest.
+
+Turn 97 reported V(11,12) as a broken-pattern mutual-extremal vertex, and separately, as one of two orphan endpoints, V(11,13) — "line 13's first crossing (with line 11, position 2 there too)." Those read as two unrelated open items in turn 97's list. They aren't. They're the same edge, seen from its two ends.
+
+Line 11's row is `[12,13,2,14,4,1,5,3,8,6,9,7,10]`. Position 1 is 12, position 2 is 13. So line 11's *first segment* — the one leaving V(11,12), the vertex turn 97 flagged as unresolved — terminates exactly at line 11's crossing with line 13, i.e. at V(11,13), the orphan vertex turn 97 flagged separately two sentences later. Turn 94's own method already established which side of a mutual-extremal vertex is the bounded candidate: at V(11,12), the inward face is bounded by {line 11's first segment, line 12's first segment} and nothing else touches it there. Line 11's first segment is a *shared edge* of that candidate face — meaning the far end of that same edge, V(11,13), is the next vertex on the same face's boundary, not an independent unknown.
+
+That collapses turn 97's "4 open items" into fewer genuinely independent questions than it looked like. At V(11,13), line 13 is extremal (its own start ray) and line 11 is not (position 2 of 13). One ray is forced there, killing 2 of the 4 local faces as unbounded by turn 95's mechanism — but unlike the mutual case, that leaves 2 candidates, not 1, because only one line is pinned to a ray. The face we're tracing came in along line 11's segment; a face boundary alternates lines at each crossing, so it must leave V(11,13) along line 13 — either line 13's own start ray (which would make the whole face unbounded, killing the V(11,12) candidate outright) or line 13's first segment, to line 13's own second-position partner.
+
+That's the actual fork, and it's a single named lookup, not a reconstruction: which of those two happens is fixed by the local rotation order at V(11,13), which in turn is fixed once we know whether line 11's incoming segment sits on the ray-side or the segment-side of line 13 there — readable from line 13's row position of line 11 relative to its neighbors, the same style of check turns 94-97 have been running throughout. I don't have line 13's row in front of me in this transcript and I'm not going to guess it. Next turn's job is exactly that pull: line 13's row, position of 11 (confirmed at position 2 per turn 97), and its position-2 partner, to see whether the boundary continues on a bounded edge or hits the ray immediately.
+
+If it hits the ray, V(11,12)'s candidate face is unbounded after all, and the extremal-segment class turn 96 was already worried about goes fully dead — 28 for 28, no exceptions, which would itself be worth knowing since it forecloses this entire approach line. If it continues on line 13's segment, we have three confirmed consecutive edges of one actual non-triangular bounded face, which is more of a real object than either of us has produced this thread, and the next hop after that is the same lookup one line later.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [97], "claims_conceded": [], "claims_opened": ["v11-12-face-shares-edge-with-orphan-v11-13"], "falsifier": "If line 13's row shows its position-2 partner sits such that the boundary leaves V(11,13) via line 13's start ray rather than its first segment, the V(11,12) candidate face is unbounded and the whole extremal-segment class is dead 28-for-28.", "tier": "none", "verifier_runs": []}
+-->
