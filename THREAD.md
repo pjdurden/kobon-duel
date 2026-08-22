@@ -2175,3 +2175,27 @@ I hold my prior.
 <!-- meta
 {"addresses": [103], "claims_conceded": [], "claims_opened": ["v11-12-corner-fix-requires-third-line-swap"], "falsifier": "an explicit rotation of some named third line, or a new 14-line table, that relocates an existing crossing inside pentagon F to produce a genuine new triangle at or near V(11,12) without breaking any of the 53 named triangles, verified against the corpus.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 105 - PythagorAss - 2026-08-22T06:18:03Z
+
+Turn 105. Turn 104's core claim is correct and I'll concede it precisely:
+
+> "an infinitesimal rotation of either line just slides V(11,12) continuously along the plane and deforms F's two free edges with it — it doesn't introduce a new vertex, because introducing a new vertex inside F requires a *third* line to cross through the interior of F"
+
+This is airtight: F is a simple pentagon (reference data 3), its five boundary lines meet only at F's five corners, and none of the other twelve lines crosses through its interior (if one did, the boundary walk that built F would have hit it). Rotating a boundary line of F moves F's shape but can't add a side to it. My proposed repair in turn 103 — "rotate line 11 or 12" — targeted the wrong lines. Conceded.
+
+But look at what this actually proves versus what it's being used for. It closes one repair mechanism on one witness. It is not a step toward "54 is unreachable at k=14," which is Euclidn't's actual win condition and requires a complete proof, not a demonstration that a specific fix fails. I want to keep that distinction sharp because turn 101 already blurred it once this cycle and got overturned for it.
+
+Concretely, here's what's left of the program, narrowed rather than closed. Two of the three free segments sit on F, both at V(11,12). The third is elsewhere among the other 20 unnamed non-triangular faces (turn 97's second orphan, V(8,13)... no — the other orphan, line 10's extremal crossing with line 8, already resolved: I checked it just now. Row 10 positions 1-2 are 8,9, candidate {8,9,10}; row 8 positions 1-2 are 9,10 (adjacent); row 9 positions 1-2 are 8,10 (adjacent). All three hold — {8,9,10} is a genuine triangle, already on turn 97's list of thirteen. So the third free segment is not sitting at the other orphan vertex the way the first two sat at V(11,12); that avenue is closed by direct check, not assumption.
+
+That means the third free segment is on some face I haven't traced yet, one of the 20 still unnamed, and it does not obviously share Euclidn't's obstruction. Turn 104's argument used a specific structural fact about F — that its five boundary lines are exhausted and none of the other nine cross its interior. That fact has to be re-derived for whatever face holds segment three; it doesn't transfer automatically. A face with, say, six or seven sides has more room, and more candidate transversals among the remaining lines, for exactly the kind of interior-crossing repair turn 104 correctly ruled out here.
+
+So the state of play: two doors closed at one vertex, cleanly and for a reason specific to that vertex's local geometry (a five-sided, fully-exhausted face). Zero doors examined yet at the location of the third free segment. Generalizing "this door is shut" to "the corridor is shut" is exactly the move the referee flagged in turn 101, and I don't think turn 104 quite makes that overgeneralization explicitly — it's careful to say "this specific proposed fix... targets the wrong lines" — but the rhetorical framing ("the pattern of doors closing... is the evidence I'm standing on") is doing more work than the math underneath it currently supports. One face down, twenty to go, and the one theorem in hand (F is exhausted) is local to F.
+
+Next turn, mine: trace another non-triangular face by the reference-data-3 method, starting from a vertex not yet resolved, to locate segment three and test whether it's similarly exhausted or has an open transversal.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [104], "claims_conceded": ["rotating-Fs-own-boundary-lines-cannot-split-its-corner"], "claims_opened": ["orphan-V8-10-resolves-to-triangle-8-9-10", "third-free-segment-not-at-second-orphan", "local-closure-at-F-does-not-generalize-to-other-20-faces"], "falsifier": "if the face holding the third free segment is also shown, by its own boundary walk, to have all its bounding lines already mutually exhausted with no interior-crossing transversal available among the remaining nine lines, I'll concede the local-repair program is dead on this witness entirely, not just at F", "tier": "none", "verifier_runs": []}
+-->
