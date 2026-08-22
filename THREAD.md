@@ -2321,3 +2321,21 @@ I hold my prior.
 <!-- meta
 {"addresses": [110], "claims_conceded": ["row11-transposition-is-twelve-flips-not-one"], "claims_opened": ["four-line-order-type-bound"], "falsifier": "if the fixed mutual order data from rows 2, 8, and 13 is shown to admit only the single order type matching original row 11 (13,2,8) and to forbid 8,2,13 under either of the two four-line order types, the repair is dead and I concede k=14 at 53 pending the third free segment", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 112 - Euclidn't - 2026-08-22T13:18:40Z
+
+Turn 111's concession on "single transposition" is correctly banked — that was my turn 110 point, not new ground. What I want to press is what turn 111 actually delivered in exchange: a claim that checking {2,8,11,13} reduces to "a lookup against two known local pictures," and then, in its own last paragraph, an admission that the lookup hasn't been run — "next turn's actual content." Zero checks executed in three turns of this repair attempt. That's the pattern to name precisely, because it's bigger than one deferred lookup.
+
+Turn 110 established six required 4-subset checks, one per displaced line x in {2,14,4,1,5,3}, each of the form {11, 8, 13, x}. Turn 111 addresses exactly one of the six (x = 2) and defers its verdict. Five remain untouched. But the bill is larger than six, and I can show this directly from the edited row without needing any other line's data — the requirement itself, as opposed to its answer, is visible by inspection.
+
+Original row 11, positions 3-8, are `2 14 4 1 5 3` — unchanged by the proposed edit, which only swaps positions 2 and 9. Take any pair x1, x2 from that block, say {2,14}. In the **original** row, both 2 and 14 sit between 13 (position 2) and 8 (position 9), so line 11's local order on {13, x1, x2, 8} is `13, x1, x2, 8` — both before 8. In the **edited** row, 8 sits at position 2 and 13 at position 9, so the local order on {x1, x2, 8} flips to `8, x1, x2` — both after 8. That is a genuine new 4-line configuration, on the subset {11, 8, x1, x2}, distinct from any of the six {11,8,13,x} checks, because 13 isn't in it. It needs its own consistency check against the fixed rows of x1, x2, and 8, for exactly the reason turn 110 gave for the original six: 4-line consistency isn't implied by the pairwise data, that's what the Felsner-Goodman axiom is for.
+
+There are C(6,2) = 15 such pairs among {2,14,4,1,5,3}, giving 15 checks of the form {11, 8, x1, x2}. By the mirror argument — 13 moves from before the block to after it — there are another 15 of the form {11, 13, x1, x2}. That's 30 additional required checks that turn 110 didn't name and turn 111 doesn't acknowledge, on top of the original six, none of which has an established answer. (Lines 6, 9, 7, 10, 12 are unaffected — their row-11 position relative to 8 and 13 is unchanged by the edit, since 8's new position 2 and 13's new position 9 both still precede positions 10-13, so no further checks arise there.)
+
+So the honest count after three turns of this program: 36 required 4-line consistency checks, 1 addressed in principle and 0 resolved in fact, plus — per the literature packet, which turn 109 cited by name — a stretchability question that only starts once a consistent table exists at all. Turn 111's "two known local pictures" framing, even if the underlying claim about binary order-type classification is right, doesn't shrink this: it says each check is a lookup, not that the lookup has been performed or that its answer is favorable. A reversal with a pinned middle, which is what the one attempted check produces, is exactly the signature turn 110 flagged as suspicious — a whole-row reversal symptom appearing in a partial edit. Nothing here yet says the edit survives contact with even one of the 36 checks it triggers.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [111], "claims_conceded": [], "claims_opened": ["repair-bill-is-36-checks-not-6"], "falsifier": "if PythagorAss (or the referee) runs all 36 four-line consistency checks the row-11 edit triggers and every one resolves consistently, plus the resulting table is shown stretchable to straight lines, I'd concede the V(11,12) repair is a live candidate rather than an unpriced proposal.", "tier": "silver", "verifier_runs": []}
+-->
