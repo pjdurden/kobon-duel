@@ -2381,3 +2381,27 @@ I hold my prior.
 <!-- meta
 {"addresses": [113], "claims_conceded": [], "claims_opened": ["quadruple-checks-test-signotope-not-chirotope"], "falsifier": "a citation or proof that for rank-3 sign data restricted to this kind of local edit, consistency on all 4-element subsets already implies the 5-element chirotope exchange axiom, collapsing the two conditions", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 115 - PythagorAss - 2026-08-22T16:18:56Z
+
+Turn 114's distinction is correct and I can't break it: a signotope passing every 4-element consistency check is not automatically a chirotope, because the rank-3 oriented-matroid exchange axiom lives on five elements, not four. Felsner-Goodman's treatment of allowable sequences is exactly where that gap is documented, and turn 109's citation of the "four-line consistency condition" undersold the requirement. I concede this:
+
+> "a signotope satisfying every 4-element consistency condition is not automatically a chirotope — not automatically realizable as any pseudoline arrangement at all... The actual rank-3 oriented-matroid exchange axiom... is stated on five elements, not four."
+
+That's airtight as literature; it isn't something I can argue around, and I'm not going to try.
+
+What I can do is bound what it actually costs here, because "the gate is a 5-element condition" and "the gate is unbounded" are different claims, and turn 114 only established the first.
+
+Editing row 11 touches nothing outside row 11. So any 5-line subset that does not contain line 11 has every one of its rows bit-for-bit identical to Bader's original — and Bader's original is a proven valid chirotope, since it stretches to an actual straight-line arrangement. Those subsets need zero rechecking, full stop. That already cuts C(14,5) = 2002 down to the C(13,4) = 715 subsets that do contain line 11.
+
+Within those 715, further shrink by asking which of the four other lines' relative order along row 11 actually changed. Split the other 13 lines into three blocks, all readable off row 11 as printed in the ledger: A = {2,14,4,1,5,3} (positions 3-8, unchanged internal order — the edit only relocates the block's neighbors, not the block itself), B = {8,13} (the swapped pair, positions 2 and 9), C = {12,6,9,7,10} (positions 1 and 10-13, which stay outside the swapped range on both sides, before and after, in both the original and edited row). Three categories of pairs are provably untouched by the edit: A-A (block order preserved), A-C and B-C (12 stays before the whole swap in both versions, 6/9/7/10 stay after it in both versions), and C-C trivially. Only A-B and B-B pairs (13-vs-A, 8-vs-A, and 8-vs-13 itself) actually flip.
+
+So a 5-subset {11, w, x, y, z} is safe outright whenever {w,x,y,z} contains zero or one element of B and, if one, the rest come only from C. Count the safe ones directly: zero-B subsets, C(11,4) = 330 (choosing 4 from A∪C, eleven lines); one-B-plus-three-C subsets, 2 × C(5,3) = 20. Safe total: 350. That leaves 715 − 350 = 365 subsets genuinely at risk — still real work, not a rounding error, but a named, bounded, and computable set, not "the whole table must be reverified from scratch," which is what an unqualified reading of turn 114 would suggest.
+
+I'm not claiming any of the 365 pass. I'm claiming the gate turn 114 named correctly is the right gate, and that most of the naive C(14,5) search space is already certified by Bader's own realizability, for free, before a single new check runs. That's the honest state: theoretical objection banked, scope of the actual remaining work priced at 365 five-line exchange-axiom checks, down from 2002.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [114], "claims_conceded": ["signotope-vs-chirotope-5-element-gate"], "claims_opened": ["row11-edit-5-subset-risk-bound-365-of-715"], "falsifier": "if any single one of the 365 at-risk five-line subsets fails the rank-3 exchange axiom against the fixed rows of the other four lines, the row-11 edit is not a valid table and this repair program is dead.", "tier": "none", "verifier_runs": []}
+-->
