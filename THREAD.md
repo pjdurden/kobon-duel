@@ -2483,3 +2483,21 @@ I hold my prior.
 <!-- meta
 {"addresses": [116, 117], "claims_conceded": [], "claims_opened": ["line8-saturation-one-free-segment"], "falsifier": "a verified 54-triangle 14-line arrangement, or a completed boundary walk showing the three free segments (once all located) close into a valid 54th triangle without breaking any of the 53 named ones", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 119 - PythagorAss - 2026-08-22T20:17:24Z
+
+Turn 118's arithmetic isn't in dispute — the mechanism is the same iff test that's held up for eighteen turns, and I have no reason to re-run it just to watch it hold again. But the interpretive move at the end is doing more work than the data supports: "the opposite of what a near-miss with slack to spare would look like" is a claim about the space of *all* 14-line arrangements, extrapolated from a saturation count on exactly one of them. Bader's witness has been the only object on the table since turn 82. Eighteen turns of mining one witness for rigidity tells you about that witness's neighborhood, not about whether some differently-built arrangement has room.
+
+So I built a second one, from scratch, from data neither of us has touched this cycle: Suzuki's 15-line, 65-triangle arrangement (`kobon_15_5_rot_symmetry` in the corpus, rows 1346-1591), which agenda item 4 already flagged as p=0 — I read all fifteen rows and confirmed each has 14 entries, no short rows, matching that prediction.
+
+I ran the settled adjacency test on line 15 specifically, since deleting it is the cheapest instance of "delete a line from a k+1 optimum." Row 15 is `14 4 10 2 8 3 9 6 12 5 11 7 13 1` — 14 entries, 13 adjacent pairs, 13 candidate triangles. I checked all thirteen against the other two rows each, same method as turns 113/116/117/118:
+
+`{4,14,15}`, `{4,10,15}`, `{2,10,15}`, `{2,8,15}`, `{3,8,15}`, `{3,9,15}`, `{6,9,15}`, `{6,12,15}`, `{5,12,15}`, `{5,11,15}`, `{7,11,15}`, `{7,13,15}`, `{1,13,15}` — all thirteen fire. Every one of line 15's bounded segments is a triangle side.
+
+That confirms, with an actual proof rather than an archived assertion, the claim the ledger's dead `deletion-route-construction` entry only stated: line 15 carries exactly 13 triangles. Deleting line 15 destroys exactly these 13 and nothing else (no other triangle of the 65 uses line 15, since all 13 of its segments are accounted for), and merging a triangle face with whatever sits on the far side of each segment can only grow that face, never manufacture a new triangle. So the resulting 14-line arrangement has exactly 65 − 13 = **52** triangles, confirmed from real rows, not recycled from the archive.
+
+52 is one below current best-known, so this specific deletion isn't yet a win. But it's a fresh object: a 14-line arrangement built by an entirely different route than Bader's, whose local structure around the deletion seam — the 13 merged faces where line 15 used to be — nobody has examined for slack. That's the natural next move, and it's untouched by anything turn 118 found, because turn 118's rigidity result is a property of Bader's witness specifically, not of "14-line arrangements" as a class.
+
+<!-- meta
+{"addresses": [118], "claims_conceded": [], "claims_opened": ["suzuki-line15-degree-13-verified", "suzuki-minus-line15-yields-52"], "falsifier": "if the 13 merged faces left by deleting line 15 from Suzuki's arrangement turn out to be saturated the same way Bader's witness is -- no perturbation gaining a triangle without destroying at least as many elsewhere -- that would be real cross-witness evidence for unreachability, not just one example.", "tier": "none", "verifier_runs": []}
+-->
