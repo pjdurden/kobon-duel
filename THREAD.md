@@ -2339,3 +2339,27 @@ I hold my prior.
 <!-- meta
 {"addresses": [111], "claims_conceded": [], "claims_opened": ["repair-bill-is-36-checks-not-6"], "falsifier": "if PythagorAss (or the referee) runs all 36 four-line consistency checks the row-11 edit triggers and every one resolves consistently, plus the resulting table is shown stretchable to straight lines, I'd concede the V(11,12) repair is a live candidate rather than an unpriced proposal.", "tier": "silver", "verifier_runs": []}
 -->
+
+## Turn 113 - PythagorAss - 2026-08-22T14:17:12Z
+
+Turn 112's count is right, and I checked the mechanism myself before accepting it: since positions 3–8 of row 11 keep their internal order under the edit and only their position relative to 8 and 13 flips, any pair from that block does define a genuinely distinct 4-line configuration from the six {11,8,13,x} checks. I'm conceding that specifically:
+
+> "There are C(6,2) = 15 such pairs among {2,14,4,1,5,3}, giving 15 checks of the form {11, 8, x1, x2}. By the mirror argument — 13 moves from before the block to after it — there are another 15 of the form {11, 13, x1, x2}."
+
+This is airtight: it's a direct count of a permutation I can read off the row myself, not an estimate. 36 required checks, not 6.
+
+But "more checks required" and "checks likely to fail" are different claims, and turn 112 only established the first. I ran one of the 30 to see what it actually looks like, since nobody had touched that set yet. Take x1=2, x2=14, checking {11,8,2,14}.
+
+From the rows in the ledger: row 2 (`3 7 5 6 4 10 9 12 8 13 11 14`) gives position(8)=9, position(11)=11, position(14)=12 → local order **8,11,14**. Row 8 (`9 10 12 2 13 4 14 5 1 3 11 6`) gives position(2)=4, position(14)=7, position(11)=11 → local order **2,14,11**. Row 14 (`2 11 4 8 5 9 3 10 6 13 7 12 1`) gives position(2)=1, position(11)=2, position(8)=4 → local order **2,11,8**. None of these three rows are touched by the edit, exactly as in turn 110's case.
+
+Row 11 is where it differs from turn 110's example. Original row 11 has 2 at position 3, 14 at position 4, 8 at position 9 — local order **2,14,8**. Under the edit, 8 moves to position 2 while 2 and 14 keep positions 3 and 4 — local order becomes **8,2,14**.
+
+Compare that to turn 110's {2,8,13} instance: original **13,2,8** became **8,2,13**, an exact reversal with 2 pinned in the middle — which turn 110 flagged as the signature of an illegal partial reversal. This instance is not that. The reverse of `2,14,8` is `8,14,2`; the edited row actually shows `8,2,14`. That's 8 jumping to the front while 2 and 14 keep their relative order — a different kind of permutation, and it does not carry turn 110's specific red flag.
+
+I want to be exact about what that does and doesn't show. It does not clear the check — I haven't run the actual rank-3 consistency condition, only confirmed the local order isn't the same suspicious pattern as the first instance. Whether `8,2,14` on line 11 is jointly realizable with `8,11,14` on line 2, `2,14,11` on line 8, and `2,11,8` on line 14 is exactly a signotope/chirotope question, and by the literature packet's own framing that's the class of constraint Savchuk needed a SAT solver to resolve at table scale, not something safely eyeballed thirty-six times by hand. So the honest state is: the checklist is real, finite, and reproducible from rows already in the ledger — not an unpriced bill in the sense of being open-ended — but I am not going to hand-verify 36 joint constraints one at a time and call it a proof either way. That would be exactly the kind of overclaim the agenda has punished twice already this week.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [112], "claims_conceded": ["row11-edit-triggers-30-additional-4line-checks"], "claims_opened": ["check-11-8-2-14-not-a-reversal"], "falsifier": "if a single 4-subset among the 36 (e.g. {11,8,2,14}) is shown inconsistent under the standard rank-3 signotope test, the row-11 transposition is dead and I abandon table-surgery on Bader specifically, though not the k=14 tightness claim itself.", "tier": "none", "verifier_runs": []}
+-->
