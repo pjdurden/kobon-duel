@@ -2517,3 +2517,27 @@ I hold my prior.
 <!-- meta
 {"addresses": [119], "claims_conceded": [], "claims_opened": ["deletion-seam-collinear-merge-unverified"], "falsifier": "A vertex-by-vertex trace of Suzuki's line-15 deletion, checking all 14 crossing points for edge-fusion on the partner line, that confirms no merged face drops to three sides, would settle 52 as exact and remove this objection.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 121 - PythagorAss - 2026-08-22T22:18:25Z
+
+Turn 120's demand is fair, and I built the assertion it's attacking without proving it. I'm conceding that specific gap:
+
+> "the zero in that equation, the 'nothing gained,' rests on an unverified structural claim about a mechanism that was never named, let alone tested."
+
+That's correct as a criticism of turn 119. Here is the proof that was missing.
+
+**The fusion mechanism is real, general, and single.** At each of line 15's 14 crossing vertices, deleting line 15 removes two of the four local edges (line 15's own segments) and contracts the other two (the crossing line's edges) into one, since the vertex drops to degree 2. This is not a second, independent effect layered on top of face-merging — it's part of the same event. Set up local quadrants at vertex V(15,a): line 15 horizontal, line a vertical, four faces NE/NW/SE/SW. Removing 15's two edges merges NE+SE into one face and NW+SW into another. That's it — two faces, not four. But now a-north (which bordered NE|NW) and a-south (which bordered SE|SW) border the *same two merged faces* on both sides, and meet at a vertex of degree 2, so they fuse into one edge automatically. This isn't conditional; it happens at every one of the 14 vertices, always.
+
+**Apply it to one of line 15's triangles.** Take T_i = {15,a,b}, sides on 15 (segment V(15,a)-V(15,b)), a, and b. Let F_right be the face on the far side of that same segment. Deleting it merges T_i and F_right. At the V(15,a) end, T_i's a-edge and F_right's a-edge fuse into one. At the V(15,b) end, T_i's b-edge and F_right's corresponding edge fuse into one. So if F_right has m sides, the merged face has exactly (1 fused a-edge) + (1 fused b-edge) + (F_right's remaining m-2 sides) = m sides — not m+1, matching Euclidn't's claim that the naive additive count is wrong.
+
+**But here's the fact that resolves it: F_right can never be a triangle.** Three lines in general position produce exactly one bounded triangular region among their seven faces. If F_right were also a triangle sharing the full segment V(15,a)-V(15,b) with T_i, it would have to be the *same* bounded triangle {15,a,b} as T_i — impossible for two faces on opposite sides of a shared edge. So F_right is forced to have m ≥ 4. The merged face therefore has m ≥ 4 sides. It is never a triangle, for any of the 13 segments.
+
+This is checkable against the global arithmetic independently of any per-face tracing: Suzuki's k=15 table is p=0 (confirmed turn 119), so V=105, E=225, faces=121, unbounded=30, bounded=91. Deleting a line with 14 crossings removes 14 vertices and 29 edges (15 of line 15's own + 14 contracted), giving V'=91, E'=196, bounded faces' = E'-V'+1-28 = 78 — exactly 91 − 13, one merge per segment, no cascading triple-merges, no anomalies. The arithmetic and the local proof agree.
+
+So: turn 119's "can only grow, never manufacture a new triangle" was asserted, not proved, and Euclidn't was right to flag that. It is now proved, by the one-bounded-triangle-per-three-lines fact applied to F_right. Net **65 − 13 + 0 = 52** stands, on a complete argument this time. Suzuki-deletion is a genuine second 14-line object at 52, one below best-known, distinct from Bader's witness, and its deletion seam is now fully characterized: 13 new faces, all with m ≥ 4 sides, sitting adjacent to the 52 untouched triangles.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [120], "claims_conceded": ["suzuki-deletion-net52-was-unproven-in-t119"], "claims_opened": ["line15-fusion-cannot-create-triangle"], "falsifier": "If any one of Suzuki's 13 line-15 segments has an F_right that is itself a bounded triangle sharing that exact segment, the one-bounded-triangle-per-three-lines fact is violated and the proof breaks.", "tier": "none", "verifier_runs": []}
+-->
