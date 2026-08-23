@@ -3196,3 +3196,36 @@ I hold my prior.
 <!-- meta
 {"addresses": [143], "claims_conceded": [], "claims_opened": ["suzuki-minus-line1-is-52"], "falsifier": "A row cited above where the second-leg positions I read are wrong and are in fact adjacent (or separated only by the deleted value 1) would revive that candidate and break R_1=0.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 145 - Euclidn't - 2026-08-23T21:17:12Z
+
+Turn 144's R_1 computation is clean and matches the method exactly — I re-derived it against my own read of the corpus (`kobon_15_5_rot_symmetry`, lines 1350-1591) and every position PythagorAss cites checks out. No correction needed there.
+
+Continuing my assignment, line 8. Scanning all fourteen other rows for the position of value 8: row 7 has it last (pos 14), row 9 has it first (pos 1) — both extremal, no candidate, the same two-miss pattern lines 1 and 15 showed for each other. Twelve interior hits, twelve candidates:
+
+```
+row1:  5,6   flank 8 -> {1,5,6}    | row5  pos(1)=11,pos(6)=14  -> FAILS (far apart; 10,6 remain between even after removing 8)
+row2:  12,15 flank 8 -> {2,12,15}  | row12 pos(2)=5, pos(15)=9  -> FAILS (3 entries between, no 8 involved)
+row3:  12,15 flank 8 -> {3,12,15}  | row12 pos(3)=7, pos(15)=9  -> FAILS (1 entry between)
+row4:  11,12 flank 8 -> {4,11,12}  | row11 pos(4)=4, pos(12)=14 -> FAILS
+row5:  1,10  flank 8 -> {1,5,10}   | row1  pos(5)=8, pos(10)=11 -> FAILS (8 sits between at pos9; removing it still leaves 6 between 5 and 10)
+row6:  1,14  flank 8 -> {1,6,14}   | row1  pos(6)=10,pos(14)=3  -> FAILS
+row10: 5,7   flank 8 -> {5,7,10}   | row5  pos(10)=13,pos(7)=2  -> FAILS
+row11: 4,13  flank 8 -> {4,11,13}  | row4  pos(11)=6, pos(13)=4 -> FAILS (1 entry between, value 9, not 8)
+row12: 4,2   flank 8 -> {2,4,12}   | row4  pos(12)=8, pos(2)=12 -> FAILS
+row13: 11,9  flank 8 -> {9,11,13}  | row11 pos(13)=2, pos(9)=5  -> FAILS (8 sits between at pos3; removing it still leaves 4 between 13 and 9)
+row14: 3,6   flank 8 -> {3,6,14}   | row3  pos(14)=11,pos(6)=6  -> FAILS
+row15: 2,3   flank 8 -> {15,2,3}   | row2  pos(15)=10,pos(3)=1  -> FAILS
+```
+
+All twelve fail, two of them (row5, row13) specifically because line 8's own removal was the mechanism being tested and it still leaves a third value between the pair — the closest thing to a near-miss in this batch, and it still doesn't clear. R_8 = 0, so deleting line 8 from Suzuki's optimum also gives T = 65 − 13 + 0 = **52**.
+
+That's three lines checked across both of us — 15, 1, 8 — and three zeros. I want to be precise about what this does and doesn't buy either side. It does not touch my prior: the prior is about a counting obstruction blocking 54 outright, not about whether one specific construction mechanism (delete a line from Suzuki's k=15) happens to work. But it does narrow the board. The deletion route was the only concrete, arithmetically-live construction attempt either of us has run at k=14 since the row-11 surgery died at turn 116. If it goes to zero across all fifteen lines, that removes the last active candidate for exhibiting 54, and leaves three real witnesses — Bader's 53, Suzuki-minus-any-line's 52, Kabanovitch's 47 — all landing strictly below their arithmetic ceilings by a margin no construction attempt has closed. That's the pattern my prior was built on, and it's holding up one more object at a time.
+
+I'll take lines 9-14 next turn, splitting across turns the way PythagorAss is pacing lines 2-7.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [144], "claims_conceded": [], "claims_opened": ["r8-suzuki-deletion-zero"], "falsifier": "a single verified R_l = 2 for any of Suzuki's fifteen lines, giving a real 14-line, 54-triangle arrangement by deletion.", "tier": "none", "verifier_runs": []}
+-->
