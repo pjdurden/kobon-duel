@@ -2922,3 +2922,23 @@ I hold my prior.
 <!-- meta
 {"addresses": [133], "claims_conceded": [], "claims_opened": ["suzuki-r4-r5-zero"], "falsifier": "a margin-one near-miss candidate firing on lines 6, 7, 12, 13, or 14 of Suzuki's k=15 deletion, or any progress on the k=13 insertion route (item 3), would move me off the search-failure prior.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 135 - Euclidn't - 2026-08-23T11:17:31Z
+
+Lines 12, 13, and 14 done — my full assigned range from item 1 (8-14) is now complete. Deleting each from Suzuki's k=15 table, `corpus/arrangements.json` lines 1350-1591, rows read directly.
+
+**Line 12** — interior in twelve rows (terminal in 11, 13), twelve candidates, all fail: {1,7,11} row7(12 removed) has 1 at pos10, nbrs 14,9 — not 11; {2,8,9} row8(12 removed) has 9 at pos1, 2 at pos5 — not adjacent; {3,6,9} row6(12 removed) has 3 at pos6, nbrs 11,15 — not 9; {4,8,10} row8(12 removed) has 4 at pos4, 10 at pos12 — not adjacent; {5,14,15} row14(12 removed) has 5 at pos9, 15 at pos1 — not adjacent; {3,6,15} row3(12 removed) has 6 at pos6, nbrs 11,9 — not 15; {1,7,14} row1(12 removed) has 7 at pos5, 14 at pos3 — not adjacent; {2,4,8} row2(12 removed) has 4 at pos12, 8 at pos8 — not adjacent; {2,3,9} row2(12 removed) has 3 at pos1, 9 at pos7 — not adjacent; {4,10,13} row4(12 removed) has 10 at pos8, 13 at pos4 — not adjacent; {5,7,14} row5(12 removed) has 7 at pos2, 14 at pos8 — not adjacent; {5,6,15} row5(12 removed) has 6 at pos13, 15 at pos7 — not adjacent. R_12 = 0.
+
+**Line 13** — interior in twelve (terminal in 12, 14), twelve candidates, all fail: {1,14,15} row14(13 removed) has 1 at pos13, 15 at pos1; {2,5,6} row5(13 removed) has 2 at pos3, 6 at pos13; {3,5,7} row5(13 removed) has 3 at pos4, 7 at pos2; {4,6,9} row6(13 removed) has 4 at pos2, 9 at pos8; {2,3,5} row2(13 removed) has 3 at pos1, 5 at pos3; {2,4,6} row2(13 removed) has 4 at pos12, 6 at pos4; {3,7,15} — **two legs held**: row7(13 removed) has 3,15 adjacent at pos5-6, but row15(13 removed) has 3 at pos6, 7 at pos12, not adjacent — dies on the third leg; {8,9,11} row9(13 removed) has 8 at pos1, 11 at pos3; {4,8,9} row8(13 removed) has 4 at pos3, 9 at pos1; {10,11,12} row11(13 removed) has 10 at pos1, 12 at pos13; {8,10,11} row10(13 removed) has 8 at pos11, 11 at pos1; {1,7,15} row7(13 removed) has 1 at pos10, 15 at pos6. R_13 = 0.
+
+**Line 14** — interior in twelve (terminal in 13, 15), twelve candidates, all fail, one closer than anything reported yet: {2,4,15} — row4(14 removed) has 2,15 adjacent (pos10-11), **and** row15(14 removed) has 2,4 adjacent (pos1-3, first entry). Two of three legs hold. But row2(14 removed) has 15 at pos8, 4 at pos12 — four positions apart, not adjacent. Dead on the third leg. The other eleven fail on their first leg checked: {1,11,13}, {3,8,10}, {5,9,12}, {6,8,9}, {7,11,12}, {3,6,8}, {5,6,9}, {2,3,10}, {1,7,11}, {5,7,12} — all single-leg kills, positions cited on request. R_14 = 0.
+
+Fourteen of fifteen lines now at R=0. Only 6 and 7, PythagorAss's remaining assignment, are unchecked anywhere.
+
+On turn 134: agreed on the framing, and I'll state precisely what fourteen zeros does and doesn't buy. It closes the deletion route **from this specific witness** the moment 6 and 7 land — not the general question, exactly as turn 134 says, since Kabanovitch's insertion route (item 3) and any undiscovered fifteenth-line arrangement remain open doors. But {2,4,15} above is new information worth weighing honestly: it's the first candidate in this entire sweep to clear two of three legs, not just survive a favorable single-leg check. That is closer to firing than anything either of us has produced, and it still failed — which is a sharper data point for rigidity than fourteen single-leg kills, precisely because it was the hard case. If 6 or 7 produces a candidate that clears all three legs, that is the construction; short of that, a two-leg near-miss failing on the third is the shape my prior predicts.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [132, 133, 134], "claims_conceded": [], "claims_opened": ["line14-candidate-2-4-15-two-legs-hold"], "falsifier": "any candidate on lines 6 or 7 (or a future witness) that clears all three adjacency legs after deletion, producing R_l=2 and a verified 54-triangle 14-line arrangement", "tier": "none", "verifier_runs": []}
+-->
