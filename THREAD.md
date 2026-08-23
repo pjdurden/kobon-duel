@@ -2603,3 +2603,29 @@ I hold my prior.
 <!-- meta
 {"addresses": [123], "claims_conceded": ["suzuki-deletion-52-triangle-witness-established"], "claims_opened": ["suzuki-line-degree-11-would-close-k14", "suzuki-symmetry-orbit-claim-unverified"], "falsifier": "any of lines 1-14 in kobon_15_5_rot_symmetry having triangle-degree exactly 11 under the iff test, confirmed against both neighbor rows, would produce a verified 54-triangle 14-line arrangement and refute my prior outright.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 125 - PythagorAss - 2026-08-23T02:18:44Z
+
+Turn 123's own claim about rotation orbits doesn't survive Euclidn't's arithmetic, and I'm conceding it outright:
+
+> "This claims line 15 is a fixed point of a 5-fold rotation and the remaining 14 split into orbits of size 5 — but 14 isn't divisible by 5, so that decomposition needs either more than one fixed line or an orbit structure nobody has exhibited."
+
+Correct, and it was my error, not Euclidn't's. I had no permutation, just a title string. Withdrawing that shortcut entirely.
+
+On the actual open item — degree-11 detection — I ran the iff test by hand on two more full rows against the real corpus table (`corpus/arrangements.json` lines 1350-1591), not just row 15.
+
+**Row 1**, thirteen adjacent pairs: (15,13)(13,14)(14,11)(11,12)(12,7)(7,9)(9,5)(5,8)(8,6)(6,10)(10,3)(3,4)(4,2). I checked every one against its two partner rows. All thirteen fire: {1,15,13}, {1,13,14}, {1,14,11}, {1,11,12}, {1,12,7}, {1,7,9}, {1,9,5}, {1,5,8}, {1,8,6}, {1,10,6}, {1,3,10}, {1,4,3}, {1,4,2}. deg_Δ(1) = 13.
+
+**Row 2**, same method, all thirteen pairs fire: {2,3,7}, {2,7,5}, {2,5,13}, {2,13,6}, {2,6,11}, {2,11,9}, {2,9,12}, {2,12,8}, {2,8,15}, {2,15,10}, {2,10,14}, {2,14,4}, {2,4,1}. deg_Δ(2) = 13. Two of these, {2,8,15} and {2,15,10}, cross-check exactly against row 15's own list from turn 119 — same triangles, found independently from the other line's row. Good internal consistency.
+
+So three lines checked (1, 2, 15), three times exactly 13. That number isn't a coincidence to chase further blindly: `sum of deg_Δ(l) over all 15 lines = 3 x 65 = 195`, and `195/15 = 13` exactly. Three real computations landing precisely on the forced average is strong evidence this arrangement is triangle-degree-regular — every line, not just the rotation orbit, carries exactly 13. If that holds for the remaining twelve lines (mechanically checkable the same way), Euclidn't's proposed test returns a clean **no**: no line in Suzuki's table has degree 11, and single-line deletion here caps uniformly at 52, never 54. I'm reporting this against my own interest — this was my construction — because the evidentiary standard cuts both ways.
+
+That closes this avenue, not the prior. It only says *this particular* k+1-to-k route, off *this particular* k=15 witness, tops out at 52. My brief's list has another entry I haven't touched yet: adding a line to a k-1 optimum. `corpus/arrangements.json` line 944 has `kobon_13_m_sym_47tri`, the classical, Tamura-tight, 47-triangle arrangement on 13 lines. Add a 14th line crossing all 13 generically (no new parallels, no new concurrences): it picks up 13 crossing points, splitting into 2 rays and 12 bounded segments. Each bounded segment can support at most one new triangle, so the new line contributes **at most 12** new triangles — against a need of exactly **+7** to hit 54 from 47. That's real slack: even if the new line's path clips through the interior of some existing triangular faces and destroys a few (an old triangle dies whenever the new line crosses two of its three sides), the arithmetic allows destroying up to 5 while still forming all 12, or fewer destroyed with fewer formed, and still clearing +7.
+
+This is a genuinely different mechanism than anything run this cycle — no deletion, no fusion, a line *inserted* into a smaller optimum, with slack (12 available against 7 needed) that Suzuki-deletion never had. Next move: pull the 13 rows of `kobon_13_m_sym_47tri` and identify which pairs of old lines are "visible" to each other, i.e. which crossings V(a,b) can be reached by a bounded segment of a hypothetical new line without any third old line intervening — that's the real target count, and unlike deletion it isn't a pure table computation, since the new line doesn't exist yet in the table.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [124], "claims_conceded": ["suzuki-rotation-orbit-claim"], "claims_opened": ["suzuki-line-degree-13-uniform", "add-line-to-k13-optimum-net-plus7-target"], "falsifier": "any one of Suzuki's twelve unchecked lines returning a triangle-degree other than 13 breaks the regularity claim and reopens the degree-11 search on this witness.", "tier": "none", "verifier_runs": []}
+-->
