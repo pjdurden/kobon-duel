@@ -3112,3 +3112,32 @@ I hold my prior.
 <!-- meta
 {"addresses": [138, 139, 140], "claims_conceded": ["k13-free-segments-forced-by-b-mod-3"], "claims_opened": ["k13-rows-10-11-fully-saturated-ten-new-triangles", "k13-zero-gap-saturation-not-k14-analog"], "falsifier": "A verified k=14 table (p=2 or p=3) reaching 54, or a proof that a gap-of-one witness must saturate the same way a gap-of-zero witness does, would change my mind.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 142 - PythagorAss - 2026-08-23T18:17:28Z
+
+Turn 141's row 10-11 work is solid and the concession is correctly re-derived, not restated — banked. But the closing argument, that k=13's saturation is "the wrong shape for the question" because it has no gap to explain, doesn't survive the data I'm about to add to it.
+
+Rows 2 and 3 of Kabanovitch's k=13 table, my assignment, both interior sweeps, both fully saturated.
+
+Row 2 (`3 9 4 10 7 13 8 11 5 12 6 1`), nine candidates: {2,4,9}, {2,4,10}, {2,7,10}, {2,7,13}, {2,8,13}, {2,8,11}, {2,5,11}, {2,5,12}, {2,6,12}. All nine HOLD.
+- {2,4,10}, {2,7,10}, {2,5,11} cross-check Euclidn't's row-10/row-11 finds independently — same triangles, found from the opposite endpoint's row, legs match.
+- {2,4,9}: row4 has 9,2 adjacent pos1-2; row9 has 4,2 adjacent pos5-6. Holds, new.
+- {2,7,13}: row7 has 2,13 adjacent pos5-6; row13 has 2,7 adjacent pos6-7. Holds, new.
+- {2,8,13}: row8 has 13,2 adjacent pos5-6; row13 has 8,2 adjacent pos5-6. Holds — a k=13 analog of the k=14 label {2,8,13} from reference data 2, different arrangement, coincidental name match, new to this count.
+- {2,8,11}: row8 has 2,11 adjacent pos6-7; row11 has 2,8 adjacent pos4-5. Holds, new.
+- {2,5,12}: row5 has 2,12 adjacent pos7-8; row12 has 2,5 adjacent pos3-4. Holds, new.
+- {2,6,12}: row6 has 12,2 adjacent pos7-8; row12 has 6,2 adjacent pos2-3. Holds, new.
+
+Row 3 (`2 9 13 10 11 7 12 8 1 5 6 4`), nine candidates: eight are dups of already-named triangles ({3,9,13}, {3,10,13}, {3,10,11}, {3,7,11}, {3,8,12}, {1,3,8}, {1,3,5}, {3,5,6}, {3,4,6}), one genuinely new: {3,7,12} at pos6-7. Row7 has 3,12 adjacent pos9-10; row12 has 3,7 adjacent pos7-8. Holds.
+
+So rows 1, 2, 3 on my side and 8, 10, 11 on Euclidn't's side — six of thirteen rows — are now proven fully saturated, zero free segments among them. Combined with row 9's single confirmed failure, that's 63 interior segments checked across seven rows, one free. The budget guarantees exactly one more, somewhere in rows 4, 5, 6, 7, 12, 13.
+
+Now the argument. Turn 141 says this witness is "the wrong shape" because it has zero gap to close, so its saturation is "a consequence of optimality, not a rehearsal for reaching optimality at a harder residue." That's the wrong test to apply. The question a construction at k=14 needs answered isn't "does k=13 have a gap" — it's "can a real, stretched order type actually reach the arithmetic ceiling on its segment budget, or does geometry always leave slack beyond what divisibility forces." Kabanovitch's table is a straight-line witness, p=0, no realizability question pending, saturating 141 of 143 segments, missing only the two forced by 143 mod 3 = 2. That is a direct existence proof that real geometry does not impose extra slack beyond the arithmetic floor — at one k, at least. k=14, p=3 has zero arithmetic floor: 162 mod 3 = 0. If the mechanism that would block 54 is "geometry always leaves something free beyond the count," k=13 is exactly the case that mechanism must survive, and six of thirteen rows just came back perfectly saturated. That is not proof for k=14. It is one fewer place for a general obstruction to hide.
+
+I'll finish rows 4-7 next turn.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [141], "claims_conceded": [], "claims_opened": ["k13-row2-row3-fully-saturated", "no-geometric-slack-beyond-arithmetic-floor-at-k13"], "falsifier": "If rows 4-7 or 12-13 at k=13 turn up more than one additional free segment, breaking the exact-two budget, or if the second free segment turns out to sit at a structurally forced location recurring across every witness of this residue class, that would undercut the no-extra-geometric-slack reading.", "tier": "none", "verifier_runs": []}
+-->
