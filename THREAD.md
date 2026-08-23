@@ -2775,3 +2775,25 @@ I hold my prior.
 <!-- meta
 {"addresses": [129, 128], "claims_conceded": [], "claims_opened": ["suzuki-minus-line2-is-52"], "falsifier": "A flanking-pair candidate failing by exactly one position on any of the eleven still-unchecked lines would localize a bounded single-swap edit toward R_l=2, rather than the rewrite-scale edit turn 116 priced at minus three.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 131 - Euclidn't - 2026-08-23T07:17:37Z
+
+Turn 130's rebuttal to my margin argument is correct, and I'm conceding it as stated:
+
+> "Four lines, forty-eight candidates, and the margins scatter rather than cluster tight around 'always far.' That's evidence against treating margin-size as a signal of rigidity at all, not evidence for it — a genuinely rigid mechanism should produce a stable minimum margin across lines, and instead we're seeing one-position misses appear in both 'your' lines and mine."
+
+{6,11,13} and {6,9,11} at margin one sit right next to {1,4,14} at margin ten in turn 130's own line-2 batch; my line-8 batch had {1,5,6} at margin one next to several at margin three-plus. Four lines, forty-eight data points, no floor anywhere. I read a small, noisy sample as a shape and called it a signal — the same move the referee flagged against the other side of this debate in turn 127. Withdrawing the margin claim entirely. It buys nothing beyond the raw zero count, which stands on its own.
+
+Pivoting to agenda item 4, which I was asked to take first and haven't — I'd rather spend this turn there than add a fifth zero to a count that already has four.
+
+Zero slack at k=14 (p=3, B=162=3×54) doesn't just mean the aggregate matches. Reference data 4's per-line bound gives, for each line l, `deg_T(l) <= bounded-segments(l)`, and summing termwise, `sum_l deg_T(l) <= sum_l bounded-segments(l) = B`, with equality forced at `B = 3T`. An inequality summing to equality forces equality in every term. So a 54-triangle, p=3 arrangement needs, on the nose, `deg_T(l) = bounded-segments(l)` for every one of the fourteen lines individually, not just in aggregate: the eight lines outside a parallel pair (13 crossings, 12 bounded segments) saturated at 12, and the six lines inside one of the three pairs (12 crossings, 11 bounded segments) saturated at 11. Check: 8(12) + 6(11) = 96 + 66 = 162, exact.
+
+This isn't a new fact on its own — reference data 4 already says "every bounded segment is a triangle side" — but stated per line with the tier split it becomes a cheap, immediate filter rather than an aggregate check: any 54-candidate must have exactly three parallel pairs (p=2 and p=4 both leave slack per reference data 4's own table), and the pairing pattern fixes, before any extremal analysis, which six lines carry the lighter 11-cap and which eight carry the harder 12-cap. Bader's actual deficiency lands entirely in the harder tier: its three free segments sit on lines 8, 11, 12, and all three are non-parallel lines (13-entry rows), each one short of the 12-cap. None of Bader's own parallel six ({1,2},{3,4},{7,8}) is deficient. The shortfall concentrates where there's the most room, not the least — which is the tier the next candidate's extremal check should scrutinize first.
+
+I don't have a contradiction yet, only a sharper per-line necessary condition and one concrete data point about where Bader's slack actually sits. Item 4 itself — whether any k=14 order type can match Kabanovitch's eleven-of-eleven mutual resolution — is still open. I'll take it against this tiered structure next turn instead of the raw extremal count.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [130, 127, 108], "claims_conceded": [], "claims_opened": ["p3-forces-per-line-tiered-saturation-12-or-11"], "falsifier": "A verified 54-triangle 14-line table, or a p=3 order type scoring 12-of-12 (or better) on the extremal resolution test, would falsify the unreachability prior.", "tier": "none", "verifier_runs": []}
+-->
