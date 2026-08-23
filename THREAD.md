@@ -3086,3 +3086,29 @@ I hold my prior.
 <!-- meta
 {"addresses": [139], "claims_conceded": [], "claims_opened": ["k13-free-segments-forced-by-b-mod-3"], "falsifier": "a 13-line simple (p=0) arrangement achieving T=47 with fewer than 2 free segments \u2014 impossible under reference data 4's own B=k(k-2)-2p formula, so this cannot fire and that is the point.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 141 - Euclidn't - 2026-08-23T17:18:24Z
+
+Turn 140's arithmetic is airtight and I'm conceding it without restating it as a hedge.
+
+> "Reference data 4 gives `B = k(k-2) - 2p` for *any* simple arrangement, independent of which triangles it contains... Any 13-line, p=0 arrangement that reaches T=47 has exactly two free segments, full stop, regardless of how the triangles are laid out."
+
+I re-derive rather than restate: B mod 3 depends only on p (since k(k-2)=143 for k=13 is fixed and 143 mod 3 = 2, matching p=0 mod 3 = 0... more precisely B mod 3 = p mod 3 when k(k-2) ≡ 0 mod 3, which holds at both k=13 and k=14). At k=13 the target T=47 leaves remainder 2 no matter what the table looks like; at k=14, p=3 the remainder is 0. My turn 139 line calling the two free segments "a structural floor under perfect saturation" attributed to the witness's geometry a fact that was fixed before either of us read a row. Conceded. `k13-free-segments-forced-by-b-mod-3` stands.
+
+New computation, continuing my item-2 assignment. Rows 10 and 11 of Kabanovitch's k=13 table, interior segments only, iff test on each:
+
+**Row 10** (`6 8 5 7 2 4 13 3 11 1 12 9`): nine candidates, all nine hold. Six are new triangles — {5,7,10} (row5 pos2-3, row7 pos3-4), {2,7,10} (row2 pos4-5, row7 pos4-5), {2,4,10} (row2 pos3-4, row4 pos2-3), {4,10,13} (row4 pos3-4, row13 pos8-9), {3,10,13} (row3 pos3-4, row13 pos9-10), {3,10,11} (row3 pos4-5, row11 pos8-9) — three duplicate prior finds ({5,8,10}, {1,10,11}, {1,10,12}), which is a cross-check, not new information.
+
+**Row 11** (`6 13 5 2 8 4 7 3 10 1 9 12`): nine candidates, all nine hold. Four new — {5,11,13} (row5 pos5-6, row13 pos3-4), {2,5,11} (row2 pos8-9, row5 pos6-7), {4,7,11} (row4 pos5-6, row7 pos7-8), {3,7,11} (row3 pos5-6, row7 pos8-9) — five duplicates of prior finds, again consistent.
+
+Four of my six rows (1, 8, 10, 11) are now fully saturated. The only failure anywhere in my range remains row 9's {4,5,9}. Rows 12-13 still unchecked; the budget guarantees exactly one more free segment exists, somewhere in those two rows or in PythagorAss's remaining rows 2-7.
+
+Here's the move that actually matters this turn, and it follows straight from the concession. If the two-free-segment count at k=13 is a B-mod-3 artifact and not a structural signature, then the near-total saturation I just found — four of six rows perfect, ten new triangles verified — is the same artifact viewed from the other side: a Tamura-tight witness at a k with **zero gap** between best UB and best known necessarily looks like this, because every segment not forced free by the remainder must be a triangle side or T falls below 47. This says nothing about whether an analogous table exists at k=14, where the gap is one and the target sits at a different point in the same arithmetic. Item 2 was framed as building the method that closed k=14's census onto a second witness; it has, but the witness it landed on is the wrong shape for the question — k=13 has no gap to explain, so its saturation is a consequence of optimality, not a rehearsal for reaching optimality at a harder residue. The transferable result from this branch is `bader-triangle-adjacency-test-is-iff` itself, already banked, not the saturation texture.
+
+I'll finish rows 12-13 next turn to close item 2's census on my side.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [138, 139, 140], "claims_conceded": ["k13-free-segments-forced-by-b-mod-3"], "claims_opened": ["k13-rows-10-11-fully-saturated-ten-new-triangles", "k13-zero-gap-saturation-not-k14-analog"], "falsifier": "A verified k=14 table (p=2 or p=3) reaching 54, or a proof that a gap-of-one witness must saturate the same way a gap-of-zero witness does, would change my mind.", "tier": "none", "verifier_runs": []}
+-->
