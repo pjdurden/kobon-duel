@@ -2740,3 +2740,38 @@ I hold my prior.
 <!-- meta
 {"addresses": [128], "claims_conceded": [], "claims_opened": ["suzuki-minus-line8-is-52"], "falsifier": "a candidate in lines 9-14 whose kill margin is exactly one position, or any candidate that fires at all, showing R_l>0 for some l", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 130 - PythagorAss - 2026-08-23T06:17:06Z
+
+Line 2 is done, continuing my assigned range from item 1. Deleting line 2 from Suzuki's k=15 table (`corpus/arrangements.json` lines 1350-1591, read directly, not from any description).
+
+Line 2 sits terminal in rows 1 and 3 (position 14 and position 1 respectively — rays, no candidate). It's interior in the other twelve rows. For each, the flanking pair created by removing 2 gives a candidate {a,x,y}, tested against rows x and y with line 2 stripped out:
+
+```
+{1,4,14}   fails: row1 (2 removed) has 14 at pos3, neighbors 13,11 — not 4
+{5,7,13}   fails: row7 (2 removed) has 5 at pos3, neighbors 4,3 — not 13
+{6,11,13}  fails: row13 (2 removed) has 11 at pos3, neighbors 10,8 — not 6
+{3,5,7}    fails: row5 (2 removed) has 7 at pos2, neighbors 4,13 — not 3
+{8,12,15}  fails: row12 (2 removed) has 8 at pos4, neighbors 4,9 — not 15
+{9,11,12}  fails: row11 (2 removed) has 9 at pos5, neighbors 4,6 — not 12
+{10,14,15} fails: row15 (2 removed) has 10 at pos3, neighbors 4,8 — not 14
+{6,9,11}   fails: row9 (2 removed) has 11 at pos4, neighbors 4,12 — not 6
+{8,9,12}   fails: row8 (2 removed) has 12 at pos5, neighbors 4,15 — not 9
+{5,6,13}   fails: row6 (2 removed) has 13 at pos3, neighbors 4,11 — not 5
+{4,10,14}  fails: row4 (2 removed) has 14 at pos11, neighbors 15,1 — not 10
+{8,10,15}  fails: row10 (2 removed) has 15 at pos5, neighbors 4,14 — not 8
+```
+
+Twelve for twelve, all dead. R_2 = 0. Four of fifteen lines now checked (15, 1, 8, 2), four zeros.
+
+On turn 129's "margin" argument: I ran the actual gap sizes for this batch too, and they don't uniformly support the reading. `{1,4,14}` misses by ten positions (14 at pos3 vs 4 at pos13); but `{6,11,13}` and `{6,9,11}` both miss by exactly one intervening entry (11 needs 6, gets 10 or 4 one slot over), same margin turn 129 flagged as its closest call. So "every candidate dies by a comfortable margin" isn't what this batch shows — it's a mix, same as turn 129's own data if you look at {1,5,6} sitting at margin one right next to {2,12,15} and {11,13,4} at margin three-plus. Four lines, forty-eight candidates, and the margins scatter rather than cluster tight around "always far." That's evidence against treating margin-size as a signal of rigidity at all, not evidence for it — a genuinely rigid mechanism should produce a stable minimum margin across lines, and instead we're seeing one-position misses appear in both "your" lines and mine.
+
+I'm not overclaiming the reverse either — forty-eight candidates and zero hits is still zero hits, and R still reads 0 everywhere the computation has landed. But the margin story doesn't yet buy Euclidn't anything beyond that raw count, and raw count alone is the same "3 for 3 is the forced average" shape the referee already flagged once this cycle. The thing that would actually support rigidity is a structural reason no candidate can ever land — something about the table's construction that forces x,y's rows to disagree with row a wherever 2 is deleted. Nobody has that argument. Until someone does, an eventual near-miss at margin exactly one, on any of the remaining eleven lines, is the live falsifier, and it would point straight at where a bounded edit should go — the way S1-S2-S3 in Bader's witness already tell us where the deletion-route work localizes.
+
+Eleven lines left on the deletion route; I'll take line 3 next. Turn 128's insertion-route question (item 3, Y=7-of-19 on Kabanovitch's k=13) is still open and untouched by either of us this cycle.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [129, 128], "claims_conceded": [], "claims_opened": ["suzuki-minus-line2-is-52"], "falsifier": "A flanking-pair candidate failing by exactly one position on any of the eleven still-unchecked lines would localize a bounded single-swap edit toward R_l=2, rather than the rewrite-scale edit turn 116 priced at minus three.", "tier": "none", "verifier_runs": []}
+-->
