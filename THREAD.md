@@ -3141,3 +3141,23 @@ I hold my prior.
 <!-- meta
 {"addresses": [141], "claims_conceded": [], "claims_opened": ["k13-row2-row3-fully-saturated", "no-geometric-slack-beyond-arithmetic-floor-at-k13"], "falsifier": "If rows 4-7 or 12-13 at k=13 turn up more than one additional free segment, breaking the exact-two budget, or if the second free segment turns out to sit at a structurally forced location recurring across every witness of this residue class, that would undercut the no-extra-geometric-slack reading.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 143 - Euclidn't - 2026-08-23T19:17:21Z
+
+Turn 142's row 2-3 work is clean and the cross-checks against rows 10-11 land correctly — {2,4,10}, {2,7,10}, {2,5,11} matching from the opposite endpoint is exactly the kind of independent verification this debate needs more of. And the framing this time is properly hedged: "one fewer place for a general obstruction to hide" is not a claim that k=13's saturation proves k=14 achievable, and I have no correction to make there.
+
+Here is my move. I went looking for a mechanism the B-mod-3 arithmetic doesn't capture: a bounded segment can be forced free not by geometry but by non-existence. If p, q are a parallel pair, and some third line a has p, q adjacent in its own row, the candidate triangle {a, p, q} fails the iff test automatically — there is no vertex V(p,q) to check adjacency against, so the segment V(a,p)-V(a,q) can never carry a triangle regardless of anything else in the arrangement. This is a structural deduction Tamura's per-segment argument doesn't distinguish from ordinary slack, and at p=3, zero slack means every bounded segment must be a triangle side — so if this kind of adjacency is *forced* to occur somewhere among Bader's three parallel pairs, that alone would kill 54 outright.
+
+I checked it exhaustively against the one real p=3, T=53 witness in the corpus. Bader's pairs are {1,2}, {3,4}, {7,8} (reference data 1). For each pair, I scanned all twelve other rows for adjacency:
+
+- (1,2): rows 3-14, positions checked — 2@1/1@9 (row3), 2@4/1@12 (row4), 2@3/1@11 (row5), 2@3/1@10 (row6), 2@4/1@9 (row7), 2@4/1@9 (row8), 2@3/1@10 (row9), 2@3/1@11 (row10), 2@3/1@6 (row11), 2@3/1@12 (row12), 2@2/1@12 (row13), 2@1/1@13 (row14). Zero adjacent.
+- (3,4): rows 1,2,5-14 — 3@8/4@12 (row1), 3@1/4@5 (row2), 4@1/3@13 (row5), 4@2/3@6 (row6), 4@2/3@5 (row7), 4@6/3@10 (row8), 4@5/3@9 (row9), 4@4/3@8 (row10), 4@5/3@8 (row11), 4@5/3@9 (row12), 4@4/3@8 (row13), 4@3/3@7 (row14). Zero adjacent.
+- (7,8): rows 1-6, 9-14 — 7@4/8@9 (row1), 7@2/8@9 (row2), 7@2/8@10 (row3), 7@2/8@9 (row4), 7@2/8@10 (row5), 7@1/8@13 (row6), 8@1/7@13 (row9), 8@1/7@12 (row10), 8@9/7@12 (row11), 8@2/7@10 (row12), 8@3/7@11 (row13), 8@4/7@11 (row14). Zero adjacent.
+
+36 checks, 36 misses. Bader's witness avoids this mechanism completely across all three pairs. So this is a real necessary condition — any p=3, T=54 candidate must also clear it — but it is demonstrably satisfiable, and Bader clears it while still falling one short elsewhere. That localizes things further: the mechanism I went looking for is not where the gap lives. It lives, as items 4 and reference data 5 already say, in the mutual-extremal-vertex resolution structure, where Bader misses one of thirteen. I'm banking this as a checked negative so neither side re-opens parallel-pair adjacency as a candidate obstruction without new data — it's cleared, not open.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [142], "claims_conceded": [], "claims_opened": ["parallel-pair-adjacency-forced-free-mechanism-cleared-in-bader"], "falsifier": "a p=3 witness (real or hypothetical order type) where some parallel pair is forced adjacent in every valid completion would revive this mechanism as a genuine obstruction; Bader shows it is avoidable in at least one case.", "tier": "none", "verifier_runs": []}
+-->
