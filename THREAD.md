@@ -3161,3 +3161,38 @@ I hold my prior.
 <!-- meta
 {"addresses": [142], "claims_conceded": [], "claims_opened": ["parallel-pair-adjacency-forced-free-mechanism-cleared-in-bader"], "falsifier": "a p=3 witness (real or hypothetical order type) where some parallel pair is forced adjacent in every valid completion would revive this mechanism as a genuine obstruction; Bader shows it is avoidable in at least one case.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 144 - PythagorAss - 2026-08-23T20:17:47Z
+
+Turn 143's parallel-pair mechanism is genuine new content — a segment forced free by non-existence of a candidate vertex, not by geometric slack — and the 36-check sweep across Bader's three pairs is complete and correctly negative. It doesn't touch my prior either way: it rules out one candidate obstruction at k=14 without replacing it with another. Banking it as cleared, not opening or disputing it.
+
+Switching to item 1, my assigned range, which I haven't touched yet and which the agenda correctly flags as the one that can actually end this. I pulled Suzuki's table directly from the corpus (`kobon_15_5_rot_symmetry`, corpus lines 1350-1591, title "15-Line Solution (65 Triangles, 5-rotational symmetry) by Toshitaka Suzuki") rather than working from a transcription, so every position cited below is a primary read.
+
+**R_1.** Row 1: `15 13 14 11 12 7 9 5 8 6 10 3 4 2`. Scanning rows 2-15 for the position of value 1: row 2 has it last (pos 14), row 15 has it last (pos 14) — both extremal, no candidate, mirroring line 15's own two extremal misses. The other twelve rows have 1 interior, giving one candidate each:
+
+```
+row3:  10,4 flank 1  -> {3,4,10}   | row4 pos(3)=14,pos(10)=9   -> FAILS
+row4:  2,3  flank 1  -> {2,3,4}    | row2 pos(4)=13,pos(3)=1    -> FAILS
+row5:  9,8  flank 1  -> {5,8,9}    | row9 pos(5)=11,pos(8)=1    -> FAILS
+row6:  8,10 flank 1  -> {6,8,10}   | row8 pos(6)=10,pos(10)=13  -> FAILS
+row7:  12,9 flank 1  -> {7,9,12}   | row12 pos(7)=12,pos(9)=6   -> FAILS
+row8:  6,5  flank 1  -> {5,6,8}    | row6 pos(8)=11,pos(5)=14   -> FAILS
+row9:  5,7  flank 1  -> {5,7,9}    | row5 pos(9)=10,pos(7)=2    -> FAILS
+row10: 3,6  flank 1  -> {3,6,10}   | row3 pos(10)=12,pos(6)=6   -> FAILS
+row11: 14,12 flank 1 -> {11,12,14}| row14 pos(11)=12,pos(12)=10 -> FAILS
+row12: 7,11 flank 1  -> {7,11,12} | row7 pos(12)=10,pos(11)=8   -> FAILS
+row13: 15,14 flank 1 -> {13,14,15}| row15 pos(13)=13,pos(14)=1  -> FAILS
+row14: 11,13 flank 1 -> {11,13,14}| row11 pos(14)=12,pos(13)=2  -> FAILS
+```
+
+Each failure is checked at the second leg only — where the gap is largest — since one dead leg kills the candidate regardless of the third; I verified none of these pairs straddle the deleted "1" either, so removing line 1 from that row doesn't rescue them. All twelve fail. R_1 = 0, so deleting line 1 from Suzuki's optimum also gives T = 65 - 13 + 0 = **52**, exactly matching R_15.
+
+Two lines checked, two zeros. That's early, and I'm not going to claim a pattern from n=2 the way turn 125 got corrected for claiming one from n=3 on a forced quantity — this one isn't forced, so it's real evidence, but thin. If lines 2-7 keep coming back zero, the honest reading shifts toward "this witness's deletions don't manufacture triangles," which would be pressure against the deletion route specifically, not against reachability of 54 by other means — the two are not the same claim, and I intend to keep them separate regardless of which way rows 2-7 land.
+
+Rows 2-3 next turn, same method, primary-source positions cited throughout.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [143], "claims_conceded": [], "claims_opened": ["suzuki-minus-line1-is-52"], "falsifier": "A row cited above where the second-leg positions I read are wrong and are in fact adjacent (or separated only by the deleted value 1) would revive that candidate and break R_1=0.", "tier": "none", "verifier_runs": []}
+-->
