@@ -2942,3 +2942,57 @@ I hold my prior.
 <!-- meta
 {"addresses": [132, 133, 134], "claims_conceded": [], "claims_opened": ["line14-candidate-2-4-15-two-legs-hold"], "falsifier": "any candidate on lines 6 or 7 (or a future witness) that clears all three adjacency legs after deletion, producing R_l=2 and a verified 54-triangle 14-line arrangement", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 136 - PythagorAss - 2026-08-23T12:18:20Z
+
+Lines 6 and 7 done — my full assigned range (1-7) from item 1 is complete. Deleting each from Suzuki's k=15 table, `corpus/arrangements.json` lines 1350-1591, rows read directly.
+
+**Line 6** — terminal in rows 5 (last, pos 14) and 7 (first, pos 1), no candidates there. Twelve candidates from the interior rows, all fail:
+
+```
+{1,8,10}   row8(6 removed) has 1 at pos10, nbrs 14,5 — not 10
+{2,11,13}  row11(6 removed) has 2 at pos6, nbrs 9,3 — not 13
+{3,11,12}  row11(6 removed) has 3 at pos7, nbrs 2,5 — not 12
+{4,7,13}   row7(6 removed) has 4 at pos1, nbr 5 only — not adjacent to 13
+{1,8,14}   row1(6 removed) has 8 at pos9, nbrs 5,10 — not 14
+{9,14,15}  row14(6 removed) has 9 at pos7, nbrs 8,5 — not 15
+{1,5,10}   row1(6 removed) has 5 at pos8, nbrs 9,8 — not 10
+{2,3,11}   row2(6 removed) has 3 at pos1, nbr 7 only — not adjacent to 11
+{3,12,15}  row3(6 removed) has 12 at pos6, nbrs 11,9 — not 15
+{2,4,13}   row2(6 removed) has 4 at pos12, nbrs 14,1 — not 13
+{8,9,14}   row8(6 removed) has 9 at pos1, nbr 13 only — not adjacent to 14
+{9,12,15}  row9(6 removed) has 12 at pos6, nbrs 2,3 — not 15
+```
+R_6 = 0.
+
+**Line 7** — terminal in rows 6 (first) and 8 (last), no candidates there. Twelve candidates, all fail:
+
+```
+{1,9,12}   row9(7 removed) has 1 at pos12, nbrs 5,10 — not 12
+{2,3,5}    row3(7 removed) has 2 at pos1, nbr 13 only — not adjacent to 5
+{2,3,13}   row2(7 removed) has 3 at pos1, nbr 5 only — not adjacent to 13
+{4,5,6}    row5(7 removed) has 4 at pos1, nbr 2 only — not adjacent to 6
+{2,4,5}    row2(7 removed) has 4 at pos12, nbrs 14,1 — not 5
+{1,9,10}   row1(7 removed) has 9 at pos6, nbrs 12,5 — not 10
+{8,9,10}   row8(7 removed) has 9 at pos1, nbr 13 only — not adjacent to 10
+{11,14,15} row14(7 removed) has 11 at pos11, nbrs 12,1 — not 15
+{1,12,14}  row1(7 removed) has 12 at pos5, nbrs 11,9 — not 14
+{3,13,15}  row3(7 removed) has 13 at pos2, nbrs 2,5 — not 15
+{11,12,14} row11(7 removed) has 12 at pos13, nbr 1 only — not adjacent to 14
+{11,13,15} row11(7 removed) has 13 at pos2, nbrs 10,8 — not 15
+```
+R_7 = 0.
+
+Fifteen of fifteen lines now checked, fifteen zeros. Item 1's construction route — 54 by single-line deletion from Suzuki's k=15 optimum — is exhausted. That's a real, citable result, and I'm opening it settled by computation on both sides: `suzuki-deletion-route-fully-exhausted`.
+
+On what it does and doesn't buy. On {2,4,15}: I checked my own 24 candidates against the same two-legs-then-third standard, and none reached two legs — every one of mine died on the first leg tested, several via the same terminal-position collapse (a neighbor set shrinking to one entry once the removed line was itself the boundary). Euclidn't's observation that {2,4,15} is the sharpest near-miss in the whole sweep stands; I have nothing that beats it and I'm not disputing the fact.
+
+What I dispute is the inferential jump from "fifteen lines, one route, zero hits" to evidence for rigidity in general. This sweep tested exactly one operation — deleting one line from one specific 15-line table — against one adjacency test per candidate. It's a complete, closed result about that operation on that object: no single-line deletion of Suzuki's arrangement reaches 54. It says nothing about insertion into a different table, a differently-symmetric 15-line arrangement, or any construction that isn't a sub-arrangement of this specific witness. A route that exhausts to zero is evidence the route is closed, not evidence the destination is unreachable — the referee's distinction from turn 127 applies with more force now than at turn 130, because the route really is exhausted, not partially sampled.
+
+Item 3 — Y=7-of-19 corner-clips on Kabanovitch's k=13 — is the only named construction route left untouched by either of us. I'll open it next turn with the actual non-triangular face list from reference data 3's boundary-walk method.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [135], "claims_conceded": [], "claims_opened": ["suzuki-deletion-route-fully-exhausted"], "falsifier": "a construction reaching 54/94/117 via insertion, a different k=15 arrangement, or a symmetric build not derived from Suzuki's table by single-line deletion, or a general impossibility proof for k=14 that isn't scoped to this one deletion route", "tier": "none", "verifier_runs": []}
+-->
