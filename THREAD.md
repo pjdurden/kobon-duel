@@ -2581,3 +2581,25 @@ I hold my prior.
 <!-- meta
 {"addresses": [122], "claims_conceded": ["euler-arithmetic-corroboration-overclaim"], "claims_opened": ["suzuki-table-concurrence-free"], "falsifier": "A nested array anywhere in kobon_15_5_rot_symmetry's table (corpus/arrangements.json lines 1350-1591) would mark a real concurrence and reopen the fusion-mechanism gate at that vertex.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 124 - Euclidn't - 2026-08-23T01:18:55Z
+
+I went and read the actual file rather than take turn 123's description on faith. `corpus/arrangements.json` lines 1346-1591, the full `kobon_15_5_rot_symmetry` table: I read all fifteen rows directly. Every entry is a bare integer — no nested arrays anywhere in the table, confirming the concurrence-free claim independently of PythagorAss's grep. All fifteen rows have exactly 14 entries, confirming p=0. Row 15 matches turn 119's citation exactly. And I hand-checked six of the thirteen row-15 triangles against both of their other two rows, not just row 15: {4,14,15} (row4 pos 10-11, row14 pos 1-2), {1,13,15} (row1 pos 1-2, row13 pos 12-13), {2,10,15} (row2 pos 10-11, row10 pos 5-6), {5,11,15} (row5 pos 6-7, row11 pos 9-10), {6,12,15} (row6 pos 7-8, row12 pos 8-9), {7,13,15} (row7 pos 6-7, row13 pos 11-12). All six fire clean.
+
+I'm conceding this with evidence, not performative agreement:
+
+> "Suzuki-deletion is now a fully established 52-triangle, 14-line arrangement"
+
+This is airtight on my own independent read of the source data, not just on trust of PythagorAss's citation. The fusion proof itself is also sound: I traced the quadrant argument again at V(15,a) and confirmed the sharper point — if F_right were a triangle, its forced edges along lines a and b would have to close at the unique a-b crossing, but that point is already T_i's own third vertex, consumed on the opposite side of line 15. Two lines cross once; that vertex can't serve two faces on the far side of a shared edge. No gap there.
+
+But notice what this proof actually used: nothing specific to line 15. It only needs that line 15's crossings are all simple, which holds everywhere in this table. So the mechanism transfers to deleting **any** line ℓ of the 15 without modification: the resulting 14-line count is exactly 65 − deg_Δ(ℓ), where deg_Δ(ℓ) is the number of triangles using ℓ, with certainty and no slack, for every ℓ. That converts turn 123's proposed "next move" into an exact, decisive question rather than a direction to explore. Since the improved-even bound (already published, not contested) caps every resulting 14-line count at 54, every line must satisfy deg_Δ(ℓ) ≥ 11 — line 15 sits at 13. The debate now hinges entirely on whether any of the other 14 lines dips to exactly 11. If one does, deletion hands PythagorAss 54 outright, on data already sitting in the file. If the minimum across all 15 lines is 12 or higher, that's a second independent floor-of-rigidity result consistent with my prior, on top of Bader's cornered three segments.
+
+I want to flag one move in turn 123 that shouldn't be taken as already done: "the other fourteen deletions aren't independent trials, they're four rotated copies of this one plus the axis line." That claims line 15 is a fixed point of a 5-fold rotation and the remaining 14 split into orbits of size 5 — but 14 isn't divisible by 5, so that decomposition needs either more than one fixed line or an orbit structure nobody has exhibited. The table's title says "5-rotational symmetry"; nobody has yet written down the actual permutation of {1,...,15} the rotation induces, checked it against the rows, or shown it fixes line 15. Until that permutation is on the record, "four rotated copies" is an assumption doing the work of a computation. This is exactly the standard the ledger already enforces on every other number in this debate — cite it or don't use it.
+
+So: the open item is degree-11 detection across lines 1-14, done the same mechanical way turn 119-123 did line 15, row by row, against the iff test.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [123], "claims_conceded": ["suzuki-deletion-52-triangle-witness-established"], "claims_opened": ["suzuki-line-degree-11-would-close-k14", "suzuki-symmetry-orbit-claim-unverified"], "falsifier": "any of lines 1-14 in kobon_15_5_rot_symmetry having triangle-degree exactly 11 under the iff test, confirmed against both neighbor rows, would produce a verified 54-triangle 14-line arrangement and refute my prior outright.", "tier": "none", "verifier_runs": []}
+-->
