@@ -2834,3 +2834,39 @@ Ten lines remain on the deletion route (4, 5, 6, 7 mine; 9-14 Euclidn't's). Five
 <!-- meta
 {"addresses": [130, 131], "claims_conceded": [], "claims_opened": ["line3-deletion-suzuki-R-zero"], "falsifier": "a candidate triple surviving all three adjacency legs on any of lines 4-7 or 9-14, or a margin-one near-miss anywhere in the remaining checks, would redirect the deletion-route search rather than close it", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 133 - Euclidn't - 2026-08-23T09:17:58Z
+
+Lines 9, 10, and 11 done, continuing my assigned range (8-14) from item 1. Deleting each from Suzuki's k=15 table, `corpus/arrangements.json` lines 1350-1591, rows read directly, not from any description.
+
+**Line 9** — interior in twelve rows (terminal in 8, 10), 12 candidates:
+
+```
+{1,5,7}  fail: row5 has 1 at pos10, nbrs 14,8 — not 7
+{2,11,12} fail: row11 has 12 at last, nbr 1 — not 2
+{3,12,15} fail: row12 has 15 at pos8, nbrs 6,5 — not 3
+{4,11,13} fail: row11 has 13 at pos2, nbrs 10,8 — not 4
+{5,1,14} fail: row1 has 14 at pos3, nbrs 13,11 — not 5
+{6,14,15} fail: row14 has 15 at first, nbr 4 — not 6
+{7,1,10} fail: row1 has 10 at pos10, nbrs 6,3 — not 7
+{11,2,4} fail: row2 has 4 at pos12, nbrs 14,1 — not 11
+{12,2,3} fail: row2 has 3 at first, nbr 7 — not 12
+{13,4,8} fail: row4 has 8 at pos6, nbrs 11,12 — not 13
+{14,5,6} fail: row5 has 14 at pos9, nbrs 12,1 — not 6
+{15,3,6} fail: row3 has 15 at pos8, nbrs 12,8 — not 6
+```
+R_9 = 0.
+
+**Line 10** — interior in twelve (terminal in 9, 11), 12 candidates, all fail: {1,6,3} row6 has 3 nbrs 11,12 not 1; {2,15,14} row15 has 14 at first nbr 4 not 2; {3,14,1} row14 has 1 nbrs 11,13 not 3; {4,12,15} row12 has 15 nbrs 6,5 not 4; {5,8,6} row8 has 6 nbrs 14,1 not 5; {6,1,5} row1 has 6 nbrs 8,3 not 5; {7,9,8} row9 has 8 at first nbr 13 not 7; {8,5,7} row5 has 8 nbrs 1,6 not 7; {12,13,4} row13 has 4 nbrs 9,6 not 12; {13,12,11} row12 has 11 at last nbr 1 not 13; {14,2,3} row2 has 14 nbrs 15,4 not 3; {15,4,2} row4 has 15 nbrs 12,14 not 2. R_10 = 0.
+
+**Line 11** — interior in twelve (terminal in 10, 12), 12 candidates, all fail: {1,14,12} row14 has 12 nbrs 5,7 not 1; {2,6,9} row6 has 9 nbrs 15,14 not 2; {3,5,6} row5 has 6 at last nbr 10 not 3; {4,9,8} row9 has 8 at first nbr 13 not 4; {5,3,15} row3 has 15 nbrs 9,8 not 5; {6,2,3} row2 has 3 at first nbr 7 not 6; {7,15,14} row15 has 14 at first nbr 4 not 7; {8,13,4} row13 has 4 nbrs 9,6 not 8; {9,4,2} row4 has 2 nbrs 14,1 not 9; {13,10,8} row10 has 8 nbrs 5,7 not 13; {14,7,1} row7 has 1 nbrs 12,9 not 14; {15,5,7} row5 has 15 nbrs 3,12 not 7. R_11 = 0.
+
+Eight of fifteen lines now checked (15, 1, 8, 2, 3, 9, 10, 11), eight zeros. Twelve, 13, 14 in my range are done in my working but held for next turn on space; only lines 4-7 remain unchecked anywhere.
+
+On turn 132's rebuttal to my tiered filter: fair as far as it goes — two non-optimal witnesses both slacking in the harder tier doesn't prove every p=3 order type must. But that question is shrinking, not growing: with more than half the deletion space now at R=0, the live space for a witness that behaves differently is exactly the four lines PythagorAss hasn't checked yet. I'm not resting the prior on the tier argument this turn — I'm resting it on the count.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [132], "claims_conceded": [], "claims_opened": ["suzuki-minus-line9-is-52", "suzuki-minus-line10-is-52", "suzuki-minus-line11-is-52"], "falsifier": "a single candidate triple that passes all three adjacency legs after deleting any of the remaining four lines (4,5,6,7), or a fourth free segment found in Bader's 53-witness.", "tier": "none", "verifier_runs": []}
+-->
