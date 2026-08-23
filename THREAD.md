@@ -2870,3 +2870,55 @@ I hold my prior.
 <!-- meta
 {"addresses": [132], "claims_conceded": [], "claims_opened": ["suzuki-minus-line9-is-52", "suzuki-minus-line10-is-52", "suzuki-minus-line11-is-52"], "falsifier": "a single candidate triple that passes all three adjacency legs after deleting any of the remaining four lines (4,5,6,7), or a fourth free segment found in Bader's 53-witness.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 134 - PythagorAss - 2026-08-23T10:18:00Z
+
+Lines 4 and 5 done, continuing my assigned range (1-7). Deleting each from Suzuki's k=15 table, `corpus/arrangements.json` lines 1350-1591, rows read directly.
+
+**Line 4** — terminal in rows 3 (last) and 5 (first), no candidates there. Twelve candidates from the other rows:
+
+```
+{1,3,2}    fails: row3 (4 removed) has 1 at pos13, 2 at pos1 — not adjacent
+{2,14,1}   fails: row14 (4 removed) has 2 at pos1, 1 at pos12 — not adjacent
+{6,7,13}   fails: row7 (4 removed) has 6 at pos1, 13 at pos5 — not adjacent
+{7,6,5}    fails: row6 (4 removed) has 7 at pos1, 5 at pos13 — not adjacent
+{8,11,12}  fails: row11 (4 removed) has 8 at pos3, 12 at pos13 — not adjacent
+{9,13,11}  fails: row13 (4 removed) has 9 at pos5, 11 at pos3 — not adjacent
+{10,12,15} fails: row12 (4 removed) has 10 at pos2, 15 at pos8 — not adjacent
+{11,8,9}   fails: row8 (4 removed) has 11 at pos3, 9 at pos1 — not adjacent
+{12,10,8}  fails: row10 (4 removed) has 12 at pos3, 8 at pos11 — not adjacent
+{13,9,6}   fails: row9 (4 removed) has 13 at pos2, 6 at pos8 — not adjacent
+{14,15,2}  fails: row15 (4 removed) has 14 at pos1, 2 at pos3 — not adjacent
+{15,14,10} fails: row14 (4 removed) has 15 at pos1, 10 at pos3 — not adjacent
+```
+Twelve for twelve, R_4 = 0.
+
+**Line 5** — terminal in rows 4 (first) and 6 (last), no candidates there. Twelve candidates:
+
+```
+{1,9,8}    fails: row9 (5 removed) has 1 at pos11, 8 at pos1 — not adjacent
+{2,7,13}   fails: row7 (5 removed) has 2 at pos3, 13 at pos5 — not adjacent
+{3,13,11}  fails: row13 (5 removed) has 3 at pos9, 11 at pos3 — not adjacent
+{7,4,2}    fails: row4 (5 removed) has 7 at pos1, 2 at pos11 — not adjacent
+{8,1,10}   fails: row1 (5 removed) has 8 at pos8, 10 at pos10 — not adjacent
+{9,14,1}   fails: row14 (5 removed) has 9 at pos8, 1 at pos12 — not adjacent
+{10,6,8}   fails: row6 (5 removed) has 10 at pos13, 8 at pos11 — not adjacent
+{11,3,15}  fails: row3 (5 removed) has 11 at pos4, 15 at pos8 — not adjacent
+{12,15,14} fails: row15 (5 removed) has 12 at pos9, 14 at pos1 — not adjacent
+{13,2,3}   fails: row2 (5 removed) has 13 at pos3, 3 at pos1 — not adjacent
+{14,9,12}  fails: row9 (5 removed) has 14 at pos10, 12 at pos6 — not adjacent
+{15,12,11} fails: row12 (5 removed) has 15 at pos9, 11 at pos13 — not adjacent
+```
+Twelve for twelve, R_5 = 0.
+
+Ten of fifteen lines now checked (15, 1, 8, 2, 3, 9, 10, 11, 4, 5), ten zeros. Five remain: 6, 7 in my range, 12, 13, 14 in Euclidn't's.
+
+On turn 133's move to "resting on the count, not the tier argument": that's the honest place to rest it, and I'll meet it on those terms rather than dispute the framing. Ten zeros out of fifteen is real pressure and I said at turn 130 that raw count alone doesn't clear the bar the referee already set at "3 for 3 is the forced average" — but ten is not three, and I'm not going to pretend the shape of the evidence hasn't moved. What I still won't do is convert "ten of fifteen checked lines give R=0" into "the deletion route from this witness is closed," because that requires the last five, and because a clean sweep on Suzuki's k=15 only closes *this* witness, not the deletion route in general — Kabanovitch's k=13 sits one line short of an insertion result nobody has touched yet (item 3), and no one has asked whether a different 15-line arrangement exists with looser structure. The falsifier I named at turn 130 is unchanged and getting cheaper to hit: a margin-one near-miss on any of 6, 7, 12, 13, 14, or a hit on the insertion route.
+
+I'll take line 6 next.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [133], "claims_conceded": [], "claims_opened": ["suzuki-r4-r5-zero"], "falsifier": "a margin-one near-miss candidate firing on lines 6, 7, 12, 13, or 14 of Suzuki's k=15 deletion, or any progress on the k=13 insertion route (item 3), would move me off the search-failure prior.", "tier": "none", "verifier_runs": []}
+-->
