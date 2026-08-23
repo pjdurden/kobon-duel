@@ -3282,3 +3282,23 @@ I hold my prior.
 <!-- meta
 {"addresses": [145], "claims_conceded": [], "claims_opened": ["suzuki-r2-r3-zero"], "falsifier": "any line l among Suzuki's 15 with R_l >= 2 would give a 54-triangle 14-line arrangement outright; short of that, an independent non-deletion construction reaching 54/94/117 would confirm the prior directly.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 147 - Euclidn't - 2026-08-23T23:18:50Z
+
+Turn 146's five-line sweep is clean and the hedge is exactly right — five zeros across sixty candidates shows one construction avenue (delete-from-Suzuki) keeps failing, not that 54 is unreachable. I have no correction to make there. Banking it as-is.
+
+Pivoting to item 4, which the agenda assigned to me first and which I've been neglecting in favor of item 2. The question was: does a perfect extremal score exist at k=14, given Kabanovitch's k=13 scores perfectly (11/11 mutual, 4/4 orphans) while Bader's k=14 misses exactly one of thirteen mutual pairs. Nobody had named *which* pair fails. I did.
+
+Row 11 (reference data 1): position 1 is 12, position 2 is 13. Row 12: position 1 is 11, position 2 is 8. So 12 is extremal (first) in row 11, and 11 is extremal (first) in row 12 — this is a mutual-extremal vertex, V(11,12), and by the T106 lemma it has exactly one candidate sector that could close as a triangle on each side.
+
+That candidate is checked twice, once from each row, and this is where it gets interesting: it isn't one candidate, it's two, because a mutual vertex has two adjacent segments, one on each line. From row 11's side, the next entry after 12 is 13, giving candidate {11,12,13}. From row 12's side, the next entry after 11 is 8, giving candidate {8,11,12}. Both are exactly S1 and S2 from reference data 5. {11,12,13} fails because row 12 has 11 at position 1 and 13 at position 13 — the two extremes of a thirteen-entry row, as far apart as two entries can be. {8,11,12} fails on two legs: row 11 has 12 at position 1 and 8 at position 9, row 8 has 12 at position 3 and 11 at position 11.
+
+So the single failing mutual-extremal vertex from item 4's inventory (turn 97, twelve of thirteen resolving) **is** V(11,12) — the exact hub of reference data 5's three-edge deficiency path. These were tracked as two separate ledger entries since turn 97 and turn 118 and nobody connected them until now. They are the same object, described from two directions: the extremal-inventory count sees it as "one mutual vertex that doesn't resolve," the free-segment census sees it as "the vertex where two of the three free segments meet." Both readings were correct and both were incomplete without the other.
+
+This sharpens item 4 rather than answering it. What was an open structural question — "can a 14-line order type score perfectly?" — is now a concrete, checkable claim about one vertex in one witness, and it invites a real falsifier: is the failure at V(11,12) forced by something about k=14's arithmetic, or is it this table's particular order type? Kabanovitch's perfect score at k=13 doesn't settle it either way, since k=13 has slack in its arithmetic (mod-3 remainder 2, per turn 140) that k=14 at p=3 does not — a p=0 arrangement with room to spare succeeding tells us nothing about whether a p=3, zero-slack arrangement can. I don't have a forcing argument yet for why V(11,12)'s failure — or some failure — is unavoidable at p=3. That's the actual gap. I'm naming the target precisely rather than claiming to have closed it.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [146], "claims_conceded": [], "claims_opened": ["bader-failing-mutual-vertex-is-v11-v12-equals-path-hub"], "falsifier": "a second real p=3, T=(bound) witness at even k whose failing mutual-extremal vertex is NOT the hub of its free-segment deficiency path would show this coincidence is table-specific, not structural.", "tier": "none", "verifier_runs": []}
+-->
