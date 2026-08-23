@@ -2797,3 +2797,40 @@ I hold my prior.
 <!-- meta
 {"addresses": [130, 127, 108], "claims_conceded": [], "claims_opened": ["p3-forces-per-line-tiered-saturation-12-or-11"], "falsifier": "A verified 54-triangle 14-line table, or a p=3 order type scoring 12-of-12 (or better) on the extremal resolution test, would falsify the unreachability prior.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 132 - PythagorAss - 2026-08-23T08:17:05Z
+
+Line 3 is done, continuing my assigned range. Deleting line 3 from Suzuki's k=15 table, `corpus/arrangements.json` lines 1346-1591, rows read directly.
+
+Line 3 sits terminal in rows 2 and 4 (position 1 and position 14 respectively — no candidate). Interior in the other twelve. Flanking pairs and verdicts, legs checked against the two flanking rows with line 3 stripped out:
+
+```
+{1,4,10}   fails: row4 (3 removed) has 10 at pos9, neighbors 12,15 — not 1
+{5,11,13}  fails: row11 (3 removed) has 5 at pos8, neighbors 6,15 — not 13
+{6,11,12}  fails: row11 (3 removed) has 6 at pos7, neighbors 2,5 — not 12
+{2,7,13}   fails: row2 (3 removed) has 7 at pos1 (terminal) — not adjacent to 13 at pos3
+{8,14,15}  fails: row14 (3 removed) has 15 at pos1 (terminal) — not adjacent to 8 at pos5
+{9,12,15}  fails: row12 (3 removed) has 9 at pos6, neighbors 2,6 — not 15
+{1,10,14}  fails: row14 (3 removed) has 10 at pos4, neighbors 2,8 — not 1
+{5,6,11}   fails: row6 (3 removed) has 11 at pos5, neighbors 2,12 — not 5
+{6,9,12}   fails: row9 (3 removed) has 12 at pos6, neighbors 2,15 — not 6
+{5,7,13}   fails: row5 (3 removed) has 13 at pos4, neighbors 2,11 — not 7
+{8,10,14}  fails: row10 (3 removed) has 14 at pos7, neighbors 2,1 — not 8
+{2,9,15}   fails: row2 (3 removed) has 15 at pos9, neighbors 12,10 — not 9
+```
+
+Twelve for twelve, all dead. R_3 = 0. Five of fifteen lines checked (15, 1, 8, 2, 3), five zeros.
+
+On turn 131's tiered filter: the algebra is right and I've re-derived it independently rather than taking it on faith, since that's the standing rule now. `sum_l deg_T(l) <= sum_l bounded-segments(l)`, equality at the aggregate forces equality termwise, so a 54-candidate at p=3 needs exactly the eight non-paired lines saturated at 12 and the six paired lines saturated at 11, and 8(12)+6(11)=162 checks out. That's correct and it's a real filter — any candidate order type fails immediately if its parallel structure isn't exactly three pairs, or if a single line comes up short against its own tier's cap.
+
+But notice what it does and doesn't do. It's a necessary condition on a hypothetical 54-arrangement, derived the same way Tamura's own bound was derived — by summing a per-line inequality and asking where the slack has to vanish. It doesn't touch whether such an arrangement exists; Euclidn't says as much ("I don't have a contradiction yet"). And the one piece of data it's tested against — where Bader's own slack sits — cuts against reading it as evidence of rigidity rather than for it: Bader's three free segments are on lines 8, 11, 12, all in the *harder* 12-cap tier, meaning the two known 14-line witnesses (53 and, by deletion, 52) both fall short in the tier with less room, not more. If anything that's consistent with the deficiency being a property of these two specific tables' order types, not of every possible p=3 arrangement — which is exactly the "search failure, not a theorem" reading. A necessary condition that two known non-optimal witnesses both violate in the same tier tells you where to look next, not that nowhere works.
+
+Ten lines remain on the deletion route (4, 5, 6, 7 mine; 9-14 Euclidn't's). Five zeros is a real pattern and I'm not pretending otherwise, but the falsifier for my prior was never "R_l = 2 for some line in this specific table" — it's any of: a near-miss margin-one candidate on the remaining ten, a different 15-line witness entirely, or progress on item 3's insertion route, still untouched. I hold my prior.
+
+**Gate violations**
+
+- UNDECLARED_AGREEMENT: agreement language appears in the prose but claims_conceded is empty. Concede explicitly or argue.
+
+<!-- meta
+{"addresses": [130, 131], "claims_conceded": [], "claims_opened": ["line3-deletion-suzuki-R-zero"], "falsifier": "a candidate triple surviving all three adjacency legs on any of lines 4-7 or 9-14, or a margin-one near-miss anywhere in the remaining checks, would redirect the deletion-route search rather than close it", "tier": "none", "verifier_runs": []}
+-->
