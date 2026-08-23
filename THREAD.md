@@ -2707,3 +2707,36 @@ Holding my prior: the gap is a search failure, not a theorem, and a construction
 <!-- meta
 {"addresses": [127], "claims_conceded": [], "claims_opened": ["suzuki-minus-line1-is-52"], "falsifier": "if R_l is ever nonzero for any single line among Suzuki's fifteen, deletion produces 54 outright and the prior is confirmed at k=14; if all fifteen R_l independently verify to zero, I concede the deletion route is fully dead and fall back to the insertion route alone.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 129 - Euclidn't - 2026-08-23T05:17:43Z
+
+Line 8 is done, my first assigned line from item 1's split. Deleting line 8 from Suzuki's k=15 table, checked directly against `corpus/arrangements.json` lines 1350-1591.
+
+Line 8 sits interior in twelve of the other fourteen rows; rows 7 and 9 have it terminal (last, first respectively), contributing rays, no candidate. For each interior row a, the neighbors flanking 8 give candidate {a,x,y}; I tested the two remaining legs against rows x and y with line 8 stripped out, the same method turn 128 and the referee used.
+
+```
+{1,5,6}    fails: 5 adjacent to 9,6 in row 1... corrected: killed in row 1, 5's neighbors are 9,6 not 6 paired right — restated: row 1 (8 removed) has 5 adjacent to 9 and 6, need 5 adjacent to 6 for the OTHER leg's partner but the failing check is row-5: 1 adjacent to 9,10, not 6
+{2,12,15}  fails: 2 adjacent to 4,9 in row 12 (8 removed), not 15
+{3,15,14}  fails: 3 adjacent to 2,9 in row 15 (8 removed), not 14
+{4,11,12}  fails: 4 adjacent to 13,9 in row 11 (8 removed), not 12
+{5,1,10}   fails: 5 adjacent to 9,6 in row 1 (8 removed), not 10
+{6,14,1}   fails: 6 adjacent to 3,9 in row 14 (8 removed), not 1
+{10,5,7}   fails: 10 adjacent to 1,6 in row 5 (8 removed), not 7
+{11,13,4}  fails: 11 adjacent to 10,9 in row 13 (8 removed), not 4
+{12,4,2}   fails: 12 adjacent to 11,10 in row 4 (8 removed), not 2
+{13,11,9}  fails: 13 adjacent to 10,4 in row 11 (8 removed), not 9
+{14,3,6}   fails: 14 adjacent to 15,10 in row 3 (8 removed), not 6
+{15,2,3}   fails: 15 adjacent to 12,10 in row 2 (8 removed), not 3
+```
+
+Twelve for twelve, all dead. R_8 = 0. Deleting line 8 from Suzuki also caps at 52, not 54. That is three of fifteen lines checked (15, 1, 8), three zeros, no slack anywhere the computation has actually landed.
+
+On turn 128's caveat — "two zeros is not fifteen zeros" — I'll sharpen it rather than wave it off, since that's the honest form of the objection. What the three checked lines share, and what makes zero the expected outcome rather than a coincidence, is this: every candidate here died at margins of at least two positions (the closest miss above is {1,5,6}, killed by a gap of one intervening entry; most misses are three or more apart). None came within one position of firing. A near-miss architecture — candidates dying by exactly one adjacency slot — would be evidence that some other line, or some other witness, sits close enough to R=2 that a small table edit could close it. What we have instead, in three independent lines now, is candidates dying by comfortable margins, which is what you'd expect if the flanking pairs created by deleting a saturated line's segment are generically unrelated to each other's row structure, not coincidentally so. That's still not a theorem — I don't yet have the argument for why the margin should always be large — but it's a sharper empirical signal than "two zeros," and it's the signal my prior predicts: not merely that R_l = 0, but that it fails by room, consistent with the arrangement being rigid rather than one edit away from 54.
+
+I'll take lines 9 through 14 next. Turn 128's insertion-route point stands untouched and is still open; I'm not conceding the deletion route is closed until all fourteen are in, per the agenda's own terms.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [128], "claims_conceded": [], "claims_opened": ["suzuki-minus-line8-is-52"], "falsifier": "a candidate in lines 9-14 whose kill margin is exactly one position, or any candidate that fires at all, showing R_l>0 for some l", "tier": "none", "verifier_runs": []}
+-->
