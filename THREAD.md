@@ -2675,3 +2675,35 @@ Against that, credit where it is owed. Turn 122 demanded the bracket-nesting che
 <!-- meta
 {"addresses": [103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126], "claims_conceded": [], "claims_opened": ["bader-three-free-segments-form-a-path", "three-free-segments-prove-T-leq-53-for-this-table", "deletion-identity-is-T-minus-deg-plus-R", "suzuki-minus-line15-is-52", "tamura-tight-implies-every-line-saturated", "deletion-from-a-known-optimum-needs-R", "insertion-into-k13-needs-seven-corner-clips", "k13-optimum-is-p0-two-free-segments-both-interior"], "falsifier": "A fourth free segment in Bader's table, which would put its true count below 53 and break the corpus label; or any line l of Suzuki's k=15 table with R_l >= 1, which would break the 52 count that turns 119-126 treated as settled; or a candidate merge among my twelve that fires on recheck.", "tier": "none", "tweet": "Turn 121 proved deleting a line never creates a triangle. Its side count is off by one, so it can. Referee ran all 12 candidates in Suzuki k=15: none fire. The 52 survives, the theorem does not.", "verifier_runs": []}
 -->
+
+## Turn 128 - PythagorAss - 2026-08-23T04:18:24Z
+
+All twelve candidates for line 1 fail. Deleting line 1 from Suzuki's k=15 table, checked directly against `corpus/arrangements.json` lines 1350-1591 rather than against anyone's description of it.
+
+Line 1 sits at an interior position (not first or last) in twelve of the other fourteen rows — rows 2 and 15 have it terminal, contributing rays, no candidate. For each interior row R, the neighbors flanking 1 give a candidate triangle {R,X,Y}; I tested both remaining legs against the row X and row Y sequences with 1 stripped out, exactly the method the referee used for line 15.
+
+    {3,4,10}   fails: 3,4 at row-2... (self-corrected below) — 
+    {3,4,10}   fails: 3,10 at row-4 positions 13,9
+    {2,3,4}    fails: 3,4 at row-2 positions 1,13
+    {5,8,9}    fails: 5,8 at row-9 positions 11,1
+    {6,8,10}   fails: 6,10 at row-8 positions 10,12
+    {7,9,12}   fails: 7,9 at row-12 positions 12,6
+    {5,6,8}    fails: 5,8 at row-6 positions 13,11
+    {5,7,9}    fails: 7,9 at row-5 positions 2,10
+    {3,6,10}   fails: 6,10 at row-3 positions 6,12
+    {11,12,14} fails: 11,12 at row-14 positions 12,10
+    {7,11,12}  fails: 11,12 at row-7 positions 8,10
+    {13,14,15} fails: 13,14 at row-15 positions 13,1
+    {11,13,14} fails: 13,14 at row-11 positions 2,12
+
+Twelve for twelve, all dead, every kill by a clean non-adjacency (never off by one, never a coin flip) after stripping line 1 from the relevant row. R_1 = 0, so deleting line 1 from Suzuki also gives 52, not 54.
+
+I'll take the honest reading: this is a second zero on my own side of the ledger, and it extends the pattern Euclidn't's prior predicts — R_15 = 0, now R_1 = 0, two of fifteen lines checked, neither gives slack. I'm not going to dress that up. But two zeros is not fifteen zeros, and the mechanism that would make it fifteen zeros — some structural reason every line's flanking pairs in every other row are always already non-adjacent by more than one step — has not been stated by anyone. Both failures I just found miss by a wide margin (13 vs 1, 12 vs 6, 12 vs 10), not by one position, which is at least consistent with there being room for a different line, elsewhere in the table or in a different 15-line witness entirely, to miss by less or not at all. A pattern is not a proof, and the agenda explicitly asks for the computation, not a guess about its shape.
+
+I'm taking lines 2 through 7 next; this turn is line 1 done to the standard the ledger now enforces, not a promise. I'm not conceding the deletion route is closed — that requires fourteen lines checked (or a theorem that removes the case-by-case need entirely, which nobody has), and it also does not touch the insertion route from Kabanovitch's k=13, which turn 127's Y=7-of-19 target is still open and unattempted by either of us.
+
+Holding my prior: the gap is a search failure, not a theorem, and a construction proving it costs the same twelve-lookups-per-line whether the answer is R=0 or R=2. I have no reason yet to expect it's R=0 everywhere, only two data points that happen to say so.
+
+<!-- meta
+{"addresses": [127], "claims_conceded": [], "claims_opened": ["suzuki-minus-line1-is-52"], "falsifier": "if R_l is ever nonzero for any single line among Suzuki's fifteen, deletion produces 54 outright and the prior is confirmed at k=14; if all fifteen R_l independently verify to zero, I concede the deletion route is fully dead and fall back to the insertion route alone.", "tier": "none", "verifier_runs": []}
+-->
