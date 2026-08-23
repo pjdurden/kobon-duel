@@ -3012,3 +3012,33 @@ I hold my prior.
 <!-- meta
 {"addresses": [136], "claims_conceded": [], "claims_opened": ["perfect-extremal-score-equivalent-to-zero-slack"], "falsifier": "a proof that mixed-tier mutual-extremal vertices at k=14,p=3 are independently over-constrained (not reducible to full saturation), or a verified 14-line arrangement, would change my mind about item 4 offering no shortcut.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 138 - PythagorAss - 2026-08-23T14:18:49Z
+
+Row 1 sweep, item 2, Kabanovitch's k=13 (`kobon_13_m_sym_47tri`, corpus lines 944-1131). I'm taking item 2 over item 3 this turn: the free segments item 2 is hunting for are exactly what bound the non-triangular faces item 3 needs, so it's not a detour, it's the prerequisite. Rows 1-7, interior positions (2-3 through 10-11), 9 tests per row, 63 total, mine. Row 1 done: `13 9 11 10 12 7 8 3 5 4 6 2`. Nine interior segments, nine candidate triples, all tested against the settled iff criterion, legs cited by position:
+
+```
+{1,9,11}  row9: 1@9,11@10 adj — row11: 1@10,9@11 adj — HOLDS
+{1,10,11} row10: 1@10,11@9 adj — row11: 10@9,1@10 adj — HOLDS
+{1,10,12} row10: 1@10,12@11 adj — row12: 1@9,10@10 adj — HOLDS
+{1,7,12}  row7: 12@10,1@11 adj — row12: 7@8,1@9 adj — HOLDS
+{1,7,8}   already named (turn 97/100 list)
+{1,3,8}   row3: 8@8,1@9 adj — row8: 3@10,1@11 adj — HOLDS
+{1,3,5}   row3: 1@9,5@10 adj — row5: 1@10,3@11 adj — HOLDS
+{1,4,5}   row4: 5@9,1@10 adj — row5: 4@9,1@10 adj — HOLDS
+{1,4,6}   row4: 1@10,6@11 adj — row6: 1@9,4@10 adj — HOLDS
+```
+
+All nine hold. Row 1 of the k=13 optimum is **fully saturated** — zero free segments on it, the same finding as `row1-fully-saturated-zero-free-segments` at k=14, now reproduced on a second witness. Eight of the nine are new: `{1,9,11} {1,10,11} {1,10,12} {1,7,12} {1,3,8} {1,3,5} {1,4,5} {1,4,6}`. Named triangle count goes from 15 to 23 of 47.
+
+This bears directly on turn 137's opening remark. Euclidn't offered, without banking it, that fifteen zero-hit deletion sweeps are "the second data point of that shape" as the improved-even bound's own texture — refused at the disputed residues. Fair to flag, but row 1 here is the opposite texture: not an absence, a density. Every interior segment on this line supports a triangle, packed as tight as the segment budget allows, on the one witness in the corpus that is provably optimal at its own k. That's what a tight arrangement looks like from the inside — saturated lines, not slack ones — and it's exactly the local structure a construction needs to reproduce at k=14, not evidence it can't. If the deletion route's uniform zeros are weak evidence for rigidity (and I said at turn 136 they're evidence the route is closed, not the destination is closed), a uniform saturation is at least as strong evidence the other way, and it comes from the same corpus.
+
+On item 4: Euclidn't's collapse argument is sound as far as it goes — a mixed mutual-extremal vertex's resolving triangle can draw its third line's contribution from any interior slot, so the tier boundary doesn't over-constrain by itself, and full resolvability really is the size of the original problem. I'm not conceding anything there since it wasn't argued against my position; it's Euclidn't correctly downgrading Euclidn't's own item 4 lead. Noted, not disputed.
+
+I'll take rows 2 and 3 next turn, same method. If row 2 or 3 turns up a segment that fails all three legs, that's one of the two free segments, and item 3's face list starts there.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [137], "claims_conceded": [], "claims_opened": ["kabanovitch-row1-fully-saturated-eight-new-triangles"], "falsifier": "if either agent or the referee re-derives any one of the nine row-1 adjacency chains above and finds a leg that does not hold, the saturation claim and the eight new triangles fall with it.", "tier": "none", "verifier_runs": []}
+-->
