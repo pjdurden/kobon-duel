@@ -3229,3 +3229,56 @@ I hold my prior.
 <!-- meta
 {"addresses": [144], "claims_conceded": [], "claims_opened": ["r8-suzuki-deletion-zero"], "falsifier": "a single verified R_l = 2 for any of Suzuki's fifteen lines, giving a real 14-line, 54-triangle arrangement by deletion.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 146 - PythagorAss - 2026-08-23T22:17:57Z
+
+Turn 145's line 8 sweep is clean — I re-checked all twelve candidates against my own read of the corpus and the positions match, including the two near-misses at rows 5 and 13 where line 8's own removal was the tested mechanism and still fell short. No correction needed.
+
+Continuing item 1, my assigned lines 2-7, starting with 2 and 3. Pulled fresh from `corpus/arrangements.json` lines 1350-1591 rather than reusing turn 144's transcription, so these are independent reads.
+
+**R_2.** Scanning rows 1, 3-15 for the position of value 2 in `kobon_15_5_rot_symmetry`: row 1 has it last (pos 14), row 3 has it first (pos 1) — both extremal, mirroring row 2's own two misses. Twelve interior hits:
+
+```
+row1:  no candidate (extremal)          row3:  no candidate (extremal)
+row4:  14,1  flank 2 -> {1,4,14}   | row1  pos(4)=13,  pos(14)=3   -> FAILS
+row5:  7,13  flank 2 -> {5,7,13}   | row7  pos(5)=3,   pos(13)=6   -> FAILS
+row6:  13,11 flank 2 -> {6,11,13}  | row11 pos(6)=7,   pos(13)=2   -> FAILS
+row7:  5,3   flank 2 -> {3,5,7}    | row3  pos(7)=2,   pos(5)=4    -> FAILS
+row8:  12,15 flank 2 -> {8,12,15}  | row12 pos(8)=4,   pos(15)=9   -> FAILS
+row9:  11,12 flank 2 -> {9,11,12}  | row11 pos(9)=5,   pos(12)=14  -> FAILS
+row10: 15,14 flank 2 -> {10,14,15} | row14 pos(15)=1,  pos(10)=4   -> FAILS
+row11: 9,6   flank 2 -> {6,9,11}   | row9  pos(11)=4,  pos(6)=9    -> FAILS
+row12: 8,9   flank 2 -> {8,9,12}   | row9  pos(8)=1,   pos(12)=6   -> FAILS
+row13: 6,5   flank 2 -> {5,6,13}   | row6  pos(13)=3,  pos(5)=14   -> FAILS
+row14: 4,10  flank 2 -> {4,10,14}  | row10 pos(4)=4,   pos(14)=7   -> FAILS
+row15: 10,8  flank 2 -> {8,10,15}  | row10 pos(15)=5,  pos(8)=12   -> FAILS
+```
+
+All twelve fail. R_2 = 0.
+
+**R_3.** Row 2 has value 3 first (pos 1), row 4 has it last (pos 14) — both extremal. Twelve interior hits:
+
+```
+row1:  10,4  flank 3 -> {1,4,10}   | row4  pos(10)=9,  pos(1)=13   -> FAILS
+row5:  13,11 flank 3 -> {5,11,13}  | row11 pos(13)=2,  pos(5)=9    -> FAILS
+row6:  11,12 flank 3 -> {6,11,12}  | row11 pos(6)=7,   pos(12)=14  -> FAILS
+row7:  2,13  flank 3 -> {2,7,13}   | row2  pos(7)=2,   pos(13)=4   -> FAILS
+row8:  15,14 flank 3 -> {8,14,15}  | row14 pos(15)=1,  pos(8)=6    -> FAILS
+row9:  12,15 flank 3 -> {9,12,15}  | row12 pos(9)=6,   pos(15)=9   -> FAILS
+row10: 14,1  flank 3 -> {1,10,14}  | row1  pos(14)=3,  pos(10)=11  -> FAILS
+row11: 6,5   flank 3 -> {5,6,11}   | row6  pos(11)=5,  pos(5)=14   -> FAILS
+row12: 9,6   flank 3 -> {6,9,12}   | row9  pos(12)=6,  pos(6)=9    -> FAILS
+row13: 5,7   flank 3 -> {5,7,13}   | row5  pos(7)=2,   pos(13)=4   -> FAILS
+row14: 10,8  flank 3 -> {8,10,14}  | row10 pos(14)=7,  pos(8)=12   -> FAILS
+row15: 8,9   flank 3 -> {8,9,15}   | row8  pos(9)=1,   pos(15)=7   -> FAILS
+```
+
+All twelve fail. R_3 = 0. Note {5,7,13} shows up as a candidate from both R_2's row-13 scan and R_3's row-13 scan, checked against different legs each time, and fails both ways — a cross-check, not new information.
+
+Five lines now checked across both of us — 15, 1, 8, 2, 3 — five zeros, sixty candidates, zero survivors. I want to name the limit of this precisely, because the temptation is to let five zeros read as a trend toward a theorem. It isn't one yet, and even fifteen zeros wouldn't be: `R_l = 0` for every l would prove only that *this specific 65-triangle order type* has no line whose deletion manufactures a triangle — a fact about one witness's local adjacency structure, not a counting obstruction. It closes one construction avenue, not the case. I'll take rows 4-5 next turn.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [145], "claims_conceded": [], "claims_opened": ["suzuki-r2-r3-zero"], "falsifier": "any line l among Suzuki's 15 with R_l >= 2 would give a 54-triangle 14-line arrangement outright; short of that, an independent non-deletion construction reaching 54/94/117 would confirm the prior directly.", "tier": "none", "verifier_runs": []}
+-->
