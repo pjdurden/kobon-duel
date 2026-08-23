@@ -3042,3 +3042,27 @@ I hold my prior.
 <!-- meta
 {"addresses": [137], "claims_conceded": [], "claims_opened": ["kabanovitch-row1-fully-saturated-eight-new-triangles"], "falsifier": "if either agent or the referee re-derives any one of the nine row-1 adjacency chains above and finds a leg that does not hold, the saturation claim and the eight new triangles fall with it.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 139 - Euclidn't - 2026-08-23T15:17:43Z
+
+Turn 138's row-1 saturation is real, and I've now replicated it independently on my own assigned range: row 8 of Kabanovitch's k=13 (`kobon_13_m_sym_47tri`, corpus lines 944-1131) is *also* fully saturated. Row 8: `9 6 10 5 13 2 11 4 12 3 1 7`. Nine interior pairs, nine candidates, all nine hold against the iff test:
+
+{6,8,10} [already named], {5,8,10}, {5,8,13}, {2,8,13}, {2,8,11}, {4,8,11}, {4,8,12}, {3,8,12}, {1,3,8}.
+
+The last one, {1,3,8}, is the same triangle PythagorAss found independently from row 1's sweep — found from two different rows, a genuine cross-check that the computation is right on both sides. Two lines now checked, two fully saturated, deg_T(1) = deg_T(8) = 11 = k−2, the theoretical max.
+
+So turn 138's texture claim gets stronger evidence, not weaker, from my own work this turn. I'm not going to pretend otherwise — that would be exactly the failure mode the agenda flagged at turn 122, endorsing a reading because it's convenient rather than checking it.
+
+But row 9 breaks the streak, and this is the actual find. Row 9: `8 6 7 5 4 2 3 13 1 11 12 10`. Position 4-5 is the pair (5,4). Candidate {4,5,9}: need 9,4 adjacent in row 5. Row 5 is `9 7 10 8 13 11 2 12 4 1 3 6` — 9 sits at position 1, 4 sits at position 9. Eight positions apart. Fails outright, first leg. The other eight candidates on row 9 all hold — {6,7,9}, {5,7,9}, {2,4,9}, {2,3,9}, {3,9,13} [new], {1,9,13}, {1,9,11}, {9,11,12} — five of them duplicate names already on the board, confirming the table read is consistent, one is new.
+
+That gives a real, verified free segment: V(9,5)-V(9,4), row 9 position 4-5. The budget (reference data 6) says exactly two exist in this table. This is one of them.
+
+Here is the point I want on record. Two lines fully saturated at the maximum possible degree, a third failing at exactly one interior slot out of nine — that is not evidence the saturation program can close. It is evidence of how narrow the miss is even in a witness that already meets its own exact bound. 141 of 143 bounded segments carry triangles; 98.6% density, and the table still cannot push the last two into service. If density alone settled the constructibility question, an arrangement this saturated should have zero free segments, not two. It has two, on the *optimal* k=13 witness — not a near-miss, not a suboptimal construction, the actual best-known object at its own k. That residual, present even at proven optimality, is the same shape as the gap under dispute at k=14, 18, 20: not absence of effort, a structural floor under perfect saturation.
+
+I'll take rows 10-13 next turn to see whether the second free segment sits nearby or elsewhere in my range.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [138], "claims_conceded": [], "claims_opened": ["k13-row8-fully-saturated-matches-row1", "k13-free-segment-row9-pos4-5-confirmed"], "falsifier": "a known-optimal Kobon table anywhere with B = 3T exactly (zero free segments at proven optimality) would break the 'residual survives even at optimality' reading I'm pressing this turn.", "tier": "none", "verifier_runs": []}
+-->
