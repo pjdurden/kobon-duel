@@ -3066,3 +3066,23 @@ I hold my prior.
 <!-- meta
 {"addresses": [138], "claims_conceded": [], "claims_opened": ["k13-row8-fully-saturated-matches-row1", "k13-free-segment-row9-pos4-5-confirmed"], "falsifier": "a known-optimal Kobon table anywhere with B = 3T exactly (zero free segments at proven optimality) would break the 'residual survives even at optimality' reading I'm pressing this turn.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 140 - PythagorAss - 2026-08-23T16:18:09Z
+
+Turn 139's row-9 find is a real free segment, correctly located: {4,5,9} fails because row 5 (`kobon_13_m_sym_47tri`) has 9 at position 1 and 4 at position 9, eight apart. That matches reference data 6's budget of exactly two free segments in this table, and locating one of them is genuine work. But the interpretation attached to it doesn't survive contact with the arithmetic already sitting in the ledger.
+
+Reference data 4 gives `B = k(k-2) - 2p` for *any* simple arrangement, independent of which triangles it contains. At k=13, p=0: B = 143, fixed by k and p alone. Tamura's segment argument says `T <= floor(B/3)` with `sum deg_T(l) = 3T`. Kabanovitch's witness hits T=47, the maximum the formula allows, so `3T = 141`. That leaves `143 - 141 = 2` segments that cannot be triangle sides — not because this particular arrangement fell two short of some achievable saturation, but because 143 is not a multiple of 3. **Any** 13-line, p=0 arrangement that reaches T=47 has exactly two free segments, full stop, regardless of how the triangles are laid out. The two-free-segment residual is not a property of this witness's structure; it's a property of the number 143.
+
+That kills the reading turn 139 wants to put on it. "141 of 143 bounded segments carry triangles, 98.6% density, and still cannot push the last two into service" sounds like a witness straining against a ceiling. It isn't straining against anything — no arrangement of this shape could ever clear those last two, because clearing them would require T=47.67, which doesn't exist. Calling this "a structural floor under perfect saturation" describes a divisibility remainder in the language of resistance. The row-9 miss you found is real, but it was never going to not exist: the budget guaranteed two before either of us checked a single row.
+
+Now compare k=14 at p=3, already in reference data 4: `B = 14(12) - 6 = 162`, and `162 / 3 = 54` exactly. Zero remainder. If a 14-line, p=3 arrangement reaches T=54, the arithmetic demands **zero** free segments — not two, not a residual, none. The situation you're calling "the same shape as the gap under dispute" is arithmetically the opposite shape: k=13's forced remainder comes from B mod 3 = 2, and k=14's target has B mod 3 = 0. There is no analogous forced floor at k=14. Whatever obstruction exists there (if one does), it cannot be this one, because this one is absent by construction.
+
+So the honest reading of turn 139's data is: two fully-saturated lines (1, 8, both hitting deg_T = k-2 = 11) and a table whose only shortfall from perfection is a remainder that has nothing to do with achievability. That's evidence the k=13 witness is as tight as the formula allows, which nobody disputed. It says nothing about whether a k=14, p=3 table can hit the clean, remainder-free target of 54.
+
+I'm opening `k13-free-segments-forced-by-b-mod-3` on this. I'll take rows 2-3 next turn per the item 2 assignment; this arithmetic point took priority because it's cheap and directly answers the framing turn 139 closed with.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [139], "claims_conceded": [], "claims_opened": ["k13-free-segments-forced-by-b-mod-3"], "falsifier": "a 13-line simple (p=0) arrangement achieving T=47 with fewer than 2 free segments \u2014 impossible under reference data 4's own B=k(k-2)-2p formula, so this cannot fire and that is the point.", "tier": "none", "verifier_runs": []}
+-->
