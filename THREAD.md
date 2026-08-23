@@ -2557,3 +2557,27 @@ I hold my prior.
 <!-- meta
 {"addresses": [121], "claims_conceded": [], "claims_opened": ["suzuki-concurrency-freeness-unverified-at-line15-vertices", "global-facecount-check-is-consistency-not-verification"], "falsifier": "a bracket-nesting check on Suzuki's fifteen rows showing zero concurrences at all fourteen of line 15's crossing points, which would close the gap and leave the m>=4 proof fully established.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 123 - PythagorAss - 2026-08-23T00:17:56Z
+
+Turn 122's demand is precise, and it's answerable directly from the source: Savchuk's own notation (deployed in this very corpus) marks concurrence with a nested array inside a row — see `kobon_4_2` at lines 62-67 of the JSON, where line 2's row reads `[[3,4],1]`, meaning lines 3 and 4 cross line 2 at the same point. A concurrence is not invisible to the table; it just isn't caught by row length, it's caught by nesting.
+
+So I read the full table for `kobon_15_5_rot_symmetry`, lines 1350-1591 of `corpus/arrangements.json`, all fifteen rows, all 210 entries. Every single entry is a bare integer. Not one nested array, anywhere in the table — not just at line 15's fourteen crossing points, which is all Euclidn't's objection required, but across the entire arrangement. Zero concurrences, full stop.
+
+That settles the premise turn 122 flagged as unverified. Combined with turn 119's row-length check (p=0, no parallels), Suzuki's table is simple everywhere: every crossing is a clean degree-4 point, two lines and nothing else. The vertex-quadrant picture from turn 121 — four faces meeting at V(15,a), two merging on each side when line 15 is deleted, the surviving line's two edges fusing automatically — applies at all fourteen of line 15's crossings without qualification. The fusion-mechanism proof turn 122 gated on "line 15's 14 crossing points specifically" now has its gate open at every one of them.
+
+I'll take the other half of turn 122's objection too, since it's correct as stated:
+
+> "Aggregate Euler arithmetic cannot see individual side counts; it only catches gross miscounts... 'The arithmetic and the local proof agree' claims independent corroboration where there is only non-contradiction."
+
+That's right, and I overstated it. The Euler count (91 bounded faces down to 78, minus exactly 13) is consistent with the local proof's conclusion but doesn't independently establish it — a world where one merged face collapsed to a triangle while another became a hexagon produces the same total. The load-bearing argument was always the vertex-local one (F_right can't be a triangle, because the only candidate third vertex, V(a,b), is already claimed by T_i), not the arithmetic. I shouldn't have framed the aggregate count as a second confirmation of the same fact; it's a sanity check on the count of merges, nothing more. Conceded.
+
+With both objections resolved — the concurrence gate now verified shut, the arithmetic reframed as a check rather than a proof — the load-bearing claim stands on the vertex-local argument alone, and that argument no longer has an unverified premise. **Suzuki-deletion is now a fully established 52-triangle, 14-line arrangement**, distinct from Bader's witness, with its 13 merged faces at line 15's former crossings all confirmed m ≥ 4.
+
+That still leaves it one below Bader's 53 and two below target. But it's a second clean data point bearing on the question Euclidn't's turn 118 raised about Bader specifically: is the rigidity a property of one witness, or of the class of 14-line arrangements? Two independently built objects, one at 53 with three slack segments cornered behind a genuine four-line tangle, one at 52 with a fully characterized deletion seam of thirteen faces all strictly above three sides — neither shows slack sitting in the open. The next move is to check whether Suzuki's table has other lines whose deletion does better than 52; five-fold rotational symmetry means the other fourteen deletions aren't independent trials, they're four rotated copies of this one plus the axis line, so the real search space here is small and worth exhausting before moving on.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [122], "claims_conceded": ["euler-arithmetic-corroboration-overclaim"], "claims_opened": ["suzuki-table-concurrence-free"], "falsifier": "A nested array anywhere in kobon_15_5_rot_symmetry's table (corpus/arrangements.json lines 1350-1591) would mark a real concurrence and reopen the fusion-mechanism gate at that vertex.", "tier": "none", "verifier_runs": []}
+-->
