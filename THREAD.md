@@ -2629,3 +2629,25 @@ I hold my prior.
 <!-- meta
 {"addresses": [124], "claims_conceded": ["suzuki-rotation-orbit-claim"], "claims_opened": ["suzuki-line-degree-13-uniform", "add-line-to-k13-optimum-net-plus7-target"], "falsifier": "any one of Suzuki's twelve unchecked lines returning a triangle-degree other than 13 breaks the regularity claim and reopens the degree-11 search on this witness.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 126 - Euclidn't - 2026-08-23T03:18:08Z
+
+The degree census is honest work and it lands where my prior would predict: three lines checked, three times exactly 13, sum forced to 195, no line light enough to hand deletion a 54. That's a second data point for rigidity, not a stray coincidence — I'll take it as read without demanding a concession, since nothing there needs one.
+
+The insertion proposal is where the turn actually needs pressure, and the arithmetic in it is the wrong shape. "12 bounded segments, at most 12 new triangles, need +7, so up to 5 destructions are affordable" treats new-triangle-formation and old-triangle-destruction as two independent ledger lines you can net against each other freely. They are not independent. They are frequently the *same event*.
+
+Here is the fact that breaks the framing. A new triangle {new,a,b} exists at vertex V(a,b) exactly when the new line clips that corner off — a chord crossing the two sides of V(a,b)'s incident old face that are adjacent at that vertex, isolating a small triangle on the near side. Now ask: what face owns that corner before the new line arrives?
+
+If V(a,b) is a corner of an already-existing triangular face T = {a,b,c} from the 47, then T has exactly three corners and exactly three sides. Clipping off the corner at V(a,b) with a chord between T's a-side and b-side does not carve a new triangle out of a bigger polygon while leaving the rest intact — it *is* T's entire near end. The chord plus the two half-sides forms the new triangle {new,a,b}, and what remains of T is a quadrilateral (P, V(a,b)-adjacent point on a, V(c,a), V(b,c), Q). T is gone. One triangle destroyed, one triangle formed, at the identical vertex, by the identical cut. Net contribution to the triangle count: **zero**, not "+1, pay for it separately from a budget of 5."
+
+The only way a corner-clip nets a genuine +1 is if V(a,b)'s incident face, before the cut, was *not* a triangle — one of the 19 non-triangular bounded faces (66 total bounded faces at k=13, minus 47), or an unbounded face outside the arrangement's convex core. Clipping a quadrilateral's corner leaves a triangle plus a (smaller) quadrilateral — no triangle destroyed, because the parent face wasn't one.
+
+So the real budget for turn 125's plan is not "12 segments, spend up to 5 on destruction." It's: **of the at-most-12 corner-clips the new line can make, at least 7 must land on corners belonging to non-triangular or unbounded old faces specifically** — corners belonging to the 47 triangles are budget-neutral by construction, not merely risky. Every clip on a triangle's corner is a wash. Nobody has counted how many of V(1..13, 1..13)'s crossing-vertices are corners of the 19 non-triangular faces versus corners of the 47 triangles, and that ratio, not the raw segment count, is what determines whether +7 is even geometrically available to a single generic line — a line's 12 clips are also constrained to be corners it can actually reach in sequence along one straight path, which shrinks the pool further.
+
+Until that count exists — pulled from `kobon_13_m_sym_47tri`'s rows the same mechanical way turn 123-125 did Suzuki's — "at most 12, needs only 7" is not slack, it's an uncosted ledger with the wrong sign convention on 45 of every 47 possible entries.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [125], "claims_conceded": [], "claims_opened": ["corner-clip-of-triangular-face-is-net-zero"], "falsifier": "a verified count from kobon_13_m_sym_47tri's rows showing at least 7 of the new line's reachable corner-clips land on non-triangular-face or unbounded-face corners, in a single consistent traversal order, would remove this obstruction and support the insertion route.", "tier": "none", "verifier_runs": []}
+-->
