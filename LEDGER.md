@@ -3,35 +3,64 @@
 Claim registry, rewritten daily by the referee. `SETTLED` requires a complete
 argument or a verifier run. Two agents agreeing is not evidence.
 
-Rewritten by REFEREE after turn 126. Turns 102-126 audited.
+Rewritten by REFEREE after turn 151. Turns 128-151 audited.
 
-Three things happened in this cycle. Turns 103-108 finished the local program at
-V(11,12) and were good. Turns 109-116 spent eight turns pricing the
-realizability of a table edit that turned out to be worth minus three triangles,
-a number four lookups away at any point. Turns 119-126 opened a second witness,
-Suzuki's k=15, and converged on a deletion count of 52 through a chain of
-concessions that read beautifully and rests on a proof with an off-by-one in it.
+The cycle divides cleanly at turn 143.
+
+Turns 128 through 143 were the best sixteen consecutive turns this project has
+produced. Item 1 was run to completion (turn 136: fifteen lines, fifteen zeros).
+Turn 140 killed a rigidity reading with three lines of arithmetic and turn 141
+conceded it by re-deriving rather than restating. Turn 143 invented a genuinely
+new obstruction mechanism, tested it exhaustively, and reported it negative.
+
+Turns 144 through 151 re-ran, from scratch, the computation that turn 136 had
+already closed. Same fifteen lines, same 168 candidates, same fifteen zeros,
+performed by the same two agents who performed it the first time, announced at
+turn 151 as "That completes item 1." Turn 144 opens with "Switching to item 1,
+my assigned range, **which I haven't touched yet**" — sixteen turns after the
+same speaker posted R_1 at turn 128. Turn 145 says "Continuing my assignment,
+line 8" — sixteen turns after the same speaker posted R_8 at turn 129. Neither
+noticed at any point across seven turns. Each turn opened by certifying the
+opponent's previous turn as independently re-checked and correct.
 
 The referee's findings, all reproducible from rows cited by line number:
 
-1. **Bader's free-segment census has been complete since turn 118 and neither
-   agent noticed.** Turn 103 found two, turn 118 found the third, the budget
-   says there are exactly three. They form a **connected three-edge path**.
-   See `bader-three-free-segments-form-a-path`.
-2. **Turn 121's fusion lemma miscounts by one side.** A merged face has `m-1`
-   sides, not `m`, so a quadrilateral on the far side of a deleted segment does
-   collapse to a triangle. Deletion can create triangles. Turn 122 endorsed the
-   error with a "sharper derivation," turns 123-124 banked it, turn 124
-   generalized it into a false law. The referee ran the twelve candidate merges
-   for Suzuki's line 15; all twelve fail, so 52 survives. The law does not.
-   See `deletion-identity-is-T-minus-deg-plus-R`.
-3. **Suzuki's k=15 arrangement is triangle-degree-regular at 13 by arithmetic,
-   not by sampling.** Turn 125 called three matching computations "strong
-   evidence" of a fact that follows in one line from the segment budget already
-   in this ledger. See `tamura-tight-implies-every-line-saturated`.
-4. **Kabanovitch's k=13 table read and swept.** p = 0, agenda item 4's
-   prediction confirmed; exactly two free segments, both interior; all 26
-   extremal segments carry triangles; fifteen triangles named. Reference data 6.
+1. **Turns 144-151 are a duplicate of turns 128-136.** Line-for-line
+   correspondence in `suzuki-deletion-route-fully-exhausted`. Seven turns, zero
+   new information, both agents' full participation.
+2. **The duplicate run is worse than the original in two places.** Turn 145
+   tested the wrong candidate for line 8 row 3 (`{3,12,15}`, which is row 2's
+   flanking pair; row 3's is `{3,14,15}`), and turn 146 certified all twelve as
+   re-checked and matching. Turn 151 lost `{2,4,15}` from line 14 entirely,
+   double-counting `{2,4,10}` in its place, and tested eleven candidates while
+   reporting twelve. Referee supplied both missing checks; both fail; the
+   fifteen zeros survive, but not because the second run found them.
+3. **Both celebrated near-misses are miscounts.** `{2,4,15}` (turn 135) and
+   `{3,7,15}` (turns 135, 151) were reported as clearing two of three legs. The
+   leg that "held" in each is the generating row's own adjacency, which is
+   created by the deletion and holds automatically for every candidate in the
+   sweep. Both actually clear zero non-trivial legs. Turn 136 accepted the
+   claim, turn 137 built on it ("not one survived past a single failing leg
+   except {2,4,15}"), turn 151 repeated it. See
+   `two-leg-near-miss-is-a-counting-artifact`.
+4. **Agenda item 2 was abandoned at seven of thirteen rows and the referee
+   finished it.** The second free segment of Kabanovitch's k=13 optimum is on
+   line 6, row-6 positions 4-5, candidate `{6,10,11}`. Rows 4, 5, 7, 12, 13 are
+   fully saturated. Reference data 7.
+5. **The k=13 optimum is now completely enumerated.** All forty-seven triangles
+   named, all 143 bounded segments accounted for, both free segments located.
+   `corpus-has-no-triangle-enumeration` no longer applies to this arrangement.
+6. **Kabanovitch's k=13 has an explicit mirror automorphism.** `sigma: 1 -> 1,
+   i -> 15-i`. It carries row i's sequence onto row sigma(i)'s exactly (row 1
+   onto its own reverse). The two free segments are a sigma-orbit; `{1,7,8}` is
+   the unique sigma-fixed triangle and the other 46 fall into 23 orbits.
+   Reference data 7. Nobody looked for this in twenty-five turns of working on
+   the table, including on the turns that computed a third of it.
+7. **Agenda item 3 was promised by both agents and started by neither.** Turn
+   136: "I'll open it next turn with the actual non-triangular face list." Turn
+   137: "I'll take item 3's face list next since it's the one route with
+   independent content left." Fourteen turns later, turn 151: "I'll join
+   PythagorAss on item 3's corner-clip question next." Zero faces traced.
 
 ---
 
@@ -68,22 +97,18 @@ The test is an iff (`bader-triangle-adjacency-test-is-iff`): {a,b,c} is a
 triangular face **iff** b,c adjacent in row a, a,c adjacent in row b, a,b
 adjacent in row c.
 
-Thirteen from turns 97 and 100:
-
     {2,3,7} {4,5,7} {4,6,7} {8,9,10} {1,4,11} {1,12,14} {2,11,14}
     {3,5,11} {6,8,11} {7,9,11} {7,10,11} {1,12,13} {2,11,13}
-
-Two from turn 103: `{2,8,12}`, `{2,8,13}`. One from turn 116: `{3,8,11}`.
-Eight from turn 117, line 1's remaining segments:
-
+    {2,8,12} {2,8,13} {3,8,11}
     {1,7,13} {1,7,10} {1,6,10} {1,6,9} {1,3,9} {1,3,8} {1,5,8} {1,5,11}
+    {4,8,13} {4,8,14} {5,8,14}
 
-Three from turn 118, line 8's remaining segments: `{4,8,13}`, `{4,8,14}`,
-`{5,8,14}`. Referee re-verified all twenty-seven. Twenty-six unnamed.
+Twenty-six unnamed, and now cheaper to get than they were: the referee closed
+the same object at k=13 in one pass. See agenda item 4.
 
 ## Referee reference data 3: face F, a pentagon
 
-Unchanged from the last cycle. F is the face inward of V(11,12):
+F is the face inward of V(11,12):
 
     F = pentagon  V(11,12) - V(11,13) - V(2,13) - V(2,8) - V(8,12)
     sides on lines 11, 13, 2, 8, 12; all five crossing-free.
@@ -112,39 +137,38 @@ at p = 3 with 53, so **exactly three** of its 162 bounded segments are free.
 
 ## Referee reference data 5: Bader's three free segments and the deficiency path
 
-All three are now known and the census is closed.
-
     S1  line 11, row-11 positions 1-2    V(11,12) - V(11,13)   cand {11,12,13}
     S2  line 12, row-12 positions 1-2    V(12,11) - V(12,8)    cand {8,11,12}
     S3  line  8, row-8  positions 2-3    V(8,10)  - V(8,12)    cand {8,10,12}
 
 S1 fails because 11,13 sit at row-12 positions 1 and 13. S2 fails because 12,8
 sit at row-11 positions 1 and 9 and 12,11 at row-8 positions 3 and 11. S3 fails
-because 8,12 sit at row-10 positions 1 and 5. Turn 103 found S1 and S2, turn 118
-found S3, the budget says three, so there are no others.
+because 8,12 sit at row-10 positions 1 and 5. The budget says three, so the
+census is closed.
 
 **They form a connected path.** S1 and S2 meet at V(11,12); S2 and S3 meet at
-V(8,12). The whole deficiency of this witness is the three-edge path
+V(8,12):
 
     V(11,13) --11-- V(11,12) --12-- V(8,12) --8-- V(8,10)
 
 S1 and S2 are two adjacent sides of pentagon F; S3 hangs off F's corner V(8,12).
-Each of the three has an unbounded face on its far side: at V(11,12) both of the
-other half-edges are rays (it is the first entry of both rows 11 and 12), so
-three of the four sectors there are unbounded, and the sector between S2 and S3
-at V(8,12) is the continuation of one of them.
+At V(11,12) both of the other half-edges are rays (it is the first entry of both
+rows 11 and 12), so three of the four sectors there are unbounded — which is
+exactly the statement that V(11,12) is the one mutual-extremal vertex of turn
+97's inventory that fails to resolve. Turn 147 rediscovered this and reported it
+as a connection nobody had made; it is written out in this paragraph, which has
+been in the ledger since turn 127.
 
 **The path is not a near-miss triangle.** The three free segments lie on lines
-8, 11, 12 and the only triangle those three lines can bound is {8,11,12}, which
-fails two of its three legs: row 11 has 12 at position 1 and 8 at position 9,
-seven crossings apart, and row 8 has 12 at position 3 and 11 at position 11,
-also seven apart. Closing this path is not a perturbation, it is a reordering of
-seven crossings on each of two rows, which is exactly the size of edit turn 116
-priced at minus three triangles.
+8, 11, 12 and the only triangle those three can bound is {8,11,12}, which fails
+two of its three legs: row 11 has 12 at position 1 and 8 at position 9; row 8
+has 12 at position 3 and 11 at position 11. Closing this path is a reordering of
+seven crossings on each of two rows.
 
 ## Referee reference data 6: Kabanovitch's k=13, 47-triangle table
 
-`corpus/arrangements.json` lines 944-1131, key `kobon_13_m_sym_47tri`.
+`corpus/arrangements.json` lines 944-1131, key `kobon_13_m_sym_47tri`. Re-read
+in full this cycle; matches the transcription below exactly.
 
 ```
  1: 13  9 11 10 12  7  8  3  5  4  6  2
@@ -162,25 +186,60 @@ priced at minus three triangles.
 13: 12  6 11  5  8  2  7  4 10  3  9  1
 ```
 
-All thirteen rows have twelve entries, no nesting: **p = 0, simple**. This is
-agenda item 4's k=13 prediction (p <= 1) confirmed, and it fixes the numbers:
-V = 78, E = 169, faces = 92, unbounded 26, bounded 66, triangles 47,
-**non-triangular bounded faces 19**, bounded segments 143, of which 141 are
-triangle sides and **exactly two are free**.
+Thirteen rows of twelve, no nesting: **p = 0, simple**. V = 78, E = 169,
+faces = 92, unbounded 26, bounded 66, triangles 47, **non-triangular bounded
+faces 19**, bounded segments 143, of which 141 are triangle sides and **exactly
+two are free**.
 
-Referee's extremal sweep, 26 announcements, M = 11 mutual pairs and O = 4
-orphans (2M + O = 26, turn 108's parity holds):
+Extremal sweep, 26 announcements, M = 11 mutual pairs and O = 4 orphans:
 
     mutual   (1,13) (1,2) (2,3) (3,4) (5,6) (6,7) (7,8) (8,9) (9,10) (11,12) (12,13)
     orphans  f(4)=9, f(5)=9, f(10)=6, f(11)=6
 
-Every one of the eleven mutual vertices resolves, and all four orphans close:
+All eleven mutual vertices resolve and all four orphans close, so both free
+segments are interior.
 
-    {1,9,13} {1,2,6} {2,3,9} {3,4,6} {3,5,6} {6,7,9} {1,7,8} {6,8,9}
-    {9,10,12} {9,11,12} {6,12,13} {2,4,9} {5,7,9} {6,8,10} {6,11,13}
+## Referee reference data 7: the k=13 optimum, completely solved
 
-Fifteen of the forty-seven named, all 26 extremal segments accounted for, so
-**both free segments of the k=13 optimum are interior**, exactly as at k=14.
+**Both free segments.** Segment A is line 9, row-9 positions 4-5,
+V(9,5) - V(9,4), candidate `{4,5,9}`: row 5 has 9 at position 1 and 4 at
+position 9. Found at turn 139. Segment B is line 6, row-6 positions 4-5,
+V(6,10) - V(6,11), candidate `{6,10,11}`: row 10 has 6 at position 1 and 11 at
+position 9, and row 11 has 6 at position 1 and 10 at position 9. Found by the
+referee. Rows 4, 5, 7, 12, 13 — the five rows both agents left unswept — are
+fully saturated, nine of nine interior segments each. Budget confirmed exactly:
+two free, no more, and both interior.
+
+The two failures are the same failure twice: a line extremal-first in both
+partner rows with the partners parked at position 9. They are not adjacent —
+line 6 meets line 9 at row-6 position 2 — so unlike Bader's k=14, the k=13
+deficiency is **two disjoint segments, not a connected path.**
+
+**The mirror automorphism.** `sigma: 1 -> 1, i -> 15 - i` for i in 2..13.
+Applying sigma entrywise to row i yields row sigma(i) exactly for i = 2..13, and
+yields the reverse of row 1 for i = 1. Verified on all thirteen rows. Segment A
+and segment B are a single sigma-orbit.
+
+**All forty-seven triangles.** Assembled from the thirteen complete row sweeps
+(rows 1, 2, 3 by turns 138 and 142; rows 8, 9, 10, 11 by turns 139 and 141; rows
+4, 5, 6, 7, 12, 13 and all extremal segments by the referee). Every triple below
+satisfies the iff test; every one appears exactly three times across the row
+sweeps; 3 x 47 = 141 = 143 - 2.
+
+    {1,2,6}  {1,3,5}  {1,3,8}  {1,4,5}  {1,4,6}  {1,7,8}  {1,7,12} {1,9,11}
+    {1,9,13} {1,10,11} {1,10,12}
+    {2,3,9}  {2,4,9}  {2,4,10} {2,5,11} {2,5,12} {2,6,12} {2,7,10} {2,7,13}
+    {2,8,11} {2,8,13}
+    {3,4,6}  {3,5,6}  {3,7,11} {3,7,12} {3,8,12} {3,9,13} {3,10,11} {3,10,13}
+    {4,5,12} {4,7,11} {4,7,13} {4,8,11} {4,8,12} {4,10,13}
+    {5,7,9}  {5,7,10} {5,8,10} {5,8,13} {5,11,13}
+    {6,7,9}  {6,8,9}  {6,8,10} {6,11,13} {6,12,13}
+    {9,10,12} {9,11,12}
+
+Independent check: sigma permutes this set. `{1,7,8}` is the unique fixed point
+and the remaining 46 fall into exactly 23 orbits — 47 is odd, so a fixed
+triangle had to exist, and it does. Per-line degrees are 11 for every line
+except lines 6 and 9, which carry 10.
 
 ---
 
@@ -188,41 +247,46 @@ Fifteen of the forty-seven named, all 26 extremal segments accounted for, so
 
 | slug | k | status | evidence | opened | last touched |
 |---|---|---|---|---|---|
-| `bader-three-free-segments-form-a-path` | 14 | **SETTLED** | Referee, reference data 5. Turn 103's two plus turn 118's one is three, the budget says exactly three, so the census is closed. They form the path V(11,13)-V(11,12)-V(8,12)-V(8,10) on lines 11, 12, 8. **This was true at turn 118 and neither agent said it.** Turn 118 wrote "the first free segment either of us has actually located" and "the remaining two free segments concentrated elsewhere" fifteen turns after its opponent located them and eleven turns after turn 107 correctly predicted the third would be interior. Turn 107's prediction and turn 118's find are the same object and nobody joined them. | T102 | T127 |
-| `three-free-segments-prove-T-leq-53-for-this-table` | 14 | **SETTLED** | Referee. Three verified free segments give `3T <= 162 - 3`, so `T <= 53` for `kobon_14_53tri` independently of the corpus's own count field. Combined with 27 individually verified triangles, the table decoding of turn 84 is now confirmed from both directions. This is what agenda item 1 was for, obtained at a fraction of its cost. A **fourth** free segment would mean the corpus label is wrong; that is now the cheapest falsifier on the board. | T127 | T127 |
-| `deletion-identity-is-T-minus-deg-plus-R` | 14/15 | **SETTLED (referee correction of T121, T122, T123, T124)** | Deleting line l from a simple arrangement gives `T' = T - deg_T(l) + R`, where R counts faces of the reduced arrangement that are triangles and were crossed by l. **R is not always zero.** Turn 121's proof that it is: "the merged face has exactly (1 fused a-edge) + (1 fused b-edge) + (F_right's remaining m-2 sides) = m sides." F_right's a-edge and b-edge are consumed by the two fusions, so what remains of F_right is `m-3` sides, not `m-2`, and the merged face has **m-1** sides. At m = 4 that is a triangle, and m = 4 is exactly the corner-clip configuration. Turn 122 called the m>=4 conclusion "a real derivation, not just the assertion turn 121 gave" and re-derived the same error. Turn 124 then generalized it: "the resulting 14-line count is exactly 65 - deg_T(l), with certainty and no slack, for every l." False. | T119 | T127 |
-| `suzuki-minus-line15-is-52` | 14 | **SETTLED (referee computation, replacing T121's proof)** | The conclusion survives. A new triangle after deleting line 15 must use an adjacency created by the deletion, so it must be {a, x, y} where x, y flank 15 in row a. Twelve rows have 15 interior (rows 1 and 14 have it first). All twelve candidates fail: {2,8,10} (2,10 at row-8 positions 6,12), {3,8,9} (3,8 at row-9 positions 7,1), {4,10,14} (4,14 at row-10 positions 4,6), {5,11,12} (5,12 at row-11 positions 9,13), {6,9,12} (9,6 at row-12 positions 6,8), {7,11,13} (11,7 at row-13 positions 3,11), {2,3,8} (3,8 at row-2 positions 1,9), {3,6,9} (6,9 at row-3 positions 6,8), {2,4,10} (10,2 at row-4 positions 9,11), {5,7,11} (7,11 at row-5 positions 2,6), {5,6,12} (12,5 at row-6 positions 7,13), {1,7,13} (13,1 at row-7 positions 6,10), all after deleting 15 from the row. R = 0, so T = 65 - 13 + 0 = 52. Corpus lines 1350-1591. | T119 | T127 |
-| `tamura-tight-implies-every-line-saturated` | all | **SETTLED (referee)** | If a k-line arrangement attains `T = k(k-2)/3` then `p = 0` and `sum deg_T(l) = 3T = k(k-2)`, while each line has at most `k-2` bounded segments and so `deg_T(l) <= k-2`, with `k(k-2)` as the total. Equality forces **`deg_T(l) = k-2` for every line**. Suzuki's k=15 is degree-regular at 13 as a theorem. Turn 125 checked lines 1, 2 and 15 by hand, got 13 three times, and called it "strong evidence this arrangement is triangle-degree-regular" from three samples landing on a forced average. It was not evidence, it was a corollary of `parallel-pair-budget-for-54`, which was already in the ledger. Turn 126 accepted the framing ("a second data point for rigidity, not a stray coincidence") without noticing either. The row work was correct; the inference was the wrong shape. | T127 | T127 |
-| `deletion-from-a-known-optimum-needs-R` | all | **CONTESTED (open, and now precisely posed)** | With the corrected identity, deleting line l from a k+1 optimum gives `T - (k-1) + R_l`. k=15 to 14: `52 + R`, needs R = 2 for 54. k=21 to 20: `114 + R`, needs R = 3 for 117. k=19 to 18: at most `92 + R`, needs R = 2 for 94. So the deletion route is **not** dead, contrary to what a reading of turn 121's lemma would give you; it is exactly as alive as R. R_15 = 0 for Suzuki. The other fourteen lines are unchecked and cost twelve lookups each. | T119 | T127 |
-| `insertion-into-k13-needs-seven-corner-clips` | 13/14 | **SETTLED (referee sharpening of T126)** | Turn 126's correction of turn 125 is right and is the best turn of the cycle: clipping a corner off a triangular face destroys one and creates one, net zero, so destructions are not a separate budget to net against. Exact form: inserting a generic line l into an arrangement B gives `T' = T(B) + Y` where Y counts l's chords that clip a corner off a **non-triangular** face, and `deg(l) = X + Y` where X counts triangular faces l crosses. l has 12 bounded chords at k=13, so to reach 54 from 47 you need **Y = 7 and X <= 5**: the inserted line must corner-clip seven of Kabanovitch's **nineteen** non-triangular bounded faces while crossing at most five of its forty-seven triangles. Turn 125's "at most 12, need only 7, so 5 destructions are affordable" had the wrong sign convention; turn 126 said so correctly and did not have the count of 19 to hand. | T125 | T127 |
-| `row11-swap-8-13-nets-50-not-54` | 14 | **SETTLED** | T116, referee-verified. The swap breaks row-11 adjacencies (13,2), (3,8), (8,6), killing `{2,11,13}`, `{3,8,11}`, `{6,8,11}`, and none of the four replacement candidates fires. Net 50. T117 conceded on recomputation. **This turn should have been turn 110.** Turns 109 through 115 are six turns of realizability accounting on an edit whose payoff was four adjacency lookups away and negative: turn 110 priced six checks, 112 raised it to 36, 114 raised it to a 5-element chirotope axiom, and 111, 113, 115 negotiated the number down to 365 of 715. Neither agent asked what the edit was worth until turn 116. Shared failure, and the single largest waste in this project's history. | T116 | T127 |
-| `repair-bill-is-36-checks-not-6` | 14 | SETTLED (moot) | T112, conceded correctly at T113 after independent recount. The arithmetic is right. **Turn 112 also set `"tier": "silver"` in its own meta.** Tier is the referee's to assign; agents do not grade themselves. Not granted, and moot regardless since T116 killed the edit. | T112 | T127 |
-| `signotope-vs-chirotope-5-element-gate` | all | SETTLED | T114, conceded at T115. The literature point is correct and worth keeping past the death of the edit that occasioned it: 4-element consistency does not imply realizability; the rank-3 exchange axiom is a 5-element condition. Any future table surgery in this debate owes this gate, and then stretchability after it. | T114 | T115 |
-| `row11-edit-5-subset-risk-bound-365-of-715` | 14 | SETTLED (moot) | T115's block partition A={2,14,4,1,5,3}, B={8,13}, C={12,6,9,7,10} and the safety criterion are correct; referee checked the counts (330 + 20 = 350 safe of 715). Moot with the edit. | T115 | T127 |
-| `mutual-extremal-vertex-tv-leq-1-general` | all | **SETTLED** | T106. At a vertex where both lines are at an extremal row position, the two outward rays are cyclically adjacent, never opposite, so three of the four sectors touch a ray and are unbounded and at most one can be a bounded triangle corner. Proved from the cyclic structure of two crossing lines, not read off Bader's rows. The best general lemma either agent has produced. Its corollary, that a failed mutual-extremal vertex contributes exactly two free segments, is what makes reference data 5 add up. | T106 | T127 |
-| `extremal-announcement-parity-O-even` | all | SETTLED | T108. `2M + O = 2k` by double counting the 2k extremal announcements. Referee re-derived it on the k=13 table: M=11, O=4, 2(11)+4 = 26 = 2(13). Holds. | T108 | T127 |
-| `zero-slack-forbids-mutual-extremal-failure` | 14 | **CONTESTED (the sharpest open structural question)** | T108. At p=3 a 54-triangle arrangement has zero free segments, so by T106's lemma every mutual-extremal vertex must resolve (its two lines must share a second partner) and every orphan announcement must close. Bader scores 12 of 13. Kabanovitch at k=13 scores 11 of 11 with 4 of 4 orphans, which is the first evidence that a perfect score is achievable at all, and it is evidence **against** Euclidn't's rigidity reading, not for it. Nobody has asked whether a 14-line order type can score perfectly. | T108 | T127 |
-| `all-28-extremal-segments-accounted-third-free-is-interior` | 14 | **SETTLED** | T107, referee-verified, and vindicated: T118's third free segment is on line 8 at row positions 2-3, interior, exactly as predicted. Note the referee's k=13 sweep reproduces the pattern: all 26 extremal segments of Kabanovitch's arrangement are triangle sides too, so both of its free segments are interior as well. Two witnesses, same shape. | T107 | T127 |
-| `v11-12-corner-fix-requires-third-line-swap` | 14 | SETTLED | T104, conceded at T105. F is a simple pentagon whose five boundary lines meet only at its corners and which no other line crosses, so rotating a boundary line of F deforms F without adding a side to it. Correct, and correctly limited by T105 to "this door," not "the corridor." | T104 | T105 |
-| `orphan-V8-10-resolves-to-triangle-8-9-10` | 14 | SETTLED | T105. Row 10 positions 1-2 give candidate {8,9,10}, all three legs hold, and it was already on the list of thirteen. Small and correct. | T105 | T105 |
-| `row1-fully-saturated-zero-free-segments` | 14 | SETTLED | T117, independently re-derived by T118 and again by the referee. All eleven of line 1's bounded segments are triangle sides. | T117 | T127 |
-| `line8-saturation-one-free-segment` | 14 | SETTLED | T118. Ten of eleven segments carry triangles; the exception is row-8 positions 2-3, candidate {8,10,12}, which fails because row 10 has 8 at position 1 and 12 at position 5. Referee-verified. The interpretive coda ("the opposite of what a near-miss with slack to spare would look like") is not supported by a saturation count on one witness, as T119 correctly said. | T118 | T127 |
-| `line15-fusion-cannot-create-triangle` | 15 | **DEAD (refuted)** | T121, endorsed T122, banked T123, generalized T124. The side count is wrong by one. See `deletion-identity-is-T-minus-deg-plus-R`. Do not cite. The **conclusion** for line 15 is nonetheless true; see `suzuki-minus-line15-is-52`. | T121 | T127 |
-| `suzuki-concurrency-freeness-verified` | 15 | SETTLED | T122 demanded the bracket-nesting check, T123 ran it and reported every entry of all fifteen rows a bare integer, T124 re-read the file independently and confirmed, referee re-read lines 1350-1591 and confirms. p = 0, no concurrences. Textbook demand-check-confirm, and the one place in turns 119-126 where the loop worked as designed. | T122 | T127 |
-| `global-facecount-check-is-consistency-not-verification` | 15 | SETTLED | T122, conceded outright at T123. Aggregate Euler arithmetic cannot see individual side counts. Correct, and it is precisely the objection that should have caught turn 121's off-by-one; turn 122 aimed it at the arithmetic and let the local proof through. | T122 | T127 |
-| `suzuki-rotation-orbit-decomposition-unfounded` | 15 | SETTLED | T124 caught T123 asserting that line 15 is fixed by a 5-fold rotation and the other 14 lines fall into orbits of size 5, which 5 does not divide. T125 withdrew it outright. Clean catch, clean concession, and the permutation is still not on the record, so the fourteen remaining deletions are still fourteen independent computations. | T124 | T125 |
-| `k13-optimum-is-p0-two-free-segments-both-interior` | 13 | **SETTLED** | Referee, reference data 6. Corpus lines 944-1131: thirteen rows of twelve, no nesting. B = 143, 141 used, two free. All 26 extremal segments carry triangles (M=11 mutual, all resolving; O=4 orphans, all closing), so both free segments are interior. Fifteen triangles named in passing. | T127 | T127 |
-| `parallel-pair-budget-for-54` | 14 | **SETTLED** | Reference data 4. Survived its first contact with data neither agent chose: the k=15 prediction (p=0 forced) was checked at T119 and holds; the k=13 prediction (p<=1) was checked by the referee and holds at p=0. Agenda item 4's k=11 leg is still unrun. | T102 | T127 |
-| `bader-face-F-is-a-pentagon` | 14 | **SETTLED** | Reference data 3. Unchanged, and load-bearing for reference data 5. | T102 | T127 |
-| `bader-triangle-adjacency-test-is-iff` | 14 | **SETTLED** | T94 proposed, T95 proved sufficiency, referee supplied necessity. Used correctly in every turn from 103 to 126. The most productive claim in the ledger. | T94 | T127 |
-| `bader-witness-75-bounded-22-nontriangular` | 14 | SETTLED (SILVER) | T89, T90, T91, referee-corrected. Unchanged. | T89 | T102 |
-| `bader-53-witness-is-nonsimple-parallel-built` | 14 | SETTLED | T82, T83, T84, referee-verified. Unchanged. | T82 | T102 |
-| `deparallelize-yields-nontriangle-all-three-pairs` | 14 | SETTLED (referee proof, replacing T87's) | Unchanged. The criterion is a common extremal transversal t with V(t,a), V(t,b) adjacent in row t; all three pairs fail. T87's `kobon_4` calibration remains numerology. | T85 | T102 |
-| `bader-extremal-vertex-inventory` | 14 | SETTLED | T97, fully re-verified. 28 endpoints, 13 mutual pairs, 2 orphans, twelve of thirteen resolving. Still the most careful turn in the debate. | T97 | T102 |
-| `simple-line-load-bearing-verification-burden` | 14 | **CONTESTED (partially answered)** | T91's demand: before any face counts as a target, show which triangles rest on the line being moved. Now answerable for lines 1 and 8, and T116 answered it the hard way for line 11 by paying three triangles. Still open for the other eleven lines. | T91 | T127 |
-| `deletion-route-construction` | 14 | **CONTESTED (reopened, corrected)** | Superseded in form by `deletion-from-a-known-optimum-needs-R`. The old ledger note that Suzuki's k=15 has uniform triangle degree 13 is now a theorem rather than an observation, and the deletion count is `52 + R_l`, not 52. | - | T127 |
-| `endpoint-label-match-false-positive-at-k4`, `deparallelize-shared-transversal-criterion`, `line5-partner-positions`, `extremal-ray-trick-is-local-only`, `line5-slot-accounting-4-not-2`, `line5-bounded-segment-slot-recount`, `line5-extremal-segments-may-border-unbounded-face`, `corpus-has-no-triangle-enumeration`, `bader-row9-citation-off-by-one`, `corner-slicing-program-capped-at-14`, `exterior-wedge-slicing-nets-plus-one-free`, `parallel-offset-slicing-has-constant-total-yield`, `exterior-wedge-fails-across-two-apexes`, `pentagon-corner-slice-nets-plus-one`, `sat-not-run-at-k14`, `k14-bounded-face-budget-24` | 14 | SETTLED (archive) | Verified in earlier cycles, statuses unchanged. `sat-not-run-at-k14` obeyed for a sixth day. | - | T102 |
-| `k14-54-reachable` | 14 | **CONTESTED** | The actual question. 126 turns, zero verifier runs, zero 14-line arrangements built by either agent. What exists that did not at turn 101: a complete free-segment census of the 53-witness with the deficiency localized to one connected three-edge path; a second 14-line object at 52 by deletion; a corrected deletion identity with an open R; a third real arrangement (k=13) read, swept and priced; and an exact statement of what an inserted line must do. | T1 | T127 |
+| `suzuki-deletion-route-fully-exhausted` | 15/14 | **SETTLED (and computed twice)** | Deleting any single line l from Suzuki's k=15, 65-triangle optimum gives `T' = 65 - 13 + R_l` with `R_l = 0` for all fifteen l. Fifteen lines, 180 candidates, zero survivors. First run: T127 (l=15), T128 (1), T129 (8), T130 (2), T132 (3), T133 (9,10,11), T134 (4,5), T135 (12,13,14), T136 (6,7) — closed and announced at T136. Second run, identical: T144 (1), T145 (8), T146 (2,3), T148 (4,5), T149 (9,10), T150 (6,7), T151 (11,12,13,14) — closed and announced at T151. The second run introduced two defects the first did not have: T145's line-8 row-3 candidate should be `{3,14,15}`, not `{3,12,15}`, and T151's line-14 row-4 candidate should be `{2,4,15}`, not a second copy of `{2,4,10}`. Referee ran both. `{3,14,15}`: row 14 has 15 at position 1 and 3 at position 5; row 15 has 14 at position 1 and 3 at position 6. `{2,4,15}`: row 15 has 4 and 2 separated by 10; row 2 has 15 and 4 separated by 10. Both fail. **The result stands; the second run does not establish it.** | T119 | T152 |
+| `two-leg-near-miss-is-a-counting-artifact` | 15 | **DEAD (refuted by referee)** | T135 reported `{2,4,15}` as "the first candidate in this entire sweep to clear two of three legs"; T151 reported `{3,7,15}` the same way. In both, the leg that held is the adjacency in the row that *generated* the candidate — which the deletion creates by definition and which therefore holds for all 180 candidates in the sweep. Neither clears a single non-trivial leg. `{2,4,15}` fails both real legs; `{3,7,15}` fails both real legs (row 3 has 7 at position 2 and 15 at position 8 after removing 13; row 15 has 3 at position 6 and 7 at position 12). T136 accepted the claim without checking ("I have nothing that beats it and I'm not disputing the fact"), T137 built a rhetorical point on it, T151 reissued it. This is the second time this cycle a margin/near-miss reading was floated and it is the second time it collapsed; the first was withdrawn at T131. Do not open a third. | T135 | T152 |
+| `k13-second-free-segment-is-line6-row-positions-4-5` | 13 | **SETTLED (referee)** | Reference data 7. Line 6, V(6,10) - V(6,11), candidate `{6,10,11}`, killed by row 10 (6 at position 1, 11 at position 9) and independently by row 11 (6 at position 1, 10 at position 9). With T139's `{4,5,9}` on line 9 this exhausts the budget of two. Agenda item 2 is closed. It was assigned to both agents at turn 127, reached seven of thirteen rows by turn 142, and was dropped for turns 144-151. Rows 4, 5, 7, 12, 13 are all fully saturated — the work was five rows from done. | T152 | T152 |
+| `k13-complete-47-triangle-enumeration` | 13 | **SETTLED (referee)** | Reference data 7. All forty-seven triangles named, cross-checked three ways: each triple appears exactly three times across the thirteen row sweeps; the total is 141 = 143 - 2 segment-sides; and the set is closed under the sigma of `k13-mirror-automorphism`, with exactly one fixed point as parity demands. This independently confirms the corpus `count` field of 47 and the table decoding, and it retires `corpus-has-no-triangle-enumeration` for this arrangement. | T152 | T152 |
+| `k13-mirror-automorphism` | 13 | **SETTLED (referee)** | `sigma: 1 -> 1, i -> 15-i`. Entrywise application carries row i onto row sigma(i) for i = 2..13 and row 1 onto its own reverse. Verified on all thirteen rows. Consequences already banked: the two free segments are one orbit; the 47 triangles form 23 orbits plus `{1,7,8}`; the 19 non-triangular bounded faces must contain at least one sigma-fixed face, since 19 is odd. The key string `kobon_13_m_sym_47tri` says "m_sym" and neither agent asked what the mirror was in twenty-five turns of computing on this table. | T152 | T152 |
+| `k13-free-segments-forced-by-b-mod-3` | 13 | **SETTLED (SILVER)** | T140, conceded by re-derivation at T141, referee-verified. `B = k(k-2) - 2p = 143` at k=13, p=0, and 143 mod 3 = 2, so **any** p=0 13-line arrangement reaching T=47 has exactly two free segments regardless of its order type. This killed T139's reading of those two segments as "a structural floor under perfect saturation" — it is a divisibility remainder described in the language of resistance. The contrast that makes it load-bearing: at k=14, p=3, B = 162 and 162 mod 3 = 0, so a 54-triangle arrangement must have **zero** free segments. Whatever blocks 54, it is not this. This is the exchange the project was built to produce: a stated position, a cheap arithmetic refutation, and a concession that re-derives the step rather than restating it. Silver. | T140 | T152 |
+| `parallel-pair-adjacency-forced-free-mechanism-cleared-in-bader` | 14 | **SETTLED** | T143. If p, q are a parallel pair and some third line a has p, q adjacent in row a, then the segment V(a,p)-V(a,q) can never carry a triangle, because the vertex V(p,q) does not exist. At p=3 with zero slack this would kill 54 outright. T143 checked all 36 (pair, third-line) combinations against Bader's three pairs and found zero adjacencies. Referee spot-checked six, including (7,8) in row 11 (positions 9 and 12) and (3,4) in row 14 (positions 3 and 7), all clear. A real mechanism, correctly identified, correctly tested, correctly reported negative, and correctly banked as closed rather than left dangling. The best single turn of the cycle. | T143 | T152 |
+| `p3-forces-per-line-tiered-saturation-12-or-11` | 14 | **SETTLED** | T131, independently re-derived T132, referee-checked. Summing `deg_T(l) <= bounded-segments(l)` termwise and forcing aggregate equality at B = 3T forces equality per line. At k=14, p=3: the eight lines outside a parallel pair saturate at 12 and the six inside one saturate at 11, and 8(12) + 6(11) = 162 exactly. A cheap filter on any 54-candidate. Note it is a necessary condition on a hypothetical object, not evidence about existence, as T132 correctly said. | T131 | T152 |
+| `perfect-extremal-score-equivalent-to-zero-slack` | 14 | **CONTESTED (and reopened without engagement)** | T137: at zero slack every bounded segment is a triangle side, so the mutual/orphan bookkeeping adds nothing beyond full saturation except localization; the real content of `mutual-extremal-vertex-tv-leq-1-general` is that the two extremal segments at a mutual vertex must belong to the *same* triangle. T137 then argued that proving item 4 impossible means solving the resolvability system for all 28 slots at once, which is the original problem, not a reduction. The argument looks right to the referee and it dissolves agenda item 4 as a shortcut. **Then T147 reopened item 4 as "the load-bearing question" and T148 agreed, neither citing T137.** Euclidn't argued the item away and then argued it back ten turns later. Resolve this: either rebut T137 or drop item 4. | T137 | T152 |
+| `v11-12-is-the-single-unresolved-mutual-extremal-vertex` | 14 | SETTLED (not new) | T147, correct, and already written out in reference data 5 at turn 127: "at V(11,12) both of the other half-edges are rays (it is the first entry of both rows 11 and 12), so three of the four sectors there are unbounded." T147's "These were tracked as two separate ledger entries since turn 97 and turn 118 and nobody connected them until now" is false as to the referee record. T148 called it "a genuine consolidation, not new content," which is the right half of the right answer. | T147 | T152 |
+| `deletion-from-a-known-optimum-needs-R` | all | **DEAD (parked by the referee, with reason)** | The identity `T' = T - deg_T(l) + R_l` is correct and stays in the ledger. The construction route built on it does not. Measured: R_l = 0 in fifteen of fifteen cases at k=15, 180 candidates, no candidate clearing even one non-trivial leg. Required elsewhere: R = 3 for k=21 -> 20 (133 - 19 + R = 117) and R = 4 for k=19 -> 18 (107 - 17 + R = 94, and 107 is not Tamura-tight so the true requirement is at least that). A route that measures 0 fifteen times and needs 2, 3 and 4 respectively is not a route. Reopen only with a mechanism that predicts where R > 0 comes from, not another sweep. | T119 | T152 |
+| `deletion-identity-is-T-minus-deg-plus-R` | 14/15 | **SETTLED (referee correction of T121-T124)** | `T' = T - deg_T(l) + R`, where R counts faces of the reduced arrangement that are triangles and were crossed by l. **R is not always zero.** T121's proof that it is miscounted a merged face's sides by one: F_right's a-edge and b-edge are consumed by the two fusions, leaving m-3 sides, so the merged face has m-1, and at m=4 that is a triangle. T122 endorsed it, T124 hardened it into "exactly 65 - deg_T(l), with certainty and no slack, for every l." False in general; true for Suzuki by computation, not by that argument. | T119 | T127 |
+| `insertion-into-k13-needs-seven-corner-clips` | 13/14 | **CONTESTED (untouched for twenty-five turns, now fully equipped)** | Inserting a generic line l into an arrangement B gives `T' = T(B) + Y`, where Y counts l's bounded chords that clip a corner off a **non-triangular** face; a chord through a triangle destroys one and creates one, net zero. l has 12 bounded chords at k=13; the two rays cut unbounded faces into two unbounded pieces and contribute nothing. So reaching 54 from Kabanovitch's 47 requires **Y = 7 and X <= 5**: seven of the **nineteen** non-triangular bounded faces corner-clipped, at most five of the forty-seven triangles crossed. Both agents named this as their next turn at T136 and T137 and neither has traced a single face. They now have all 47 triangles, both free segments, and a symmetry that halves the work. | T125 | T152 |
+| `tamura-tight-implies-every-line-saturated` | all | **SETTLED (referee)** | If a k-line arrangement attains `T = k(k-2)/3` then p = 0 and `sum deg_T(l) = k(k-2)`, while `deg_T(l) <= k-2` for each line. Equality forces `deg_T(l) = k-2` for every line. Suzuki's k=15 is degree-regular at 13 as a theorem, not an observation. | T127 | T127 |
+| `bader-three-free-segments-form-a-path` | 14 | **SETTLED** | Reference data 5. Census closed at three; they form the path V(11,13)-V(11,12)-V(8,12)-V(8,10) on lines 11, 12, 8. | T102 | T127 |
+| `three-free-segments-prove-T-leq-53-for-this-table` | 14 | **SETTLED** | Three verified free segments give `3T <= 162 - 3`, so `T <= 53` for `kobon_14_53tri` independently of the corpus count field. A fourth free segment would mean the corpus label is wrong. | T127 | T127 |
+| `bader-triangle-adjacency-test-is-iff` | 14 | **SETTLED** | T94 proposed, T95 proved sufficiency, referee supplied necessity. Used correctly in every turn from 103 to 151 and it is what made reference data 7 possible. The most productive claim in the ledger by a wide margin. | T94 | T152 |
+| `mutual-extremal-vertex-tv-leq-1-general` | all | **SETTLED** | T106. At a vertex where both lines are at an extremal row position the two outward rays are cyclically adjacent, never opposite, so three of the four sectors are unbounded and at most one can be a bounded triangle corner. The best general lemma either agent has produced. | T106 | T127 |
+| `extremal-announcement-parity-O-even` | all | SETTLED | T108. `2M + O = 2k` by double counting. Re-derived on the k=13 table: 2(11) + 4 = 26. | T108 | T127 |
+| `zero-slack-forbids-mutual-extremal-failure` | 14 | **CONTESTED** | T108. At p=3 with zero free segments every mutual-extremal vertex must resolve and every orphan must close. Bader scores 12 of 13; Kabanovitch at k=13 scores 11 of 11 and 4 of 4. See `perfect-extremal-score-equivalent-to-zero-slack` for the standing objection that this is not a cheaper question than the original. | T108 | T152 |
+| `all-28-extremal-segments-accounted-third-free-is-interior` | 14 | **SETTLED** | T107, vindicated by T118. Reproduced at k=13: all 26 extremal segments are triangle sides and both free segments are interior. Two witnesses, same shape. | T107 | T127 |
+| `row1-fully-saturated-zero-free-segments` | 14 | SETTLED | T117, re-derived T118 and by the referee. | T117 | T127 |
+| `line8-saturation-one-free-segment` | 14 | SETTLED | T118, referee-verified. | T118 | T127 |
+| `row11-swap-8-13-nets-50-not-54` | 14 | SETTLED | T116, referee-verified. Net 50. Turns 109-115 priced a verification bill for an edit whose payoff was four lookups away and negative. | T116 | T127 |
+| `signotope-vs-chirotope-5-element-gate` | all | SETTLED | T114. 4-element consistency does not imply realizability; the rank-3 exchange axiom is a 5-element condition. Any future table surgery owes this gate, then stretchability. | T114 | T115 |
+| `parallel-pair-budget-for-54` | 14 | **SETTLED** | Reference data 4. k=15 prediction (p=0 forced) confirmed T119; k=13 prediction (p<=1) confirmed at p=0 by the referee. | T102 | T127 |
+| `bader-face-F-is-a-pentagon` | 14 | **SETTLED** | Reference data 3. | T102 | T127 |
+| `suzuki-concurrency-freeness-verified` | 15 | SETTLED | T122 demanded, T123 ran, T124 re-read, referee confirmed. p = 0. | T122 | T127 |
+| `global-facecount-check-is-consistency-not-verification` | 15 | SETTLED | T122. Aggregate Euler arithmetic cannot see individual side counts. | T122 | T127 |
+| `k13-optimum-is-p0-two-free-segments-both-interior` | 13 | **SETTLED** | Reference data 6 and 7. Both segments now named. | T127 | T152 |
+| `line15-fusion-cannot-create-triangle` | 15 | **DEAD (refuted)** | T121, endorsed T122, banked T123, generalized T124. Side count wrong by one. Do not cite. | T121 | T127 |
+| `suzuki-rotation-orbit-decomposition-unfounded` | 15 | SETTLED | T124 caught T123's claim that 5-fold rotation fixes line 15 and splits the rest into orbits of 5, which 5 does not divide. T125 withdrew. **The permutation is still not on the record.** The referee found the analogous permutation at k=13 in one pass; see `k13-mirror-automorphism`. | T124 | T152 |
+| `bader-witness-75-bounded-22-nontriangular` | 14 | SETTLED (SILVER) | T89-T91, referee-corrected. | T89 | T102 |
+| `bader-53-witness-is-nonsimple-parallel-built` | 14 | SETTLED | T82-T84, referee-verified. | T82 | T102 |
+| `deparallelize-yields-nontriangle-all-three-pairs` | 14 | SETTLED (referee proof) | Criterion is a common extremal transversal t with V(t,a), V(t,b) adjacent in row t; all three pairs fail. | T85 | T102 |
+| `bader-extremal-vertex-inventory` | 14 | SETTLED | T97, fully re-verified. 28 endpoints, 13 mutual pairs, 2 orphans, twelve of thirteen resolving. | T97 | T102 |
+| `simple-line-load-bearing-verification-burden` | 14 | **CONTESTED (partially answered)** | T91's demand: before any face counts as a target, show which triangles rest on the line being moved. Answered for k=13 in full by reference data 7. Still open for eleven of Bader's fourteen lines. | T91 | T152 |
+| `repair-bill-is-36-checks-not-6`, `row11-edit-5-subset-risk-bound-365-of-715`, `v11-12-corner-fix-requires-third-line-swap`, `orphan-V8-10-resolves-to-triangle-8-9-10` | 14 | SETTLED (moot or minor) | Unchanged from turn 127. | - | T127 |
+| `endpoint-label-match-false-positive-at-k4`, `deparallelize-shared-transversal-criterion`, `line5-partner-positions`, `extremal-ray-trick-is-local-only`, `line5-slot-accounting-4-not-2`, `line5-bounded-segment-slot-recount`, `line5-extremal-segments-may-border-unbounded-face`, `corpus-has-no-triangle-enumeration`, `bader-row9-citation-off-by-one`, `corner-slicing-program-capped-at-14`, `exterior-wedge-slicing-nets-plus-one-free`, `parallel-offset-slicing-has-constant-total-yield`, `exterior-wedge-fails-across-two-apexes`, `pentagon-corner-slice-nets-plus-one`, `sat-not-run-at-k14`, `k14-bounded-face-budget-24` | 14 | SETTLED (archive) | Statuses unchanged. `sat-not-run-at-k14` obeyed for a seventh day. `corpus-has-no-triangle-enumeration` is now superseded at k=13 by reference data 7. | - | T152 |
+| `k14-54-reachable` | 14 | **CONTESTED** | The actual question. 151 turns, zero verifier runs, zero 14-line arrangements built by either agent. What exists that did not at turn 126: a complete deletion sweep of Suzuki's k=15 returning zero fifteen times; a cleared parallel-pair obstruction mechanism at k=14; a per-line tiered saturation filter at p=3; and a fully solved k=13 optimum — every triangle, every free segment, and its symmetry group. What does not exist: a single traced face of any arrangement, which is the one thing agenda item 3 has asked for since turn 127. | T1 | T152 |
 | `mirror-program-weakly-dominated`, `pentagram-vertices-all-spoken-for`, `cluster-siting-abandoned-the-554-premise`, `outside-line-role-pigeonhole`, `similarity-rotation-budget-is-per-cluster`, `parking-confinement-blocks-secondary-reuse`, `companion-lines-are-not-free-they-are-clusters`, `companion-slopes-are-open-not-pinned`, `similarity-freedom-resolves-dual-role-tension`, `hull-avoidance-forces-external-crossings`, `direction-freedom-global`, `endpoint-match-convention-calibrated-against-k4-kills-all-three`, `local-lookup-program-exhausted` | 14 | DEAD (archive) | Unchanged. Do not cite. | - | T102 |
 | `external-ray-triangle-verified`, `4cluster-negative-export-is-free`, `l1-carves-existing-ade-face`, `homothety-margin-not-scale-invariant`, `recentered-homothety-clears-E`, `wedge-cut-criterion-exact`, `pentagram-directions-equally-spaced`, `export-costs-intracluster-triangles`, `pentagram-walls-are-four-distinct`, `wall-tip-correspondence`, `cevian-wall-formula-invalid`, `euler-point-resolution-deltaF`, `degenerate-arrangement-63-faces`, `clustering-forces-three-nontriangles`, `cross-cluster-ratio-not-harder`, `homothety-realizes-S12`, `intracluster-tamura-cap-12`, `c7-mod7-kill-k14`, `central-symmetry-parallel-tax`, `mirror-fixed-lines-parallel`, `f0-no-self-symmetric-triangles`, `f0-axis-sector-forced-nontriangular`, `clustering-is-not-concurrence`, `pairwise-subarrangement-cap-67`, `mod2-weak-filter`, `cb-stacking-tautology`, `three-of-four-crossings-unhandled`, `construction-rate-far-below-target` | 14 | SETTLED (archive) | Unchanged, none cited since turn 81. | - | T81 |
 | `global-counting-cannot-obstruct-k14`, `symmetry-tax-pattern`, `f0-forced-nontri-at-least-10`, `m2-exhaustively-capped-28`, `single-line-translation-export`, `export-mechanism-needs-second-line`, `bc-to-m1m2-construction-dead`, `first-m2-triangle-exhibited`, `theta10-construction-unsited`, `sliver-exposure-question`, `corridor-danger-is-local-not-global`, `corridor-clipping-debate-t47-t51`, `translation-crossings-diverge-generically`, `pairwise-cap-gives-no-pressure`, `subarrangement-averaging-upper-bound`, `cevian-r80-and-descendants`, `edge-incidence-bound-121`, `vertex-corner-identity`, `nearpencil-starves-triangles`, `m3-nearpencil-hits-ceiling`, `residue-stacking-cb-vs-improved-even` | 14/all | DEAD or CONTESTED (archive) | Unchanged. | - | T77 |
