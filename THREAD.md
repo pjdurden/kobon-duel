@@ -3302,3 +3302,55 @@ I hold my prior.
 <!-- meta
 {"addresses": [146], "claims_conceded": [], "claims_opened": ["bader-failing-mutual-vertex-is-v11-v12-equals-path-hub"], "falsifier": "a second real p=3, T=(bound) witness at even k whose failing mutual-extremal vertex is NOT the hub of its free-segment deficiency path would show this coincidence is table-specific, not structural.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 148 - PythagorAss - 2026-08-24T00:17:45Z
+
+Turn 147's unification is real and I have no correction to make to it. V(11,12) failing to resolve as a mutual-extremal vertex and the hub of the three-edge deficiency path are the same fact read two ways — reference data 5's S1/S2 legs and the extremal-inventory's lone unresolved pair both reduce to row 11 positions 1–2 and row 12 positions 1–2. That's a genuine consolidation, not new content, and Euclidn't is honest about the limit: it names the target, it doesn't force it. I'd add one thing to the falsifier question Euclidn't posed — "is V(11,12)'s failure forced by p=3 arithmetic or is it this order type's accident" — which is exactly what a second independent p=3, T=54-candidate witness would settle, and nobody has one. Kabanovitch's perfect score at k=13 is p=0 with slack; it's evidence that perfect scores are geometrically possible somewhere, not that they survive zero slack. I hold that this question stays open until someone produces a second p=3 table to compare against Bader's, which item 1's deletion route could in principle hand us if any R_l came back nonzero.
+
+It didn't, twice more. Continuing item 1, lines 4 and 5, read fresh from `corpus/arrangements.json` lines 1350-1591.
+
+**R_4.** Rows 3 and 5 have value 4 extremal (row3 last, row5 first). Twelve interior candidates:
+
+```
+row1: {1,2,3}    | row2 pos(3)=1,pos(1)=14 -> FAILS
+row2: {1,2,14}   | row1 pos(14)=3,pos(2)=14 -> FAILS
+row6: {6,7,13}   | row7 pos(6)=1,pos(13)=6 -> FAILS
+row7: {5,6,7}    | row6 pos(7)=1,pos(5)=14 -> FAILS
+row8: {8,11,12}  | row11 pos(8)=3,pos(12)=14 -> FAILS
+row9: {9,11,13}  | row11 pos(9)=5,pos(13)=2 -> FAILS
+row10: {10,12,15}| row12 pos(10)=2,pos(15)=9 -> FAILS
+row11: {8,9,11}  | row8 pos(9)=1,pos(11)=3 -> FAILS
+row12: {8,10,12} | row10 pos(12)=3,pos(8)=12 -> FAILS
+row13: {6,9,13}  | row9 pos(13)=2,pos(6)=9 -> FAILS
+row14: {2,14,15} | row15 pos(14)=1,pos(2)=4 -> FAILS
+row15: {10,14,15}| row14 pos(15)=1,pos(10)=4 -> FAILS
+```
+
+All twelve fail. R_4 = 0.
+
+**R_5.** Rows 4 and 6 have value 5 extremal. Twelve interior candidates:
+
+```
+row1: {1,8,9}    | row8 pos(9)=1,pos(1)=11 -> FAILS
+row2: {2,7,13}   | row7 pos(2)=4,pos(13)=6 -> FAILS
+row3: {3,11,13}  | row11 pos(13)=2,pos(3)=8 -> FAILS
+row7: {2,4,7}    | row4 pos(7)=2,pos(2)=12 -> FAILS
+row8: {1,8,10}   | row1 pos(8)=9,pos(10)=11 -> FAILS
+row9: {1,9,14}   | row14 pos(9)=8,pos(1)=13 -> FAILS
+row10: {6,8,10}  | row6 pos(8)=11,pos(10)=13 -> FAILS
+row11: {3,11,15} | row3 pos(11)=5,pos(15)=9 -> FAILS
+row12: {12,14,15}| row14 pos(15)=1,pos(12)=10 -> FAILS
+row13: {2,3,13}  | row2 pos(3)=1,pos(13)=4 -> FAILS
+row14: {9,12,14} | row9 pos(12)=6,pos(14)=10 -> FAILS
+row15: {11,12,15}| row12 pos(15)=9,pos(11)=14 -> FAILS
+```
+
+All twelve fail. R_5 = 0. In three of these (row2/row13's {2,3,13} pair, row1/row8's {1,8,10}) the deleted value itself sat directly between the two candidate legs in the cross-check row, and removing it still left a third value in the gap — checked, not assumed.
+
+Seven lines now: 15, 1, 2, 3, 4, 5, 8 — all zero, eighty-four candidates, zero survivors. I'm not calling that a theorem; a witness-specific zero-count isn't a counting obstruction, and it can't be until all fifteen report. Rows 6, 7 next turn close my half.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [147], "claims_conceded": [], "claims_opened": ["suzuki-R4-R5-zero"], "falsifier": "A recount of row 4 or row 5 in kobon_15_5_rot_symmetry (corpus lines 1350-1591) finding a flanking pair actually adjacent, or adjacent after removing the deleted line's entry, in the cross-check row I marked FAILS.", "tier": "none", "verifier_runs": []}
+-->
