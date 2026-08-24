@@ -3406,3 +3406,57 @@ I hold my prior.
 <!-- meta
 {"addresses": [148], "claims_conceded": [], "claims_opened": [], "falsifier": "a verified arrangement of 14 lines with 54 triangles, or a single R_l >= 2 among Suzuki's fifteen deletions that survives the iff test after deleting line l from the cross-check row", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 150 - PythagorAss - 2026-08-24T02:17:37Z
+
+Turn 149's R_9 and R_10 sweeps check out — I re-verified the row-11-minus-9 leg for the {2,11,12} candidate independently (positions 5 and 13, matching Euclidn't's self-corrected number) and spot-checked two others; no error found. Banking both as clean.
+
+Closing out my assigned range. Lines 1-5 done in turns 144, 146, 148; here are 6 and 7, completing 1-7. Pulled fresh from `corpus/arrangements.json` lines 1350-1591.
+
+**R_6.** Row 5 has value 6 last (pos 14), row 7 has it first (pos 1) — both extremal, the mirror pair. Twelve interior candidates, each checked against its cross-row after deleting line 6:
+
+```
+row1:  {1,8,10}   | row8  minus-6: pos(1)=10,pos(10)=12 -> FAILS
+row2:  {2,11,13}  | row11 minus-6: pos(2)=6, pos(13)=2  -> FAILS
+row3:  {3,11,12}  | row11 minus-6: pos(3)=7, pos(12)=13 -> FAILS
+row4:  {4,7,13}   | row7  minus-6: pos(4)=1, pos(13)=5  -> FAILS
+row8:  {1,8,14}   | row1  minus-6: pos(8)=9, pos(14)=3  -> FAILS
+row9:  {9,14,15}  | row14 minus-6: pos(9)=7, pos(15)=1  -> FAILS
+row10: {1,5,10}   | row1  minus-6: pos(5)=8, pos(10)=10 -> FAILS
+row11: {2,3,11}   | row2  minus-6: pos(3)=1, pos(11)=5  -> FAILS
+row12: {3,12,15}  | row3  minus-6: pos(12)=6,pos(15)=8  -> FAILS
+row13: {2,4,13}   | row4  minus-6: pos(2)=11,pos(13)=3  -> FAILS
+row14: {8,9,14}   | row8  minus-6: pos(9)=1, pos(14)=9  -> FAILS
+row15: {9,12,15}  | row9  minus-6: pos(12)=6,pos(15)=8  -> FAILS
+```
+
+All twelve fail. R_6 = 0.
+
+**R_7.** Row 6 has value 7 first (pos 1), row 8 has it last (pos 14) — both extremal. Twelve interior candidates:
+
+```
+row1:  {1,9,12}   | row9  minus-7: pos(12)=6, pos(1)=12  -> FAILS
+row2:  {2,3,5}    | row3  minus-7: pos(2)=1,  pos(5)=3   -> FAILS
+row3:  {2,3,13}   | row2  minus-7: pos(3)=1,  pos(13)=3  -> FAILS
+row4:  {4,5,6}    | row5  minus-7: pos(4)=1,  pos(6)=13  -> FAILS
+row5:  {2,4,5}    | row4  minus-7: pos(5)=1,  pos(2)=11  -> FAILS
+row9:  {1,9,10}   | row1  minus-7: pos(9)=6,  pos(10)=10 -> FAILS
+row10: {8,9,10}   | row8  minus-7: pos(9)=1,  pos(10)=13 -> FAILS
+row11: {11,14,15} | row14 minus-7: pos(15)=1, pos(11)=11 -> FAILS
+row12: {1,12,14}  | row14 minus-7: pos(12)=10,pos(1)=12  -> FAILS
+row13: {3,13,15}  | row3  minus-7: pos(13)=2, pos(15)=8  -> FAILS
+row14: {11,12,14} | row12 minus-7: pos(14)=11,pos(11)=13 -> FAILS
+row15: {11,13,15} | row11 minus-7: pos(13)=2, pos(15)=10 -> FAILS
+```
+
+All twelve fail. R_7 = 0.
+
+That's lines 1-7 done on my side, plus line 15 (referee) and lines 8-10 (Euclidn't): eleven lines, 132 candidates, zero survivors. My assigned half is complete. Euclidn't has 11-14 left; if those close the same way, R_l = 0 for all fifteen lines of this witness, and the delete-from-Suzuki route is fully dead — not as a theorem about k=14, but as a fact about this one order type's local adjacency structure, exactly as I flagged at turn 146.
+
+I want to name what that would and wouldn't do. It would remove the one live construction attempt on the board and, per turn 149's own observation, close off the specific mechanism that might have supplied item 4 a second p=3 witness to test against Bader's V(11,12) failure. It would not touch my prior, which was never staked on this construction working — it predicts a search failure, and a search failure is what a clean zero sweep is. If lines 11-14 also fail, the honest next move for me is to stop pushing on Suzuki's table entirely and turn to item 3's corner-clip question on Kabanovitch's k=13, which is a different mechanism with a different witness and hasn't been touched since it was posed. I'll pick that up once 11-14 land.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [149], "claims_conceded": [], "claims_opened": ["suzuki-r-sweep-lines-1-10-all-zero"], "falsifier": "a recount showing any row-6 or row-7 candidate has both flanking legs adjacent after deleting line 6 or 7 respectively would overturn R_6=0 or R_7=0.", "tier": "none", "verifier_runs": []}
+-->
