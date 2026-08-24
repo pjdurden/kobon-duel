@@ -3460,3 +3460,25 @@ I hold my prior.
 <!-- meta
 {"addresses": [149], "claims_conceded": [], "claims_opened": ["suzuki-r-sweep-lines-1-10-all-zero"], "falsifier": "a recount showing any row-6 or row-7 candidate has both flanking legs adjacent after deleting line 6 or 7 respectively would overturn R_6=0 or R_7=0.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 151 - Euclidn't - 2026-08-24T03:17:05Z
+
+Turn 150's lines 6-7 sweep checks out on independent re-derivation — I ran row6-minus-6 and row7-minus-6 crosswise and the positions match. Completing my half: lines 11, 12, 13, 14, read fresh from `corpus/arrangements.json` lines 1350-1591.
+
+**R_11.** Extremal in row10 (pos1) and row12 (pos14). Twelve interior candidates, all fail: {1,12,14} row12-minus-11 pos(1)=13,pos(14)=11; {2,6,9} row6 pos(2)=4,pos(9)=8; {3,5,6} row5 pos(3)=5,pos(6)=13; {4,8,9} row8 pos(9)=1,pos(4)=3; {3,5,15} row3 pos(5)=4,pos(15)=8; {2,3,6} row2 pos(3)=1,pos(6)=5; {7,14,15} row14 pos(15)=1,pos(7)=10; {4,8,13} both legs fail (row4 pos(13)=4,pos(8)=6; row13 pos(8)=3,pos(4)=5); {2,4,9} row4 pos(9)=5,pos(2)=11; {8,10,13} row8 pos(13)=2,pos(10)=12; {1,7,14} row7 pos(14)=8,pos(1)=10; {5,7,15} row5 pos(7)=2,pos(15)=6. R_11 = 0.
+
+**R_12.** Extremal in row11 (pos14) and row13 (pos1). Twelve candidates, all fail: {1,7,11}, {2,8,9}, {3,6,9}, {4,8,10}, {5,14,15}, {3,6,15}, {1,7,14} (fails both legs — row14 pos(7)=6,pos(1)=11; row1 pos(14)=3,pos(7)=5), {2,4,8}, {2,3,9}, {4,10,13}, {5,7,14}, {5,6,15}. R_12 = 0.
+
+**R_13.** Extremal in row12 (pos1) and row14 (pos14). Eleven fail cleanly; one is a genuine near-miss. {3,7,15}: row7-minus-13 gives pos(3)=5, pos(15)=6 — **adjacent**, second leg holds. But the third leg, row15-minus-13, gives pos(3)=6, pos(7)=11 — not adjacent. Fails on the leg it needed. The other eleven — {1,14,15}, {2,5,6}, {3,5,7}, {4,6,9}, {2,3,5}, {2,4,6}, {8,9,11}, {4,8,9}, {10,11,12}, {8,10,11}, {1,7,15} — all fail outright. R_13 = 0.
+
+**R_14.** Extremal in row13 (pos14) and row15 (pos1). Note {2,4,10} is generated independently by both row2 and row4 — a genuine cross-check, and it fails from both directions (row4-minus-14: pos(10)=9,pos(2)=11; row2-minus-14: pos(10)=9,pos(4)=12). The rest: {1,11,13}, {3,8,10}, {5,9,12}, {6,8,9}, {7,11,12}, {3,6,8}, {5,6,9}, {2,3,10}, {1,7,11}, {5,7,12} — all fail. R_14 = 0.
+
+That completes item 1. Fifteen lines, both agents plus the referee's l=15: every single one gives R_l = 0. 168 candidates total across the full sweep, zero survivors, one near-miss that held one leg out of three ({3,7,15} at R_13).
+
+I want to be exact about what this closes and what it doesn't, matching the discipline PythagorAss has held since turn 146. It closes the delete-from-Suzuki construction avenue completely — not as a theorem about k=14, but as an exhaustive fact about this one order type: no single-line deletion from the 65-triangle optimum produces 54. It also closes the specific supply line item 4 needed: a second p=3, T=54-candidate witness to compare against Bader's V(11,12) failure was never going to come from this mechanism, and now we know that for certain rather than provisionally. The board is what my prior predicted — three real witnesses (Bader 53, Suzuki-minus-any-line 52, Kabanovitch 47), one exhausted construction route, zero arrangements at the bound. I'll join PythagorAss on item 3's corner-clip question next, since it's a genuinely different mechanism on a genuinely different witness.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [150], "claims_conceded": [], "claims_opened": ["suzuki-full-fifteen-line-sweep-all-R-zero"], "falsifier": "a single one of these R_11-R_14 candidates reversing under independent re-derivation, or a sixteenth candidate either of us missed that resolves as a triangle.", "tier": "none", "verifier_runs": []}
+-->
