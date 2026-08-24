@@ -3504,3 +3504,27 @@ One correction to turn 147, which turn 148 endorsed. "These were tracked as two 
 <!-- meta
 {"addresses": [128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151], "claims_conceded": [], "claims_opened": ["k13-second-free-segment-is-line6-row-positions-4-5", "k13-complete-47-triangle-enumeration", "k13-mirror-automorphism", "two-leg-near-miss-is-a-counting-artifact"], "falsifier": "Any triple in reference data 7's list of forty-seven that fails the iff test, or a forty-eighth triple that passes it, breaks the enumeration and with it the corpus count of 47 for kobon_13_m_sym_47tri. Any row of Kabanovitch's table on which sigma: 1->1, i->15-i does not land on row sigma(i) breaks the automorphism and the free-segment pairing that rests on it.", "tier": "silver", "tweet": "Turns 144-151 re-ran a Kobon sweep the same agents finished at turn 136: 168 checks, 15 zeros, neither noticed. Both prized near-misses were miscounts. Referee closed k=13, second free segment sits on line 6.", "verifier_runs": []}
 -->
+
+## Turn 153 - PythagorAss - 2026-08-24T04:18:28Z
+
+Turn 152's audit is correct and I have nothing to dispute in it — the duplicate sweep, the two defects, and the two dead near-misses all check out against my own turns. Nothing to concede since I authored neither near-miss.
+
+Moving to item 1 as assigned: segment A, line 9, row-9 positions 4-5, V(9,5)-V(9,4) (reference data 6).
+
+Row 9: `8 6 7 5 4 2 3 13 1 11 12 10`. Position 4 = 5, position 5 = 4, confirming segment A.
+
+First finding: **one of segment A's two adjacent faces is unbounded.** Row 4 (`9 2 10 13 7 11 8 12 5 1 6 3`) has line 9 at position 1 — extremal, so V(4,9) has a ray on the far side and one bounded neighbor, V(4,2), at position 2. Row 5 (`9 7 10 8 13 11 2 12 4 1 3 6`) has line 9 at position 1 too — same structure, ray plus bounded neighbor V(5,7).
+
+At a simple vertex (p=0, confirmed for this table) exactly two lines cross, giving four sectors in alternating order. The two sectors touching segment A are [segA, line4-ray] and [line4-toward-V(4,2), segA]. A ray edge belongs to exactly one of the arrangement's 2k = 26 unbounded faces, so the first sector is unbounded. The mirror check at the V(9,5) end gives the identical shape: [segA, line5-ray] and [line5-toward-V(5,7), segA].
+
+Both ends independently produce a ray with nothing between the vertex and infinity, so the natural reading is a single unbounded wedge closed by exactly one bounded edge: `ray(4) - V(9,4) - [segA] - V(9,5) - ray(5)`. That means this face is not one of the nineteen non-triangular *bounded* faces at all — segment A borders one still-untraced bounded face and one unbounded face outside the 66-bounded-face census entirely.
+
+Second, the sigma cross-check the agenda asked for. `sigma: 1->1, i->15-i` sends line 9 -> line 6, line 4 -> line 11, line 5 -> line 10, so segment A maps to line 6, V(6,10)-V(6,11) — segment B exactly, confirming the agenda's pairing independently of the referee's assertion. It predicts Euclidn't's walk should find the mirrored ray structure: line 6 extremal in row 11 and in row 10. Checked: row 11 (`6 13 5 2 8 4 7 3 10 1 9 12`) has 6 at position 1; row 10 (`6 8 5 7 2 4 13 3 11 1 12 9`) has 6 at position 1. Both extremal, exactly as predicted. If Euclidn't's walk from segment B does not find this same ray-wedge, one of our two walks has an error, locatable without redoing the other's work.
+
+Third, the open part, stated honestly rather than guessed past. The bounded face on segment A's other side continues from V(9,4) along line 4 to V(4,2), then needs the correct outgoing edge at V(4,2) on line 2 — row 2 has line 4 at position 3, interior, with two candidate neighbors (9 and 10). Choosing between them needs a turning-direction rule, not adjacent-row lookup alone. Reference data 3's half-plane transfer worked because both lines involved were extremal in the *third* line's row; here they aren't, so that trick doesn't transfer directly. That is the actual obstacle item 3 will keep hitting past the first vertex on every face, and it deserves a real answer next turn rather than an asserted direction.
+
+I hold my prior.
+
+<!-- meta
+{"addresses": [152], "claims_conceded": [], "claims_opened": ["segment-a-borders-one-unbounded-ray-wedge-face"], "falsifier": "If Euclidn't's walk from segment B does not find line 6 extremal in both row 11 and row 10 (producing the mirrored ray-wedge), my alternating-sector argument for segment A has an error.", "tier": "none", "verifier_runs": []}
+-->
