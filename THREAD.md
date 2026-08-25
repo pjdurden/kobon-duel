@@ -3735,3 +3735,29 @@ I hold my prior. Nothing this turn touches k=14 directly, but the "folding back"
 <!-- meta
 {"addresses": [161], "claims_conceded": [], "claims_opened": ["folding-back-is-discovery-redundancy-not-target-shrinkage"], "falsifier": "if a fresh seed on an unrepresented line (e.g. line 3) also collapses onto an already-named face rather than opening new territory, and this happens on three consecutive fresh attempts, I'd treat that as real evidence the remaining orbits are small or degenerate, not just discovery redundancy.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 163 - Euclidn't - 2026-08-25T11:18:44Z
+
+Turn 162's rebuttal is correct and I'll concede it with the re-derivation the rules require, not a restatement.
+
+> "F5 has six edges; each edge sits on a different triangle side, and each of those triangle sides is a valid seed for item 2's search... landing on it twice is exactly the expected multiplicity, not a sign the remaining slots are drying up."
+
+Re-derived: a hexagon has six sides, each side is a distinct triangle's edge (by `bader-triangle-adjacency-test-is-iff`'s analogue for k=13), so six of the 141 triangle-side seeds point at it by construction. Two independent walks landing on the same hexagon from different entry edges is what six-fold redundancy predicts, not evidence the target set is shrinking. I conceded the wrong inference in turn 161; the census's remaining size says nothing about how many seeds re-find already-known faces early.
+
+Now the actual move. There is a structural fact nobody has used yet, and it kills the whole insertion program in one pass rather than requiring the census to finish.
+
+**No two of the nineteen non-triangular bounded faces share an edge.** Every bounded edge of B is either one of the 141 triangle-side edges or one of the 2 free segments (reference data 4, 7: `B = 143 = 141 + 2`). By the Tamura per-segment argument (reference data 4), a triangle-side edge's two endpoints fix a *unique* candidate triangle `{a,b,c}` on *one specific side*; the far side is therefore never a triangle. So every triangle-side edge has exactly one triangle neighbor and one non-triangle neighbor — never two triangles, and never two non-triangles. The two free segments (reference data 8) each have one unbounded 3-sided face on one side and one hexagon on the other — again never two of the nineteen. So no edge of B has two of the nineteen on both sides. This uses order-type data throughout (the row-adjacency test, the free-segment structure), not a bare Euler count.
+
+**This bounds Y for any generic insertion.** Insert a 14th line l into B, generic: no parallels, no passing through existing vertices. Its 13 crossings give 12 bounded chords. Between consecutive chords, l crosses some line m at an interior point of one specific edge e of m — a point that did not exist before insertion. The two chords flanking that crossing occupy exactly the two faces of B adjacent across e. Label each of the 12 chords T (lands in a triangle) or N (lands in one of the nineteen). Since no two of the nineteen are edge-adjacent, **no two consecutive chords can both be N.** That is a hard constraint on the sequence, independent of which faces the census eventually names.
+
+The maximum number of N's in a sequence of 12 with no two adjacent is `ceil(12/2) = 6` (e.g. N T N T N T N T N T N T). Y, the corner-clip count, is a subset of the N-chords — a chord through a triangle nets zero regardless (destroys one, creates one, per the agenda's own identity), and a non-corner-clip chord through one of the nineteen also nets zero. So `T' <= 47 + Y <= 47 + 6 = 53`.
+
+**Generic-line insertion into Kabanovitch's k=13 optimum cannot exceed 53 triangles at k=14.** Item 3 needed Y=7 from 12 slots; the adjacency structure of B caps it at 6, regardless of which seven faces the census eventually names or which line is chosen. Turns 124 through 162 have been building toward a target that this lemma shows is unreachable by this route.
+
+Scope, honestly: this closes the insertion-from-B program, not k=14 in general — a 54-triangle arrangement not obtainable by inserting a line into this specific optimum is untouched. My win condition needs the general case. But it retires agenda items 1-3's stated purpose entirely and it is the first argument in this project that actually constrains a construction attempt rather than just cataloguing faces.
+
+I hold my prior: N(14)=53, N(18)=93, N(20)=116.
+
+<!-- meta
+{"addresses": [162], "claims_conceded": ["seed-convergence-signals-drying-up"], "claims_opened": ["no-two-nontriangular-faces-share-an-edge", "generic-insertion-into-b-caps-at-53"], "falsifier": "a base 14-line arrangement reaching 54 that is not a generic single-line insertion into this k=13 optimum, or a counterexample showing two of the nineteen faces actually do share an edge (which would break the no-two-adjacent lemma).", "tier": "none", "verifier_runs": []}
+-->
