@@ -3710,3 +3710,28 @@ I hold my prior. N(14) = 53, N(18) = 93, N(20) = 116, with a parity or counting 
 <!-- meta
 {"addresses": [160], "claims_conceded": [], "claims_opened": ["sigma-h1-verified-from-rows", "seed-5-8-10-collapses-into-hexagon-b"], "falsifier": "A verified straight-line 14th line inserted into Kabanovitch's k=13 optimum achieving seven corner-clips across seven distinct non-triangular faces (checked against the rank-3 exchange axiom) would realize 54 and refute my prior at k=14.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 162 - PythagorAss - 2026-08-25T10:18:44Z
+
+Turn 161's negative result is real but its interpretation needs a check before it hardens into "structural worry." I ran the same experiment Euclidn't ran — one fresh seed, chosen from my own assigned range (line 6, not yet used in G1 or H1) — and it also folds back onto a known face. That is useful, but not for the reason turn 161 suggests.
+
+**The walk.** Seed triangle {6,8,9}: row6 positions 2-3 give values 9,8 (edge on line 6), row8 positions 1-2 give 9,6, row9 positions 1-2 give 8,6 — genuine, confirmed three ways, and it's on reference data 7's list. Walking the far side of the line-6 edge V(6,9)-V(6,8), using the pivot rule from turn 158 (at each vertex, look up the row of the line you're turning onto, find the two neighbors of the value you're leaving, the one matching where you came from is the triangle side, exit via the other):
+
+V(6,9) → row9 neighbors of 6 are 8,7; 8 matches (candidate {6,8,9}, our seed) → exit 7 → V(9,7)
+V(9,7) → row7 neighbors of 9 are 6,5; 6 matches (candidate {6,7,9}, genuine) → exit 5 → V(7,5)
+V(7,5) → row5 neighbors of 7 are 9,10; 9 matches (candidate {5,7,9}, genuine) → exit 10 → V(5,10)
+V(5,10) → row10 neighbors of 5 are 8,7; 7 matches (candidate {5,7,10}, genuine) → exit 8 → V(10,8)
+V(10,8) → row8 neighbors of 10 are 6,5; 5 matches (candidate {5,8,10}, genuine) → exit 6 → V(8,6)
+V(8,6) → row6 neighbors of 8 are 9,10; 10 matches (candidate {6,8,10}, genuine) → exit 9 → V(6,9), closes.
+
+Edge set: {V(6,9),V(7,9)}, {V(7,9),V(5,7)}, {V(5,7),V(5,10)}, {V(5,10),V(8,10)}, {V(8,10),V(6,8)}, {V(6,8),V(6,9)} — identical to F5's edge set from turn 157, same hexagon, walked from a different seed and a different starting vertex.
+
+**Why this cuts against turn 161's reading, not for it.** F5 has six edges; each edge sits on a different triangle side, and each of those triangle sides is a valid seed for item 2's search. So a hexagon like F5 is reachable from up to six independent starting points — landing on it twice is exactly the expected multiplicity, not a sign the remaining slots are drying up. The 19-face census is a fixed target set; how many of the 141 triangle-side seeds happen to point at any one member of that set says nothing about how many members there are. Conflating "many seeds converge on few known faces early" with "few new faces remain" mistakes the discovery process's redundancy for the target's size. If anything this is a second, structurally independent confirmation of F5 — my chain touches {6,7,9}, {5,7,9}, {5,7,10}, only overlapping Euclidn't's {5,8,10}/{6,8,10} pair at the last two steps — which is exactly the kind of cross-check the agenda asks for and gets it for free.
+
+I'll pick a genuinely fresh seed next turn, further from the lines already implicated (H1/G1/F4/F5 between them already cover 2,4,5,6,7,8,9,10,11,12,13 — line 3 alone is thin), rather than one more line-6 attempt.
+
+I hold my prior. Nothing this turn touches k=14 directly, but the "folding back" argument, if it stood, would have been the first piece of actual pressure on it in 160 turns — and it doesn't stand up to one lookup.
+
+<!-- meta
+{"addresses": [161], "claims_conceded": [], "claims_opened": ["folding-back-is-discovery-redundancy-not-target-shrinkage"], "falsifier": "if a fresh seed on an unrepresented line (e.g. line 3) also collapses onto an already-named face rather than opening new territory, and this happens on three consecutive fresh attempts, I'd treat that as real evidence the remaining orbits are small or degenerate, not just discovery redundancy.", "tier": "none", "verifier_runs": []}
+-->
