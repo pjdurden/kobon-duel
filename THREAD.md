@@ -3905,3 +3905,25 @@ That's a well-posed sub-problem now: do the 98 ray-zone segments, as the mirrore
 <!-- meta
 {"addresses": [169], "claims_conceded": [], "claims_opened": ["distant-axis-preserves-same-side-triangles", "mirror-construction-98-new-segments-96-must-triangulate"], "falsifier": "a coordinate check showing some cross-family crossing point does not recede monotonically along its line as the axis translation distance D grows would break the limit argument for same-side preservation.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 171 - Euclidn't - 2026-08-25T19:18:44Z
+
+Turn 170's limit argument survives scrutiny — the same-side preservation is real, not asserted. I re-derived it independently and it holds.
+
+> "for D large enough, all 49 cross-family crossings land in ray zones on both lines they touch"
+
+Re-derived: parametrize mirror line l_j' as q_0 + t·u_j + D·n_hat (translation along fixed axis normal, direction u_j unchanged). Solving l_i ∩ l_j' for t gives an affine function t(D) = a + bD (generic case, b≠0 since u_j isn't parallel to l_i). Since l_j'’s own internal span (crossings with the other 6 mirror lines) sits at a fixed, D-independent range of t-values — translating the whole mirror copy rigidly doesn't change t-coordinates along l_j' relative to itself — t(D) exits that fixed range once D passes some threshold. The symmetric argument in l_i's own coordinate gives the other side. Finite intersection of 49 eventually-true thresholds gives one common D0. I concede this mechanism: same-side survival is achievable, not fictional, and the two halves' 22 triangles are real once D > D0.
+
+But this concession sharpens the actual demand rather than closing it, and turn 170 undersells how sharp. **The order type stabilizes for D large — this isn't a continuous parameter to search, it's a single fixed combinatorial answer waiting to be read off.** Each concurrency test among three of the fourteen lines is a determinant that is a polynomial in D of bounded degree (affine in D per translating line involved), so it has finitely many roots; past the largest root, the combinatorial type — which pairs of new crossings are adjacent, hence which triples close into triangles — is constant. "Push D further" cannot change the count once every wall in C(14,3) is passed. So the 32-triangle target is not something to search for by tuning D; it is a fixed number determined entirely by the 7 original line directions, their 7 mirror images, and the axis normal, and nobody has computed it.
+
+And the number it needs to hit is far tighter than "well-posed." 32 mixed triangles consume 96 of the 98 new segments — average per-line usage 96/14 ≈ 6.86 out of 7. Since usage per line is an integer capped at 7, this forces **at least 12 of the 14 lines to use all 7 of their new segments**, with at most 2 slack slots total across the whole arrangement. That is not "mostly saturates," it is "saturates almost everywhere with zero room for error on 12 lines."
+
+Here is why that is a real obstruction and not a restatement of the difficulty. On line a, the 7 new points are ordered by sorting the seven rates b_{a,j} (one per mirror line j) — this order is generically a fixed, near-arbitrary permutation of the seven mirror lines as seen from a, unrelated to the order the same seven mirror lines present to line a's neighbors on the original side. For a to hit degree 7, every one of its 7 ray-zone segments must independently close into an adjacent triple with some pair of lines on the other side — a condition that must hold simultaneously across twelve different lines' worth of orderings, derived from fourteen essentially independent directions, with no symmetry forcing agreement between them (unlike Kabanovitch's sigma, there is no automorphism here linking line a's order to line b's). Nothing shown so far — not the limit argument, not the segment budget — touches whether these twelve near-arbitrary permutations actually cooperate.
+
+Compute the stable order type and count triangles in it. Until then, 32 is asserted, not derived, and per the standing rule on unverified counts, I treat it as fiction.
+
+I hold my prior: N(14) = 53, N(18) = 93, N(20) = 116.
+
+<!-- meta
+{"addresses": [170], "claims_conceded": ["distant-axis-same-side-survival-via-limit"], "claims_opened": ["distant-axis-order-type-stabilizes-for-large-d", "mixed-triangle-target-needs-12-of-14-lines-fully-saturated"], "falsifier": "an explicit computation of the stable (D-past-all-walls) order type for a concrete choice of 7 original line directions/positions and axis normal, showing 32 or more mixed triangles actually close, with coordinates or a table checkable by the iff test.", "tier": "none", "verifier_runs": []}
+-->
