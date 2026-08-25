@@ -3849,3 +3849,23 @@ I hold my prior: N(14) = 53, N(18) = 93, N(20) = 116.
 <!-- meta
 {"addresses": [166], "claims_conceded": [], "claims_opened": ["insertion-y-capped-at-6-independent-of-concurrence-count"], "falsifier": "an algebraic error in ceil(x/2) <= (x+1)/2 summed over segments of size n = 12-m, m+1 segments \u2014 the bound is arithmetic, not geometric, so only a counting mistake could break it, not a new construction.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 168 - PythagorAss - 2026-08-25T16:18:44Z
+
+Turn 167's arithmetic is correct, and I'll concede it with re-derivation rather than restatement.
+
+> "Y <= sum_i ceil(seg_i/2) <= sum_i (seg_i + 1)/2 = (n + m+1)/2 = (12-m + m+1)/2 = 13/2 = 6.5"
+
+Re-derived: with m interior concurrences, l crosses 13-m distinct points of B, giving n = 12-m bounded chords split by m exempted edges into m+1 segments summing to n. Each segment enforces strict alternation, so its N-count is `ceil(seg_i/2) <= (seg_i+1)/2`, and the sum over m+1 segments is `(n+m+1)/2 = 13/2`, integer-capped at 6. Checked independently against turn 164's m=1 case (11+2)/2=6.5→6 and turn 165's m=2 case: I ran the exhaustive three-part split myself — sizes (1,1,8) give 1+1+4=6, and no partition of 10 into three nonnegative parts beats that, since at most two parts can be odd when the total is even. Both match. Y <= 6 for every m from 0 to 6, unconditionally.
+
+But the bound generalizes further than turn 167 claimed, and I should say so before building on it rather than after. Nothing in the argument uses that B is *Kabanovitch's optimum* specifically — it only uses that B is a **simple** 13-line arrangement. The edge-alternation fact (reference data 4's Tamura per-segment argument: a bounded segment's two endpoints fix a unique candidate triangle on one specific side, so the far side is never that triangle) holds for any simple arrangement of any size, not just the 47-triangle one. So: **generic single-line insertion into any simple 13-line arrangement A caps the result at T(A) + 6.** Since Tamura's bound for k=13 is tight at 47 and that's the max any A can score, single-line generic insertion from a simple 13-line base is capped at 53, period — not just from B, from every simple 13-line arrangement there is. Concurrent insertion adds nothing new per turn 167's own m-sweep. This fully retires agenda items 1-3's stated purpose; the census of nineteen faces was never load-bearing for this bound and doesn't need finishing to close the single-line-insertion program.
+
+I say this against my own position because it's true and because it clears the board for what actually matters: this closes one construction method, not k=14. My win condition doesn't route through inserting one line into a 13-line arrangement, and it never had to.
+
+**New avenue, concrete rather than "try symmetry."** 54 = 2 x 27. A 14-line arrangement built as 7 pairs under a point-reflection or line-reflection involution sigma has every triangle either sigma-fixed or paired into an orbit of 2. If a construction realizes exactly 27 orbit-pairs and zero fixed triangles, the count is exactly 54 with no remainder to chase — unlike a 7-fold rotational scheme (14 = 7x2 orbits of lines but triangle orbits under Z/7 are size 7 or 1, and 54 = 7x7+5 doesn't divide clean, which is presumably why nobody has pushed a 7-fold family here). The 2-fold case is arithmetically the friendlier target. Concretely: take two mutually reflected copies of a 7-line near-pencil-ish generic arrangement (7 lines through no common point, positioned generically, T(7)=11 achievable per known values), reflect across an axis avoiding all of the first copy's vertices, and count cross-copy triangles formed by one line from each half plus the fixed-line contributions. This needs the actual cross-triangle count worked out, which I haven't done yet — that's next turn's work, not a claim now.
+
+I hold my prior: N(14) = 54 is still open. The insertion-from-13 program, in its fullest generalized form, is now completely closed — correctly, and I'm the one stating the stronger version of why. The live question moves to direct 2-fold symmetric constructions at k=14, which nothing in turns 163-167 touches.
+
+<!-- meta
+{"addresses": [167], "claims_conceded": ["y-leq-6-independent-of-concurrence-count"], "claims_opened": ["generic-insertion-into-any-simple-13-line-caps-53", "twofold-symmetric-k14-orbit-count-54-eq-2x27"], "falsifier": "a 2-fold symmetric 14-line construction whose cross-copy triangle count, worked out explicitly, provably falls short of 27 pairs for every choice of 7-line half and axis, or a proof that reflection symmetry forces at least one non-triangular fixed face killing the clean 54 count", "tier": "none", "verifier_runs": []}
+-->
