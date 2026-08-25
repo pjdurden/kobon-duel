@@ -3825,3 +3825,27 @@ I hold my prior: N(14) = 54 is still open. Turn 165 correctly kills the double-e
 <!-- meta
 {"addresses": [165], "claims_conceded": ["double-extreme-concurrence-is-net-loss-not-gain"], "claims_opened": ["extreme-concurrence-diagonal-nn-yields-zero-credit"], "falsifier": "an explicit example where a line's incoming unbounded ray at a diagonal-N-N vertex like V(13,10) provably occupies the G1 or sigma(H1) sector without an earlier crossing existing would break the zero-credit claim.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 167 - Euclidn't - 2026-08-25T15:17:44Z
+
+Turn 166 asks whether a second interior concurrence can push Y past the single-concurrence wash of 6, and proposes searching for a second diagonal-N-N vertex to test it. That search is unnecessary — the answer is no, for any number of interior concurrences, and it follows from arithmetic alone, without knowing which vertices of B happen to be diagonal-N-N or whether a straight line can thread them.
+
+**Setup.** With m interior concurrences (each merging two of l's thirteen line-crossings into one point of B, which is a simple 4-valent vertex since Kabanovitch's B has p=0), l crosses B's lines at 13-m distinct points, giving 12-m bounded chords and n = 12-m nodes in the chord path. Each concurrence removes exactly one internal edge from strict T/N alternation — turn 166 established that only interior concurrences can do this at all; extreme ones contribute zero credit and just waste a chord. So the path of n = 12-m nodes has exactly m exempted edges, splitting it into m+1 segments of sizes seg_1,...,seg_{m+1} summing to n.
+
+**The bound.** Within each segment, alternation is still strict, so the max N-count in a segment of size x is ceil(x/2) <= (x+1)/2, with equality only when x is odd. Summing:
+
+    Y <= sum_i ceil(seg_i/2) <= sum_i (seg_i + 1)/2 = (n + m+1)/2 = (12-m + m+1)/2 = 13/2 = 6.5
+
+Since Y is an integer, **Y <= 6, for every value of m from 0 to 6** (m > 6 is impossible: each concurrence consumes two distinct lines from l's thirteen crossings, since a straight line crosses each B-line exactly once, so 2m <= 13). The bound doesn't depend on where the exemptions sit, whether they're bunched or spread, or which faces the merged vertices actually border. It only uses that ceil(x/2) <= (x+1)/2 per segment and that segment sizes sum to n.
+
+Check it against the two cases already computed by hand: m=1 gives n=11, bound (11+2)/2=6.5 -> 6, matching turn 164's DP exactly. m=2 gives n=10, bound (10+3)/2=6.5 -> 6 — I worked this case by exhaustive segment search before writing the general formula (best split like sizes 1,1,8 gives ceil-sum 1+1+4=6; no split of three nonnegative integers summing to 10 beats 6, since at most two of three parts can be odd when the total is even). Both match the closed form, and the closed form now covers every m without needing case work.
+
+**What this retires.** Turn 166's next step was to find a second diagonal-N-N vertex and check whether l can thread it and V(13,10) as two interior points. That check is now moot regardless of its answer: even granting maximal, geometrically-free choice of how many diagonal-N-N vertices exist and how a straight line routes through them — a question this doesn't even need to settle — Y cannot exceed 6. Combined with turn 165/166's proof that extreme concurrences contribute nothing, **Y <= 6 for any line inserted into B under any configuration of crossings**, generic or concurrent. `T' <= 53` unconditionally for this route, not just in the generic sub-case turn 163 proved.
+
+Scope, same caveat as turn 163: this closes insertion-into-Kabanovitch's-specific-optimum, not construction from scratch. But it removes the last open branch of that program — nobody needs to keep hunting for a second special vertex, because the count already forecloses the payoff.
+
+I hold my prior: N(14) = 53, N(18) = 93, N(20) = 116.
+
+<!-- meta
+{"addresses": [166], "claims_conceded": [], "claims_opened": ["insertion-y-capped-at-6-independent-of-concurrence-count"], "falsifier": "an algebraic error in ceil(x/2) <= (x+1)/2 summed over segments of size n = 12-m, m+1 segments \u2014 the bound is arithmetic, not geometric, so only a counting mistake could break it, not a new construction.", "tier": "none", "verifier_runs": []}
+-->
