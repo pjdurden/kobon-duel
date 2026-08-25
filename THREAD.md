@@ -3869,3 +3869,25 @@ I hold my prior: N(14) = 54 is still open. The insertion-from-13 program, in its
 <!-- meta
 {"addresses": [167], "claims_conceded": ["y-leq-6-independent-of-concurrence-count"], "claims_opened": ["generic-insertion-into-any-simple-13-line-caps-53", "twofold-symmetric-k14-orbit-count-54-eq-2x27"], "falsifier": "a 2-fold symmetric 14-line construction whose cross-copy triangle count, worked out explicitly, provably falls short of 27 pairs for every choice of 7-line half and axis, or a proof that reflection symmetry forces at least one non-triangular fixed face killing the clean 54 count", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 169 - Euclidn't - 2026-08-25T17:18:44Z
+
+Turn 168's generalization is correct and clears the board cleanly — I have nothing to concede since the insertion-from-13 program was retired in my favor over turns 163-167, and I'll let that stand without restating it.
+
+The new avenue needs pressure before it's allowed to count as progress. PythagorAss's orbit arithmetic — zero fixed triangles when sigma is a fixed-point-free line-involution, all 54 needed as 27 orbits of 2 — is correct, and it's the same odd-involution-needs-a-fixed-point fact that produced Kabanovitch's own `{1,7,8}` in reference data 10. But the arithmetic hides where the actual work is.
+
+Apply Tamura's per-segment argument (reference data 4) to each 7-line half on its own: k=7, p=0 gives B = k(k-2) = 35 bounded segments, T(7) <= floor(35/3) = 11, tight and achievable, using 33 of the 35 segments as triangle sides and leaving exactly 2 free — 35 mod 3 = 2, the identical residue that forced Kabanovitch's two free segments at k=13 (`k13-free-segments-forced-by-b-mod-3`). So each 7-line half, taken alone, is already saturated: 33 of its 35 bounded segments are spoken for before the second copy is even introduced.
+
+Now add the other seven lines. Each of the 7 mirrored lines crosses each of the 7 original lines exactly once — 49 new crossings — and by the same convexity fact turn 163 used against generic insertion, a line landing on a bounded segment that's a triangle side must pass through that triangle's interior, destroying it as a face. With 33 of 35 slots already full on each side, preserving both halves intact requires every one of those 49 crossings to land in the four total free/ray positions per line, on both sides, simultaneously. That is not "position generically" — it's a global avoidance condition on 49 points against a structure with almost no slack, and turn 168 has not shown it is satisfiable, let alone exhibited coordinates that do it.
+
+Grant it anyway, to find where the real gap is. Suppose both halves' 11 triangles survive perfectly intact. Mirrored, that's 22 same-side triangles, forming 11 sigma-orbits. The target is 27 orbits. **That leaves 16 orbits — 32 triangles, fifty-nine percent of the total — that must be mixed, using lines from both halves, with a count turn 168 explicitly admits hasn't been worked out.** This proposal isn't a construction with one gap to patch; on its own best-case numbers, the part that's "free" (same-side survival, itself unproven) supplies barely two-fifths of the target, and the majority is the unverified part.
+
+This is the same failure mode as the deletion route and the corner-clip route before it: an identity that looks like it delivers most of the bound while the actual triangles remain uncounted. Per the standing rule against unverified counts, I'm treating "32 mixed triangles" as fiction until a table produces them — and per the standing rule against near-miss margin arguments, "we're close, only the cross term is missing" is exactly the shape that has failed three times already in this ledger.
+
+Concrete ask: before the next turn claims progress on this avenue, either exhibit the 49 cross-copy crossing positions relative to both halves' 33 spoken-for segments, or concede that same-side survival is itself unverified and the 2-fold program has produced zero triangles so far, mixed or otherwise.
+
+I hold my prior: N(14) = 53, N(18) = 93, N(20) = 116.
+
+<!-- meta
+{"addresses": [168], "claims_conceded": [], "claims_opened": ["two-fold-mirror-same-side-survival-unverified", "two-fold-mirror-orbit-count-leaves-32-of-54-unverified"], "falsifier": "An explicit table showing both 7-line halves' 11 triangles each survive as faces of the full 14-line union, plus an exhibited count of at least 16 additional mixed-line sigma-orbits reaching exactly 54.", "tier": "none", "verifier_runs": []}
+-->
