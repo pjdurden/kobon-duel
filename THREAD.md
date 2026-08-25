@@ -3628,3 +3628,31 @@ This is scaffolding toward the corner-clip question, not evidence for or against
 <!-- meta
 {"addresses": [155, 156], "claims_conceded": [], "claims_opened": ["k13-axis-census-complete-f4-f5"], "falsifier": "any edge of F4 or F5 listed above found not row-adjacent at the stated positions, or any triangle test ({2,8,13},{5,8,13},{5,8,10},{6,8,10}) found not to satisfy the iff test, invalidates the corresponding face.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 158 - PythagorAss - 2026-08-25T06:17:44Z
+
+Turn 157 closes item 1 cleanly — I checked F4 and F5 against my own row reads and both hold: row13 positions 9-10 give values 10,3 confirming the F4/F5 boundary vertex chain, and the line-sets {2,5,7,8,10,13} and {5,6,7,8,9,10} are correctly sigma-closed. Nothing to dispute. Moving to item 2, my assigned range: triangle sides on lines 2-7.
+
+Starting triangle: {2,4,9}, confirmed at row2 positions2-3 (values9,4), row4 positions1-2 (values9,2), row9 positions5-6 (values4,2). Its line-2 side is the edge V(2,9)-V(2,4). I walked the far side of that edge using turn 156's tool.
+
+From V(2,9), the triangle {2,4,9} occupies the sector using line2-toward-4 and line9-toward-4 (row9 flanks value2 with 4 at position5 and 3 at position7). The other sector — our face — exits via line9-toward-3: V(3,9), row9 positions6-7 (values2,3).
+
+At V(3,9), arriving via line9 from direction "2," the candidate {2,3,9} is genuine (already listed), occupying line9-toward-2 with line3-toward-2. Our face exits via line3-toward-13 (row3 flanks value9 with 2 at position1, 13 at position3): V(3,13), row3 positions2-3 (values9,13).
+
+At V(3,13), arriving via line3 from "9," candidate {3,9,13} is genuine (listed). Face exits via line13-toward-10 (row13 flanks value3 with 10 at position9, 9 at position11): V(13,10), row13 positions10-9 (values3,10).
+
+At V(13,10), arriving via line13 from "3," candidate {3,10,13} is genuine (listed). Face exits via line10-toward-4 (row10 flanks value13 with 4 at position6, 3 at position8): V(10,4), row10 positions7-6 (values13,4).
+
+At V(10,4), arriving via line10 from "13," candidate {4,10,13} is genuine (listed). Face exits via line4-toward-2 (row4 flanks value10 with 2 at position2, 13 at position4): V(4,2), row4 positions3-2 (values10,2).
+
+At V(4,2), arriving via line4 from "10," candidate {2,4,10} is genuine (listed). Face exits via line2-toward-9 (row2 flanks value4 with 9 at position2, 10 at position4): closes exactly onto the starting edge V(2,9)-V(2,4).
+
+**G1 = V(2,4) − V(2,9) − V(3,9) − V(3,13) − V(13,10) − V(10,4) − V(2,4)**, lines {2,3,4,9,10,13}. All six edges verified adjacent in their own rows (cited above). A hexagon, distinct from A, B, F2-F5, P by line-set — none of those seven contain both 3 and 13 alongside 2,4,9,10.
+
+Eight of nineteen faces now named. Falsifiable prediction for Euclidn't: sigma sends {2,3,4,9,10,13} to {13,12,11,6,5,2}, so a walk starting from a triangle side on lines 8-13 should surface a sigma-image hexagon with line-set {2,5,6,11,12,13}. If your independent walk from that side doesn't land there, one of us has a bad turn, localized to a specific vertex.
+
+This is still item-3 scaffolding, not a construction at k=14. I hold my prior: nobody has proved an obstruction at 14, 18, or 20, and a SAT search that hasn't been re-run with symmetry constraints tuned to what we're learning here isn't evidence of unreachability either.
+
+<!-- meta
+{"addresses": [157], "claims_conceded": [], "claims_opened": ["k13-orbit-face-G1-lines-2-3-4-9-10-13"], "falsifier": "if Euclidn't's walk from a triangle side on lines 8-13 does not close into the hexagon with line-set {2,5,6,11,12,13}, G1's walk has a bad turn and I retract it pending relocation of the error", "tier": "none", "verifier_runs": []}
+-->
