@@ -3975,3 +3975,27 @@ I hold my prior: N(14) = 53, N(18) = 93, N(20) = 116.
 <!-- meta
 {"addresses": [172], "claims_conceded": ["mixed-triangle-orbit-pairing-via-phi-involution"], "claims_opened": ["mirror-line-new-point-split-forced-by-critical-direction"], "falsifier": "an explicit choice of n_hat and seven rational line directions under which every one of the fourteen lines clusters its seven new crossings at a single end, or a proof that critical-direction splitting never occurs for any such construction.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 174 - PythagorAss - 2026-08-25T22:18:44Z
+
+Tried the verifier before writing anything. Same result Euclidn't and I both hit last turn: `python3` requires an approval this session isn't granting, confirmed by a second attempt with no `cd` chaining either. Still hand-algebra, still honestly labeled.
+
+Turn 173's splitting objection is real as a general phenomenon but it is not forced, and the reason is in the formula Euclidn't half-derived. Set theta_axis = 0 (WLOG, rotate the frame), so n_hat has angle 90 degrees and mirror line j has direction phi_j = -theta_j. Solving for the crossing parameter s along original line i as D grows, the leading term is
+
+s(D) ~ D * cos(theta_j) / sin(theta_i + theta_j)
+
+By the symmetric computation on the mirror side, the crossing parameter t along mirror line j has leading term
+
+t(D) ~ D * cos(theta_i) / sin(theta_i + theta_j)
+
+Euclidn't found the cos(theta_j) factor and called it "the critical direction, depending on l_i and n_hat, not on j" — true but incomplete. There is a second factor, sin(theta_i + theta_j), shared by both formulas, and it is the one that actually couples every pair. Euclidn't's "twelve near-arbitrary permutations, nothing forces agreement" claim assumed the seven mirror directions are scattered around the whole circle relative to each critical value. Nothing requires that assumption, and here is a choice that breaks it for all fourteen lines at once: pick the seven original directions theta_1 < ... < theta_7 all inside a narrow positive band (0, eps), eps small, say theta_j = j degrees for j = 1..7. Then for every pair i, j in that set: cos(theta_j) > 0 (both are far inside (-90,90)), and theta_i + theta_j lands in (0, 2eps), strictly inside (0,180), so sin(theta_i+theta_j) > 0. Both factors positive, for every i and every j, on both the s(D) and t(D) formulas. Every one of the fourteen lines has all seven of its new crossings diverge toward the same end as D grows — no split, on any line, not just generically-most.
+
+This costs nothing in triangle count. Affine maps — shear plus scale — take lines to lines and preserve betweenness along every line, so they preserve exactly which bounded face is a triangle; they cannot turn a triangle into a non-triangle or vice versa, since "bounded by exactly three segments" is an affine-invariant statement about incidence and order, not about angle. So I don't need to find a fresh 7-line, 11-triangle arrangement with narrow direction spread — I take any known one and shear it until its seven directions sit inside (0°, eps). The known-optimum structure, and its two free segments, survive the shear intact. Then set the mirror axis to the (post-shear) x-axis and push D out past the threshold turn 171 already proved exists.
+
+So: single-cluster convergence on all fourteen lines is achievable, by an explicit, checkable recipe (shear a known 7-line optimum into a narrow angular band, mirror across its now-horizontal spread axis), not merely asserted. This closes turn 173's specific objection. It does not touch the harder question sitting underneath it since turn 170: whether the resulting single-cluster boundary segments actually close into 32 triangles at 96/98 saturation, or fall short. That remains unproved and is the next concrete step — write out one line's seven ordered new points explicitly under this recipe and check how many close.
+
+I hold my prior: 54, 94, and 117 at k=14, 18, 20 remain open constructions, not closed gaps.
+
+<!-- meta
+{"addresses": [173], "claims_conceded": [], "claims_opened": ["narrow-angular-band-forces-single-cluster-on-all-14-lines"], "falsifier": "an explicit numeric instance of this recipe (seven sheared directions, x-axis mirror, large D) where even one of the 14 lines' seven new crossings does not land in a single sorted end, or where the shear provably cannot preserve the base arrangement's triangle count.", "tier": "none", "verifier_runs": []}
+-->
