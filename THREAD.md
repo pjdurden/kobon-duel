@@ -3949,3 +3949,29 @@ I hold my prior: 54, 94, and 117 at k=14, 18, 20 remain open constructions, not 
 <!-- meta
 {"addresses": [171], "claims_conceded": ["mirror-construction-96-of-98-forces-12-of-14-lines-fully-saturated"], "claims_opened": ["mirror-translate-involution-phi-is-arrangement-automorphism", "mixed-triangles-pair-under-phi-forcing-even-orbit-count", "k14-p0-t54-needs-exactly-6-free-segments-generically"], "falsifier": "an explicit choice of seven directions and axis normal, checked by hand or by the verifier, where the phi-paired dual orders cannot be completed to 32 mixed triangles without dropping the total below 54, or a demonstration that phi as defined here is not actually well-defined for the translation used", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 173 - Euclidn't - 2026-08-25T21:18:44Z
+
+Turn 172's phi involution is correctly built, and I'll concede it with re-derivation.
+
+> "phi(phi(x)) = R(R(x)+v) + v = [x + R_lin(v)] + v = [x - v] + v = x, since R_lin(v) = -v"
+
+Re-derived: R is a reflection so R∘R = id, and its linear part satisfies R_lin(v) = -v exactly when v is parallel to the axis normal — true here since v = D·n_hat by construction. So phi = T_v∘R squares to the identity. And phi(l_i) = T_v(R(l_i)) is literally the translated mirror line used to build the arrangement, so phi swaps the two sevens exactly: genuine automorphism, no triangle fixed (an odd 3-set can't be stable under a fixed-point-free involution), mixed triangles paired into orbits of 2. That's real structure, not decoration.
+
+Before writing anything else I tried to run this turn's claims through the verifier, the same standard last turn's demand imposed on the construction. `python3` is not approved in this session either — confirmed by two separate attempts, both refused before execution. So this stays hand-argument, the same honest labeling PythagorAss used last turn.
+
+Here is where the argument breaks, and it's in the clause turn 170 waved past:
+
+> "diverges (to +infinity or -infinity depending on the sign of the slope difference — doesn't matter which)"
+
+It does matter. Fix line l_i and call its *critical direction* the mirror-line slope for which the l_i/l_j' crossing point does not move under translation. The sign of divergence for a given mirror line l_j' flips exactly when w_j (that mirror line's own direction) crosses this critical value. Since v = D·n_hat is the *same* translation applied to all seven mirror lines, the critical direction depends only on l_i and n_hat — not on j. The seven mirror-line directions are seven generically distinct values scattered around the circle; nothing forces all seven to sit on the same side of l_i's one critical direction. Generically some diverge toward +∞ along l_i and some toward -∞, so **l_i's seven new points split into two clusters, one at each end of l_i's old five-segment span**, in a ratio fixed by how many of the seven mirror directions land on each side of l_i's own critical direction.
+
+This doesn't touch the 98-segment count — split or clustered, seven new points make seven new segments per line, exactly as turn 170 showed. It touches saturation. A line whose new points cluster at a single end has one boundary segment (old vertex to first new vertex) and otherwise closes new-new. A split line has **two** boundary segments, one at each end, each anchored to a *different* old vertex on l_i and needing a *different* third line's cooperation to close. Fourteen lines, each independently split by its own critical direction against the same seven mirror slopes — nothing makes those fourteen boundary conditions cooperate, and phi doesn't rescue it: phi pairs l_i with phi(l_i), the mirror of itself, not with the other original lines whose boundary segments would need to interlock with l_i's for a triangle to close there.
+
+Concrete ask, sized to one turn: pick explicit rational directions for the seven original lines and for n_hat, compute which of the seven mirror directions fall on each side of one line's critical direction, and report whether that line clusters or splits. If n_hat can be chosen so all fourteen lines cluster at a single end, the objection dissolves and the phi-orbit reduction stands on solid ground. If even one line generically splits, the boundary-segment count needs to be rederived before 96/98 means anything.
+
+I hold my prior: N(14) = 53, N(18) = 93, N(20) = 116.
+
+<!-- meta
+{"addresses": [172], "claims_conceded": ["mixed-triangle-orbit-pairing-via-phi-involution"], "claims_opened": ["mirror-line-new-point-split-forced-by-critical-direction"], "falsifier": "an explicit choice of n_hat and seven rational line directions under which every one of the fourteen lines clusters its seven new crossings at a single end, or a proof that critical-direction splitting never occurs for any such construction.", "tier": "none", "verifier_runs": []}
+-->
