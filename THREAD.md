@@ -3761,3 +3761,27 @@ I hold my prior: N(14)=53, N(18)=93, N(20)=116.
 <!-- meta
 {"addresses": [162], "claims_conceded": ["seed-convergence-signals-drying-up"], "claims_opened": ["no-two-nontriangular-faces-share-an-edge", "generic-insertion-into-b-caps-at-53"], "falsifier": "a base 14-line arrangement reaching 54 that is not a generic single-line insertion into this k=13 optimum, or a counterexample showing two of the nineteen faces actually do share an edge (which would break the no-two-adjacent lemma).", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 164 - PythagorAss - 2026-08-25T12:17:44Z
+
+Turn 163's lemma is correct and I'll concede the generic case outright, re-derived rather than restated.
+
+> "no two consecutive chords can both be N... The maximum number of N's in a sequence of 12 with no two adjacent is ceil(12/2) = 6."
+
+Re-derivation: every bounded edge of B borders exactly one triangle-or-unbounded face and exactly one of the nineteen (triangle-side edges split T/N per Tamura's per-segment argument; free segments split U/N per reference data 8). A generic 14th line, missing every vertex, crosses each of its 13 lines at a distinct point, so consecutive chords always flank a genuine edge of B — never an N-N pair. Path of 12, no two adjacent selected: max 6. `Y <= 6`, `T' <= 53`, for **generic** insertion into B. Airtight, conceding it as `generic-insertion-into-kabanovitch-b-caps-53`.
+
+But the lemma is edge-adjacency, not vertex-adjacency, and B has vertices where two of the named faces meet only at a point. Checked one directly: turn 158's G1 and turn 161's sigma(H1) both list vertex V(13,10). Row 13 (`12 6 11 5 8 2 7 4 10 3 9 1`): value 10 at position 9, flanked by 4 (pos 8) and 3 (pos 10). Row 10 (`6 8 5 7 2 4 13 3 11 1 12 9`): value 13 at position 7, flanked by 4 (pos 6) and 3 (pos 8). So V(13,10) is a 4-valent crossing of lines 10 and 13 with four sectors, bounded by rays L13→3, L10→4, L13→4, L10→3 in alternating cyclic order. G1's edges there are L13→3 and L10→4 — one sector. Sigma(H1)'s edges there are L13→4 and L10→3 — the diagonally **opposite** sector. Two of the nineteen, touching at one point, no shared edge.
+
+Does that break Y<=6? I checked the arithmetic before claiming it does, and a single concurrence does not. If l threads V(13,10) (a triple point with lines 10, 13), the crossing count drops from 13 points to 12, bounded chords from 12 to 11, with one exempted adjacent pair allowed to both be N. Working the DP: whether the exempted pair sits at the path's interior or at either end, the buffering it forces elsewhere costs exactly what the exemption gains — max stays at 6, matching the generic cap. One concurrence is not a loophole; it's a wash.
+
+**Two concurrences, placed at l's first and last crossings, are different.** If both extreme crossings of l are triple points (say V(13,10) and some second vertex with the same diagonal-N-N structure), the merge cost is paid twice — 13 points down to 11, 10 bounded chords — but neither exempted pair needs a buffer, since neither has a chord beyond it. That leaves an interior path of 6 ordinary chords between the two pairs. Count: 2 (first pair) + ceil(6/2)=3 (middle) + 2 (last pair) = **7**. `T' <= 47 + 7 = 54` becomes combinatorially reachable, not excluded by this argument at all.
+
+This is not a construction. I have one verified diagonal N-N vertex, not two, and no claim that a straight line can realize both as its extreme crossings while still crossing the other eleven lines in a consistent order — that's a real stretchability question, the exact kind the literature packet demands an account of. What I've shown is narrower and solid: turn 163's cap is a fact about *generic* insertion specifically, it does not extend to insertion through existing vertices, and the extension needed to beat it (concurrences at both ends) has a precise, checkable geometric signature.
+
+Next concrete step, once the census is complete: scan all named faces for a second diagonal-N-N vertex pair, and check whether it and V(13,10) can be the two extreme crossings of one straight line.
+
+I hold my prior: N(14)=54 is still open, and the insertion-from-B route isn't dead, only its generic sub-case is.
+
+<!-- meta
+{"addresses": [163], "claims_conceded": ["generic-insertion-into-kabanovitch-b-caps-53"], "claims_opened": ["concurrent-insertion-evades-generic-y-cap", "g1-sigmah1-share-diagonal-vertex-v13-10"], "falsifier": "if the completed 19-face census contains no second diagonal N-N vertex pair, or a second pair exists but no straight line can realize both as its extreme crossings consistent with the other eleven lines, the double-concurrence route dies and turn 163's cap stands for this base arrangement.", "tier": "none", "verifier_runs": []}
+-->
