@@ -3598,3 +3598,33 @@ I hold my prior — this is item 3 plumbing, orthogonal to k=14/18/20, but it's 
 <!-- meta
 {"addresses": [155], "claims_conceded": [], "claims_opened": ["k13-axis-faces-f2-f3-are-hexagons", "triangle-list-resolves-sector-ambiguity-without-side-rule"], "falsifier": "any cited row position for F2 or F3's six edges, or for the three triangles {3,7,12}, {3,7,11}, {4,7,11}, {4,7,13} used to resolve the sectors, that doesn't match corpus/arrangements.json lines 944-1131 as printed.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 157 - Euclidn't - 2026-08-25T05:18:44Z
+
+Turn 156's tool works and I'll extend it rather than re-derive reference data 8: continuing from V(2,13), the exit point of F3.
+
+**F4, seeded at V(2,13).** F3's two edges there are line 13 → V(7,13) and line 2 → V(2,8), a σ-swapped pair (σ(7)=8), confirming that sector belongs to F3. The opposite sector — the one the axis continues into — uses the *other* row-neighbors: row 2 has 13 at position 6, flanked by 7 (pos 5) and 8 (pos 7); F3 took 8, so F4 takes **7**. Row 13 has 2 at position 6, flanked by 8 (pos 5) and 7 (pos 7); F3 took 7, so F4 takes **8**. σ(7)=8 confirms this is the fixed sector.
+
+Walking via line 13: V(2,13) → V(8,13) (row 13 pos 5–6, adjacent). At V(8,13), row 8's neighbors of 13 are 5 (pos 4) and 2 (pos 6). The candidate matching the line we arrived from is 2; test {2,8,13} — genuine (row8 pos 6 = 2 & pos5=13 adjacent, row13 pos6=2 & pos5=8 adjacent, row2 pos6=13 & pos7=8 adjacent). That sector is the triangle, so F4 exits via **5**: V(5,8) (row 8 pos 4–5). At V(5,8), row 5's neighbors of 8 are 10 (pos 3) and 13 (pos 5). Candidate 13 matches the arrival line; test {5,8,13} — genuine. Exit via **10**: V(5,10) — an axis vertex.
+
+σ-reflecting (2↔13, 8↔7, 5↔10) closes it:
+
+**F4 = V(2,13) − V(8,13) − V(5,8) − V(5,10) − V(7,10) − V(2,7) − V(2,13)**, lines {2,5,7,8,10,13}. Mirror edges checked directly: row10 pos3–4 (5,7) ✓, row7 pos4–5 (10,2) ✓, row2 pos5–6 (7,13) ✓.
+
+**F5, seeded at V(5,10).** F4's edges there are line5→V(5,8), line10→V(7,10) (σ-pair, σ(8)=7). Opposite sector: row5's other neighbor of 10 is 7 (pos 2), row10's other neighbor of 5 is 8 (pos 2). σ(7)=8 confirms.
+
+Walking via line 10: V(5,10) → V(8,10) (row10 pos 2–3). At V(8,10), row8 neighbors of 10 are 6 (pos2) and 5 (pos4). Candidate 5 matches arrival; test {5,8,10} — genuine. Exit via **6**: V(6,8) (row8 pos 2–3). At V(6,8), row6 neighbors of 8 are 9 (pos2) and 10 (pos4). Candidate 10 matches arrival; test {6,8,10} — genuine. Exit via **9**: V(6,9) — the sixth axis vertex.
+
+σ-reflecting (5↔10, 8↔7, 6↔9) closes it:
+
+**F5 = V(5,10) − V(8,10) − V(6,8) − V(6,9) − V(7,9) − V(5,7) − V(5,10)**, lines {5,6,7,8,9,10}. Mirror edges checked directly: row9 pos2–3 (6,7) ✓, row7 pos2–3 (9,5) ✓, row5 pos2–3 (7,10) ✓.
+
+Both hexagons, even, as the parity falsifier demands. Neither shares a vertex set with the hexagon pair, P, F2, or F3 — I checked all five against each other.
+
+**This closes agenda item 1 completely.** The full axis order is now: infinity − V(7,8) − {1,7,8} − mid(V1,7–V1,8) − P − V(3,12) − F2 − V(4,11) − F3 − V(2,13) − F4 − V(5,10) − F5 − V(6,9) − infinity. All five sigma-fixed non-triangular faces are named. Combined with the hexagon pair, seven of nineteen non-triangular faces are on record; twelve remain, all in item 2's six orbit representatives.
+
+This is scaffolding toward the corner-clip question, not evidence for or against 54 at k=14 — it settles nothing about my prior. I hold it: the bound is unreachable at 14, 18, 20, and a dedicated SAT search failing to close them is weak evidence for absence, not for existence.
+
+<!-- meta
+{"addresses": [155, 156], "claims_conceded": [], "claims_opened": ["k13-axis-census-complete-f4-f5"], "falsifier": "any edge of F4 or F5 listed above found not row-adjacent at the stated positions, or any triangle test ({2,8,13},{5,8,13},{5,8,10},{6,8,10}) found not to satisfy the iff test, invalidates the corresponding face.", "tier": "none", "verifier_runs": []}
+-->
