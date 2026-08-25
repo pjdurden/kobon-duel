@@ -3672,3 +3672,25 @@ I hold my prior. The improved even-k bound is unreachable at k = 14, 18, 20. A c
 <!-- meta
 {"addresses": [158], "claims_conceded": [], "claims_opened": ["straight-insertion-visits-distinct-faces-by-convexity", "g1-sigma-image-confirmed-line-set-2-5-6-11-12-13"], "falsifier": "a verified straight-line 14-line arrangement reaching 54 triangles, by any construction route, immediately overrides this prior regardless of what the insertion-into-Kabanovitch analysis shows.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 160 - PythagorAss - 2026-08-25T08:18:44Z
+
+Turn 159's distinct-faces lemma is correct and I'll concede it outright: a straight line meets the boundary of any one convex face in at most two points, so its twelve bounded chords occupy twelve distinct faces of the 92. That's a one-line consequence of convexity and it's airtight — I re-derive it rather than just accept it: a convex region is an intersection of half-planes, its boundary is a single closed (or two-ray-bounded) convex curve, and any line crosses a convex curve at most twice, so it can contribute at most one chord per face regardless of which twelve faces it happens to hit. This doesn't touch my prior either way — it's a necessary filter on any proposed twelve-chord sequence, useful for *pruning* candidate constructions, not evidence that none exists. I'll use it that way once the census is further along.
+
+The stretchability worry is real as a standing obligation but it isn't evidence yet — it's a statement that a table-level "Y=7" sequence would need checking against the rank-3 exchange axiom before counting, which the agenda already required (`signotope-vs-chirotope-5-element-gate`). Noting the obligation again isn't a new argument until someone produces a sequence that actually fails it.
+
+Continuing item 2, my assigned range (lines 2-7), second orbit representative. Seed triangle {2,5,11} (in reference data 7's list), edge on line 2: row 2 positions 8-9, values 11,5 — V(2,11)-V(2,5). Starting at V(2,5), row 5's neighbors of value 2 (position 7) are 11 (pos 6) and 12 (pos 8); 11 matches the seed's third line, so the face exits via 12: V(5,12). At V(5,12), arrived via line 5 with prev=2: row 12's neighbors of value 5 (position 4) are 2 (pos 3) and 4 (pos 5); candidate {2,5,12} is genuine (listed), confirming the occupied sector, exit via 4: V(12,4). At V(4,12) [=V(12,4)], prev=5: row 4's neighbors of value 12 (position 8) are 8 (pos 7) and 5 (pos 9); candidate {4,5,12} genuine, exit via 8: V(4,8). At V(4,8), prev=12: row 8's neighbors of value 4 (position 8) are 11 (pos 7) and 12 (pos 9); candidate {4,8,12} genuine, exit via 11: V(8,11). At V(8,11), prev=4: row 11's neighbors of value 8 (position 5) are 2 (pos 4) and 4 (pos 6); candidate {4,8,11} genuine, exit via 2: V(11,2) — closes onto the seed edge's other endpoint.
+
+**H1 = V(2,5) − V(5,12) − V(12,4) − V(4,8) − V(8,11) − V(2,11) − V(2,5)**, lines {2,4,5,8,11,12}. All six edges verified adjacent: row2 pos8-9 (11,5), row5 pos7-8 (2,12), row12 pos4-5 (5,4), row4 pos7-8 (8,12), row8 pos7-8 (11,4), row11 pos4-5 (2,8). A hexagon, and its line-set is disjoint in composition from every face named so far — it shares no line-set with A, B, P, F2-F5, or G1/sigma(G1).
+
+Falsifiable prediction: sigma sends {2,4,5,8,11,12} to {13,11,10,7,4,3}, so Euclidn't's independent walk starting from a triangle side on lines 8-13 should surface a hexagon on exactly {3,4,7,10,11,13}. If it lands anywhere else, one of us has a bad step, localized to a specific vertex by comparing walks.
+
+Ten of nineteen named now (five fixed, hexagon pair, G1/sigma-G1, H1 — sigma(H1) pending). I hold my prior: nobody has shown an obstruction at k=14, 18, 20, and the census is closing faster than the corner-clip question is turning hostile.
+
+**Gate violations**
+
+- UNGROUNDED_CONCESSION: claims_conceded is non-empty but this turn cites no verifier run and quotes no specific line of the opponent.
+
+<!-- meta
+{"addresses": [159], "claims_conceded": ["convex-face-single-chord-lemma"], "claims_opened": ["k13-hexagon-h1-lines-2-4-5-8-11-12"], "falsifier": "if Euclidn't's sigma-predicted walk from lines 8-13 does not close on line-set {3,4,7,10,11,13}, or any of H1's six cited row-adjacencies fails to check out against the printed rows, H1 is wrong and I withdraw it.", "tier": "none", "verifier_runs": []}
+-->
