@@ -3528,3 +3528,21 @@ I hold my prior.
 <!-- meta
 {"addresses": [152], "claims_conceded": [], "claims_opened": ["segment-a-borders-one-unbounded-ray-wedge-face"], "falsifier": "If Euclidn't's walk from segment B does not find line 6 extremal in both row 11 and row 10 (producing the mirrored ray-wedge), my alternating-sector argument for segment A has an error.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 154 - Euclidn't - 2026-08-25T03:17:25Z
+
+Turn 153 checks out and extends further than PythagorAss stated. Tracing segment B from my assigned pairing: line 6, row-6 positions 4-5 (row 6: `7 9 8 10 11 13 12 2 1 4 3 5`, values 10 and 11 — reference data 7). Row 10 (`6 8 5 7 2 4 13 3 11 1 12 9`) has line 6 at position 1 — extremal — bounded neighbor at position 2, line 8: V(10,6) borders V(10,8). Row 11 (`6 13 5 2 8 4 7 3 10 1 9 12`) has line 6 at position 1 too, bounded neighbor at position 2, line 13: V(11,6) borders V(11,13). Both ends reproduce the ray-plus-one-bounded-edge structure PythagorAss found for segment A, and sigma (line9→6, line4→11, line5→10, line2→13, line7→8) sends V(4,2)→V(11,13) and V(5,7)→V(10,8) — exactly the two vertices I just derived independently. Two walks, done separately, land on sigma-image vertices. Segment A's untraced bounded face and segment B's are a sigma pair, as the agenda predicted.
+
+Now the obstacle PythagorAss named instead of guessing past: continuing from V(11,13) onto line 13, row 13 (`12 6 11 5 8 2 7 4 10 3 9 1`) has line 11 at position 3, interior, neighbors position 2 (line 6, where we came from) and position 4 (line 5). Same ambiguity, at the sigma-predicted vertex — not an accident of segment A's geometry, but forced whenever the walk reaches a crossing where neither line is extremal in the third line's row, which is the generic case, not the exception reference data 3 handled.
+
+There's an actual answer to what resolves it, not a shrug: the project's own table convention states it. `docs/superpowers/specs/2026-08-20-kobon-duel-phase2-design.md:104-106` — "Enclose all crossings in a circle. Pick a line as #1, go clockwise, number the lines as they enter the circle... Row i of the table lists the lines crossing line i, in order along line i." That fixes each line's *entry* order as literal line-number order, 1 through k clockwise. It does not fix *exit* order — where each line's second circle-crossing falls relative to the others — and exit order is exactly what a turning rule needs: which of the two row-13 neighbors continues the same face depends on whether line 5's exit sits clockwise or counterclockwise of line 11's, relative to line 6. That's recoverable in principle — thirteen rows over-determine a single allowable sequence — but it's a global reconstruction from all thirteen rows at once, not a lookup in the row you're standing on. Neither agent has built it. The face-tracing method has a sourced gap, and it hits most non-extremal crossings in both walks.
+
+Item 4, one paragraph as the referee asked. Turn 137 stands:
+
+> "T137: at zero slack every bounded segment is a triangle side, so the mutual/orphan bookkeeping adds nothing beyond full saturation except localization... T137 then argued that proving item 4 impossible means solving the resolvability system for all 28 slots at once, which is the original problem, not a reduction."
+
+That's airtight because zero-slack full saturation already implies every mutual vertex resolves and every orphan closes — the bookkeeping can't fail without the arrangement failing to exist, so "prove the bookkeeping fails" and "prove the arrangement doesn't exist" are the same question under different names. Turn 147 reopened it without citing this and I built on that without rereading my own prior turn — same failure mode the referee flagged in the deletion-sweep duplication, smaller scale. Item 4 comes off the board.
+
+<!-- meta
+{"addresses": [152, 153], "claims_conceded": ["item-4-reopened-at-turn147"], "claims_opened": ["segment-b-walk-confirms-sigma-pairing-with-segment-a", "table-fixes-entry-order-not-exit-order"], "falsifier": "an explicit reconstruction of the k=13 exit-order permutation that resolves the V(11,13) turn without contradiction would remove this obstacle; a verified 54/94/117-triangle arrangement at k=14/18/20 would end the debate outright.", "tier": "none", "verifier_runs": []}
+-->
