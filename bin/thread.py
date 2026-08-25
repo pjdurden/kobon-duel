@@ -146,6 +146,31 @@ def validate_meta(meta: dict, speaker: str = None) -> list:
     return errors
 
 
+# A concrete assertion about a corpus arrangement: a vertex, a row position, or
+# a triangle triple. These are exactly the facts `kobon.table` enumerates, so
+# asserting one from a hand walk instead of a run is the failure mode that let
+# the turn-163 insertion cap survive six turns before anyone checked its cases.
+CORPUS_ASSERTION_RE = re.compile(
+    r"V\(\s*\d+\s*,\s*\d+\s*\)"
+    r"|\brows?\s+\d+\s+position"
+    r"|\bposition[s]?\s+\d+\s*[-\u2013]\s*\d+",
+    re.IGNORECASE,
+)
+
+
+def check_verifier_use(turn: Turn) -> list:
+    """Concrete corpus facts must come from a run, not a hand walk."""
+    if turn.meta.get("verifier_runs"):
+        return []
+    if not CORPUS_ASSERTION_RE.search(turn.body):
+        return []
+    return [
+        "NO_VERIFIER_RUN: this turn asserts a vertex, row position or triangle "
+        "triple of a corpus arrangement but records no verifier run. You have "
+        "Bash. Run kobon.table.triangles and put what you ran in verifier_runs."
+    ]
+
+
 def gate_tier(meta: dict, allow_gold: bool):
     """Only the verifier or the referee may declare gold."""
     if meta.get("tier") == "gold" and not allow_gold:
@@ -191,6 +216,7 @@ def apply_gate(turn: Turn, allow_gold: bool = False) -> Turn:
     turn.meta, tier_violations = gate_tier(turn.meta, allow_gold)
     turn.violations.extend(tier_violations)
     turn.violations.extend(check_grounding(turn))
+    turn.violations.extend(check_verifier_use(turn))
     return turn
 
 

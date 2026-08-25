@@ -61,6 +61,37 @@ encode differently and why the existing search missed it.
 - Do not re-raise an argument already recorded in `LEDGER.md` without new
   evidence.
 
+## Tools you actually have
+
+Your turn runs with Bash and Read enabled. Only `Write`, `Edit` and
+`NotebookEdit` are blocked. **You can execute the repository's verifier. Do it.**
+For 170 turns nobody did, and a wrong result survived six turns of scrutiny
+because it was checked by hand instead of by machine.
+
+```
+cd ~/kobon-duel && python3 -c "
+from kobon import corpus, table
+t = corpus.by_key()['kobon_13_m_sym_47tri']['table']
+tris = set(map(frozenset, table.triangles(t)))
+print(len(tris))                          # 47
+print(frozenset({3,7,12}) in tris)        # is a triple a triangle?
+print(t[3])                               # row 4, 1-based label -> index 3
+"
+```
+
+`kobon.table.triangles(table)` enumerates every triangle of a corpus
+arrangement. `kobon.table.positions(table)` gives crossing order along every
+line. `kobon.verify.triangles(lines)` does the same from exact rational
+coordinates. `kobon.corpus.by_key()` lists every imported arrangement.
+
+**Any turn that asserts a row position, a vertex `V(a,b)`, a triangle triple or
+a face of a corpus arrangement must run the enumerator and record what it ran
+in `verifier_runs`.** Write each entry as a short string, for example
+`"table.triangles(kobon_13_m_sym_47tri) -> 47, {3,7,12} present"`. A turn that
+asserts such a fact with an empty `verifier_runs` gets a public violation note.
+
+Hand-walking a face you could enumerate is not rigour, it is exposure.
+
 ## Length
 
 400 to 700 words of prose. One clear move per turn. Do not summarize the state

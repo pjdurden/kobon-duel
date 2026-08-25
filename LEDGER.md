@@ -55,6 +55,58 @@ The referee's findings this cycle:
 
 ---
 
+## OWNER CORRECTION, entered after turn 170, standing until re-argued
+
+**Turns 163 to 168 built a bound that is not sound, and it must not be carried
+forward.** The referee has not audited that stretch yet. This entry pre-empts it.
+
+The claims `no-two-nontriangular-faces-share-an-edge`,
+`generic-insertion-into-b-caps-53`,
+`y-leq-6-independent-of-concurrence-count`,
+`insertion-y-capped-at-6-independent-of-concurrence-count` and
+`generic-insertion-into-any-simple-13-line-caps-53` are **REFUTED**. Do not cite
+any of them as settled.
+
+**The defect.** Turn 168's own re-derivation says every bounded edge borders
+"exactly one triangle-or-unbounded face and exactly one of the nineteen," and
+then treats that first category as contributing zero. That is true for a
+triangle, because a chord through a triangle destroys one and creates one. It is
+false for an unbounded face. A chord that clips the corner of an unbounded wedge
+produces a **bounded** triangle, worth +1, and the T/N labelling never counts it.
+The partition is not exhaustive, so the no-two-adjacent-N argument does not bound
+Y.
+
+**Decisive check, no geometry needed.** N(4) = 2 and N(5) = 5, both in KNOWN.md.
+Delete a line from any 5-line optimum: the remaining simple 4-line arrangement has
+at most 2 triangles, so re-inserting must create at least 3. It has exactly 3
+bounded chords against an alternation cap of ceil(3/2) = 2. Cap violated. Further,
+a simple 4-line arrangement has C(3,2) = 3 bounded faces, two of them its
+triangles, leaving exactly **one** bounded non-triangle, so at least two of the
+three new triangles come from clipping unbounded faces. The same failure recurs at
+k = 7, where N(7) - N(6) = 4 against a cap of 3.
+
+**Where it lands.** Reference data 8, which is correct, says each of the two free
+segments of B has an unbounded three-sided wedge on one side and a hexagon on the
+other. That wedge is a clippable unbounded face, so a line can gain twice in a row
+there: clip the hexagon on the way in, clip the wedge on the way out. Two free
+segments give two exemptions, and turn 167's own formula with n = 12 and three
+segments then yields Y <= (12 + 3)/2 = 7.5, so **7**. That is exactly the value
+reaching 54 requires. The cap does not merely have a gap, it collapses onto the
+target.
+
+**What survives.** The face census (reference data 9 and 10, and the faces named
+in turns 156 to 162) is independent of this and stands. Turn 165 and 166's result
+that extreme concurrences contribute zero credit is correct and unaffected. What
+does not survive is the headline, and turn 168's generalization propagated the
+error rather than exposing it.
+
+**How it got through.** Both agents and the gate verified the algebra, which was
+fine, and nobody verified that the case analysis was exhaustive, which it was not.
+Neither agent ran a single line of the repository's own enumerator. Across 170
+turns `verifier_runs` has been empty 170 times.
+
+---
+
 ## Referee reference data 1: Bader's k=14, 53-triangle table (verified)
 
 `corpus/arrangements.json` lines 1138-1343, key `kobon_14_53tri`. Row i is line
@@ -347,6 +399,10 @@ F2 there.
 
 | slug | k | status | evidence | opened | last touched |
 |---|---|---|---|---|---|
+| `insertion-y-capped-at-6-independent-of-concurrence-count` | 13/14 | **REFUTED (owner, after T170)** | T167's closed form `Y <= (n+m+1)/2 = 6.5`. The algebra is right and the premise is not: the T/N partition of chords omits chords lying in unbounded faces, which can be corner-clipped to create bounded triangles. See the owner correction at the top of this file. Counterexample to the mechanism, from classical values only: N(5)-N(4) = 3 from 3 chords against a cap of 2, and N(7)-N(6) = 4 from 5 chords against a cap of 3. | T167 | T170 |
+| `generic-insertion-into-any-simple-13-line-caps-53` | 13/14 | **REFUTED (owner, after T170)** | T168 generalized T163's cap to every simple 13-line base. It inherits the same omission. Note what it would have implied had it held, which neither agent noticed: every 14-line arrangement is a single-line insertion into a 13-line one, and N(13)=47 is closed, so the cap would have given N(14) <= 53 outright. That is the reason to be suspicious of it, not to bank it. | T168 | T170 |
+| `no-two-nontriangular-faces-share-an-edge` | 13 | **SETTLED as stated, MISUSED downstream** | The literal claim is true and is Tamura's per-segment argument: each bounded edge borders at most one triangle, and B - 3T = 2 free segments each carry an unbounded wedge on one side. What does not follow is that consecutive chords cannot both gain, because the wedge is clippable. Keep the fact, drop the corollary. | T163 | T170 |
+| `unbounded-wedge-clip-creates-bounded-triangle` | all | **OPEN, and this is the live question** | A chord entering an unbounded three-sided wedge through its bounded edge and leaving through one of its two rays cuts off a bounded triangle. Free segments are exactly where such a wedge sits adjacent to one of the nineteen. How many of l's twelve chords can occupy clippable unbounded faces at k=13, and can two consecutive gains actually be realized by a straight line at a free segment? Settle this and the insertion program is either dead or alive on evidence rather than on an incomplete case split. | T170 | T170 |
 | `face-walk-side-test-is-two-lookups` | all | **SETTLED (referee), and it kills a claimed obstacle** | Reference data 8. T153: "Choosing between them needs a turning-direction rule, not adjacent-row lookup alone... that trick doesn't transfer directly." T154 escalated it to a sourced impossibility: the phase-2 design doc fixes entry order but not exit order, therefore "a global reconstruction from all thirteen rows at once, not a lookup in the row you're standing on. Neither agent has built it. The face-tracing method has a sourced gap." The quotation from `docs/superpowers/specs/2026-08-20-kobon-duel-phase2-design.md` is accurate and the inference from it is wrong. Two lines y, z meet at V(y,z); that single vertex ties row y's before/after split at x to row z's. One comparison, two row lookups, resolves any single turn; k-2 comparisons orient every line against x. The referee applied it to the exact vertices both agents stopped at and finished both walks in the same pass. **No gap.** | T153 | T155 |
 | `k13-free-segment-outer-face-is-unbounded` | 13 | **SETTLED (T153, argument supplied by referee)** | Reference data 8. If a free segment V(a,b) - V(a,c) has b and c each meeting a at its own row-position 1, both rays point away from the triangle that a, b, c bound, so they lie in the same half-plane of a and close a three-sided unbounded face with the segment. Both k=13 free segments have exactly this shape. **Consequence: each free segment contributes one of the nineteen, not two.** The referee's own agenda at turn 152 said four; the correct number is two, and T153 caught it. T153 reached the right answer by "the natural reading is a single unbounded wedge," which is a guess that happened to be true; the ray-alignment step is the content and it was not supplied until now. | T153 | T155 |
 | `k13-free-segment-faces-are-a-hexagon-sigma-pair` | 13 | **SETTLED (referee)** | Reference data 9. Segment A's bounded face is the hexagon V(9,4) - V(4,2) - V(2,10) - V(10,7) - V(7,5) - V(5,9); segment B's is its sigma-image. All twelve edges verified adjacent in their rows, both closures forced rather than assumed. Two of nineteen named. Note what the shape says: the free segment does not sit on a large ragged face, it sits on a hexagon, which is the second-hardest size to corner-clip after the ones above it. That is the first real datum for agenda item 2. | T155 | T155 |
