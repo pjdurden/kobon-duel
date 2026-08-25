@@ -3805,3 +3805,23 @@ I hold my prior: N(14) = 53, N(18) = 93, N(20) = 116.
 <!-- meta
 {"addresses": [164], "claims_conceded": [], "claims_opened": ["extreme-concurrence-yields-no-chord-not-a-gain"], "falsifier": "an interior (non-extreme) diagonal N-N vertex, distinct from V(13,10) and correctly positioned so l's flanking chords on both sides are genuinely bounded, that beats the ceil(n/2) alternation cap after full buffering is checked", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 166 - PythagorAss - 2026-08-25T14:17:44Z
+
+Turn 165's correction is right, and I can sharpen why into something stronger than stated, not weaker.
+
+> "one of those two sectors is on the ray side, outside the bounded structure entirely, contributing nothing to Y no matter which sector it happens to be."
+
+Conceded, re-derived rather than restated. At V(13,10), the four sectors alternate G1, sector-P, sigma(H1), sector-Q in cyclic order, per turn 164's own boundary listing (G1 bounded by L13→3/L10→4, sigma(H1) bounded by L13→4/L10→3, diagonally opposite). Both G1 and sigma(H1) are bounded by construction — they're two of the nineteen non-triangular *bounded* faces. If l's incoming ray — the portion before its first crossing, extending to infinity — occupied the G1 or sigma(H1) sector, tracing that ray backward carries it into the interior of a bounded hexagon. Since the hexagon is bounded, the ray must exit through one of its other five edges at a finite point, which is a crossing with one of B's thirteen lines — contradicting p_1 being l's first crossing. So the incoming ray cannot lie in the G1 or sigma(H1) sector at all; it must lie in sector-P or sector-Q. l is straight, so the outgoing chord c_1 lands in the sector diagonally opposite the incoming one — and P, Q are themselves the other diagonal pair. So c_1 lands in whichever of {P,Q} it isn't, **never in G1 or sigma(H1)**.
+
+That's sharper than turn 165's version: placing l's first crossing at V(13,10) doesn't just fail to deliver "2" credit — it delivers **zero** credit from the G1/sigma(H1) pair specifically, full stop, regardless of which direction l points. Whatever c_1 actually lands in is sector P or Q, faces nobody has identified yet. Extreme placement at a diagonal-N-N vertex isn't merely suboptimal (Euclidn't's 5 < 6) — it's structurally wasted, since the bounded-ray-can't-escape-to-infinity argument rules out that vertex's N-N pair from ever touching an extreme chord, generally, not just at V(13,10).
+
+That leaves interior concurrences as the only mechanism with real content, exactly as turn 165 concludes. Turn 165's "wash" result for one interior concurrence (cap stays 6) is the baseline to beat, and it's the only version of this mechanism either of us has actually verified rather than asserted.
+
+Next concrete task, taking it rather than deferring it: does a **second** interior diagonal-N-N vertex, placed away from V(13,10) and away from both of l's extremes, push the cap above 6, or does it wash again? Sketch: two interior exemptions on a chain of 10 nodes (12 chords minus 2 for two merged crossing-points). If the two exempted pairs sit far enough apart that each pays its own buffering cost independently, turn 164's argument suggests the total stays at 6 by additivity. If they're close enough to share a buffer node, the costs might not add linearly — that configuration is the only one worth running the DP on rather than assuming. This needs a second named diagonal-N-N vertex first, which means finishing the census (items 1 and 2 are still short six faces between us).
+
+I hold my prior: N(14) = 54 is still open. Turn 165 correctly kills the double-extreme route, and the reason is more restrictive than either of us had stated — extreme placement at any diagonal-N-N vertex contributes zero, not merely less than generic. The live question narrows to whether two *interior* diagonal-N-N vertices can beat the single-vertex wash, and that requires a second one to be found before it can be tested at all.
+
+<!-- meta
+{"addresses": [165], "claims_conceded": ["double-extreme-concurrence-is-net-loss-not-gain"], "claims_opened": ["extreme-concurrence-diagonal-nn-yields-zero-credit"], "falsifier": "an explicit example where a line's incoming unbounded ray at a diagonal-N-N vertex like V(13,10) provably occupies the G1 or sigma(H1) sector without an earlier crossing existing would break the zero-credit claim.", "tier": "none", "verifier_runs": []}
+-->
