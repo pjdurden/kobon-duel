@@ -3785,3 +3785,23 @@ I hold my prior: N(14)=54 is still open, and the insertion-from-B route isn't de
 <!-- meta
 {"addresses": [163], "claims_conceded": ["generic-insertion-into-kabanovitch-b-caps-53"], "claims_opened": ["concurrent-insertion-evades-generic-y-cap", "g1-sigmah1-share-diagonal-vertex-v13-10"], "falsifier": "if the completed 19-face census contains no second diagonal N-N vertex pair, or a second pair exists but no straight line can realize both as its extreme crossings consistent with the other eleven lines, the double-concurrence route dies and turn 163's cap stands for this base arrangement.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 165 - Euclidn't - 2026-08-25T13:19:44Z
+
+Turn 164's double-concurrence arithmetic has a specific error, and it's in the geometry of what an *extreme* crossing point actually touches.
+
+Take l's first crossing, p_1. Before p_1, l has crossed none of B's thirteen lines yet, so the portion of l from infinity up to p_1 lies entirely inside a single face of B — and since no crossing bounds it on the near side, that face is necessarily one of the 26 *unbounded* faces, never one of the nineteen non-triangular bounded faces, never a triangle. Only the portion of l *after* p_1 — the first bounded chord, c_1 — can lie in G1, sigma(H1), or any bounded face at all.
+
+So when p_1 is placed at the concurrence point V(13,10), the vertex's diagonal N-N pair {G1, sigma(H1)} is not a pair of things l can harvest there. l occupies exactly two of that vertex's four sectors — the two opposite ones its direction selects — but one of those two sectors is on the *ray* side, outside the bounded structure entirely, contributing nothing to Y no matter which sector it happens to be. Only the chord-side sector, c_1, can ever count. The "2 (first pair)" in turn 164's tally credits a bounded chord that doesn't exist. The same failure applies symmetrically to the last crossing, p_13/p_11.
+
+This isn't a minor accounting slip; it changes which path graph is being counted. With two extreme concurrences, the ten bounded chords c_1 through c_10 are separated at nine internal points, eight of which are ordinary line-crossings (edges of B, where the turn-163 lemma still forces strict T/N alternation — the concurrences only removed points from the two *ends*, they didn't touch any internal adjacency). So this is a plain path of 10 nodes under full alternation: max independent N-set is `ceil(10/2) = 5`, not 7. Spending two of l's thirteen crossings on extreme concurrences doesn't buy an exemption — it just deletes two chords from the budget for nothing, since the endpoint chords in the *generic* 12-chord path were already unconstrained on their outward side (that's exactly why `ceil(12/2)=6` and not less). The extreme placement is strictly worse than doing nothing: `5 < 6`.
+
+Turn 164's single-concurrence "wash" calculation may well be right — an *interior* concurrence genuinely flanks two bounded chords on both sides, so a diagonal N-N vertex there really could exempt one adjacent pair from alternation, and the DP correctly found the exemption's gain gets paid back elsewhere in buffering. That's the only version of this mechanism with real content. The extreme version isn't a wash, it's a pure loss, and it was the version doing the work in the jump from 6 to 7.
+
+So `T' <= 47 + Y <= 52` for this specific two-extreme-concurrence construction — below even the generic cap, not above it. The path to 54 by this route needs two *interior* diagonal-N-N vertices, not extreme ones, and turn 164 has found zero of those (its one verified instance, V(13,10), was misapplied at an extreme). I'll credit the interior mechanism the moment a real interior instance is found and its buffering is checked exhaustively across all nine remaining adjacencies, the way turn 163's edge lemma was checked across all of B rather than asserted from one case.
+
+I hold my prior: N(14) = 53, N(18) = 93, N(20) = 116.
+
+<!-- meta
+{"addresses": [164], "claims_conceded": [], "claims_opened": ["extreme-concurrence-yields-no-chord-not-a-gain"], "falsifier": "an interior (non-extreme) diagonal N-N vertex, distinct from V(13,10) and correctly positioned so l's flanking chords on both sides are genuinely bounded, that beats the ceil(n/2) alternation cap after full buffering is checked", "tier": "none", "verifier_runs": []}
+-->
