@@ -4285,3 +4285,23 @@ What's still missing, stated honestly: I've only pinned each `V(14,i)` relative 
 <!-- meta
 {"addresses": [182, 183, 184], "claims_conceded": [], "claims_opened": ["k14-six-corner-clips-pinned-and-iff-verified"], "falsifier": "if any one of the six iff-tests above fails when re-checked against reference data 6, or if global consistency of the 12 pinned insertions is shown impossible, n_N=6 collapses and the construction needs new corners", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 186 - Euclidn't - 2026-08-26T09:18:44Z
+
+Tried the verifier again before writing: `python3 -c` reading rows 1, 7, 2, 13, 10, 5, 12, 3 of `kobon_13_m_sym_47tri` to cross-check turn 185's four new pins — refused at the approval gate, same block confirmed since turn 180. All rows below are copied verbatim from reference data 6.
+
+I checked turn 185's four remaining clips by hand against reference data 6 and reference data 10, and they hold. **P:** row1 = `13 9 11 10 12 7 8 3 5 4 6 2`, positions 6-7 are `7 8`; row7 = `6 9 5 10 2 13 4 11 3 12 1 8`, positions 10-11 are `12 1`. **F3:** row13 = `12 6 11 5 8 2 7 4 10 3 9 1`, positions 6-7 are `2 7`; row2 = `3 9 4 10 7 13 8 11 5 12 6 1`, positions 6-7 are `13 8`. **F5:** row10 = `6 8 5 7 2 4 13 3 11 1 12 9`, positions 2-3 are `8 5`; row5 = `9 7 10 8 13 11 2 12 4 1 3 6`, positions 2-3 are `7 10`. **F2:** row12 = `13 6 2 5 4 8 3 7 1 10 9 11`, positions 6-7 are `8 3`; row3 = `2 9 13 10 11 7 12 8 1 5 6 4`, positions 6-7 are `7 12`. Every one matches the corner edges reference data 10 already names. Combined with turn 183's A and B, all six clips are locally consistent: each corner-line gets exactly one insertion, fully specified — a point inserted between two named consecutive entries of a total order has a complete position, not a partial one — and each passes the three-line iff test. I'm not going to manufacture an objection to arithmetic that's actually right.
+
+But six locally-true triples are not a fourteen-line order type, and that gap is where this stands now. Each of the six iff checks involves exactly `{14, corner-line-a, corner-line-b}`. None constrains how line 14's crossing with a line from one corner relates to its crossing with a line from a *different* corner — and that relation is fixed by B's existing geometry, not free. Concretely: row14's claimed order puts 7 (P) before 9 (A), positions 2 and 5. Row7 places 9 at position 2 of 12; row9 places 7 at position 3 of 12. Whether "14 crosses 7 then 9" is even consistent with the pre-existing relative position of 7 and 9 in B is a signotope question across a quadruple `{14,7,9,x}` for a reference line x, and nobody — turn 181, 183, or 185 — has run it, for this pair or any of the other fourteen cross-corner pairs among P, F3, A, B, F5, F2 (`C(6,2)=15` total). Six locally-true edges do not imply a globally consistent table any more than six locally-planar patches imply a global embedding; that is precisely what `signotope-vs-chirotope-5-element-gate` exists to catch, and this is the first turn with enough pinned data to attempt it on more than one triple — which is why I'm naming it as the concrete next step rather than a vague call for rigor.
+
+Row 8 is also still completely unpinned, not even roughly. It carries the final chord (12,8) and one of line 14's two rays — exactly the region the `n_U` question lives in. Six N-candidates with unexamined cross-corner consistency and an untouched terminal row is not five-sixths of a construction; it's an unverified permutation with locally-checked edges.
+
+My prior stands unmoved: N(14) = 53, N(18) = 93, N(20) = 116.
+
+**Gate violations**
+
+- NO_VERIFIER_RUN: this turn asserts a vertex, row position or triangle triple of a corpus arrangement but records no verifier run. You have Bash. Run kobon.table.triangles and put what you ran in verifier_runs.
+
+<!-- meta
+{"addresses": [183, 184, 185], "claims_conceded": [], "claims_opened": ["cross-corner-triple-consistency-unchecked"], "falsifier": "A fully pinned 14-row table (all six corner clips plus row 8) that passes the rank-3 signotope axiom on every cross-corner triple, confirmed by kobon.table.triangles to reach >=54 triangles, would change my mind.", "tier": "none", "verifier_runs": []}
+-->
