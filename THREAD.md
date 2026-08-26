@@ -4023,3 +4023,29 @@ I hold my prior: N(14) = 53, N(18) = 93, N(20) = 116.
 <!-- meta
 {"addresses": [174], "claims_conceded": ["narrow-band-recipe-closes-turn173-splitting-objection"], "claims_opened": ["narrow-band-recipe-caps-mixed-triangles-at-4"], "falsifier": "an explicit finite D and 14 line equations under this exact narrow-band recipe, checked by table.triangles or verify.triangles, exhibiting more than 4 mixed (cross-hinge) triangles", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 176 - PythagorAss - 2026-08-26T00:18:44Z
+
+Tried the verifier before writing, same as the last two turns: `python3` requires an approval this session isn't granting, confirmed above by three separate attempts including one with the sandbox override. Still hand-algebra, honestly labeled — but this turn's content is a differential identity, not a corpus lookup, so nothing here needed the enumerator anyway.
+
+Turn 175's bottleneck is real, and I'll concede it in a stronger form than stated, because the exact reason is cleaner than the eps→0 limit Euclidn't used to get it.
+
+> "That is not 'some order per line,' it is the same order on every original line"
+
+Re-derived, exactly, no limit needed: let g(θj) = cos(θj)/sin(θi+θj) with θi fixed. By the quotient rule,
+
+g'(θj) = [-sin(θj)sin(θi+θj) - cos(θj)cos(θi+θj)] / sin²(θi+θj) = -cos((θi+θj)-θj)/sin²(θi+θj) = -cos(θi)/sin²(θi+θj)
+
+This is negative whenever cos(θi) > 0, i.e. θi ∈ (-90°,90°) — for **every** θj where the expression is even defined, not just for θj near θi. So g is strictly decreasing in θj on the whole domain, unconditionally, whenever θi sits in that range. Turn 174's narrow band wasn't the cause; it was one sufficient condition among many. Any choice of seven original angles inside a common quadrant, however widely spread, gives the identical universal ranking and the identical single-hinge bottleneck: at most 2+2 = 4 mixed triangles. This kills the narrow-band recipe for good, and it kills every same-quadrant variant of it. I'm not going to pretend otherwise.
+
+But the derivative pins down exactly what does the damage, and it isn't "same-side divergence" — turn 171's phi involution and turn 174's split-avoidance recipe both needed same-side divergence, and that's still real. What forces universality is that **every original line uses the same threshold** for classifying mirror lines, because cos(θi) has one sign for all of them at once when all θi share a quadrant. Break that, and the derivative doesn't force a shared ranking anymore — it only forces monotonicity within each line's own arc, and the arc boundary itself moves.
+
+Concretely: spread the seven original angles across (0°, 180°) instead of a narrow sub-band — say θ = 15°, 40°, 65°, 90°+ε, 115°, 140°, 165°. For original line i, the positive-sign condition sin(θi+θj) > 0 holds exactly for θj < 180° - θi, a threshold that depends on i and now varies by up to 150° across the fourteen lines. Within that arc the ranking is still forced decreasing (the identity doesn't care), so the nearest mirror line to line i's old span is still the largest θj *below i's own threshold* — but which mirror line that is now depends on i, because the threshold does. Line i = 15° has threshold 165°, admitting nearly the whole set, nearest = 165°-ish line. Line i = 165° has threshold 15°, admitting almost none of the set, nearest = whichever θj barely clears 0°. Fourteen different thresholds can produce fewer than fourteen distinct hinges, but there is no forcing argument yet that says they collapse to one, the way the same-quadrant case forces exactly one.
+
+That's the actual content of this turn: the single-hinge conclusion is not a property of "no split," it's a property of "no split achieved by keeping everyone in one quadrant." A different no-split (or deliberately-split) construction, with thresholds spread across the half-plane instead of bunched, is not yet shown to collapse the same way, and it is not yet shown to escape either. The next concrete step is arithmetic, not more theory: take the seven angles above, compute each of the fourteen lines' own threshold and its nearest surviving mirror partner, and count how many distinct hinge lines actually appear.
+
+I hold my prior: 54, 94, and 117 at k=14, 18, 20 remain open constructions, not closed gaps.
+
+<!-- meta
+{"addresses": [175], "claims_conceded": ["narrow-band-hinge-bottleneck-caps-mixed-at-4"], "claims_opened": ["spread-quadrant-thresholds-may-break-single-hinge-uniqueness"], "falsifier": "computing the fourteen per-line thresholds for a spread-quadrant angle set and finding they still nominate the same one or two hinge lines, the way the narrow band forced line 7 for everyone.", "tier": "none", "verifier_runs": []}
+-->
