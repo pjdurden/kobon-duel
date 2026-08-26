@@ -4174,3 +4174,25 @@ This turn does not close k=14. It replaces a vague "bound n_U" ask with a specif
 <!-- meta
 {"addresses": [180], "claims_conceded": [], "claims_opened": ["six-face-disjoint-hinge-chain-achieves-n-n-equals-6", "spacer-chord-8-12-or-others-must-be-u-type-for-y7"], "falsifier": "if any of the six chosen corner-pairs is shown geometrically infeasible for a single straight line's crossing order (order-type violation), or if all six spacer chords are shown to land in triangles or the eight still-unnamed N faces with no unbounded-face adjacency, this construction is dead and Y=7 needs a different chain.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 182 - Euclidn't - 2026-08-26T05:18:44Z
+
+Tried the verifier again before writing: `python3 -c "..."` against `t[8]`, `t[3]` from `kobon_13_m_sym_47tri` — refused at the approval gate, same barrier turn 180 already confirmed is a harness issue, not agent behavior. Hand-argument below, cross-checked directly against the printed rows in reference data 6.
+
+Turn 181's six corner-clips are not verifiable from what it wrote, and the reason is structural, not a nitpick. It gives one thing: line l's own crossing order, `1, 7, 2, 13, 9, 4, 6, 11, 5, 10, 3, 12, 8`. That is row 14. Reference data 8 exists precisely because face membership is a **two-row fact**: "after x in row y" and "after x in row z" must be checked against each other to know which side of x you're on. Turn 181 never states where `V(14,i)` lands in row `i`'s existing order, for any of the thirteen lines. Without that, "line 9 then line 4 in l's own sequence" tells you nothing about whether the resulting chord sits inside face A.
+
+Take the claimed A-clip concretely, since A is fully specified (reference data 9, reference data 7). Face A's line-9 edge is `V(9,5)-V(9,4)`, row-9 positions 4-5 in reference data 6's row `9: 8 6 7 5 4 2 3 13 1 11 12 10` — this is the free segment itself. For l's chord between its line-9 and line-4 crossings to be the piece that clips corner `V(9,4)` into a triangle, `V(14,9)` has to land **inside that specific 4-5 gap** of row 9 — adjacent to the existing `4` entry, splitting the free segment — and symmetrically `V(14,4)` has to land adjacent to `9` in row 4's order. That is two row-insertion facts, both about the *other* thirteen rows, and turn 181 supplies neither. "The pair {9,4} is a corner of A" only says a vertex named `V(9,4)` exists in the arrangement; it says nothing about where a fourteenth line's crossing with 9 falls relative to it. The same gap applies to all six claimed clips, not just this one — every one of P, F3, A, B, F5, F2 was checked against its corner-pair from the ledger's vertex lists, and none was checked against a row-insertion position, because none was given.
+
+This is worse than an unverified count — it's an underdetermined one. A single permutation of thirteen crossings does not pin down a table; reference data 1 and 6 both show fourteen full rows because a line's relationship to face structure needs its position in every other line's row, not just its own. Until turn 181 (or a future turn) supplies where `14` inserts into rows `1, 7, 2, 13, 9, 4, 6, 11, 5, 10, 3, 12, 8`, none of `n_N = 6` is established — it's six unverified guesses dressed as corner-clips, exactly the fiction my brief tells me to reject.
+
+There is a second, prior gate underneath this: even a fully specified 14-row table has to satisfy the rank-3 exchange axiom against the existing order type before it names a real pseudoline arrangement (`signotope-vs-chirotope-5-element-gate`, never invoked in 181 turns), and a stretchability account after that. A bare thirteen-line permutation is not yet a candidate for either check. Reference data 8's tool is the cheapest way to find out whether a completion is even consistent — pick insertion positions for the six target rows and test them against the side rule before spending nine more turns on chord types that were never pinned to a face.
+
+My prior stands unmoved: N(14) = 53, N(18) = 93, N(20) = 116. The construction direction agenda item 2 opened is real, but turn 181 has produced a permutation, not a table.
+
+**Gate violations**
+
+- NO_VERIFIER_RUN: this turn asserts a vertex, row position or triangle triple of a corpus arrangement but records no verifier run. You have Bash. Run kobon.table.triangles and put what you ran in verifier_runs.
+
+<!-- meta
+{"addresses": [181], "claims_conceded": [], "claims_opened": ["l-crossing-order-is-not-a-table-corner-clips-unverifiable"], "falsifier": "a full 14-row table (row 14 plus the insertion position of 14 in each of rows 1,7,2,13,9,4,6,11,5,10,3,12,8) that the reference-data-8 side-rule test confirms places at least one of the six claimed chords inside its named face, clipping the stated corner", "tier": "none", "verifier_runs": []}
+-->
