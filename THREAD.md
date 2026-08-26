@@ -4226,3 +4226,25 @@ I hold my prior: 54, 94, and 117 remain open constructions. This turn narrows "a
 <!-- meta
 {"addresses": [182], "claims_conceded": ["turn181-permutation-underdetermines-table"], "claims_opened": ["corner-clip-a-b-row-insertions-pinned"], "falsifier": "if inserting V(14,9)/V(14,4)/V(14,6)/V(14,11) at these four pinned positions is shown inconsistent by the side rule against any already-named k=13 triangle, or if the remaining four corners cannot be pinned the same way, the construction is dead at this face set", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 184 - Euclidn't - 2026-08-26T07:18:44Z
+
+Tried the verifier again before writing: `cd ~/kobon-duel && python3 -c "..."` reading rows 9, 4, 6, 11 of `kobon_13_m_sym_47tri` — refused at the approval gate before execution, same block confirmed since turn 180. Every row cited below is copied verbatim from reference data 6's printed table.
+
+Turn 183's concession stands, and I'll add to it rather than dispute it: both pinned clips actually do pass the iff test (reference data 2) as stated. For {14,9,4}: 9,4 adjacent in row 14 (turn 181's sequence), 14 adjacent to 4 in row 9 (inserted between 5 and 4), 14 adjacent to 9 in row 4 (inserted between 9 and 2) — three local facts, test satisfied, no dispute. Same for {14,6,11}. I'm not going to manufacture a problem with something that's actually correct.
+
+Here's what turn 183 didn't notice: segment B is not an independent free segment that happens to look like segment A. It's segment A's mirror image, and the mirror automorphism sigma proves it exactly. `sigma: 9 -> 6, 4 -> 11, 5 -> 10` (from `i -> 15-i`). Apply sigma entrywise to row 9 — `8 6 7 5 4 2 3 13 1 11 12 10` becomes `7 9 8 10 11 13 12 2 1 4 3 5` — and that is row 6, printed, character for character. Segment A sits at row-9 positions 4-5 (entries 5,4); its sigma-image sits at row-6 positions 4-5 (entries sigma(5)=10, sigma(4)=11) — exactly segment B, candidate {6,10,11}. Reference data 8's proof that segment A's far side is unbounded (rows 4 and 5 both put line 9 at position 1, so both rays point into the same half-plane) transports across sigma without recomputation: rows 10 and 11 both put line 6 at position 1 — I checked, row 10 is `6 8 5 7 2 4 13 3 11 1 12 9` and row 11 is `6 13 5 2 8 4 7 3 10 1 9 12`, position 1 in both — so segment B's far side is unbounded too, by the image of the same argument. `k13-mirror-automorphism` pays a sixth time.
+
+Now the point this buys, against turn 183's construction specifically. Both unbounded twins sit adjacent to lines {4,5} and {10,11}, and both clips already commit line 14's *only* crossing with lines 4 and 6 to the interior hexagon corner (row 4 between 9,2; row 6 between 10,11). Line 14 crosses each of the thirteen lines exactly once — that's what a row is — so there is no second crossing with 4 or 6 available to also clip the unbounded twin next door. The free-segment structure that made A and B easy pickings for interior triangles is now fully spent; it cannot also hand PythagorAss a bonus U-chord toward the seventh clip. That door, which reference data 8's mechanism might have suggested was open, is closed by the same one-crossing-per-line fact that makes the construction a table in the first place.
+
+Which leaves the actual gate untouched: whether a single straight (or even pseudo-) line can realize six simultaneous corner-clips at all, which is an order-type consistency question, not a per-corner one. Five lines are now fully pinned relative to each other and to 14 — {14, 9, 4, 6, 11} — the first instance where the rank-3 exchange axiom (`signotope-vs-chirotope-5-element-gate`) is actually checkable rather than hypothetical. Nobody has run it. That's the next concrete step, not a new theory, and it's smaller than the six-corner problem, not bigger.
+
+I hold my prior: N(14) = 53, N(18) = 93, N(20) = 116.
+
+**Gate violations**
+
+- NO_VERIFIER_RUN: this turn asserts a vertex, row position or triangle triple of a corpus arrangement but records no verifier run. You have Bash. Run kobon.table.triangles and put what you ran in verifier_runs.
+
+<!-- meta
+{"addresses": [183], "claims_conceded": [], "claims_opened": ["free-segment-unbounded-twins-are-sigma-images-and-foreclose-bonus-clip"], "falsifier": "a verified 5-line exchange-axiom check on {14,9,4,6,11} that is consistent, extending to a full 13-row table passing the axiom throughout and surviving stretchability, would move me toward the construction being real.", "tier": "none", "verifier_runs": []}
+-->
