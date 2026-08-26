@@ -4145,3 +4145,32 @@ The verifier: I tried `python3 -c`, `/usr/bin/python3 -c`, and a chained form. A
 <!-- meta
 {"addresses": [156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179], "claims_conceded": [], "claims_opened": ["mirror-translate-family-capped-at-36", "insertion-gain-ratio-refutes-y-bound-program", "insertion-leak-is-u-chords-not-rays", "n-u-chord-count-unknown", "mirror-hinge-ranking-has-a-moving-pole", "same-quadrant-mirror-forces-single-hinge"], "falsifier": "Reference data 13 breaks if some line of a distant-mirror arrangement carries three or more old-new bounded segments, or if a mixed triangle exists whose side on an original line is not an old-new segment; either would lift the cap of 36. Reference data 11c breaks if a ray of a generically inserted line is exhibited creating a bounded triangle. Reference data 12 breaks if N(12) is shown to exceed 38 or N(13) to be below 47.", "tier": "silver", "tweet": "Both agents spent five turns bounding a 14-line mirror construction. A segment count caps that whole family at 36 triangles, no angles needed. And N(13) minus N(12) is 9, so bounding insertion gain below 7 is dead.", "verifier_runs": []}
 -->
+
+## Turn 181 - PythagorAss - 2026-08-26T04:19:44Z
+
+Tried the verifier again before writing: `python3 -c "print(1)"` alone, no chaining, still refused. Confirmed same block turn 180 already conceded is a harness issue. Hand-argument, cross-checked against the printed corner lists in reference data 9, 10 and 14.
+
+Turn 180's redirection is right, and I'm taking agenda item 2 literally: build the crossing order, don't theorize about it. Here is a concrete fourteenth line against Kabanovitch's table.
+
+Six of the eleven known non-triangular faces have disjoint corner-pairs — no line reused between them:
+
+    P:  {1,7}     F3: {2,13}    A:  {9,4}
+    B:  {6,11}    F5: {5,10}    F2: {3,12}
+
+Union of lines used: {1,7,2,13,9,4,6,11,5,10,3,12} — twelve distinct lines, leaving only line 8 uncovered. Each pair is an adjacent-edge corner straight from the ledger's own face listings: P's corner {1,7} (reference data 10), F3's {2,13}, F5's {5,10}, F2's {3,12} (reference data 10/14), A's {9,4}, B's {6,11} (reference data 9).
+
+Sequence the fourteenth line l to cross these thirteen lines in the order
+
+    1, 7, 2, 13, 9, 4, 6, 11, 5, 10, 3, 12, 8
+
+giving twelve chords c1..c12 between consecutive crossings. Chords c1, c3, c5, c7, c9, c11 are exactly the six chosen pairs — (1,7), (2,13), (9,4), (6,11), (5,10), (3,12) — each a corner-clip of a distinct known N-face, by reference data 11a's a=0 case: entering and leaving a hexagon or pentagon through its two edges adjacent to one vertex cuts a triangle off it, net gain +1, since the parent face wasn't triangular to begin with and convexity (reference data 11, T159) guarantees l meets each face at most once so no double-dipping. Chords c2, c4, c6, c8, c10, c12 are spacers — (7,2), (13,9), (4,6), (11,5), (10,3), (12,8) — placed precisely so no two N-chords are adjacent, satisfying the N-N alternation constraint exactly at its cap of six (reference data 11d survives, and this sequence saturates it rather than violating it).
+
+That's `n_N = 6` by construction, six of eleven known faces, each used once, all thirteen lines placed, nothing hand-waved about which face a chord lands in — the pairs are read directly off the ledger's own vertex lists, not asserted from a picture.
+
+This is short of 7 by exactly one, and it sharpens rather than restates the open question. I don't need a bound on `n_U` in general anymore; I need one specific fact: does at least one of the six spacer chords — (7,2), (13,9), (4,6), (11,5), (10,3), or the final piece (12,8)/ray on 8 — sit in an unbounded face of B and clip its corner? Those six spacers are otherwise unconstrained by this construction; I haven't checked whether any is a T-chord (landing in one of the 47 named triangles, gain 0 and fine) or genuinely open. That is the concrete blocking step: I have not yet tested any spacer chord against reference data 6's rows or reference data 7's triangle list, because the enumerator that would make that check mechanical is unavailable this session.
+
+This turn does not close k=14. It replaces a vague "bound n_U" ask with a specific six-chord list to test, which is exactly the adjacency data agenda item 3 was already collecting.
+
+<!-- meta
+{"addresses": [180], "claims_conceded": [], "claims_opened": ["six-face-disjoint-hinge-chain-achieves-n-n-equals-6", "spacer-chord-8-12-or-others-must-be-u-type-for-y7"], "falsifier": "if any of the six chosen corner-pairs is shown geometrically infeasible for a single straight line's crossing order (order-type violation), or if all six spacer chords are shown to land in triangles or the eight still-unnamed N faces with no unbounded-face adjacency, this construction is dead and Y=7 needs a different chain.", "tier": "none", "verifier_runs": []}
+-->
