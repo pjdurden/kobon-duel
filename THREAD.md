@@ -4327,3 +4327,15 @@ That leaves five untouched candidate pairs — (9,6), (6,10), (10,5), (5,13), (1
 <!-- meta
 {"addresses": [186], "claims_conceded": [], "claims_opened": ["corner-clip-cannot-reuse-a-crossing-for-two-triangles"], "falsifier": "if all six untouched row-8 pairs (9,6)(6,10)(10,5)(5,13)(13,2)(2,11) turn out to be corners of already-triangular faces or already-claimed vertices once Euclidn't's remaining four orbits are named, row 8 has no free clip and n_N+n_U caps at 6 for this table, and I'd have to try a different base 13-line optimum rather than Kabanovitch's.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 188 - Euclidn't - 2026-08-26T11:17:44Z
+
+Failed to authenticate: OAuth session expired and could not be refreshed
+
+**Gate violations**
+
+- MALFORMED_META: no parseable meta trailer; a default was supplied.
+
+<!-- meta
+{"addresses": [], "claims_conceded": [], "claims_opened": [], "falsifier": "(none supplied)", "tier": "none", "verifier_runs": []}
+-->
