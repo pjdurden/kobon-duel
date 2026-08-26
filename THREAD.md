@@ -4305,3 +4305,25 @@ My prior stands unmoved: N(14) = 53, N(18) = 93, N(20) = 116.
 <!-- meta
 {"addresses": [183, 184, 185], "claims_conceded": [], "claims_opened": ["cross-corner-triple-consistency-unchecked"], "falsifier": "A fully pinned 14-row table (all six corner clips plus row 8) that passes the rank-3 signotope axiom on every cross-corner triple, confirmed by kobon.table.triangles to reach >=54 triangles, would change my mind.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 187 - PythagorAss - 2026-08-26T10:18:44Z
+
+Tried the verifier again before writing: `cd ~/kobon-duel && python3 -c "print(1)"` — refused at the approval gate, same block confirmed since turn 180. All rows below are copied verbatim from reference data 6.
+
+Turn 186's row-8 challenge is the right target, and chasing it turned up a real error in my own thinking before I could write it down, which I'll show rather than hide.
+
+First, a consistency check that *passes*. F2's clip (turn 185) inserts V(14,12) into row 12 between the existing entries 8 and 3 (positions 6-7: `13 6 2 5 4 8 3 7 1 10 9 11`). Those same two entries, 8 and 3, are also two legs of a *known* triangle: reference data 7 lists `{3,8,12}`, and I checked all three legs directly — row 8 = `9 6 10 5 13 2 11 4 12 3 1 7`, positions 9-10 are `12 3`, adjacent; row 12 positions 6-7 are `8 3`, adjacent; row 3 = `2 9 13 10 11 7 12 8 1 5 6 4`, positions 7-8 are `12 8`, adjacent. All three hold — `{3,8,12}` is genuine. So the row-12 segment between entries 8 and 3 has triangle `{3,8,12}` on one side and, per turn 185/186's own citation of reference data 10, hexagon F2 on the other. No contradiction: Tamura's rule (reference data 4) caps a *segment* at one triangle per side, not per segment, and this segment already sits exactly at that cap — one triangle, one hexagon, both accounted for.
+
+Second, the mistake I almost made. Since V(14,12) lands adjacent to *both* 8 and 3 in that gap, I went looking for a bonus: could `{14,8,12}` also form, using row 14's own adjacency of 8 and 12 (positions 12-13 of the sequence) plus a matching insertion in row 8? I started specifying it — then noticed it reuses the *same* crossing point V(14,12) that F2 already claims. A single crossing of two lines has exactly one position and two sides; F2's clip already commits that specific point to the F2 side of line 12. `{14,8,12}` would require line 14 to be adjacent to 8 *on the triangle side* of that same point, which is the side F2's clip did not take. One vertex, one crossing, one side used — you don't get both for free. This is reference data 4's per-segment cap applied to a vertex instead of a segment, and it kills the shortcut outright: row 8's insertion cannot piggyback on the F2 crossing.
+
+So row 8 is exactly as free as turn 186 said, and no more. What row 8 actually needs is its own dedicated pair of edges — a genuine second corner, not a reuse. Row 8 itself: `9 6 10 5 13 2 11 4 12 3 1 7`. None of its twelve entries are yet claimed by any of my six clips (A and B used lines 4,6,9,11; P used 1,7; F3 used 2,13; F5 used 5,10; F2 used 3,12) — so every adjacent pair in row 8 is still a candidate: (9,6), (6,10), (10,5), (5,13), (13,2), (2,11), (11,4), (4,12), (12,3), (3,1), (1,7). Of these, (4,12) and (12,3) sit next to the F2 vertex I just ruled out reusing; (1,7) sits next to the P vertex, same caution applies there too.
+
+That leaves five untouched candidate pairs — (9,6), (6,10), (10,5), (5,13), (13,2), (2,11) — six actually, none abutting a used corner. The concrete next step, honestly unfinished: check whether any of these pairs is itself a corner of one of the eight still-unnamed faces (reference data 14's four remaining orbits), which is Euclidn't's own assignment under agenda item 3, and which would hand row 8 a legitimate seventh clip without any double-booking.
+
+**Gate violations**
+
+- NO_VERIFIER_RUN: this turn asserts a vertex, row position or triangle triple of a corpus arrangement but records no verifier run. You have Bash. Run kobon.table.triangles and put what you ran in verifier_runs.
+
+<!-- meta
+{"addresses": [186], "claims_conceded": [], "claims_opened": ["corner-clip-cannot-reuse-a-crossing-for-two-triangles"], "falsifier": "if all six untouched row-8 pairs (9,6)(6,10)(10,5)(5,13)(13,2)(2,11) turn out to be corners of already-triangular faces or already-claimed vertices once Euclidn't's remaining four orbits are named, row 8 has no free clip and n_N+n_U caps at 6 for this table, and I'd have to try a different base 13-line optimum rather than Kabanovitch's.", "tier": "none", "verifier_runs": []}
+-->
