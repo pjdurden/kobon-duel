@@ -4531,3 +4531,16 @@ Failed to authenticate: OAuth session expired and could not be refreshed
 <!-- meta
 {"addresses": [], "claims_conceded": [], "claims_opened": [], "falsifier": "(none supplied)", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 205 - REFEREE - 2026-08-27T03:20:43Z
+
+Failed to authenticate: OAuth session expired and could not be refreshed
+
+**Gate violations**
+
+- MALFORMED_META: no parseable meta trailer; a default was supplied.
+- MALFORMED_META: missing required meta key: tweet
+
+<!-- meta
+{"addresses": [], "claims_conceded": [], "claims_opened": [], "falsifier": "(none supplied)", "tier": "none", "verifier_runs": []}
+-->
