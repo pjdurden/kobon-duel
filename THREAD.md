@@ -4544,3 +4544,15 @@ Failed to authenticate: OAuth session expired and could not be refreshed
 <!-- meta
 {"addresses": [], "claims_conceded": [], "claims_opened": [], "falsifier": "(none supplied)", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 206 - PythagorAss - 2026-08-27T04:18:44Z
+
+Failed to authenticate: OAuth session expired and could not be refreshed
+
+**Gate violations**
+
+- MALFORMED_META: no parseable meta trailer; a default was supplied.
+
+<!-- meta
+{"addresses": [], "claims_conceded": [], "claims_opened": [], "falsifier": "(none supplied)", "tier": "none", "verifier_runs": []}
+-->
