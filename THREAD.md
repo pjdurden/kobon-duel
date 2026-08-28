@@ -4784,3 +4784,33 @@ Failed to authenticate: OAuth session expired and could not be refreshed
 <!-- meta
 {"addresses": [], "claims_conceded": [], "claims_opened": [], "falsifier": "(none supplied)", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 226 - PythagorAss - 2026-08-28T00:17:44Z
+
+The last five turns on the record — 220 through 225 — are empty; both sides failed to authenticate and nothing was argued. The last real content is still the referee's turn-180 rewrite, which assigned me the construction: a fourteenth line against Kabanovitch's k=13 optimum (reference data 6/7) reaching 54 under the iff test, opening with a crude cap per item 4.
+
+First, the verifier. I ran the exact call from the brief:
+
+```
+python3 -c "from kobon import corpus, table; t = corpus.by_key()['kobon_13_m_sym_47tri']['table']; ..."
+```
+
+It was refused before execution, same as every attempt since turn 172. The tool is still not available in this session. Everything below is hand-derived from reference data already referee-verified, not a fresh corpus query, so I'm not claiming a verifier run for it.
+
+Here is the move. The mirror automorphism is `sigma: 1->1, i->15-i` for `i` in 2..13. Note `sigma(7) = 15-7 = 8`. That means **any sigma-fixed face's line-set must contain both line 7 and line 8, or neither** — one line of proof: if a face `F` is fixed, `sigma(F) = F`, and if `7` bounds `F` then `sigma(7)=8` must bound `sigma(F)=F` too. Check it against the five known fixed faces, all already in reference data 3 and 10:
+
+    P:  {1,3,7,8,12}      has both
+    F2: {3,4,7,8,11,12}   has both
+    F3: {2,4,7,8,11,13}   has both
+    F4: {2,5,7,8,10,13}   has both
+    F5: {5,6,7,8,9,10}    has both
+
+All five pass, as the lemma forces. This isn't a new discovery so much as a proof of why the census came out the way it did — but it has a payoff. Lines 7 and 8 are the two highest-connectivity lines in the eleven named faces so far: line 7 borders P, F2, F3, F4, F5, hexagon A `{2,4,5,7,9,10}`, and `sigma(H1) = {3,4,7,10,11,13}` — seven of eleven. Line 8 borders the same five fixed faces plus hexagon B `{5,6,8,10,11,13}` and `H1 = {2,4,5,8,11,12}` — seven of eleven, the sigma-mirror count as the lemma demands.
+
+That makes the 7-8 corridor the highest-density target for an inserted line. Crude cap first, per item 4: on line 14 itself, only the chords immediately adjacent to its crossings with lines 7 and 8 can land in faces anchored there. If line 14 crosses 7 and 8 consecutively in its own row, that's the chord between them plus one flanking chord on each side — three chords locally anchored to the corridor, out of the twelve total. Three is not seven; this is a seed, not the whole route. The remaining four chords needed have to come from the other faces those three miss: G1 and sigma(G1), which touch none of lines 7,8, are the next targets, and they sit on `{2,3,4,9,10,13}` and `{2,5,6,11,12,13}` respectively — both reachable from a line that also threads lines 4 and 2, which already appear in the 7-8-adjacent faces too.
+
+Next turn I commit to the explicit 13-entry crossing order for line 14, opening with 7,8 adjacent, and I will test each resulting candidate triple against reference data 7's list of 47 the way turns 156-162 tested face walks, reporting the type (T/N/U) of every one of the twelve chords honestly, including where it fails.
+
+<!-- meta
+{"addresses": [180], "claims_conceded": [], "claims_opened": ["sigma-fixed-faces-contain-both-line-7-and-8", "lines-7-8-are-max-connectivity-insertion-targets"], "falsifier": "an explicit demonstration that no generic line can cross lines 7 and 8 consecutively without passing through the fixed vertex V(7,8) or being blocked from reaching G1/sigma(G1) would kill this targeting route.", "tier": "none", "verifier_runs": []}
+-->
