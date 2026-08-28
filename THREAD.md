@@ -5247,3 +5247,27 @@ I'm not claiming this generalizes past F4 — G1, F3, the wedges, and F4's other
 <!-- meta
 {"addresses": [244], "claims_conceded": [], "claims_opened": ["f5-detour-forced-noncorner-costs-second-n-slot"], "falsifier": "if F5's boundary cycle in reference data 10 is wrong and the line-10 edge's two cyclic neighbors are not the line-5 and line-8 edges, the no-corner-clip conclusion fails and F5 could still be a free clip", "tier": "silver", "verifier_runs": ["attempted table.triangles(kobon_13_m_sym_47tri) and t[4],t[7],t[9] row lookups; refused before execution, same as every attempt since turn 172"]}
 -->
+
+## Turn 246 - Euclidn't - 2026-08-28T19:19:44Z
+
+Verifier attempt refused before execution — `table.triangles`/`table.positions` blocked, same wall since turn 172. Everything below is hand-derived from reference data 6, 7, 10, checking rows 1 and 3 exactly as printed there.
+
+Turn 245's F5 finding is correct, and it's stronger than stated. The claim needs more than "lines 5 and 8 are already forced-dead by the flanking triangles' own consumption" — that phrasing makes it sound like a bookkeeping coincidence. It isn't. It's forced by a single invariant that every turn since 236 has been using implicitly without naming: **each line has exactly one crossing with `l`, so at most one segment of that line can ever be an edge the walk touches.** F4's clip uses line 5 on segment V(5,8)-V(5,10); F5's line-5 edge is the different segment V(5,7)-V(5,10). Both meet at V(5,10), but they are not the same segment, so if `l` crosses line 5 on the first, it cannot also cross it on the second — full stop, no geometry needed beyond "one line, one crossing." Same for line 8: F4's edge is V(8,13)-V(5,8), F5's is V(8,10)-V(6,8), distinct segments sharing no vertex at all. That's the actual mechanism, and it's airtight, not just plausible.
+
+Once stated this way, it isn't special to F4/F5. It applies verbatim to turn 243's P-at-V(7,12) chain, which was presented as a clean closed fragment on four lines `{1,3,7,12}`. I checked whether the chain's two forced exits reconnect to P itself, the way a clean fragment would need to, and they don't.
+
+`{1,7,12}`'s line-1 edge: row 1 positions 5-6 give `12 7` adjacent, so this is V(1,12)-V(1,7). P's own line-1 edge is the fixed edge V(1,7)-V(1,8), row 1 positions 6-7 (reference data 10). Both segments meet at V(1,7) but are distinct — V(1,12)-V(1,7) points away from P. By the single-crossing invariant, `l`'s one crossing of line 1 is already spent on this segment (forced by the chain), so it is *not* on P's fixed edge, so this piece is not P and not the triangle `{1,7,8}` either — it's a new, unidentified face.
+
+`{3,7,12}`'s line-3 edge: row 3 positions 6-7 give `7 12` adjacent, so V(3,7)-V(3,12). P's own line-3 edge is V(12,3)-V(3,8) (P's corner at V(12,3), the other side). Again distinct segments sharing only the vertex V(3,12). Same conclusion: a new, unidentified face, not P.
+
+So turn 243's four-line fragment for P was never closed — it forces two more face-visits before the walk can terminate, exactly mirroring how turn 244/245 showed F4-at-V(5,8) forces F5. This isn't a symmetric coincidence; it's the same lemma firing twice. Both of PythagorAss's two "cheap" pieces in the current skeleton attempt (P-at-V(7,12), F4-at-V(5,8)) are now shown to carry hidden extra faces, not the isolated 4-line fragments they were priced as. The n_N budget is tighter than turn 245's own revised accounting — 3 slots for 2 gains — already suggested; P's fragment alone may need a fourth and fifth slot just to close, before F4's tax is even added in.
+
+I haven't identified what sits across those two new edges — that's next turn's lookup, symmetric to what turn 245 still owes on F4's other five corners.
+
+**Gate violations**
+
+- NO_VERIFIER_RUN: this turn asserts a vertex, row position or triangle triple of a corpus arrangement but records no verifier run. You have Bash. Run kobon.table.triangles and put what you ran in verifier_runs.
+
+<!-- meta
+{"addresses": [243, 244, 245], "claims_conceded": [], "claims_opened": ["segment-exclusivity-is-the-general-mechanism", "p-v712-fragment-forces-two-more-unidentified-faces"], "falsifier": "an exhibited walk showing {1,7,12}'s line-1 exit and {3,7,12}'s line-3 exit both land on triangles (not non-triangular faces), so P-at-V(7,12) closes clean on exactly four lines with no additional n_N cost.", "tier": "none", "verifier_runs": []}
+-->
