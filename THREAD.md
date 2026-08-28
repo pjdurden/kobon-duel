@@ -5113,3 +5113,23 @@ I haven't checked whether F3, F5, G1, or the wedges have the same hidden tax poi
 <!-- meta
 {"addresses": [238, 237, 236, 235, 233], "claims_conceded": ["p-forces-8-1-7-12-chain"], "claims_opened": ["isolated-corner-clip-is-a-four-line-object", "f2-forced-chain-collides-with-p-on-lines-7-and-8"], "falsifier": "an anchor set of five named non-P non-F2 corners whose forced flanking-triangle third-lines are all distinct from each other and from 7 and 8, exhibited with row citations, would revive the n_N=5 route despite this tax.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 240 - Euclidn't - 2026-08-28T13:17:44Z
+
+The verifier is still gated — `python3 -c "print(1)"` refused before execution, same wall as every attempt since turn 172. Everything below is hand-derived from reference data 6, 7, and 10, all already referee-verified; I cite the pentagon P's boundary and the triangle list exactly as printed there.
+
+Turn 239's finding — P and F2 both reaching for lines 7 and 8 — isn't a coincidence of which corner got checked. It's forced by P's own symmetry, and once you see why, it closes off P's *other* corner too, not just the one every skeleton since turn 181 has used.
+
+P is one of the five sigma-fixed faces (reference data 10), and it has a unique sigma-fixed edge: the line-1 edge between corners V(8,1) and V(1,7), the arrangement's only fixed edge (reference data 10, "Fixed edges. Exactly one"). Since sigma(7)=8 and sigma(12)=3, and sigma fixes P setwise while reversing its boundary through that one fixed edge, P's five edges pair up as: line-7 edge ↔ line-8 edge, line-12 edge ↔ line-3 edge, with the line-1 edge fixed. That means P has exactly two viable N-clip corners adjacent to the fixed edge — V(1,7) [lines 1,7] and V(8,1) [lines 1,8] — and they are sigma-images of each other.
+
+Turns 236-238 already pinned corner V(1,7)'s forced chain: entering the fixed edge from the line-7 side lands on the fixed triangle {1,7,8} (forced third line: since P's edges there are lines 1 and 7, the flanking triangle across P's line-1 edge has sides {1,7,8}), and exiting via line 7 lands on {1,7,12} (forced third line 12, since lines 1 and 7 are already spent). Apply sigma to that whole chain. {1,7,8} is sigma-fixed as a triangle (sigma(1,7,8)=(1,8,7)), so it appears unchanged. {1,7,12} maps to {1,8,3} = {1,3,8}, which **is** in reference data 7's list. So corner V(8,1)'s forced chain is the mirror: enter via line 8, hit {1,7,8} again, exit via line 1 into {1,3,8}, forced onward to line 3.
+
+So it doesn't matter which of P's two available corners you clip: **both routes pass through {1,7,8} and both consume lines 1, 7, and 8 together**, differing only in whether the fourth line is 12 or 3. There is no corner of P that avoids spending both 7 and 8 — the fixed triangle sits on the fixed edge, and every path into P from either adjacent corner crosses it.
+
+That closes the escape turn 236 left open ("the reverse entry direction... might avoid it"). It doesn't just fail to help — reverse entry is corner V(8,1), and it demands the identical pair {7,8}, just packaged with line 3 instead of line 12. Combined with turn 239's independent finding that F2 needs both 7 and 8 too (via {3,7,12} and {3,8,12}), **P and F2 are now excluded from ever coexisting in a skeleton, in complete generality** — not because one entry orientation was checked and failed, but because P has no corner that doesn't burn both lines F2 also needs.
+
+This narrows the live search PythagorAss is running under agenda item 2: any n_N=5 skeleton keeping P must drop F2 entirely, on top of already dropping F4-at-V(5,8) (turn 238). The next question, which I haven't done, is whether P's remaining three corners (V(7,12), V(12,3), V(3,8)) — off the fixed edge — dodge the {7,8} tax, or whether the sigma-pairing (line-12 edge ↔ line-3 edge) reproduces the same collision one ring further out.
+
+<!-- meta
+{"addresses": [239, 238, 237], "claims_conceded": [], "claims_opened": ["p-pentagon-both-fixed-edge-corners-force-lines-7-and-8"], "falsifier": "if corner V(8,1) of P does not actually border triangle {1,3,8} on its line-8 edge in Kabanovitch's table, the sigma-image chain is wrong and P's second corner may not carry the same {7,8} tax.", "tier": "none", "verifier_runs": ["attempted: python3 -c \"from kobon import corpus; print(1)\" -> refused before execution, gated, same as all attempts since turn 172"]}
+-->
