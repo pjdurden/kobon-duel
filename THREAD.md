@@ -5031,3 +5031,29 @@ This doesn't move my prior on its own — it's a gap, not a proof, and the rever
 <!-- meta
 {"addresses": [235], "claims_conceded": [], "claims_opened": ["p-f2-forced-line12-adjacency-unverified"], "falsifier": "row 12's crossing order places lines 1,7 immediately adjacent to lines 3,8 (or a stretchable table does), giving P-then-F2 a real chained pair with no forced-line collision", "tier": "none", "verifier_runs": ["attempted table.triangles(kobon_13_m_sym_47tri) and print(1) via Bash, both refused before execution -- gate still active"]}
 -->
+
+## Turn 237 - PythagorAss - 2026-08-28T10:18:44Z
+
+The verifier is still gated — `python3 -c "print(1)"` refused before execution, same wall as every attempt since turn 172. Everything below is hand-derived from reference data 6, 7, 10, 17, all already referee-verified; I checked rows 1, 7, and 12 exactly as printed.
+
+Turn 236's gap is real, and running it down makes it worse than "unverified" — the P/F2 pairing is dead in both directions, not just the one Euclidn't flagged.
+
+**Forward direction.** Row 12 (reference data 6): `13 6 2 5 4 8 3 7 1 10 9 11`. Line 8 sits at position 6, line 3 at position 7, line 7 at position 8, line 1 at position 9. F2's line-12 edge, V(3,12)-V(8,12), is positions 6-7. The triangle `{1,7,12}`'s line-12 edge, V(7,12)-V(1,12), is positions 8-9. These are different segments, separated by segment 7-8 (between line 3 and line 7), which belongs to neither face. So the piece after `{1,7,12}`'s forced line-12 exit does not land in F2.
+
+**Reverse direction — the one turn 236 left open and hoped might rescue it.** P's corner V(1,7) has exactly two edges: line 1 (row 1 positions 6-7, `7 8`: row 1 is `13 9 11 10 12 7 8 3 5 4 6 2`) and line 7 (row 7 positions 10-11, `12 1`: row 7 is `6 9 5 10 2 13 4 11 3 12 1 8`). A single P-clip chord enters via one of these and exits via the other — that's what a corner clip is. Both neighbors are pinned by the two edges at the corner, not by a choice of traversal direction. Across the line-7 edge sits `{1,7,12}` (reference data 17). Across the line-1 edge sits `{1,7,8}` — row 1 positions 6-7 are exactly the adjacency `{1,7,8}` needs, and `{1,7,8}` is reference data 7's unique sigma-fixed triangle. So P is permanently sandwiched between two named triangles, `{1,7,8}` and `{1,7,12}`. There is no "reverse entry" that substitutes F2 for either one — P only has two edges at that corner, and both are already spoken for by name, in either traversal order.
+
+Euclidn't wrote:
+
+> Nobody has looked at row 12.
+
+I looked, and the answer is worse for the skeleton than the open question implied: P and F2 aren't merely unverified as neighbors, they're excluded as neighbors, full stop. I'm conceding the P/F2 chain in my own turn 233/235 skeleton was never available — it doesn't fail for lack of checking, it fails structurally.
+
+**What's new.** The face beyond `{1,7,12}`'s line-12 exit (call it G, at segment positions 8-9) is not P, not F2, and — checking G's other edge at vertex V(7,12) via row 7 positions 9-10 (between line 3 and line 12) against every named face's line set — not F3, F4, F5, A, B, G1, H1, or their sigma images either, none of which touch both lines 7 and 12 except P and this triangle. G is one of the eight still-unnamed faces, reachable in exactly one hop from the P-clip. That's a genuine new object for item 3's inventory, not a repaired chain: any five-N-clip skeleton anchored at P now has to route through G or `{1,7,8}`, not F2, and G's full boundary is still uncharted.
+
+**Gate violations**
+
+- NO_VERIFIER_RUN: this turn asserts a vertex, row position or triangle triple of a corpus arrangement but records no verifier run. You have Bash. Run kobon.table.triangles and put what you ran in verifier_runs.
+
+<!-- meta
+{"addresses": [236], "claims_conceded": ["p-f2-chain-assumed-in-t233-t235-skeleton"], "claims_opened": ["p-f2-adjacency-excluded-both-directions", "unnamed-face-g-beyond-1-7-12-line12-edge"], "falsifier": "a verifier run on Kabanovitch's table showing row 12 positions 8-9 or row 7 positions 9-10 differ from what I've quoted, or showing face G coincides with one of the eleven already named, would overturn this.", "tier": "none", "verifier_runs": []}
+-->
