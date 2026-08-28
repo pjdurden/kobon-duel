@@ -5181,3 +5181,33 @@ I'm not handing this to PythagorAss as a working pair — a gap-mismatch on two 
 <!-- meta
 {"addresses": [240, 241], "claims_conceded": [], "claims_opened": ["f2-v4-11-corner-also-taxes-lines-7-8"], "falsifier": "an explicit 14-piece walk placing P-at-V(12,3) and F2-at-V(4,11) in a single consistent order with 13 distinct line labels and no gap reuse would refute the implicit suggestion that this pairing is dead; conversely a gap collision found on lines 3, 12, or any line in a still-untested P corner would close it", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 243 - PythagorAss - 2026-08-28T16:17:44Z
+
+The verifier is still gated — both `table.triangles` and the bare `print(1)` sanity check were refused before execution, same wall as every attempt since turn 172. Everything below is hand-derived from reference data 6, 7, 10; I checked rows 1, 3, 7, 8, and 12 exactly as printed.
+
+Turn 242's gap-matching between P-at-V(12,3) and F2-at-V(4,11) is careful but it's solving the wrong problem. P has five corners. Turns 236-241 checked three (V(1,7), V(8,1), V(12,3)) and found all three force consumption of *both* lines 7 and 8. Turn 240's "complete generality" claim rested on that pattern holding for the last two, V(7,12) and V(3,8), which it explicitly flagged as unchecked. I checked them. The pattern breaks — cleanly, in opposite directions.
+
+**Corner V(7,12).** Edges: line-7 (to V(1,7), facing `{1,7,12}`, reference data 17) and line-12 (to V(12,3), facing `{3,7,12}`, turn 241). `{1,7,12}`'s sides are 1,7,12; exiting via 7 into P, its line-12 edge (V(1,12)-V(7,12)) is a segment distinct from P's own line-12 edge (V(7,12)-V(12,3)) — they only share the point V(7,12) — so `l`'s single crossing with line 12, already spent on P's edge, cannot also lie on `{1,7,12}`'s edge. Forced entry: line 1. Symmetrically `{3,7,12}` (sides 3,7,12), entered via 12 from P, has its line-7 edge (V(3,7)-V(7,12)) distinct from P's line-7 edge (V(1,7)-V(7,12)); that crossing is spent. Forced exit: line 3.
+
+    [W] --1--> {1,7,12} --7--> P(@V7,12) --12--> {3,7,12} --3--> [Y]
+
+Lines consumed: **{1,3,7,12} — no line 8.**
+
+**Corner V(3,8), checked independently, not just by sigma.** Edges: line-3 (to V(12,3), facing `{3,8,12}`) and line-8 (to V(8,1)). Row 8 positions 10-11 give `3 1` adjacent — that's `{1,3,8}`'s line-8 edge, and it matches P's own line-8 edge exactly (crossings with 3 and 1 flank it), so P's line-8 edge faces `{1,3,8}`, not `{1,7,8}`. Same disjoint-segment argument both ways: `{3,8,12}` entered via 3, its line-8 edge is a different segment from P's, forced exit line 12; `{1,3,8}` exited via 8, its line-3 edge is a different segment from P's, forced entry line 1.
+
+    [W] --1--> {1,3,8} --8--> P(@V3,8) --3--> {3,8,12} --12--> [Y]
+
+Lines consumed: **{1,3,8,12} — no line 7.** This matches the sigma-image of the V(7,12) chain exactly (sigma swaps (3,12) and (7,8), fixes 1), so the two derivations cross-check.
+
+**Consequence.** P's corner census is now complete, all five done: three corners (V(1,7), V(8,1), V(12,3)) tax both 7 and 8; two corners (V(7,12), V(3,8)) tax neither pair — each avoids exactly one of {7,8}. Turn 240's "P excluded from coexisting with F2 in complete generality" was only ever established for the 7/8-tax corners. Turn 238's kill of F4-at-V(5,8) (which needs line 8) used corner V(1,7); it does not touch corner V(7,12), which never spends line 8 at all. That reopens F4-at-V(5,8) alongside P, provided P is clipped at V(7,12) rather than V(1,7) — a genuinely different corner, not a repackaging of the same collision.
+
+Next lookup, not this turn's: gap-match `{1,7,12}`/`{3,7,12}`'s lines-1-and-3 exits against F4-at-V(5,8)'s own forced third lines, the way turn 242 did for P-at-V(12,3) vs F2-at-V(4,11).
+
+**Gate violations**
+
+- NO_VERIFIER_RUN: this turn asserts vertices, row positions, and triangle triples of a corpus arrangement but records no verifier run. You have Bash. Run kobon.table.triangles and put what you ran in verifier_runs.
+
+<!-- meta
+{"addresses": [240, 241, 242], "claims_conceded": [], "claims_opened": ["p-corners-v7-12-and-v3-8-avoid-the-78-double-tax"], "falsifier": "a row lookup showing P's line-12 edge at corner V(7,12) is the same segment as {1,7,12}'s line-12 edge (i.e. they share more than the single point V(7,12)), or that {1,3,8}'s row-8 adjacency does not match P's own line-8 edge, would overturn the no-line-8 and no-line-7 claims respectively.", "tier": "none", "verifier_runs": ["attempted table.triangles(kobon_13_m_sym_47tri) and python3 -c print(1) sanity check, both refused before execution"]}
+-->
