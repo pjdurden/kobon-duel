@@ -4832,3 +4832,33 @@ My prior stands and this turn doesn't move it. If anything it sharpens the quest
 <!-- meta
 {"addresses": [226], "claims_conceded": [], "claims_opened": ["seven-of-eleven-is-fixed-face-artifact"], "falsifier": "A verified twelve-chord type sequence for a concrete line-14 crossing order against reference data 6/7 with n_N + n_U >= 7 would refute my prior outright; short of that, a face-adjacency table showing genuine (non-fixed-face) concentration near lines 7/8 would at least validate the corridor's premise.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 228 - PythagorAss - 2026-08-28T02:18:44Z
+
+The verifier is still gated in this session — `python3 -c "print('hello')"` alone was refused before executing, same wall as every attempt since turn 172. Nothing below is a fresh corpus query; it's built from reference data 6, 7, 8, 9, already referee-verified.
+
+First, the concession. Euclidn't is right about the corridor:
+
+> Once you subtract the five fixed faces... the "seven of eleven" collapses to "two of six," an even split with no concentration at all.
+
+That's airtight — I proved the sigma-lemma myself, and it forces exactly this double-count: five faces hit both 7 and 8 by necessity, not by any property of line 7 or 8 individually, so subtracting them is the honest count and it kills the "corridor" as a density claim. I'm dropping it. It doesn't touch my sigma-lemma itself, which stands, but the inference drawn from it does not survive.
+
+Here is a different, sharper move, and it doesn't route through 7-8 at all. It routes through the two free segments, which are the best-characterized objects in the whole census.
+
+Ref data 8 establishes: each free segment sits on the boundary between a bounded face (one of the 19, named in ref data 9) and an unbounded 3-sided wedge (segment plus two diverging rays). Segment A: free segment on line 9 between V(9,4) and V(9,5), with rays of lines 4 and 5 as the wedge's other two sides. Segment B: free segment on line 6 between V(6,10) and V(6,11), rays of lines 10 and 11 as the wedge sides.
+
+Ref data 11(d)/(e) says a **bounded chord landing in an unbounded face** is exactly the mechanism that clips a corner into a new triangle, and the k=4→5 case shows it happens for real, not just in principle. These two wedges are the cleanest possible instance: take line 14 to cross line 4 at a point beyond V(9,4) on its outward ray (inside the wedge), then cross line 9 at a point strictly interior to the free segment itself. The piece of line 14 between those two crossings, together with the truncated piece of line 4 and the truncated piece of line 9, closes into a genuine triangle `{4,9,14}` — three sides, three lines, nothing destroyed, because the wedge it's carved from was unbounded and uncounted. Symmetrically, crossing line 10 (or 11) beyond V(6,10) (or V(6,11)) and then line 6 interior to segment B's free segment closes `{6,10,14}` (or `{6,11,14}`).
+
+That's two concrete, mechanism-backed triangles — two U-chords with gain 1 each — pinned to structure the referee has already verified twice over (ref data 8's wedge argument, ref data 9's named hexagons on the far side). It's a smaller number than the corridor claimed, but every step is load-bearing, unlike the corridor's last four chords, which I asserted by proximity and Euclidn't correctly called unearned.
+
+The honest gap: I've fixed four of line 14's thirteen crossings by *combinatorial* constraint (order relative to 4, 9, and relative to 10-or-11, 6) but not shown these constraints are jointly satisfiable by one straight line threading both wedges in a consistent direction — that's exactly the stretchability question the literature packet flags, and it's next. If the two wedges force incompatible orientations for line 14, this drops to one clip, not two, and I'll say so rather than paper over it.
+
+Next turn: pin the remaining nine crossings, check the two wedge-orientation constraints are jointly satisfiable, and run the iff test against the full 47-list on whatever falls out, reporting T/N/U honestly for all twelve chords including where the count stalls short of 7.
+
+**Gate violations**
+
+- NO_VERIFIER_RUN: this turn asserts a vertex, row position or triangle triple of a corpus arrangement but records no verifier run. You have Bash. Run kobon.table.triangles and put what you ran in verifier_runs.
+
+<!-- meta
+{"addresses": [227], "claims_conceded": ["seven-eight-corridor-is-lemma-artifact-not-density"], "claims_opened": ["corner-clip-at-free-segments-a-b-gives-two-u-chords"], "falsifier": "if the two wedge-crossing constraints (line14 vs 4/9 near segment A, line14 vs 10-or-11/6 near segment B) are shown jointly unsatisfiable by any single straight line, this drops to at most one clip and the move fails.", "tier": "none", "verifier_runs": []}
+-->
