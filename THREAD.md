@@ -5157,3 +5157,27 @@ So the "complete generality" claim needs the two remaining corners (V(3,8) too) 
 <!-- meta
 {"addresses": [240], "claims_conceded": [], "claims_opened": ["p-corner-v12-3-avoids-f2-canonical-collision"], "falsifier": "if the face across F2's V(4,11) edges (lines 4 and 11) turns out to require any of {3,7,8,12}, or if corner V(3,8) reproduces the same tax as V(1,7)/V(7,12), the escape closes and turn 240's generality claim is vindicated", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 242 - Euclidn't - 2026-08-28T15:17:24Z
+
+Verifier still gated — the `table.triangles`/`table.positions` call was refused before execution, same wall as every attempt since turn 172. Everything below is hand-derived from reference data 6, 7, 10, and rows 4, 7, 8, 11 exactly as printed in reference data 6.
+
+Turn 241's third-corner check (V(12,3)) is correct and the concession it forces from turn 240 is warranted. But turn 241's characterization of F2's remaining escape corner is wrong in a way that matters: it says corner V(4,11) involves "neither 4 nor 11" of the {3,7,8,12} tax and calls it untested. I tested it. It isn't clean — it taxes lines 7 and 8 too, by the identical forcing mechanism, just through different triangles.
+
+F2's corner V(4,11) has edges line-11 (to V(7,11)) and line-4 (to V(4,8)). Across line-11: `{4,7,11}` — row 4 positions 5-6 give `7 11` adjacent, row 7 positions 7-8 give `4 11` adjacent, row 11 positions 6-7 give `4 7` adjacent. Full iff pass, in reference data 7. Across line-4: `{4,8,11}` — row 4 positions 7-8 give `11 8`... check directly: row 8 positions 7-8 give `11 4` adjacent, row 11 positions 5-6 give `8 4` adjacent, row 4 positions 6-7 give `11 8` adjacent. Full pass, in reference data 7.
+
+Forced thirds, by the same one-crossing-per-line, different-gap argument turns 236-239 established: F2's own line-4 edge sits at row-4 gap 6-7 (lines 11,8 adjacent there); `{4,7,11}`'s line-4 edge sits at row-4 gap 5-6 (lines 7,11). Different gaps, so line 4's single crossing can't serve both — `{4,7,11}` can't exit via 4, forced to line 7. Symmetrically F2's line-11 edge is row-11 gap 6-7; `{4,8,11}`'s line-11 edge is row-11 gap 5-6 — different, so `{4,8,11}` is forced off line 11 too, exiting via line 8.
+
+Full chain: `[W] --7--> {4,7,11} --11--> F2(@V4,11) --4--> {4,8,11} --8--> [Y]`, consuming lines `{4,7,8,11}`. So this corner isn't independent of the 7/8 bottleneck turn 239 found — it's a second, distinct way of taxing the same two lines.
+
+That's a correction, not a kill. I checked whether it collides with turn 241's own P-at-V(12,3) chain (which taxes 7 and 8 via `{3,7,12}`'s line-7 edge and `{3,8,12}`'s line-8 edge) by gap-matching, since that's the sharp test turns 236-241 have converged on. P-at-V(12,3)'s line-7 tax sits at row-7 gap 9-10 (lines 3,12); F2-at-V(4,11)'s sits at row-7 gap 7-8 (lines 4,11) — different gaps. Same check on line 8: P's tax at row-8 gap 9-10 (lines 3,12) vs F2's at row-8 gap 7-8 (lines 4,11) — different again. No forced conflict between these two specific chains by this method.
+
+I'm not handing this to PythagorAss as a working pair — a gap-mismatch on two lines checked in isolation doesn't make an 8-piece combined fragment a valid sub-walk; the two chains still have to interleave consistently inside one 14-piece walk with 13 distinct labels, in some order, alongside whatever fifth N-clip closes n_N=5, and nobody has attempted that ordering. But the honest result is: F2's last unchecked corner is not the clean escape turn 241 implied, and it is not yet excluded either. P's remaining two corners (V(7,12), V(3,8)) are still untested against it.
+
+**Gate violations**
+
+- NO_VERIFIER_RUN: this turn asserts a vertex, row position or triangle triple of a corpus arrangement but records no verifier run. You have Bash. Run kobon.table.triangles and put what you ran in verifier_runs.
+
+<!-- meta
+{"addresses": [240, 241], "claims_conceded": [], "claims_opened": ["f2-v4-11-corner-also-taxes-lines-7-8"], "falsifier": "an explicit 14-piece walk placing P-at-V(12,3) and F2-at-V(4,11) in a single consistent order with 13 distinct line labels and no gap reuse would refute the implicit suggestion that this pairing is dead; conversely a gap collision found on lines 3, 12, or any line in a still-untested P corner would close it", "tier": "none", "verifier_runs": []}
+-->
