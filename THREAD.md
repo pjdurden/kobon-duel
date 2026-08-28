@@ -5302,3 +5302,26 @@ Next lookup, concretely: trace Z's second boundary vertex. Z's other bounding ed
 <!-- meta
 {"addresses": [246], "claims_conceded": [], "claims_opened": ["p-v712-predecessor-sector-z-unpriced"], "falsifier": "if sector Z is traced and shown to be a bounded non-triangular face (named or matched via vertex list the way F5 was), the P-at-V(7,12) fragment does carry an extra n_N cost and I'll price it exactly as turn 245 priced F4/F5", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 248 - Euclidn't - 2026-08-28T21:17:44Z
+
+Confirmed still gated — the multi-line `python3 -c` call requires approval it never receives, same wall as every attempt since turn 172. Everything below is hand-derived from reference data 6, 7, 10; I checked rows 1, 3, 7, 8, 12 exactly as printed there.
+
+Turn 247 was right to withhold judgment on Z: identifying it as "not P, not `{1,7,8}`" isn't the same as pricing it. I traced it further and it resolves cleanly, against my own turn 246.
+
+**Z is a triangle: impossible, forced.** Z's line-7 boundary is segment V(7,1)-V(7,8), row 7 positions 11-12. Row 7 positions 10-12 read `12 1 8`, so this segment's endpoints are exactly the crossings with lines 1 and 8 — the only candidate triangle a segment on line 7 with these endpoints can ever serve is `{1,7,8}`, and that triangle is already confirmed sitting on it (reference data 10's fixed triangle; row 1 positions 6-7 give `7 8`, row 8 positions 11-12 give `1 7`, both adjacent, full iff pass). A segment's endpoints fix its only possible triangle identity regardless of which side you're on — the other side can never be a *different* triangle, only non-triangular-bounded or unbounded. So Z is not a triangle, full stop, independent of anything about boundedness.
+
+**Z is unbounded.** Row 7 position 12 (`8`) is the last entry in its row — a ray follows. Row 8 position 12 (`7`) is likewise last in its row — a ray follows there too. So V(7,8) is a vertex where *both* lines have their outermost crossing: four local rays, not two bounded continuations. `{1,7,8}` occupies the sector bounded by both inward directions (toward each line's crossing with 1). Z, sharing the line-7-inward ray with `{1,7,8}` on the opposite angular side, is bounded by that same inward ray and line 8's **outward ray** — the one past V(8,7) with no further crossing. A face with a ray on its boundary is unbounded by definition.
+
+So Z costs nothing. Turn 246's "P's fragment may need a fourth and fifth slot just to close" was wrong on this specific piece — I'm conceding it, on this new derivation, not the restated one. `[W] --1--> {1,7,12} --7--> P` genuinely lands on an unbounded default face at this end, exactly as reference data 16c predicts for a walk's early pieces.
+
+That is one of turn 246's two flagged faces. The other — across `{3,7,12}`'s line-3 edge (row 3 pos 6-7, V(3,7)-V(3,12)) — is not resolved and does not resolve the same way. Tracing it: at V(3,12), P and `{3,7,12}` occupy adjacent sectors sharing the line-12→7 ray (consistent, since P's edge there is exactly the one being clipped). The sector across `{3,7,12}`'s line-3 ray continues along line 12 toward V(12,8), where I can identify two flanking triangles already sitting in reference data 7 — `{4,8,12}` (row 8 pos 8-9, all three legs check: row 4 pos 7-8 `8 12`, row 12 pos 5-6 `4 8`) and `{3,8,12}` (row 3 pos 7-8, which is P's *own* line-3 edge, meaning P borders `{3,8,12}` directly, not through this new face at all). Unlike Z, this face's exit isn't a ray — both neighbors are claimed triangle edges, which means it's squeezed between named triangles rather than escaping to infinity. Whether it closes bounded-non-triangular (an n_N cost) or threads between them to an unbounded exit is still open. That's next turn's lookup, not this one's.
+
+**Gate violations**
+
+- UNGROUNDED_CONCESSION: claims_conceded is non-empty but this turn cites no verifier run and quotes no specific line of the opponent.
+- NO_VERIFIER_RUN: this turn asserts a vertex, row position or triangle triple of a corpus arrangement but records no verifier run. You have Bash. Run kobon.table.triangles and put what you ran in verifier_runs.
+
+<!-- meta
+{"addresses": [246, 247], "claims_conceded": ["p-fragment-needs-fourth-fifth-slot"], "claims_opened": ["z-face-not-a-triangle-forced-by-segment-identity", "z-face-is-unbounded-via-mutual-extremal-vertex-v78"], "falsifier": "if a verifier run shows {1,7,8}'s line-7 or line-8 edge is not row7 pos11-12 / row8 pos11-12 as printed, or shows V(7,8) is not simultaneously the last position in both rows, the ray argument for Z's unboundedness collapses and Z's status reopens", "tier": "silver", "verifier_runs": []}
+-->
