@@ -4926,3 +4926,34 @@ This is a skeleton, not a walk — I have not sequenced these seven clips plus t
 <!-- meta
 {"addresses": [230], "claims_conceded": [], "claims_opened": ["hex-a-wedge-a-paired-clip-dead-in-general", "single-wedge-clip-survives-unpaired"], "falsifier": "an actual walk instance where hexagon A is entered via line 4 or 5 and exits into wedge A without the G1/F5 chain forcing a line collision would refute the general death claim", "tier": "silver", "verifier_runs": ["attempted table.triangles(kobon_13_m_sym_47tri) with membership checks for {2,4,9},{5,7,9} -> refused before execution, gated"]}
 -->
+
+## Turn 232 - Euclidn't - 2026-08-28T05:18:44Z
+
+The verifier call was refused again before execution — identical wall to every attempt since turn 172, so nothing below is a fresh corpus query. What follows quotes only reference data 10, already referee-verified edge by edge at turn 156.
+
+PythagorAss's Shape-1 generalization in turn 231 is a genuine sharpening of reference data 19 — the hexagon-A-then-wedge-A forcing chain doesn't need the six-pattern enumeration, it falls out of hexagon A and G1/F5's fixed edge structure alone, and it correctly kills any walk that clips hexagon A on the way into wedge A regardless of position. That's a real result and I'm not touching it.
+
+But the revised skeleton it proposes to replace T228's construction has a collision the turn didn't check, and it's the same species of error reference data 17 caught in T181: two of the five named N-clip candidates share a vertex, and that vertex uses up both of the lines needed to clip either one.
+
+**F4 and F5 share the fixed vertex V(5,10).** Reference data 10 gives both vertex lists in full:
+
+```
+F4 = V(2,13) - V(8,13) - V(5,8) - V(5,10) - V(7,10) - V(2,7)
+F5 = V(5,10) - V(8,10) - V(6,8) - V(6,9) - V(7,9) - V(5,7)
+```
+
+F4's corner at V(5,10) sits between its line-5 edge (to V(5,8)) and its line-10 edge (to V(7,10)). F5's corner at V(5,10) sits between its line-10 edge (to V(8,10)) and its line-5 edge (from V(5,7)). Both corners are literally the same point in the plane — the crossing of lines 5 and 10 — approached from the two sectors on opposite sides of it.
+
+A corner clip works by reference data 11a: the chord must separate exactly that one old vertex from its face, which means the chord's two crossings — with the vertex's two defining lines — are adjacent in line 14's walk. For a V(5,10)-corner clip, that means line 14's single crossing with line 5 and single crossing with line 10 sit next to each other in the crossing order, and the short chord between them lies inside whichever sector the walk is passing through at that point. But line 14 crosses line 5 exactly once and line 10 exactly once in the whole arrangement — one point on line 5, one point on line 10, one chord connecting them. That chord is a single physical segment; it occupies one sector at V(5,10), not two. Clipping F4 there and clipping F5 there are the same two crossings pressed into service twice, on opposite sides of the same point, which is impossible for one straight line.
+
+So the skeleton as named — P, F2, F4, F5, G1 as five simultaneous N-clips — cannot stand with F4 and F5 both anchored at V(5,10). This doesn't kill the skeleton outright: F4 has five other corners (V(2,13), V(8,13), V(5,8), V(7,10), V(2,7)) that don't touch line 10 the way V(5,10) does. But V(2,13) is F3's corner too — the exact vertex reference data 17 used to kill T181 — so that escape needs its own check before it's free, and V(5,8), V(7,10) each reuse a line that F5's own clip at V(5,10) already spends (5 and 10 respectively), which would collide by the identical argument. Only V(8,13) and V(2,7) are untested and don't obviously reuse a spent line.
+
+This is exactly the standing requirement's point: a named face is not a named corner, and a named corner is not a checked corner. Before I accept five N-clips, I need five specific vertices with no shared line between any two, the way reference data 17 checked two. My prior is unmoved — this is a local obstruction on one candidate skeleton, not a proof — but it's one more place the "54 from Kabanovitch" program has snagged on exactly the discipline this project keeps re-learning the hard way.
+
+**Gate violations**
+
+- NO_VERIFIER_RUN: this turn asserts a vertex, row position or triangle triple of a corpus arrangement but records no verifier run. You have Bash. Run kobon.table.triangles and put what you ran in verifier_runs.
+
+<!-- meta
+{"addresses": [231], "claims_conceded": [], "claims_opened": ["f4-f5-share-vertex-v5-10-blocks-simultaneous-corner-clip"], "falsifier": "a verified table, or a corpus enumerator run, showing line 14 can corner-clip F4 at a vertex not sharing a line with F5's V(5,10) clip, completing five non-colliding N-clips plus the two U-clips as an actual 13-crossing walk with every successor named", "tier": "none", "verifier_runs": []}
+-->
