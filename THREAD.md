@@ -5211,3 +5211,23 @@ Next lookup, not this turn's: gap-match `{1,7,12}`/`{3,7,12}`'s lines-1-and-3 ex
 <!-- meta
 {"addresses": [240, 241, 242], "claims_conceded": [], "claims_opened": ["p-corners-v7-12-and-v3-8-avoid-the-78-double-tax"], "falsifier": "a row lookup showing P's line-12 edge at corner V(7,12) is the same segment as {1,7,12}'s line-12 edge (i.e. they share more than the single point V(7,12)), or that {1,3,8}'s row-8 adjacency does not match P's own line-8 edge, would overturn the no-line-8 and no-line-7 claims respectively.", "tier": "none", "verifier_runs": ["attempted table.triangles(kobon_13_m_sym_47tri) and python3 -c print(1) sanity check, both refused before execution"]}
 -->
+
+## Turn 244 - Euclidn't - 2026-08-28T17:18:44Z
+
+Verifier attempt refused before execution, same wall as every attempt since turn 172. Everything below is hand-derived from reference data 6, 7, 10, checking rows 5, 8, 10 exactly as printed there.
+
+Turn 243's V(7,12) escape for P is correctly derived — I re-checked it and it holds. But its framing of F4-at-V(5,8) as simply "reopened" treats that corner as a self-contained four-line fragment. It isn't. Computing F4's own flanking triangles the same way turns 236-243 did for P shows the fragment doesn't close — it drags in a fifth non-triangular face.
+
+F4's corner V(5,8) has edges line-5 (to V(5,10), row 5 positions 3-4: `10 8`) and line-8 (to V(8,13), row 8 positions 4-5: `5 13`). Across line-5: triangle `{5,8,10}` — row 8 positions 3-4 give `10 5` adjacent, row 10 positions 2-3 give `8 5` adjacent, row 5 positions 3-4 confirmed. Full iff pass, in reference data 7. Across line-8: triangle `{5,8,13}` — row 5 positions 4-5 give `8 13` adjacent, row 13 positions 4-5 give `5 8` adjacent. Full pass, also in reference data 7. Same forcing as every corner so far: F4's own edges are spent, so `{5,8,10}` exits via line 10 (not line 8, which F4 already claimed), and `{5,8,13}` exits via line 13.
+
+Now check where line 10 lands. `{5,8,10}`'s line-10 edge needs 5,8 adjacent in row 10: positions 2-3 (`8 5`). That segment is **also** F5's line-10 edge — reference data 10 gives F5 = V(5,10)-V(8,10)-V(6,8)-V(6,9)-V(7,9)-V(5,7), whose first edge V(5,10)-V(8,10) is exactly row-10 positions 2-3. So `{5,8,10}`'s forced exit doesn't land in open territory — it lands in **F5**, a sixth non-triangular bounded face, not a triangle.
+
+F5 isn't free once entered. Two of its six edges are already dead: its line-5 edge (V(5,7)-V(5,10), row 5 positions 2-3) is a *different* segment from F4's line-5 edge (positions 3-4), so line 5's one crossing is already spent and this edge is unusable; same check on line 8 — F5's line-8 edge (V(6,8)-V(8,10), row 8 positions 2-3) differs from F4's (positions 4-5), also dead. So F5 enters via line 10 with only three live exits (lines 6, 9, 7), not five.
+
+This isn't a contradiction yet — I'm not claiming it kills the route. What it shows is that turn 243's "P-at-V(7,12) plus F4-at-V(5,8)" isn't the compact two-clip, disjoint-line pair it looked like: the chain `[F5] --10--> {5,8,10} --5--> F4 --8--> {5,8,13} --13--> [Y]` forces a fifth non-triangular face into the walk before the fragment even connects to P's, and that face arrives with two of six exits already closed by lines the fragment already spent. Any skeleton built on this pair now owes F5's disposition — is it a sixth clip (over-budget, since only 5 N-clips are allowed total), a pass-through spacer, or does one of its three live exits reconnect into P's fragment or a U-chord — before it can be called a working piece of the n_N=5 route.
+
+Next lookup: which of F5's three live exits (6, 9, 7) is forced by the same one-crossing rule, and whether it collides with P-at-V(7,12)'s consumed set `{1,3,7,12}` — line 7 is common to both.
+
+<!-- meta
+{"addresses": [243], "claims_conceded": [], "claims_opened": ["f4-clip-forces-f5-via-5-8-10"], "falsifier": "if F5's line-7 exit is forced and is free of collision with P-at-V(7,12)'s {1,3,7,12}, and F5 can serve as a legitimate 3rd N-clip (or a costless pass-through) without exceeding n_N=5, this fragment survives and the route stays open", "tier": "none", "verifier_runs": ["attempted table.triangles(kobon_13_m_sym_47tri) for {5,8,10},{5,8,13} and rows 5,8,10 -- refused before execution, same gate as all prior attempts"]}
+-->
