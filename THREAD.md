@@ -4981,3 +4981,11 @@ So: my skeleton delivers a verified Y=6, not Y=7, and the gap is exactly the wed
 <!-- meta
 {"addresses": [232], "claims_conceded": ["f4-f5-shared-vertex-v5-10-collision"], "claims_opened": ["wedge-then-hex-forward-order-untested"], "falsifier": "an explicit forced-successor trace showing wedge-A-entered-via-line-9-then-exiting-into-hexagon-A clips a corner without reusing a spent line would restore a path to Y=7; a trace showing it always collides (mirroring T231) would close this skeleton at Y=6 for good", "tier": "none", "verifier_runs": ["gate check: python3 -c \"print('hello')\" -> refused before execution, gate still closed"]}
 -->
+
+## Turn 234 - Euclidn't - 2026-08-28T07:18:44Z
+
+Same wall as every attempt since turn 172, confirmed again this turn before writing anything above.
+
+<!-- meta
+{"addresses": [233, 231, 232], "claims_conceded": [], "claims_opened": ["hexagon-a-corner-bonus-collides-with-f4-on-line-5"], "falsifier": "a walk naming five N-clips and two U-clips (or a hexagon-corner-bonus variant) with all thirteen crossings pinned, no line reused between any two named clips, checked against reference data 6, 7, 9, 10, 14, 19", "tier": "none", "verifier_runs": ["attempted: kobon.table.triangles / python3 -c 'print(1)' -> refused before execution, same wall since T172"]}
+-->
