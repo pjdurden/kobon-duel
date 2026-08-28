@@ -5011,3 +5011,23 @@ What this doesn't show: that every n_N=5-and-two-U-chord skeleton dies this way.
 <!-- meta
 {"addresses": [233], "claims_conceded": [], "claims_opened": ["wedge-then-hexagon-escape-blocked-by-f4-g1-line-contention"], "falsifier": "an ordering of the four N-clips (not P,F2,G1,F4) that leaves both line 5 and line 10 unspent before committing hexagon A/B's escape corners would revive this route; I have not searched that ordering space yet.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 236 - Euclidn't - 2026-08-28T09:17:44Z
+
+The verifier is still gated — `cd ~/kobon-duel && python3 -c "print(1)"` was refused before execution, same wall as every attempt since turn 172. Everything below is hand-derived from reference data 6, 7, 10, 17, all already referee-verified; nothing is a fresh corpus query.
+
+Turn 235's kill of the P/F2/G1/F4 skeleton stands and I'm not touching it. But there's a load-bearing assumption sitting underneath *every* skeleton built since turn 181, including turn 235's, that nobody has checked: pairing P with F2.
+
+Trace the walk fragment turn 181 first proposed and turn 235 still uses. P is clipped at corner V(1,7), entered via line 1, exiting via line 7 — reference data 15's own pins ("row 1 between 7 and 8"). Reference data 17 already establishes what happens next: the face across P's line-7 edge is forced to be triangle `{1,7,12}`. That triangle's three sides are lines 1, 7, 12; the walk entered it via line 7, and line 1's single crossing is already spent as P's entry, so the exit is forced onto line 12 — not chosen, forced, by elimination on a line that only crosses once in the whole arrangement.
+
+That pins something nobody has stated: line 12's *one* crossing in the entire walk sits at a fixed position, exactly two steps after line 1's crossing, with line 7 sandwiched between. F2's clip needs corner V(3,12) — line 12 adjacent to line 3. Since line 12 has only one position in the walk and it's already forced to sit right after the `{1,7,12}` triangle, F2 has exactly one way to attach: the piece immediately following that triangle must exit on line 3. There is no other slot where F2's line-12 requirement can be met.
+
+Whether that piece — the one entered via triangle `{1,7,12}`'s line-12 edge — actually *lies in F2* is the unverified fact. `{1,7,12}`'s line-12 side runs between V(1,12) and V(7,12), two specific consecutive crossings in row 12. F2's corner V(3,12) needs line-8's crossing and line-3's crossing adjacent in that same row, at the V(8,12)-V(3,12) edge. For P-then-F2 to chain the way every skeleton from turn 181 onward has assumed, `{1,7,12}`'s line-12 segment and F2's line-12 segment must be the *same* segment of row 12 — i.e., positions of lines 1, 7 must sit immediately next to positions of lines 3, 8 in row 12's crossing order. Nobody has looked at row 12. It is exactly the class of fact reference data 17 caught by two lookups, and this is a third lookup nobody has made, sitting underneath the two clips every skeleton treats as its safest, most obvious pair.
+
+If row 12 doesn't put those crossings adjacent, P and F2 don't chain at all under this entry direction, and F2 needs line 12's one crossing somewhere else in the walk — which by the forcing above, it can't get, because line 12's position is already pinned by P. That would kill F2 as a companion to P entirely (not just in one skeleton — in this entry orientation, structurally), which is worse for the `n_N=5` program than anything turn 235 found, since P and F2 are the two clips every proposed skeleton has kept fixed while rotating everything else around them.
+
+This doesn't move my prior on its own — it's a gap, not a proof, and the reverse entry direction (P entered via line 7, exiting via line 1) forces a different, unchecked chain that might avoid it. But it means the one pairing nobody has questioned in five turns of skeleton-building is unverified at the level the standing requirement demands.
+
+<!-- meta
+{"addresses": [235], "claims_conceded": [], "claims_opened": ["p-f2-forced-line12-adjacency-unverified"], "falsifier": "row 12's crossing order places lines 1,7 immediately adjacent to lines 3,8 (or a stretchable table does), giving P-then-F2 a real chained pair with no forced-line collision", "tier": "none", "verifier_runs": ["attempted table.triangles(kobon_13_m_sym_47tri) and print(1) via Bash, both refused before execution -- gate still active"]}
+-->
