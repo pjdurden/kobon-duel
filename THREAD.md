@@ -5057,3 +5057,31 @@ I looked, and the answer is worse for the skeleton than the open question implie
 <!-- meta
 {"addresses": [236], "claims_conceded": ["p-f2-chain-assumed-in-t233-t235-skeleton"], "claims_opened": ["p-f2-adjacency-excluded-both-directions", "unnamed-face-g-beyond-1-7-12-line12-edge"], "falsifier": "a verifier run on Kabanovitch's table showing row 12 positions 8-9 or row 7 positions 9-10 differ from what I've quoted, or showing face G coincides with one of the eleven already named, would overturn this.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 238 - Euclidn't - 2026-08-28T11:18:44Z
+
+Confirmed: the verifier call was refused before execution, same wall as every attempt since turn 172. Everything below is hand-derived from reference data 6, 7, 10, 17, already referee-verified; I cite row 1, row 7, row 8, and row 12 exactly as printed there.
+
+Turn 237's kill of P/F2 is right, but it undersells what happened. P doesn't just fail to chain with F2 — using P at all forces a rigid four-line local structure, and that structure now collides with PythagorAss's own fallback fix from turn 233.
+
+**The chain around P is forced end to end, not just at the P/{1,7,12} step.** Reference data 17 already gives P's two edges: line 1 (row 1 positions 6-7, `7 8`, facing `{1,7,8}`) and line 7 (row 7 positions 10-11, `12 1`, facing `{1,7,12}`). A corner clip uses both edges by definition (11a), so if P is an N-clip, the walk passes `{1,7,8}` on one side and `{1,7,12}` on the other — no alternative, since those are P's only two edges.
+
+`{1,7,8}` is a triangle, so by 11b it needs a distinct entry and exit edge among its three sides (lines 1, 7, 8). One is line 1, into P. The other must be line 7 or line 8 — except line 7's *single* crossing with `l` is already spent: it's P's own exit edge, forced onward into `{1,7,12}` (reference data 17). A line crosses `l` exactly once, so `{1,7,8}` cannot also claim line 7. Its other edge is therefore forced to line 8.
+
+Symmetrically, `{1,7,12}`'s three sides are lines 1, 7, 12; line 1 and line 7 are both already spent (P's entry and exit), so `{1,7,12}`'s exit is forced to line 12 — this is turn 236's step, and turn 237 confirmed line 12's one crossing doesn't land in F2.
+
+So committing P to the skeleton forces the exact five-face run
+
+    G'' --8--> {1,7,8} --1--> P --7--> {1,7,12} --12--> G
+
+with **lines 8, 1, 7, 12 all consumed**, in this order, for a net gain of +1 (P only; the two triangles are forced zero-gain passengers). G and G'' are unnamed.
+
+**That collides with PythagorAss's own fix.** Turn 233 rescued F4 from turn 232's V(5,10) collision by moving it to corner V(5,8) — reference data 10: `F4 = V(2,13)-V(8,13)-V(5,8)-V(5,10)-V(7,10)-V(2,7)`, corner V(5,8) between the line-8 edge (to V(8,13)) and the line-5 edge (to V(5,10)). A corner clip there needs line 8's crossing, exactly as much as `{1,7,8}`'s forced third edge needs it. Line 8 crosses `l` once. P's presence alone — independent of F2, independent of anything else in the skeleton — already spends that crossing on the `{1,7,8}`-to-`G''` step. F4-at-V(5,8) cannot also have it.
+
+Turn 232 killed F4-at-V(5,10). This kills F4-at-V(5,8), the only other corner turn 233 found untouched by the rest of the skeleton. P is now shown incompatible with F2 (turn 237) *and* with both of F4's attempted anchors. That's not a coincidence about F4; it's P forcing consumption of four specific lines (1, 7, 8, 12) the instant it's used at all, which is a much bigger footprint than one corner clip's "two edges" suggested. Any skeleton keeping P owes a fifth N-clip candidate whose corners touch none of {1,7,8,12} — F2, F4's two corners, and by extension anything anchored on line 8 or line 12 are now closed routes, not just the ones already tried.
+
+I haven't checked whether G1{13,10} or wedge A/B collide with this same forced quartet; that's the next lookup, not this turn's. My prior stands: this is another closed branch, not a proof.
+
+<!-- meta
+{"addresses": [237], "claims_conceded": [], "claims_opened": ["p-clip-forces-line-8-12-consumption"], "falsifier": "if row 8 in reference data 6 shows {1,7,8}'s third edge is not forced to line 8 (i.e. line 7 was somehow still available), or if F4 admits a third corner untouched by lines 1,7,8,12, the collision doesn't hold and F4-at-V(5,8) survives alongside P", "tier": "none", "verifier_runs": ["attempted: cd ~/kobon-duel && python3 -c 'from kobon import corpus, table; ...' -> refused before execution, same wall since turn 172"]}
+-->
