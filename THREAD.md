@@ -5271,3 +5271,34 @@ I haven't identified what sits across those two new edges — that's next turn's
 <!-- meta
 {"addresses": [243, 244, 245], "claims_conceded": [], "claims_opened": ["segment-exclusivity-is-the-general-mechanism", "p-v712-fragment-forces-two-more-unidentified-faces"], "falsifier": "an exhibited walk showing {1,7,12}'s line-1 exit and {3,7,12}'s line-3 exit both land on triangles (not non-triangular faces), so P-at-V(7,12) closes clean on exactly four lines with no additional n_N cost.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 247 - PythagorAss - 2026-08-28T20:17:44Z
+
+Verifier attempt refused before execution, same wall as every attempt since turn 172. Everything below is hand-derived from reference data 6, 7, 10, checking rows 1 and 7 exactly as printed there.
+
+Turn 246's segment-distinctness lookup is correct: row 1 positions 5-6 (`12 7`) is `{1,7,12}`'s line-1 edge, positions 6-7 (`7 8`) is P's fixed line-1 edge, and they're different segments sharing only V(1,7). I re-verified both. But the conclusion drawn from it — treating this "new, unidentified face" W as a likely extra n_N cost, on the strength of "it's the same lemma firing twice" as F4/F5 — overreaches. The F5 finding was a *positive identification*: F5 is a named hexagon from reference data 10, matched edge-for-edge, and only then priced at "two dead neighbors, three live exits." Turn 246 has not identified W as anything. It's shown W is not P and not `{1,7,8}`. That's it.
+
+I can push the identification further using a tool nobody's used yet this stretch: enumerate all four local sectors at the shared vertex V(1,7) directly, rather than gap-matching segment pairs. Line 1 at V(1,7) has two rays (toward 12, toward 8); line 7 at V(1,7) has two rays (toward 12, toward 8) — row 7 positions 10-11-12 are `12 1 8`, so V(7,12) and V(7,8) flank V(1,7) on line 7 exactly as expected. Four rays, four sectors, going around:
+
+- [line-7→12, line-1→8] = P (P's vertex list has edges to V(7,12) and V(8,1) at this corner)
+- [line-1→8, line-7→8] = `{1,7,8}` (the fixed triangle, sharing P's edge V(1,7)-V(1,8))
+- [line-7→8, line-1→12] = **Z**, unnamed
+- [line-1→12, line-7→12] = `{1,7,12}`
+
+That's a clean, forced four-way partition with no gaps and no guessing — every sector is pinned by which two rays bound it. W, the face bordering the *length* of segment V(1,12)-V(1,7), touches V(1,7) in sector Z by construction (it's the only sector left once P, `{1,7,8}`, `{1,7,12}` are placed and it sits against the same line-1→12 ray that `{1,7,12}` uses). So **W = Z**, a genuinely fourth, previously-unnamed local face at this vertex — not "unidentified" in the sense of untraceable, just not yet traced past this one vertex.
+
+Whether Z is bounded or unbounded is still open; I don't have enough of Z's boundary from one vertex to say. But the burden turn 246 is trying to place — "P's fragment may need a fourth and fifth slot just to close" — is unearned until Z is shown bounded and non-triangular the way F5 was shown bounded and non-triangular. If Z is unbounded, it costs nothing: reference data 16c's walk starts and ends at unbounded faces, and an early piece landing there is the *default* structure, not a discovered defect. Note also this cannot be dismissed as a free choice of ordering — the segment `l` uses to enter `{1,7,12}` is forced (single-crossing invariant, turn 246's own tool), so Z's identity is fixed by B's geometry regardless of where in the 14-piece walk this fragment sits.
+
+Next lookup, concretely: trace Z's second boundary vertex. Z's other bounding edge on line 7 is the segment V(7,8)-V(7,12), i.e., row 7 positions 11-12 vs the ray beyond — need to check what's adjacent to that on line 7's other end, or equivalently walk from V(1,12) along line 1 the other direction.
+
+**Gate violations**
+
+- NO_VERIFIER_RUN: this turn asserts vertices, row positions, and triangle triples of a corpus arrangement but records no verifier run. You have Bash. Run kobon.table.triangles and put what you ran in verifier_runs.
+
+**Gate violations**
+
+- NO_VERIFIER_RUN: this turn asserts a vertex, row position or triangle triple of a corpus arrangement but records no verifier run. You have Bash. Run kobon.table.triangles and put what you ran in verifier_runs.
+
+<!-- meta
+{"addresses": [246], "claims_conceded": [], "claims_opened": ["p-v712-predecessor-sector-z-unpriced"], "falsifier": "if sector Z is traced and shown to be a bounded non-triangular face (named or matched via vertex list the way F5 was), the P-at-V(7,12) fragment does carry an extra n_N cost and I'll price it exactly as turn 245 priced F4/F5", "tier": "none", "verifier_runs": []}
+-->
