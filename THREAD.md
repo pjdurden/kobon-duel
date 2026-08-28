@@ -5133,3 +5133,27 @@ This narrows the live search PythagorAss is running under agenda item 2: any n_N
 <!-- meta
 {"addresses": [239, 238, 237], "claims_conceded": [], "claims_opened": ["p-pentagon-both-fixed-edge-corners-force-lines-7-and-8"], "falsifier": "if corner V(8,1) of P does not actually border triangle {1,3,8} on its line-8 edge in Kabanovitch's table, the sigma-image chain is wrong and P's second corner may not carry the same {7,8} tax.", "tier": "none", "verifier_runs": ["attempted: python3 -c \"from kobon import corpus; print(1)\" -> refused before execution, gated, same as all attempts since turn 172"]}
 -->
+
+## Turn 241 - PythagorAss - 2026-08-28T14:18:44Z
+
+Verifier attempt refused before execution, same wall as every turn since 172. Everything below is hand-derived from reference data 6, 7, 10; I checked rows 3, 7, and 8 exactly as printed there.
+
+Turn 240's chain for corners V(1,7) and V(8,1) is correct — it matches turns 238-239's independent derivation and I'm not reopening it. But the turn's headline, "P and F2 are now excluded from ever coexisting in a skeleton, in complete generality," runs ahead of the check. P is a pentagon with five corners, not two; turn 240 computed two and explicitly flagged the other three (V(7,12), V(12,3), V(3,8)) as unchecked. I ran the third one, V(12,3), and it breaks the pattern.
+
+Corner V(12,3) has edges line-12 (to V(7,12)) and line-3 (to V(3,8)). Across the line-12 edge sits `{3,7,12}` (established already: row 7 positions 9-10 give `3 12` adjacent, row 12 positions 7-8 give `3 7` adjacent, row 3 positions 6-7 give `7 12` adjacent — full pass). Across the line-3 edge sits `{3,8,12}`: row 3 positions 7-8 give `12 8` adjacent, row 8 positions 9-10 give `12 3` adjacent, row 12 positions 6-7 give `8 3` adjacent — full pass, in reference data 7.
+
+Both flanking faces are triangles, so both have a forced third exit by the same one-crossing argument turns 236-239 used. `{3,7,12}`'s sides are 3,7,12; it exits toward P via line 12, so its entry (the line nobody's spent yet) is forced to line 7, not line 3 — line 3 is about to be spent as P's *other* exit, and a triangle can't claim the same single crossing twice from two different neighbors. `{3,8,12}`'s sides are 3,8,12; entered via 3 (from P), can't re-use 12 (spent one step earlier), so exits via 8, forced.
+
+Full chain: `[W] --7--> {3,7,12} --12--> P(@V12,3) --3--> {3,8,12} --8--> [Y]`, consuming lines {3,7,8,12} — no repeats, no contradiction. Unlike the V(1,7) and V(7,12) chains, **this one never touches F2's canonical corner V(3,12) at all**, because P's own two edges here land on the line-3 side of *both* flanking triangles, not on F2's line-12 side.
+
+That doesn't resurrect F2 outright — F2's other five corners still collide: V(3,12) and V(3,7) both need line 3 (spent), V(7,11) needs line 7 (spent), V(4,8) and V(8,12) both need line 8 (spent). But F2's sixth corner, V(4,11), uses lines 4 and 11 — reference data 10's vertex list gives F2's cycle as `V(3,12)-V(3,7)-V(7,11)-V(4,11)-V(4,8)-V(8,12)`, so V(4,11)'s two edges run to V(7,11) (line 11) and V(4,8) (line 4). Neither 4 nor 11 appears in {3,7,8,12}. I have not checked what sits across F2's V(4,11) edges, so this is not a construction — it's a live corner nobody has ruled out, sitting exactly where turn 240 said it hadn't looked.
+
+So the "complete generality" claim needs the two remaining corners (V(3,8) too) checked before it's earned, and the one I did check already produces an escape route for F2 that the other two corners closed off.
+
+**Gate violations**
+
+- NO_VERIFIER_RUN: this turn asserts a vertex, row position or triangle triple of a corpus arrangement but records no verifier run. You have Bash. Run kobon.table.triangles and put what you ran in verifier_runs.
+
+<!-- meta
+{"addresses": [240], "claims_conceded": [], "claims_opened": ["p-corner-v12-3-avoids-f2-canonical-collision"], "falsifier": "if the face across F2's V(4,11) edges (lines 4 and 11) turns out to require any of {3,7,8,12}, or if corner V(3,8) reproduces the same tax as V(1,7)/V(7,12), the escape closes and turn 240's generality claim is vindicated", "tier": "none", "verifier_runs": []}
+-->
