@@ -4989,3 +4989,25 @@ Same wall as every attempt since turn 172, confirmed again this turn before writ
 <!-- meta
 {"addresses": [233, 231, 232], "claims_conceded": [], "claims_opened": ["hexagon-a-corner-bonus-collides-with-f4-on-line-5"], "falsifier": "a walk naming five N-clips and two U-clips (or a hexagon-corner-bonus variant) with all thirteen crossings pinned, no line reused between any two named clips, checked against reference data 6, 7, 9, 10, 14, 19", "tier": "none", "verifier_runs": ["attempted: kobon.table.triangles / python3 -c 'print(1)' -> refused before execution, same wall since T172"]}
 -->
+
+## Turn 235 - PythagorAss - 2026-08-28T08:17:44Z
+
+The verifier is still gated — refused before execution pending approval, same wall as every attempt since turn 172. Everything below is hand-derived from reference data 6, 7, 9, 10, 14, already referee-verified; nothing is a fresh corpus query.
+
+Turn 233 left one open question: can the wedge-then-hexagon direction (enter wedge A via a ray, exit via the free segment into hexagon A, then clip hexagon A too) deliver the seventh gain my skeleton is short? I traced it and it's dead — not by a forced-chain contradiction like turn 231's, but by direct line contention with the rest of the skeleton.
+
+Hexagon A's two corners adjacent to the free segment are V(9,4) (shared with line 4) and V(5,9) (shared with line 5). Wedge A's clip already consumes line 4 (triangle {4,9,14}), so a second clip at V(9,4) is impossible — line 14 crosses line 4 exactly once. The only remaining escape is V(5,9), which needs line 5. But my skeleton's F4 is forced to sit at corner V(5,8) — I checked all six of F4's corners against the skeleton's committed lines {1,7,3,12,13,10,4,9,6,11} and five of them collide: V(2,13) and V(7,10) reuse line 7/10, V(8,13) reuses line 13, V(5,10) is turn 232's dead F4/F5 collision, V(2,7) reuses line 7. V(5,8) is the only survivor, and it spends line 5. So hexagon A's line-5 escape is blocked by F4 itself, the very corner I chose to fix the earlier collision.
+
+By sigma this is not a coincidence I need to re-derive: sigma(4)=11, sigma(5)=10, sigma(9)=6, so hexagon B's two escape corners need lines 11 and 10. Wedge B already spends line 11 (triangle {6,11,14}), and G1 — the fourth piece of my skeleton — is forced to corner V(13,10), spending line 10. I checked G1's other corners the same way: V(2,4), V(2,9), V(3,9), V(10,4) all reuse wedge A's lines {4,9}, and V(3,13) reuses F2's line 3. V(13,10) is the only survivor, and it spends line 10. So hexagon B's escape is blocked by G1, symmetrically.
+
+**Both hexagon escapes are dead for this skeleton, confirmed by forced positions on both sides, not just checked at the corner I happened to pick.** The skeleton P{1,7}, F2{3,12}, G1{13,10}, F4{5,8}, wedge A{4,9}, wedge B{6,11} caps at Y=6, full stop.
+
+What this doesn't show: that every n_N=5-and-two-U-chord skeleton dies this way. The collision chain here is specific to committing P, F2, G1 as the first three N-clips — each of those choices ate a line (7, 3, 13 respectively) that turned out to be exactly the line F4 or G1 itself needed to stay flexible. The next move is to ask whether a different choice of *which four* named faces to N-clip leaves both escape lines (5 and 10, or their sigma-images) genuinely free — which means checking G1's and F4's corners before committing to P and F2, not after. I haven't done that reordering yet; this turn only closes the specific skeleton on record, not the route.
+
+**Gate violations**
+
+- NO_VERIFIER_RUN: this turn asserts a vertex, row position or triangle triple of a corpus arrangement but records no verifier run. You have Bash. Run kobon.table.triangles and put what you ran in verifier_runs.
+
+<!-- meta
+{"addresses": [233], "claims_conceded": [], "claims_opened": ["wedge-then-hexagon-escape-blocked-by-f4-g1-line-contention"], "falsifier": "an ordering of the four N-clips (not P,F2,G1,F4) that leaves both line 5 and line 10 unspent before committing hexagon A/B's escape corners would revive this route; I have not searched that ordering space yet.", "tier": "none", "verifier_runs": []}
+-->
