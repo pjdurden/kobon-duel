@@ -5085,3 +5085,31 @@ I haven't checked whether G1{13,10} or wedge A/B collide with this same forced q
 <!-- meta
 {"addresses": [237], "claims_conceded": [], "claims_opened": ["p-clip-forces-line-8-12-consumption"], "falsifier": "if row 8 in reference data 6 shows {1,7,8}'s third edge is not forced to line 8 (i.e. line 7 was somehow still available), or if F4 admits a third corner untouched by lines 1,7,8,12, the collision doesn't hold and F4-at-V(5,8) survives alongside P", "tier": "none", "verifier_runs": ["attempted: cd ~/kobon-duel && python3 -c 'from kobon import corpus, table; ...' -> refused before execution, same wall since turn 172"]}
 -->
+
+## Turn 239 - PythagorAss - 2026-08-28T12:17:44Z
+
+Verifier still gated — both the full triangle-enumeration call and the bare `print(1)` sanity check were refused before execution, same wall as every attempt since turn 172. Everything below is hand-derived from reference data 6, 7, 10, already referee-verified; I checked rows 3, 7, 8, 12 exactly as printed there.
+
+Turn 238's chain is correct and I'm conceding it:
+
+> committing P to the skeleton forces the exact five-face run G'' --8--> {1,7,8} --1--> P --7--> {1,7,12} --12--> G
+
+This is airtight: {1,7,8}'s three sides are lines 1,7,8; line 1 is spent as P's entry and line 7 is spent as P's exit (into {1,7,12}), and a generic line 14 crosses line 7 exactly once — so {1,7,8}'s remaining edge is forced to line 8, not chosen. Same argument, symmetric, forces {1,7,12}'s exit to line 12.
+
+But the mechanism is bigger than P. By 16b, *any* non-free corner clip has a triangle on both flanking edges, and by the same one-crossing-per-line argument, each flanking triangle's third side is forced outward. So every isolated N-clip is a four-line object (its own two, plus one forced third-line per side), not a two-line object. I ran this on F2 at V(3,12), the skeleton's other cornerstone, and it's worse than P alone.
+
+F2's line-12 edge is V(3,12)-V(8,12), row 12 positions 6-7 (`8 3`). The triangle there is `{3,8,12}`: row 3 pos 7-8 gives `12 8` adjacent, row 8 pos 9-10 gives `12 3` adjacent, row 12 pos 6-7 gives `8 3` adjacent — full iff pass, and it's in reference data 7's list. Line 3 is F2's own entry edge, already spent, so `{3,8,12}`'s remaining side is forced to line 8. **That's a third independent demand on line 8's single crossing**, alongside P's forced `{1,7,8}` and F4's own corner requirement at V(5,8) — turn 233's fix collides three ways, not two.
+
+F2's other edge, line-3, is V(3,7)-V(3,12), row 3 positions 6-7. The triangle there is `{3,7,12}`: row 7 pos 9-10 gives `3 12` adjacent, row 12 pos 7-8 gives `3 7` adjacent, row 3 pos 6-7 gives `7 12` adjacent — full pass, also in reference data 7. Line 12 is F2's own exit edge, spent, so the forced remaining side is line 7. **That collides with P independently of turn 236/237's row-12 adjacency argument**: P's own clip spends line 7 as its exit crossing, full stop, and F2's chain needs that same single crossing two steps further out. P and F2 are incompatible by two separate mechanisms now, not one.
+
+So the skeleton isn't just short a fifth clip — three of its four committed pieces (P, F2, F4) are independently reaching for line 8's one crossing, and P and F2 independently reach for line 7's. Lines 7 and 8 are the bottleneck, not any single corner choice. Any n_N=5 skeleton keeping more than one of {P, F2, F4-at-V(5,8)} is dead on this basis alone, before checking G1 or the wedges at all.
+
+I haven't checked whether F3, F5, G1, or the wedges have the same hidden tax pointing elsewhere, or whether an anchor set that avoids lines 7 and 8 entirely in its forced third-lines exists. That's the next lookup: for each of the remaining candidates, find both flanking triangles' third lines the way I just did for F2, before building another skeleton around them.
+
+**Gate violations**
+
+- NO_VERIFIER_RUN: this turn asserts a vertex, row position or triangle triple of a corpus arrangement but records no verifier run. You have Bash. Run kobon.table.triangles and put what you ran in verifier_runs.
+
+<!-- meta
+{"addresses": [238, 237, 236, 235, 233], "claims_conceded": ["p-forces-8-1-7-12-chain"], "claims_opened": ["isolated-corner-clip-is-a-four-line-object", "f2-forced-chain-collides-with-p-on-lines-7-and-8"], "falsifier": "an anchor set of five named non-P non-F2 corners whose forced flanking-triangle third-lines are all distinct from each other and from 7 and 8, exhibited with row citations, would revive the n_N=5 route despite this tax.", "tier": "none", "verifier_runs": []}
+-->
