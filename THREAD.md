@@ -4957,3 +4957,27 @@ This is exactly the standing requirement's point: a named face is not a named co
 <!-- meta
 {"addresses": [231], "claims_conceded": [], "claims_opened": ["f4-f5-share-vertex-v5-10-blocks-simultaneous-corner-clip"], "falsifier": "a verified table, or a corpus enumerator run, showing line 14 can corner-clip F4 at a vertex not sharing a line with F5's V(5,10) clip, completing five non-colliding N-clips plus the two U-clips as an actual 13-crossing walk with every successor named", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 233 - PythagorAss - 2026-08-28T06:18:44Z
+
+The verifier is still gated — same wall as every attempt since turn 172; I ran the exact call and a bare `python3 -c "print('hello')"` and both were refused before execution. Everything below is hand-derived from reference data 6, 9, 10, 14, already referee-verified.
+
+Turn 232's collision is real and I'm conceding it:
+
+> Both corners are literally the same point in the plane — the crossing of lines 5 and 10 — approached from the two sectors on opposite sides of it... That chord is a single physical segment; it occupies one sector at V(5,10), not two.
+
+That's airtight: line 14 crosses line 5 once and line 10 once, so there is exactly one chord with those two lines as endpoints, and it can clip at most one of F4's or F5's V(5,10) corners. F5 was never committed in my skeleton — only F4 was — so I'm dropping F4-at-V(5,10) and checking the escape.
+
+Euclidn't flagged V(2,13) (reuses F3's vertex from reference data 17) and V(7,10), V(2,7) as reusing lines my skeleton had already spent, leaving V(8,13) and V(2,7) "untested." There's a cleaner fifth option Euclidn't didn't name: F4's corner **V(5,8)**, between its line-8 edge (to V(8,13)) and line-5 edge (to V(5,10)) — reference data 10: `F4 = V(2,13) - V(8,13) - V(5,8) - V(5,10) - V(7,10) - V(2,7)`. Neither line 5 nor line 8 is used by P{1,7}, F2{3,12}, G1{13,10}, wedge A{4,9}, or wedge B{6,11}, and V(5,8) isn't a vertex of F5, G1, or hexagon A, so it collides with nothing in the skeleton. F4-at-V(5,8) replaces F4-at-V(5,10) cleanly.
+
+Revised skeleton: P{1,7}, F2{3,12}, G1{13,10}, F4{5,8} as N-clips; wedge A{4,9}, wedge B{6,11} as U-clips. Six pairwise-disjoint line-pairs, twelve of the thirteen lines used, line 2 left over.
+
+Here's the honest new problem, and it's arithmetic, not geometry: **that's only Y=6, not 7.** I have four N-clips, not five. To seat a fifth N-clip I need a seventh disjoint pair, which needs 14 lines. I have 13. Line 2 alone can't pair with anything without reusing an already-committed line, and reusing a line means the shared line's second adjacency is the *forced successor* of whichever clip already claims it — which by reference data 16b is a triangle, gain 0, for every one of P, F2, G1, F4 (none of their relevant exit edges are free segments). So none of these four clips can donate a line to a fifth clip without collapsing into a forced triangle instead.
+
+The only faces with a non-triangle-forcing exit are hexagons A and B, via their free segments — and that's exactly the joint I haven't cleared. Turn 231 killed hex-then-wedge (clip the hexagon corner, then the same trajectory continues into the wedge). I have not checked the reverse order: enter the wedge first (as I've done, via the ray), exit through the free segment into the hexagon, and ask whether the hexagon can *also* be clipped at that point, sharing a line with nothing wasted. Unlike turn 231's case, this doesn't obviously hit an already-spent-line contradiction on a first pass — tracing it, an entry via line 9 into hexagon A landing on its line-4 or line-2 edge would force the next piece into `{2,4,9}` (line-4 exit) exactly as in turn 231, but the "already spent" collision there came from position bookkeeping specific to the terminal case, not from this direction. I don't yet know if it dies.
+
+So: my skeleton delivers a verified Y=6, not Y=7, and the gap is exactly the wedge-then-hexagon question, untested in either direction now. I'm not claiming it fails or succeeds.
+
+<!-- meta
+{"addresses": [232], "claims_conceded": ["f4-f5-shared-vertex-v5-10-collision"], "claims_opened": ["wedge-then-hex-forward-order-untested"], "falsifier": "an explicit forced-successor trace showing wedge-A-entered-via-line-9-then-exiting-into-hexagon-A clips a corner without reusing a spent line would restore a path to Y=7; a trace showing it always collides (mirroring T231) would close this skeleton at Y=6 for good", "tier": "none", "verifier_runs": ["gate check: python3 -c \"print('hello')\" -> refused before execution, gate still closed"]}
+-->
