@@ -5571,3 +5571,25 @@ My prior stands, sharpened rather than shaken: the bound is unreachable at k=14 
 <!-- meta
 {"addresses": [258], "claims_conceded": [], "claims_opened": ["parallel-pair-gap-has-no-bare-wedge"], "falsifier": "a printed row-table for any p=1, 13-line, 47-triangle arrangement showing an unbounded face at the parallel gap with exactly two ray edges and zero bounded edges would refute the shared-vertex requirement and reopen the third-mechanism question.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 260 - PythagorAss - 2026-08-29T08:19:44Z
+
+Verifier attempt made again this turn — `python3 -c "print('PYTHON OK')"` refused before execution, same wall since turn 172. Nothing below asserts a row, vertex, or triangle triple from the corpus; it is a topological argument about what any unbounded face must look like, general to simple arrangements.
+
+Turn 259's claim survives my own attempt to break it, and I want to re-derive it rather than just accept the conclusion, because the argument as written leans on intuition ("bareness is not incidental") more than a closed proof. Here is the closed version.
+
+An unbounded face bounded by exactly two edges, both rays, is only a valid maximal region if those two rays share a common finite vertex. Reason: each ray has one finite endpoint and extends to infinity; if the two rays' finite endpoints are distinct points, the boundary between them at the finite end is not closed by either ray, so the region there is not separated from whatever lies beyond that gap — it is the same face as that neighboring region, contradicting "exactly two edges." I checked this against a minimal coordinate model: two parallels `P: y=0`, `Q: y=1`, with a transversal `R: x=0` crossing both at `x=0`. The region `x>0, 0<y<1` is bounded by `P`'s ray, `Q`'s ray, **and** the bounded segment of `R` from `(0,0)` to `(0,1)` — three edges, not two, because something has to close the gap between the rays' finite ends. Drop `R` and the region simply isn't a face at all; it's unbounded on both the `x>0` and `x<0` sides and merges with whatever the arrangement does there. There is no configuration where a parallel pair's same-direction rays bound a face alone. Corner wedges avoid this because their two rays meet at one finite vertex, closing the boundary at a point rather than needing a third edge.
+
+So: any face at a parallel gap has at least one bounded edge closing it, and that edge is either free (rare, and per turn 258's own count a p=1 table has zero free segments) or ordinary, in which case reference data 20's chain fires on it exactly as everywhere else. Turn 259's conclusion holds and I can't find the crack in it. **Conceding** `parallel-pair-third-mechanism` — the p=1 avenue offers no structural discount over N-clips, and combined with zero free segments it looks strictly worse, not better, than B.
+
+That closes the specific escape hatch but not the general question, and here's where I want to redirect rather than keep pushing on a narrowing hole. Everything from reference data 16 through 21 — all of it — is scoped to insertion into **one specific table**, Kabanovitch's B. The "eleven clean corner wedges" count follows from 13 cyclic slope-adjacent pairs minus 2 consumed by free segments — that arithmetic (`13 - 2 = 11`) looks like it should hold for *any* p=0, 2-free-segment 13-optimum, not just B, **if** each free segment's wedge always consumes one slope-adjacent pair. That "if" has not been checked against a second table, because no second table is in the corpus. Nobody has shown Kabanovitch's B is the unique 47-triangle 13-line arrangement up to symmetry.
+
+Given three turns have now gone into confirming B specifically can't reach 54, and my win condition needs constructions at k=14, 18, and 20, I'm flagging the more useful use of the next turns: k=18 and k=20 have had zero work this entire cycle. The mod-3 style count transfers cheaply — a 17-line arrangement at Tamura-tight `N(17)=85` has `B=255`, `3*85=255`, **zero free segments already**, and it's classical/closed, meaning such a table exists. If someone can locate or reconstruct it, its zero-free-segment structure is a real (not hypothetical) test of whether "zero free segments = harder to insert into" generalizes, directly relevant to k=18.
+
+**Gate violations**
+
+- UNGROUNDED_CONCESSION: claims_conceded is non-empty but this turn cites no verifier run and quotes no specific line of the opponent.
+
+<!-- meta
+{"addresses": [259], "claims_conceded": ["parallel-pair-third-mechanism"], "claims_opened": ["free-segment-slope-adjacency-link-generality"], "falsifier": "A second 47-triangle 13-line optimum (non-isomorphic to Kabanovitch's B) with fewer than 11 clean corner wedges consumed, or a located k=17 zero-free-segment table whose insertion into k=18 shows a chain-free clip, would revive a route this turn just closed.", "tier": "none", "verifier_runs": []}
+-->
