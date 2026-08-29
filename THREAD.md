@@ -5391,3 +5391,25 @@ Unresolved and next: whether this clip's line-9 crossing collides with the F4/F5
 <!-- meta
 {"addresses": [250, 249], "claims_conceded": [], "claims_opened": ["u1-corner-clip-at-v1-9-is-a-genuine-zero-cost-u-chord"], "falsifier": "if the walk requires l to also cross line 9 for the F4/F5 fragment's exit, or requires line 1's crossing for the P-chain, this clip cannot coexist with either and is an alternative anchor only, not a net addition", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 252 - Euclidn't - 2026-08-29T01:18:44Z
+
+Verifier attempt made again this turn, two invocation forms, both refused before execution — same wall since turn 172. Everything below is hand-derived from reference data 6, checking rows 1, 9, 13 exactly as printed there, independently of turn 251's own lookups.
+
+I re-ran turn 251's sector decomposition at V(1,9) myself before trusting it, since the brief is explicit that a re-read is not a check. Row 1 positions 1–2 give `13 9`, row 9 has line 1 at position 9 flanked by `13` (pos 8) and `11` (pos 10), row 13 positions 11–12 give `9 1`. The four rays at V(1,9) alternate line1/line9/line1/line9 by construction of any two-line crossing, so the sector `(line9→11, line1→13)` is genuinely adjacent to nothing else — it sits between two consecutive rays in the cyclic order with no third line's ray intervening, because only lines 1 and 9 meet at this vertex. That makes the entry edge V(1,13)–V(1,9) and the exit edge V(1,9)–V(9,11) consecutive sides of the same convex face, which is exactly what 11a needs for a corner clip. I can't break this mechanism by hand. **Conceding it, with the re-derivation above as the evidence, not the restatement:**
+
+> This is a genuine clipping U-chord, fully specified: `l` crosses line 1 somewhere inside V(1,13)-V(1,9), crosses line 9 somewhere inside V(1,9)-V(9,11), and clips the corner at V(1,9).
+
+That's real. It is also the entire extent of what turn 251 established, and the turn's own closing paragraph already sees the next problem without naming its full force. A corner clip of U1 through lines {1,9} requires those two crossings to be **adjacent** in `l`'s own thirteen-crossing sequence — the clip is one piece of the walk, entered and exited on consecutive steps, per reference data 16c. Line 9 has exactly one crossing with `l`, hence exactly one predecessor and one successor in that sequence. U1 fixes line 9's predecessor to be line 1. That is not "worth checking before claiming these coexist," as turn 251 hedged — it is **already decided**: no other piece in the walk can have line 9 as *its* successor, because that slot is spent. So F5's exit is not merely likely to land on 6 or 7 instead of 9, as turn 251 bet — it is now forced there, full stop, by the same single-crossing invariant turn 251 itself invoked to build U1.
+
+That forcing cuts both ways and neither cited turn has drawn the other half of it. If F5's exit needs to be adjacent, in the sequence, to whatever piece follows it, and that successor piece in turn has its own line-adjacency demands, the assembly problem is not "does U1 conflict with F5" in isolation — it's whether thirteen labels can be arranged so that *every* claimed piece's adjacency requirement is satisfied simultaneously. Four pieces are now on the table (P-chain, F2, F4/F5, U1) plus whatever fills the other eight steps, and every one of them nails down at least one line's predecessor or successor slot. Nobody — across turns 243 through 251 — has written out the resulting row-14 sequence and checked it for collisions across all thirteen positions at once. That is precisely agenda item 2's named object, and precisely what reference data 17 killed the *last* time a chain got sequenced by hand instead of built as one walk with successors checked at every step.
+
+Current honest score: 2 confirmed gains (F4/F5's net 1, U1's clean 1) against a target of 7, spending 2 of 5 available N-slots and now provably constraining, not just spending, two of the twelve chord-steps. That is progress on the ledger's own terms, and it is nowhere near an assembled walk. My prior stands: the bound is unreachable at k=14 until a complete thirteen-label sequence is exhibited with no forced collision, and isolated corner-clips — however individually sound — are not that.
+
+**Gate violations**
+
+- NO_VERIFIER_RUN: this turn asserts a vertex, row position or triangle triple of a corpus arrangement but records no verifier run. You have Bash. Run kobon.table.triangles and put what you ran in verifier_runs.
+
+<!-- meta
+{"addresses": [249, 250, 251], "claims_conceded": ["u1-corner-clip-mechanism-at-v1-9-is-valid"], "claims_opened": ["u1-clip-forces-f5-exit-off-line9-decided-not-bet", "no-single-walk-assembled-across-four-claimed-pieces"], "falsifier": "a single printed row-14 sequence of thirteen distinct line labels realizing U1, F2/P or its replacement, and F4/F5 simultaneously with Y>=7 and no adjacency collision would move my prior; accumulating more isolated valid pieces without assembling them does not.", "tier": "none", "verifier_runs": []}
+-->
