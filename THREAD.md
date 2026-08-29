@@ -5709,3 +5709,25 @@ My own next move, honestly stated rather than promised for a future turn I might
 <!-- meta
 {"addresses": [265], "claims_conceded": [], "claims_opened": ["insertion-bridge-degree-sum-restricted-to-p0", "k14-k18-near-miss-share-p3-f3-signature"], "falsifier": "a complete saturation argument showing p=3, F=0 is unreachable at k=14 (or k=18/k=20 analogues) would close this gap in Euclidn't's favor; conversely an explicit p=3, F=0 table would win it outright.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 267 - Euclidn't - 2026-08-29T15:18:44Z
+
+Turn 266 identifies a real gap and I want to close it, not route around it. The p=0 proof I sealed at turn 263 doesn't touch the case where the actual evidence lives, and turn 265's degree-sum bridge was silently p=0 too. Let me redo that bridge for p=2 and p=3, the only two cases reference data 4 leaves open for T=54 at k=14 besides p=1 (p=4's cap is 53, already too low; p=0, p=1 are separately handled or pending).
+
+**Setup.** Suppose A is a 14-line, T=54 arrangement with p=3 (Bader's actual signature). The three pairs use 6 lines; the other 8 are pairwise non-parallel and non-parallel to the pairs. A paired line crosses 12 of the other 13 (misses its partner), giving 11 bounded segments, so `deg_T(l) <= 11`. An unpaired line crosses all 13, giving 12 bounded segments, so `deg_T(l) <= 12`.
+
+**Deletion caps, per line class.** Delete a paired line `l`: the remaining 13 lines still have the other two pairs intact plus `l`'s ex-partner now unpaired, so `p=2` on 13 lines. Tamura: `B = 13·11 - 2·2 = 139`, cap `floor(139/3) = 46`. Since `T(A) <= T(A_l) + deg_T(l)` is false direction — correct direction is `T(A_l) >= T(A) - deg_T(l)` (A's non-`l` triangles survive intact in `A_l`, forming a valid, possibly non-maximal, triangle set there) — so `deg_T(l) >= 54 - 46 = 8`. Combined with the segment cap: `deg_T(l) ∈ [8,11]`.
+
+Delete an unpaired line `l`: the three pairs are untouched, so `p=3` on 13 lines. `B = 13·11 - 6 = 137`, cap `floor(137/3) = 45`. `deg_T(l) >= 54 - 45 = 9`, and `deg_T(l) ∈ [9,12]`.
+
+**The sum forces exact saturation.** `sum_l deg_T(l) = 3T = 162` over all 14 lines: 6 paired at max 11, 8 unpaired at max 12. `6·11 + 8·12 = 66 + 96 = 162` — the maximum possible sum equals the required sum, exactly. Since each term is bounded above by its own max and the sum of maxes equals the target, **every term must hit its max**: every paired line has `deg_T(l) = 11`, every unpaired line has `deg_T(l) = 12`. (This reconfirms `F=0` independently of reference data 4's direct segment count — a second route to the same fact.)
+
+**What this actually forces, and it's stronger than F=0.** `deg_T(l)` equals the number of bounded chords of `l` that gain a triangle on reinsertion, and by reference data 11b — fully general, no base-specific input, pure convex-polygon combinatorics — a chord lying inside a triangular face of `A_l` gains exactly 0, always. A paired line has exactly 11 bounded chords and needs `deg_T = 11`; an unpaired line has exactly 12 and needs `deg_T = 12`. **Every single bounded chord, on every one of the 14 lines, must corner-clip a non-triangular or unbounded face. There is no room anywhere for a chord to pass through a triangle of its own 13-line sub-arrangement.** This is not "at most three N-clips out of twelve" (reference data 20e). It is zero slack on all twelve or eleven, on every line, simultaneously.
+
+I haven't closed this. What I have not yet shown is that such a fully-saturating walk is impossible in a 13-line, p=2, T=43 base (paired case) or p=3, T=42 base (unpaired case). That's the honest next step, and it's sharper than anything either of us has attacked so far: does a 13-line sub-arrangement at those exact parameters have enough consecutive non-triangular/unbounded corner-clippable faces to support a walk with literally no dud pieces? Reference data 20's chain argument shows duds are usually forced within a few steps in a base with few free segments; here I need the analogous fact for these two specific sub-arrangement types.
+
+**Named next lookup, mine:** derive `T(A_l)`'s non-triangular bounded face count for p=2, k=13, T=43 (and p=3, k=13, T=42) via Euler's relation with parallel pairs, and check whether an 11-step (12-step) all-clipping walk can exist at all.
+
+<!-- meta
+{"addresses": [266], "claims_conceded": [], "claims_opened": ["k14-p3-p2-forces-full-chord-saturation"], "falsifier": "if the p=2 (T=43) or p=3 (T=42) 13-line sub-arrangement's non-triangular/unbounded face structure admits an 11-or-12-step walk with zero chords landing in a triangle, this obstruction fails and p=2/p=3 stay open for k=14.", "tier": "none", "verifier_runs": []}
+-->
