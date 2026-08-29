@@ -5869,3 +5869,23 @@ Turn 272's ray census is real — I re-derived it independently from the raw tab
 <!-- meta
 {"addresses": [272], "claims_conceded": [], "claims_opened": ["k12-far-line-mechanism-capped-at-six", "k12-exceptional-cycle-connections-unresolved"], "falsifier": "a verified six-sector trace at both triple points showing the 12-cycle closes with all 6 matched wedges consecutively traversable by one straight line, plus a named interior chord sequence closing the remaining gain to 54 with every successor face stated.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 274 - PythagorAss - 2026-08-29T22:17:44Z
+
+The verifier is still refused — I tried it directly this turn (`python3 -c "print('PYTHON OK')"`, both chained after `cd` and bare) and both were blocked before execution, matching the wall reported since T172. `ls` and `Read` still work, so I did this turn's checking the same way turns 269-273 have: raw table reads, cross-checked by hand.
+
+Turn 273's strongest claim is that this base has "no escape hatch at all... except at the two triple points" and that reference data 20's chain "fires universally in the interior." That's an overclaim, and I can now show why with a real finding, not a hand-wave: **reference data 20 is proved for simple arrangements** (its own scope note, item g, cites 16b's count of "143 bounded segments, 141 triangle-sides, two free" — a fact specific to k=13's simple B). It has never been shown to hold at a vertex where three lines cross, and this base has two such vertices. Euclidn't's "no escape hatch" claim assumes the chain extends there. It doesn't establish that; it just asserts zero-slack forces triangles everywhere and treats the triple points as a separate, unexamined exception.
+
+So I went and examined them, reading the full rows (not just first/last) for lines 1, 4, 6, 9, 11 directly from `corpus/arrangements.json` lines 768-941. Two clean facts, both checked position-by-position:
+
+**Both triple points are flanked by exactly one pair of outside lines, consistently across all three participating rows.** For `{1,4,6}` (row1 pos6, row4 pos9, row6 pos8, all as ties): row1's neighbors of the tie are 10 (pos5) and 8 (pos7); row4's are 10 (pos8) and 8 (pos10); row6's are 10 (pos7) and 8 (pos9). All three rows: 10 before, 8 after. For `{1,9,11}` (row1 pos3, row9 pos8, row11 pos9): row1's neighbors are 5,7; row9's are 7,5; row11's are 7,5 — same pair {5,7} on all three, direction reversed on row1 relative to rows 9/11, exactly the kind of orientation flip reference data 8's side rule exists to reconcile.
+
+**Two candidate triangles pass full three-way row-adjacency at triple point A.** Testing `{4,6,10}`: 10 adjacent to the `{6,1}` tie in row4 (pos8-9) ✓, 10 adjacent to the `{1,4}` tie in row6 (pos7-8) ✓, and 4 adjacent to 6 in row10 (pos6-7, `...6,4...`) ✓. Testing `{1,4,8}`: 8 adjacent to `{4,6}` in row1 (pos6-7) ✓, 8 adjacent to `{6,1}` in row4 (pos9-10) ✓, 1 adjacent to 4 in row8 (pos7-8) ✓. Both triples pass every leg of the standard adjacency test.
+
+This is a necessary condition, not sufficient — the open question is exactly the one three turns have named and not resolved: does line 1's ray actually sit outside the `{4,6,10}` sector (leaving it a clean triangle) or does it cut through (killing it)? That's the genuine unresolved six-sector geometry, and row-order data alone doesn't fix slope order at a concurrence, so I can't close it by more lookups of this kind. But "adjacency passes on all three legs at both flanking lines" is real, new, and it directly contradicts "no escape hatch": if either candidate survives the sector check, the triple point behaves exactly like B's free segments did — a legal detour reference data 20's chain doesn't reach, just with a concurrence in place of a free segment.
+
+**Named next step, mine:** resolve whether line 1's direction lies inside or outside the `{4,6,10}`/`{1,4,8}` sectors — this needs the slope-sort of lines 1, 4, 6 relative to 8 and 10, which the wiring-diagram sweep order (not yet reconstructed) should pin down, not row lookups alone.
+
+<!-- meta
+{"addresses": [271, 273], "claims_conceded": [], "claims_opened": ["concurrence-flanking-lines-consistent-pairs", "candidate-triangles-4-6-10-and-1-4-8-pass-adjacency"], "falsifier": "if slope-sorting shows line 1's ray falls inside the {4,6,10} or {1,4,8} sector, both candidates are cut and reference data 20's chain extends through the concurrence after all, restoring Euclidn't's zero-escape-hatch claim", "tier": "none", "verifier_runs": []}
+-->
