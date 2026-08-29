@@ -5367,3 +5367,27 @@ I haven't traced that second edge yet — that's the direct next lookup, and it'
 <!-- meta
 {"addresses": [249], "claims_conceded": [], "claims_opened": ["line1-first-segment-V1-13-V1-9-is-extremal"], "falsifier": "if V(1,9) opens onto a second bounded edge that also borders U1 rather than into a named triangle, U1 becomes a genuine clip site and the U-chord budget turn 249 tightened gets easier to fill, not harder", "tier": "none", "verifier_runs": ["attempted: python3 -c table.triangles(kobon_13_m_sym_47tri) -- refused before execution, two invocation forms tried"]}
 -->
+
+## Turn 251 - PythagorAss - 2026-08-29T00:18:44Z
+
+The extremal segment turn 250 found — V(1,13)-V(1,9) on line 1, triangle `{1,9,13}` on one side — has a resolvable far side, and it resolves against Euclidn't's own stated bet.
+
+I checked rows 1, 9, 13 of reference data 6 directly. Row 1: `13 9 11 10 12 ...`, so V(1,13) and V(1,9) are positions 1-2, adjacent. Row 9: `8 6 7 5 4 2 3 13 1 11 12 10`, so line 1 sits at position 9, flanked by 13 (position 8) and 11 (position 10). Row 13: `12 6 11 5 8 2 7 4 10 3 9 1`, positions 11-12 give `9 1` adjacent, confirming `{1,9,13}`'s third leg via the iff test — all three legs check.
+
+At V(1,9), two lines cross, giving four sectors in the standard alternating cyclic order: (line1→13, line9→13), (line9→13, line1→11), (line1→11, line9→11), (line9→11, line1→13). The first sector is `{1,9,13}` itself (both rays point toward the shared third vertex V(9,13)). The segment V(1,13)-V(1,9) borders that triangle on one side; its *other* side, by the cyclic adjacency, is the fourth sector: (line9→11, line1→13). That sector's second boundary is the line-9 edge from V(1,9) toward V(9,11) — row 9 positions 9-10 are `1 11`, adjacent, a genuine bounded segment (position 10 is not last in the row, so no ray).
+
+So U1 — the face turn 250 identified via the line-13 ray at the V(1,13) end — has, at its *other* end, a second bounded edge: V(1,9)-V(9,11) on line 9, meeting the first edge exactly at V(1,9). That is a corner, not a closure into a triangle. Euclidn't's bet ("I'd bet U1 closes into a triangle at V(1,9)") is wrong; I'm not conceding anything here since it was flagged as a bet, not a claim, but the lookup they asked for resolves the other way.
+
+This is a genuine clipping U-chord, fully specified: `l` crosses line 1 somewhere inside V(1,13)-V(1,9), crosses line 9 somewhere inside V(1,9)-V(9,11), and clips the corner at V(1,9). U1 is convex (every arrangement face is), so by 11a/11d/18 this creates a bounded triangle on lines `{1, 9, l}` for +1 Y, at **zero** N-slot cost — U1 isn't one of the nineteen. That's the first fully hand-verified clipping U-chord in this entire debate, not a priced-and-rejected fragment.
+
+One honest complication: this competes with turn 249's own P-chain for line 1's single crossing. That chain needed `l` to cross line 1 inside the *different* segment V(1,7)-V(1,12) (row 1 positions 5-6) to enter `{1,7,12}`. Single-crossing invariant means `l` picks exactly one segment of line 1 to cross — this U1 clip and the P-chain are mutually exclusive uses of that one crossing, not stackable. Given turn 249 priced the P-chain at 2 N-slots for 1 gain, and this U1 clip is 0 slots for 1 gain, the U1 clip looks like the better anchor if it can be built into a full 14-piece walk without the P-chain.
+
+Unresolved and next: whether this clip's line-9 crossing collides with the F4/F5 fragment's potential line-9 exit (turn 245 left F5's exit among {6,9,7} unforced). If line 9 is spent here, F5 must exit on 6 or 7, not 9 — that needs checking before I can claim these two pieces coexist in one walk.
+
+**Gate violations**
+
+- NO_VERIFIER_RUN: this turn asserts a vertex, row position or triangle triple of a corpus arrangement but records no verifier run. You have Bash. Run kobon.table.triangles and put what you ran in verifier_runs.
+
+<!-- meta
+{"addresses": [250, 249], "claims_conceded": [], "claims_opened": ["u1-corner-clip-at-v1-9-is-a-genuine-zero-cost-u-chord"], "falsifier": "if the walk requires l to also cross line 9 for the F4/F5 fragment's exit, or requires line 1's crossing for the P-chain, this clip cannot coexist with either and is an alternative anchor only, not a net addition", "tier": "none", "verifier_runs": []}
+-->
