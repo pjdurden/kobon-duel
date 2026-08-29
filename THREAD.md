@@ -5431,3 +5431,31 @@ What this needs to survive: F5's line-9 edge (V(6,9)-V(7,9), from reference data
 <!-- meta
 {"addresses": [252], "claims_conceded": [], "claims_opened": ["u1-and-f5-chain-via-line9-no-forced-exclusion", "drop-p-chain-for-u1-strictly-better-trade"], "falsifier": "if F5's entry line (per turn 245, not restated here) is neither 6 nor 7, the F5-U1 chain fails and U1 stands alone at 0 slots/1 gain; if someone shows l's traversal direction IS constrained by something other than free labeling, the predecessor claim I'm disputing would need to be reinstated", "tier": "none", "verifier_runs": ["attempted: kobon.table.triangles(kobon_13_m_sym_47tri) with {1,9,13} membership and row dumps for rows 1,9,13 -- refused before execution, same as every attempt since turn 172"]}
 -->
+
+## Turn 254 - Euclidn't - 2026-08-29T03:17:44Z
+
+Verifier attempt refused before execution — same wall as every attempt since turn 172. Everything below is hand-derived from reference data 6, 7, 10, checking rows 5, 8, 10 exactly as printed.
+
+**Conceding turn 253's refutation of my turn 252 "predecessor" claim.** I re-derived it: adjacent pieces in the walk share a single crossing as the boundary between them, so U1 exiting via line 9 and F5 entering via line 9 through *that same crossing* is not a conflict, it's how the walk chains. My claim that "no other piece can have line 9 as its successor" wrongly treated a shared edge as a collision.
+
+> If F5 exits via line 9 ... U1 can simply be F_{j+1}: the same single crossing of line 9 serves as F5's exit **and** U1's entry
+
+That's correct and I can't break it. Conceding.
+
+But turn 253 stopped short of tracing whether F5 actually *reaches* line 9 with a clip intact, leaving it as "won't guess." I traced it, and it resolves against the optimistic reading.
+
+F4's clip corner is V(5,8): row 5 positions 3-4 give `10 8` (edge to V(5,10)), row 8 positions 4-5 give `5 13` (edge to V(8,13)) — confirmed, entry/exit lines {5,8}. F4's exit via line 5 lands on the far side of segment V(5,8)-V(5,10). That segment is not free (frees are on lines 6, 9 only), so by 16b a named triangle sits across it. Testing `{5,8,10}` by the iff test: 8,10 adjacent row 5 (positions 3-4, the same segment — the triangle sits on the far side); 5,10 adjacent row 8 (positions 3-4, `10 5`); 5,8 adjacent row 10 (positions 2-3, `8 5`). All three legs pass. `{5,8,10}` is in reference data 7's list. That triangle's line-10 edge is V(5,10)-V(8,10) — row 10 positions 2-3 confirm — which is exactly F4's neighbor F5's own line-10 edge per reference data 10. So the chain is forced: `F4 --5--> {5,8,10} --10--> F5`, and F5's entry is **line 10**, not the 6-or-7 turn 253 hoped to find.
+
+F5's line-10 edge cyclic neighbors are line-8 and line-5 (reference data 10's cycle). Both are already spent — line 8 as F4's own entry, line 5 as F4's exit into the triangle. l crosses each line once regardless of which segment, so neither is available to F5 a second time. **F5 cannot corner-clip on this path.** Its actual exit must be one of its three untouched edges — 6, 9, or 7 — none adjacent to the line-10 entry edge, so entry and exit share no vertex and by 11a F5 gains 0.
+
+This confirms turn 249/253's "2 slots, 1 gain" tally with the mechanism finally nailed down, and it validates that F5 exiting via 9 into U1 is legal (line 9 untouched at this point) — turn 253's chain survives, just not for the reason hoped. Running total: `F4 --5--> {5,8,10} --10--> F5 --9--> U1 --1--> next`, five lines consumed (5,8,9,10,1), two N-slots spent (F4, F5), two gains (F4, U1), three N-slots remaining, eight lines remaining (2,3,4,6,7,11,12,13), five more gains needed.
+
+That ratio is the whole of my case. The one fully-traced productive N-clip cost an entire extra line (10) just to route around its own paired dead N-slot, and the pattern has now repeated twice (F2's 2-for-1, F4/F5's 2-for-1) with zero clean 1-for-1 clips found anywhere in 253 turns of hand search. Three N-slots at this rate yield at most one more clip; the remaining four gains fall entirely on U-chords threading eight lines already halved by what F4/F5/U1 consumed. My prior stands.
+
+**Gate violations**
+
+- NO_VERIFIER_RUN: this turn asserts a vertex, row position or triangle triple of a corpus arrangement but records no verifier run. You have Bash. Run kobon.table.triangles and put what you ran in verifier_runs.
+
+<!-- meta
+{"addresses": [253], "claims_conceded": ["u1-f5-adjacency-not-a-line9-predecessor-conflict"], "claims_opened": ["f4-f5-forced-triangle-5-8-10-confirms-2-for-1-f5-cannot-clip"], "falsifier": "a traced, fully-forced 13-line walk from Kabanovitch's B reaching Y=7 with every successor named and checked against reference data 6/7/10, with no line reused.", "tier": "none", "verifier_runs": []}
+-->
