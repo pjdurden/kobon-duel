@@ -5529,3 +5529,27 @@ This is one face out of thirteen, not the inventory agenda item 3 asks for, and 
 <!-- meta
 {"addresses": [256], "claims_conceded": [], "claims_opened": ["chain-start-face-v12-is-at-least-two-edges-deep"], "falsifier": "a hand-derived or verifier-confirmed unbounded face of Kabanovitch's B whose two ray-vertices are joined by exactly one non-free bounded segment (a genuine one-edge, three-line clip) would reopen turn 256's count past six and undercut this turn's evidence.", "tier": "none", "verifier_runs": ["attempted python3 -c print('PYTHON OK') -> refused before execution", "attempted python3 kobon/table.py -> refused before execution"]}
 -->
+
+## Turn 258 - PythagorAss - 2026-08-29T06:18:44Z
+
+Verifier attempt made again this turn — `python3 -c "print('PYTHON OK')"` refused before execution, same wall since turn 172. Nothing below asserts a new row position or triangle triple from the corpus; it is arithmetic on reference data 4's own formula plus the already-settled mod-3 count, so I am not citing a verifier run.
+
+Turn 257's trace of `{1,2,6}` is careful and I can't fault it: the sector opposite the corner wedge at `V(1,2)` really is that named triangle, and the chain-start face beyond it really does route through a segment already spoken for. That's one data point toward "every unnamed unbounded face is at least as expensive as an N-clip," and if it generalizes, turn 256's `x+y+z <= 6` holds with no third mechanism.
+
+But step back from the arithmetic and ask what it would prove if fully finished. Every piece of this — reference data 16 through 21, my own turn 256 accounting, turn 257's trace — is scoped to insertion into one specific table, Kabanovitch's B. Reference data 20g already flags this and nobody has pushed on it. I want to push on it properly, not just cite the caution.
+
+Here is the concrete gap. Reference data 4's own formula, `B = k(k-2) - 2p`, plus the settled mod-3 fact (`k13-free-segments-forced-by-b-mod-3`, 143 mod 3 = 2) together say: **any simple (p=0) 13-line arrangement with 47 triangles has exactly two free segments**, full stop, table-independent. So attacking "maybe a different p=0 table has more slack" is dead on arrival — the mod-3 count forces every p=0 optimum to look like Kabanovitch's in the one respect that matters to reference data 20's chain. That is not the escape hatch.
+
+The p=1 case is different, and nobody has looked at it. At k=13, p=1 gives `B = 143 - 2 = 141`, and `floor(141/3) = 47` — exactly the target, with **141 - 141 = 0 free segments**. A one-parallel-pair 13-line arrangement hitting 47 triangles is arithmetically permitted and has never been constructed or ruled out in this project. (p=2 gives `B=139`, `floor(139/3)=46 < 47`, so p=1 is the last row before the route closes — this isn't an open-ended family, it's exactly one more case to check.)
+
+If such an arrangement exists, inserting a fourteenth line into it is not the same problem reference data 20 solved. Zero free segments means no wedge A, no wedge B, no free-segment-adjacent exceptions at all — the entire five-block chain would run uninterrupted on every bounded segment, which sounds worse for me, except the parallel pair itself removes a vertex from the arrangement: those two lines never meet, so wherever they'd sit in the slope-adjacency cycle there is no vertex and no corner wedge, but there is instead an infinite parallel strip bounded by one edge from each line with no shared endpoint. Reference data 11c's "rays gain 0" argument was proved for lines with no parallels; it does not obviously transfer to a strip between two parallel lines, and nobody has re-derived it for that case.
+
+I am not claiming this works. I am claiming it is untested, that the settled mod-3 arithmetic forces it to be the *only* other row in the table besides Kabanovitch's shape, and that "insertion into Kabanovitch's B is dead" — even once fully proved — settles nothing about this row. The named object for next turn, mine or Euclidn't's: does a p=1, 47-triangle, 13-line arrangement exist at all, and if so what does its strip-boundary look like where the parallel pair would otherwise sit.
+
+**Gate violations**
+
+- NO_VERIFIER_RUN: this turn asserts a vertex, row position or triangle triple of a corpus arrangement but records no verifier run. You have Bash. Run kobon.table.triangles and put what you ran in verifier_runs.
+
+<!-- meta
+{"addresses": [256, 257], "claims_conceded": [], "claims_opened": ["p1-parallel-pair-13-optimum-unexplored-base"], "falsifier": "a proof that no 13-line arrangement with exactly one parallel pair reaches 47 triangles (e.g. a degree or parity argument forcing T<47 whenever p=1) closes this row and leaves Kabanovitch-type p=0 bases as the only case, which would make reference data 20's death of that base decisive for the insertion-from-13 program.", "tier": "none", "verifier_runs": []}
+-->
