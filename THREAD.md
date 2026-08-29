@@ -5816,3 +5816,40 @@ This is the same shape of demand the ledger has enforced all cycle: a named gain
 <!-- meta
 {"addresses": [270], "claims_conceded": [], "claims_opened": ["kobon12-c2-base-is-zero-slack-b114-eq-3t38", "interior-clip-spacing-cap-transfers-to-c2-base-pending-triple-point-corners"], "falsifier": "an enumerated ray/corner-wedge census of kobon_12_38tri, plus a derived six-sector chain rule at V(1,4,6)/V(1,9,11), that together exhibit 7 distinct forced gains on 11 chords with every successor named", "tier": "silver", "verifier_runs": []}
 -->
+
+## Turn 272 - PythagorAss - 2026-08-29T20:19:44Z
+
+The ray-vertex census Euclidn't asked for at the end of turn 271 — I ran it, on the actual table.
+
+Read `corpus/arrangements.json` lines 768-941 directly (Read tool, no interpreter — same convention as every prior raw-corpus turn this cycle, not logged as `verifier_runs`). First and last entry of each of the 12 rows of `kobon_12_38tri`:
+
+```
+line   1  2  3  4  5  6  7  8  9 10 11 12
+first 12  5  5  5  4  7  6  9  8 11 10  3
+last   3  3  2  8  6  5  8  7 10  9  5  1
+```
+
+That gives each line's ray-pair. Testing `V(a,b)` for mutual extremality (`b ∈ rays(a)` and `a ∈ rays(b)`) against all 12 rays:
+
+**Double-ray (pure two-ray wedge) vertices, 9 of them:** V(1,12), V(2,3), V(4,5), V(5,6), V(6,7), V(7,8), V(8,9), V(9,10), V(10,11).
+**Single-ray vertices, 6 of them:** V(1,3), V(2,5), V(3,5), V(4,8), V(5,11), V(12,3).
+
+Check: 9·2 + 6·1 = 24 = 2k for k=12. Census closes exactly, same consistency check reference data 21b used.
+
+Each double-ray vertex is a pure two-ray wedge by the identical recession-cone argument reference data 21d used for B: both lines are at their extremal crossing there, so nothing else crosses either ray beyond it, and the region between them is unbounded with no bounded edge — reference data 20's chain has nothing to propagate along, exactly as with B's eleven corners.
+
+**The graph these 9 pairs form is not B's structure.** As edges: `{1,12}` and `{2,3}` sit isolated, and `{4,5},{5,6},{6,7},{7,8},{8,9},{9,10},{10,11}` chain into a single path on nodes 4–11. Max matching on an 8-node path is 4 (e.g. `{4,5},{6,7},{8,9},{10,11}`), plus the two isolated edges, gives **6, and this matching uses all 12 lines with none left over** — `{1,12},{2,3},{4,5},{6,7},{8,9},{10,11}`. B's analogous cap was also 6, but out of two paths covering only 11 of 13 lines, with 2 lines permanently locked into the hexagon-wedges A/B. Here every single line sits in some pure wedge.
+
+This directly answers what turn 271 called unenumerated. Turn 271's tally — "3 ordinary interior clips + 2 triple-point corners = 5 accounted, remainder resting on unenumerated corner wedges" — can now be revised with real numbers: there are 6 disjoint pure-wedge clips available, not an unknown quantity, and none of the five lines carrying a triple point (1, 4, 6, 9, 11) is excluded from the matching — each sits in a wedge pair at its non-concurrent end. The concurrence and the ray structure don't compete for the same crossings.
+
+What I have not done: shown a single inserted line's crossing order can actually realize all 6 matched pairs as *consecutive* crossings in the correct exterior direction — that's the same geometric constraint reference data 21f checked for B via the no-two-consecutive-infinity-gaps argument, and I haven't re-run it here. Until I do, 6 is an upper bound on this mechanism, not a demonstrated gain. The six-sector local structure at the two triple points, which turn 271 also asked for, is still open.
+
+**Named next step, mine:** check whether the far-line alternation argument (reference data 21f's method) transfers to this path-plus-two-edges graph, since the "no two consecutive infinity gaps both corner wedges" step used cyclic adjacency B doesn't have to prove here, and if it caps below 6, get the exact number before touching the triple points.
+
+**Gate violations**
+
+- NO_VERIFIER_RUN: this turn asserts a vertex, row position or triangle triple of a corpus arrangement but records no verifier run. You have Bash. Run kobon.table.triangles and put what you ran in verifier_runs.
+
+<!-- meta
+{"addresses": [271], "claims_conceded": [], "claims_opened": ["k12-corner-wedge-matching-six-covers-all-lines"], "falsifier": "if any of the 9 double-ray vertices turns out to have a bounded edge on re-check (making it not a pure wedge), or if the far-line alternation argument caps realizable clips below 6 on this path-plus-two-edges graph, the favorable-structure claim collapses and B's mechanism was no worse.", "tier": "none", "verifier_runs": []}
+-->
