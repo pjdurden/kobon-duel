@@ -6297,3 +6297,27 @@ That matters because the condition is not free-floating — it's a three-ray coi
 <!-- meta
 {"addresses": [293], "claims_conceded": ["c3-d2-budget-matches-baders-f3-not-stricter"], "claims_opened": ["isolated-triple-point-d2-gadget-has-zero-corpus-precedent"], "falsifier": "an explicit table (any k) exhibiting one isolated triple point with both rays of one line doubled via two distinct named helper lines, with the four resulting triangles verified against the row data, would validate the local gadget and remove this objection.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 295 - PythagorAss - 2026-08-30T18:18:44Z
+
+Turn 294's challenge is fair and answerable directly: exhibit the isolated-triple-point, both-rays-doubled gadget once, in coordinates, at any k. I built it. Python is still refused (confirmed again this turn — `python3 -c "print(1+1)"` blocked before execution), so this is hand arithmetic on explicit real coordinates, checkable by anyone with a ruler.
+
+**The construction.** `P=(0,0)`. `a: y=0`, `b: y=√3x`, `c: y=-√3x` (three lines through P at 0°, 60°, 120°, matching turn 293's six-sector layout exactly). `L: x=1`, `L''': x=-1` (a minor simplification — these two happen to be parallel to each other in this minimal witness, which only costs a `p=1` inside this 5-line sub-picture and has no bearing on the mechanism; a generic embedding would tilt one of them).
+
+**All nine pairwise crossings:** `a∩b=a∩c=b∩c=P=(0,0)`. `a∩L=(1,0)`, `a∩L'''=(-1,0)`. `b∩L=(1,√3)`, `b∩L'''=(-1,-√3)`. `c∩L=(1,-√3)`, `c∩L'''=(-1,√3)`. `L∩L'''`: none (parallel).
+
+**Ray-nearest check, all six rays, by direct comparison.** Ray `a+` (positive x-axis): only `L` crosses it (`L'''` meets `y=0` at `x=-1`, off the positive ray) — trivially nearest. Ray `b+` (60°): only `L` crosses it (`L'''∩b=(-1,-√3)`, angle 240°, off this ray). Ray `c-` (300°): only `L` crosses it (`L'''∩c=(-1,√3)`, angle 120°, off this ray). So `L` is the unique, hence nearest, crosser of the consecutive triple `{c-, a+, b+}` — turn 293's condition for `e(a+)` to double. Symmetrically, `L'''` is the unique nearest crosser of `{c+, a-, b-}`, doubling `e(a-)`.
+
+**The four triangles, vertices computed, not asserted:**
+`{a,b,L}` = `(0,0),(1,0),(1,√3)`. `{a,c,L}` = `(0,0),(1,0),(1,-√3)`. Both share the edge `(0,0)-(1,0)` — that's `e(a+)` — on opposite sides of line `a`.
+`{a,b,L'''}` = `(0,0),(-1,0),(-1,-√3)`. `{a,c,L'''}` = `(0,0),(-1,0),(-1,√3)`. Both share `(0,0)-(-1,0)` = `e(a-)`, opposite sides.
+
+**Interior check.** Triangle `{a,b,L}` occupies `0≤x≤1`, between rays at 0° and 60°. Line `c` leaves `P` at 120°/300°, neither inside that wedge, and `c∩L=(1,-√3)` falls outside the triangle's edge range `y∈[0,√3]` on `x=1` — so `c` misses the interior. `L'''` sits entirely at `x=-1`, outside `x∈[0,1]`. By the mirror symmetry `x→-x`, the same holds for the other three triangles against their respective fifth line. All four are genuine faces of this 5-line arrangement, not further cut.
+
+`e(a+)` and `e(a-)` are each a side of two nonoverlapping triangles, one per side — `d=2` at a single isolated triple point, `f=0` on both doubled segments, exactly turn 293's cap realized in a real, stretchable, straight-line arrangement. This directly answers turn 294: the gadget has now been built once, at k=5, in coordinates — stronger than a table, since stretchability isn't a question when you start from real numbers.
+
+What this doesn't do: embed three disjoint copies into a 14-line arrangement with the other eleven lines saturating everything else. That's still the open step, and turn 294's saturation-difficulty point (six alignment events, never done before as a *set*) stands untouched by a single instance. Next: check whether `L` and `L'''` here can double as two of the "5 remaining generic lines" role from turn 292's budget, or whether the gadget structurally needs its own two dedicated lines per triple point, which would push `c=3` from 11 spare lines to a tighter 5.
+
+<!-- meta
+{"addresses": [294], "claims_conceded": [], "claims_opened": ["isolated-triple-point-d2-gadget-realized-k5-coordinates"], "falsifier": "a re-check showing one of {a,b,L},{a,c,L},{a,b,L'''},{a,c,L'''} is degenerate, or that c crosses {a,b,L}'s interior or b/L cross the other pair's interiors, would kill this witness", "tier": "none", "verifier_runs": []}
+-->
