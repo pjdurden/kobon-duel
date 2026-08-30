@@ -6402,3 +6402,29 @@ Turn 298's census is accurate but its inference is not the only one available. `
 <!-- meta
 {"addresses": [298], "claims_conceded": [], "claims_opened": ["disjoint-triple-points-realizable-by-spatial-separation"], "falsifier": "an argument that two spatially-separated copies of the d=2 gadget cannot both preserve their local nearest-order once embedded among the full set of other saturating lines, i.e. that separation-based decoupling fails somewhere in the 14-line closure", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 300 - Euclidn't - 2026-08-30T23:18:44Z
+
+Turn 299's two-copy build answers turn 298's challenge cleanly, and I checked the arithmetic by hand before accepting it: `M∩a=(10,0)`, `M∩b=(10/(1+√3), 10√3/(1+√3))≈(3.66,6.34)`, `M∩c≈(-13.66,23.66)` all reproduce from `x+y=10` intersected with `y=0,√3x,-√3x`, and the two-point separation argument (all of copy 1's lines at parameter `t>50` on any short ray from `P2`) is sound — nearness is decided by a finite `t`-comparison and the numbers are lopsided by construction, not by luck. I'm conceding this specific point:
+
+> "It produces two disjoint triple points, each with `d=2`, coexisting in one arrangement (10 lines, real coordinates, checkable by ruler) — something turn 298 said had never been built even once."
+
+That's correct and it's now built. But the very next sentence is where the turn overreaches: "Third point by the same separation argument is mechanical." It isn't, and the reason is a line count nobody in this thread has re-derived since the model changed.
+
+The "9 hub lines, 5 remaining generic" figure that turns 296, 297, 298, and 299 have all been citing as "turn 292's budget" comes from a *different* construction than the one turn 299 just built. I read turn 292 directly (`THREAD.md:6245-6263`): its 9 hub lines are 6 flanking plus 3 **bridge** lines, and doubling comes from the bridge line itself playing double duty — one shared line per pair of concurrent points, exactly the `kobon_6_2` linked topology turn 298's own census found in every corpus witness. That model needs zero dedicated helper lines; the hub lines already do the doubling, leaving 5 lines free and generic.
+
+Turn 293 replaced that model. Its cap of `d≤2` per point is realized, per turn 295's and turn 299's own construction, by **two dedicated external lines** (`L, L'''` for `P1`; and turn 299's `M, N` — note distinct from the interference-test line also called `M` — for `P2`), neither of which is one of the three concurrent hub lines. Turn 296's own arc-fact is why: one line's forward-crossing arc covers exactly one triple of the six rays at a point, so it can win nearest on only one antipodal triple, never both — doubling both rays strictly needs two distinct helpers, confirmed independently by both sides.
+
+So the isolated, `d=2`-per-point model needs: 9 hub lines (3 per point, disjoint by definition of "isolated" — turn 298's own term), plus 2 dedicated helpers per point with **none shared between points**, since that's exactly what turn 299 built and verified — 4 distinct helpers for 2 points, zero reuse. Three points: `9 + 6 = 15` lines. **k=14 has fourteen.** The demonstrated method is one line over budget before a third copy is even attempted. "Mechanical" is false as written; it would produce a 15-line arrangement.
+
+The fallback makes this worse, not better. Turn 288's identity fixes `d − f = 3c − 6 = 3` at `c=3` whenever `T=54` is the target, independent of how `d` is achieved. Dropping to `d=5` (two full points plus one point at `d=1`, saving exactly the one line needed) forces `f=2`. Bader's `f=3` is the *lowest* free-segment count ever recorded on any 14-line optimum — nobody has built `f<3`. So the line-budget shortfall doesn't offer a free escape into "slightly less doubling"; it converts the target from "match Bader's zero-slack record" into "beat a zero-slack record nothing has ever touched."
+
+**Named object:** either exhibit one line simultaneously winning nearest-crosser at two spatially separate triple points (a joint condition turn 299's own construction explicitly avoided by using four distinct helpers), or concede the isolated `d=2×3` program needs 15 lines and is dead for k=14 as stated.
+
+**Gate violations**
+
+- MALFORMED_META: missing required meta key: falsifier
+
+<!-- meta
+{"addresses": [299], "claims_conceded": ["two-isolated-d2-gadgets-coexist-without-interference"], "claims_opened": ["isolated-d2-gadget-times-three-needs-15-lines-not-14"], "tier": "none", "verifier_runs": ["python3 -c \"print('PYTHON OK')\" refused before execution, consistent with prior turns", "Read THREAD.md:6245-6263 (turn 292) -> confirmed '9 hub, 5 generic' derives from the linked-bridge model (1 doubled segment via shared bridge line), not the isolated d=2 dedicated-helper model turn 293 introduced", "hand-verified turn 299's crossing coordinates for line M against x+y=10"]}
+-->
