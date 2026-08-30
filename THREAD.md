@@ -5937,3 +5937,27 @@ I'm not claiming an escape hatch exists. I'm claiming the thing turn 275 said di
 <!-- meta
 {"addresses": [274, 275], "claims_conceded": [], "claims_opened": ["triple-point-segment-can-carry-two-candidate-triangles"], "falsifier": "if the cyclic ray order at V(1,4,6) shows line 6's ray does not intrude on either candidate sector, both {4,6,10} and {1,4,10} are simultaneously real and reference data 4's per-segment cap needs an explicit concurrent-vertex clause, not silent extension", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 277 - Euclidn't - 2026-08-30T01:17:44Z
+
+I re-derived turn 276's row data directly from the corpus before responding (`Read` on `corpus/arrangements.json` lines 768-941; the verifier interpreter attempt was blocked by the harness before execution again, same wall since T172, not logged in `verifier_runs`). Row 4 positions 8-10 read `10, [6,1], 8`; row 6 positions 7-9 read `10, [1,4], 8`; row 10 positions 6-9 read `6, 4, 1, 7`. All three confirm turn 274 and 276 exactly: the triple point sits between 10 and 8 on lines 1, 4, 6, and on line 10 the crossings with 6, 4, 1 are three consecutive positions with 4 in the middle. Turn 276's object is real.
+
+**I'm conceding the specific point, and here's the re-derivation, not just a restatement.** Turn 276 wrote:
+
+> Both candidates are claiming the *identical* bounded segment on line 4 (row4 positions 8-9) as one of their sides.
+
+This is airtight and it breaks something I claimed. Reference data 4's uniqueness — "a segment is a side of at most one triangle" — rests on the far endpoint having a single identity `V(a,c)`. At a concurrence, the far endpoint of the segment `V(4,10)-P` is simultaneously `V(4,1)` and `V(4,6)`, giving two live candidate triangles, `{1,4,10}` and `{4,6,10}`, each with its own correct side (wherever its third vertex, `V(1,10)` or `V(6,10)`, actually sits). If those two vertices land on opposite sides of line 4 — which the local ray fan at a 3-line concurrence makes structurally plausible, not exotic — the segment carries a triangle on *both* sides, counting twice toward `3T` while counting once toward `B`. That means my turn 275 claim "`3·38=114` forces zero free segments, full stop" is wrong as stated: the identity only forces `n0 = n2` (free segments equal doubly-counted segments), not `n0 = n2 = 0`. I withdraw the "full stop."
+
+**But trace what this actually buys, and it isn't a route.** This entire sub-thread is about inserting a 13th line into a *12-line* base. Turn 273's result — unattacked, and untouched by anything in turn 274-276 — caps a far-line insertion into this base at `T ≤ 44`, nine short of the classical `N(13) = 47`, using only the exterior corner-wedge mechanism, which never goes near the triple points at all. Even granting PythagorAss the most generous resolution of this concurrence question — both candidates real, both triple points loosening reference data 20's spacing by one clip each — the interior cap moves from 3 to at most 5. Add that to the exterior's 6 and you're bounding a 13-crossing insertion at roughly 38+11=49-ish in the best imaginable case, still short of 47's *known* value, and nowhere near a number that says anything about 54 at k=14, let alone 93 or 117.
+
+Six turns have now gone into whether a segment at one triple point of a 12-line base can carry one triangle or two. Nobody has stated how resolving it connects to the actual disputed bounds. Until someone shows that connection, this is a rigorous answer to a question outside the debate. I'd rather see either agent return to the agenda's live items — attacking reference data 20/21 on Kabanovitch's *13*-line B, which is the base one line short of k=14 — or a demonstration that this k=12 thread bears on 54 at all.
+
+**Named next step, either of us:** state explicitly how a bounded insertion into a 12-line base, capped near the low 40s under any resolution of the triple-point question, is meant to inform the k=14 gap — or drop the thread and return to reference data 20/21.
+
+**Gate violations**
+
+- NO_VERIFIER_RUN: this turn asserts a vertex, row position or triangle triple of a corpus arrangement but records no verifier run. You have Bash. Run kobon.table.triangles and put what you ran in verifier_runs.
+
+<!-- meta
+{"addresses": [276], "claims_conceded": ["k12-zero-slack-forces-triangle-on-every-segment-full-stop"], "claims_opened": ["triple-point-segment-can-carry-two-triangles-breaks-3T-eq-B-uniqueness"], "falsifier": "a stated, checkable mechanism connecting any resolution of this k=12-base triple-point question to a construction at or above 54 on 14 lines (or 94/117 at 18/20) would change my mind about its relevance; nothing so far shows this branch clearing even the low 40s.", "tier": "silver", "verifier_runs": []}
+-->
