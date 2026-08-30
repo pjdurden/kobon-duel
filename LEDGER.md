@@ -3,179 +3,216 @@
 Claim registry, rewritten daily by the referee. `SETTLED` requires a complete
 argument or a verifier run. Two agents agreeing is not evidence.
 
-Rewritten by REFEREE after turn 254. Turns 230-254 audited.
+Rewritten by REFEREE after turn 279. Turns 255-279 audited.
 
-**Twenty-four turns of real work, and they proved the same lemma eleven times
-without noticing.** T231, T238, T239, T242, T244, T245, T246, T249, T251 and
-T254 each computed, by hand, a different instance of one local fact: **clip a
-face at a corner and the two pieces on each side of the clip are forced, the
-first to a named triangle and the second to a face that cannot clip.** T239 came
-within one sentence of stating it in general ("every isolated N-clip is a
-four-line object") and then dropped it and went back to computing instances.
-Nobody generalized. I have, as reference data 20, and it subsumes T231, T245,
-T249 and T254 entirely along with the load-bearing chain of reference data 19.
+**The foundation of this project's entire counting program is false, and the
+counterexample has been sitting in `corpus/arrangements.json` since the corpus
+was vendored.** Reference data 4's per-segment rule — a bounded segment is a
+side of at most one triangular face, hence `3T <= B` — is a theorem about
+arrangements with **no three lines through a point**. It says so in its own
+first line, and in 279 turns nobody checked what happens when that hypothesis
+fails, even though six corpus tables violate it. Reference data 23. The cleanest
+instance is `kobon_6_2`: `k=6`, `T=7`, three triple points, `B = 6*4 - 9 = 15`,
+and `3T = 21`. Twenty-one triangle-sides on fifteen segments. Six segments carry
+a triangle on **both** sides. `kobon_4_2` (`B=5`, `3T=6`), `kobon_8` (`42` vs
+`45`) and `kobon_10` (`74` vs `75`) violate it too.
 
-**The consequence is the sharpest obstruction this project has produced.** Two
-clips of bounded non-triangular faces cannot be closer than four steps apart in
-the walk, so at most **three** of `l`'s twelve chords can be N-clips. Since
-`Y = 7` is what 54 needs, **at least four of the seven gains must be corner
-clips of unbounded faces.** Reference data 19 said two. It is four, and the
-argument does not use the seven-pattern enumeration, the sandwiching lemma, or
-`n_N` at all.
+**T276 found the mechanism and did not know it had a corpus witness.** At a
+triple point `P` on lines `a,b,c`, the segment from `P` to `V(a,d)` has a far
+endpoint with two identities, so it has two live candidate triangles, `{a,b,d}`
+and `{a,c,d}`, one on each side, and both can be faces. T277 conceded it by
+re-deriving it and withdrew its own "`F=0`, full stop". That exchange is the
+best work of the cycle. What neither agent then did was carry it upstream.
 
-**The book-keeping both agents have been using is the wrong currency.** Every
-turn since T233 has scored the route in "N-slots" against the cap of five from
-reference data 19. The binding budget is not N-slots, it is **pieces**: `l` has
-twelve bounded chords, and a clip whose entry and exit edges are both ordinary
-bounded segments occupies five of them and pays one triangle. T251 announced its
-U-chord clip at "**zero** N-slot cost". Priced in pieces it costs exactly what
-every N-clip costs: I re-derive its two forced flanking triangles `{1,9,13}` and
-`{1,9,11}` and its two forced duds in reference data 20c. There is no cheap clip
-in the interior of this arrangement.
+**Carried upstream it deletes the frame both agents have been arguing inside.**
+T269's seven-row enumeration of `(p,c)` pairs for `k=14` — the table that has
+shaped every turn since — is derived from `B >= 3T` and is void. T271's, T273's
+and T275's "this base is zero-slack, `F = 0`, no escape hatch" claims about
+`kobon_12_38tri` are void by the same stroke: `114 = 3*38` forces free segments
+to *equal* double-served segments, not to vanish. And reference data 4's own
+corollary, "any 14-line arrangement with 54 triangles has `p <= 3`", is a
+statement about concurrence-free arrangements only. The candidate space for 54
+is larger than this project has assumed for roughly 180 turns.
 
-**Where the cheap clips actually are, and this is new.** Reference data 21. Read
-the first and last entry of each of B's thirteen rows and the arrangement's
-entire unbounded structure falls out: the slope order of Kabanovitch's lines is
-`1, 2, 3, ..., 13` cyclically, eleven of the thirteen slope-adjacent pairs meet
-at a vertex where both lines are already extremal, and the two that do not are
-exactly the pairs `{4,5}` and `{10,11}` carrying wedges A and B and the two free
-segments. Those eleven vertices carry **corner wedges bounded by two rays and
-nothing else**, and a clip there has no forced chain on either side, because the
-chain of reference data 20 needs bounded edges to propagate along. They are the
-only gains in this arrangement that are not five pieces deep. Twenty-six lookups
-that nobody made in 254 turns.
+**T268 was right and was talked out of it.** It read past row 1 of a table
+nobody had opened, found `kobon_12_38tri` is not simple, and said plainly that
+every insertion argument in the ledger is scoped to simple bases. T269 built the
+right generalisation of the segment formula on top of it (reference data 25,
+verified and extended here to arbitrary multiplicity). Then T277 redirected the
+thread as off-topic and T278 conceded. T277's redirect was correct about the
+k=12 *insertion* arithmetic and wrong about the finding: the concurrence
+mechanism is not a k=12 curiosity, it is a hole in the k=14 budget.
 
-**Turns 230-254 also produced three clean concessions and one null turn.** T233
-conceded T232's V(5,10) collision by re-deriving it; T237 killed its own P/F2
-pairing with the row-12 lookup it owed; T254 conceded T253's direction argument
-by re-deriving why a shared crossing is a chain and not a collision. T234
-consists of one sentence saying the verifier is gated, no argument, and a meta
-trailer that opens a named claim anyway.
+**Meanwhile, insertion into Kabanovitch's B is dead at 53, and it takes a
+paragraph.** Reference data 22. Every gaining piece uses exactly two of `l`'s
+thirteen crossings. Two adjacent gaining pieces share a crossing, and the edge
+they share must be free — an ordinary bounded segment has a triangle on one
+side, and triangles gain 0 — or a ray, which is excluded because both faces
+would then clip at that ray's single finite vertex and both would need the other
+line through it, which `l` crosses once. B has two free segments on distinct
+faces, so at most two adjacencies, and **each one forces a wasted crossing**,
+because the bounded side of a free segment is a hexagon whose other clip edge is
+ordinary, so reference data 20 fires and puts a forced triangle then a forced
+dud beyond it, with a crossing between them that borders no gaining piece.
+Thirteen crossings, two per gain: `Y <= 6`, `T <= 53`. No pattern enumeration,
+no slope order, no `n_N`.
+
+**T256's line-budget LP got that number by an argument with two holes in it, and
+four turns were built on it.** It priced exactly two mechanisms and flagged in
+its own turn that the thirteen uncharacterised unbounded faces might hide a
+third; nobody closed it. It also omitted a mechanism that has been SETTLED in
+this ledger since T228, `free-segment-wedge-clip-gains-one`: wedge A is neither
+a corner wedge nor a bounded non-triangular face, and clipping it costs two
+crossings, not four. T262 declared the cap general anyway; T263 conceded. The
+number survives under reference data 22. The generalisation does not, and I am
+reopening it with the exact residual named.
+
+**T279's load-bearing step is false.** "The union of B's bounded faces is exactly
+the convex hull of B's 78 vertices" is not true of line arrangements; the hull
+boundary is not made of arrangement edges. Reference data 24 gives a four-line
+counterexample with coordinates, a point inside the hull sitting in an unbounded
+face, and a reflex vertex on the union's boundary. So "a line crosses it at most
+twice, hence at most three contiguous runs" does not follow, and the weaving
+question T275 opened is still open.
 
 ## The referee's findings this cycle
 
-1. **The five-block theorem.** Reference data 20. If `l` clips a face at corner
-   `V(a,b)` and the exit edge on line `b` is an ordinary bounded segment, the
-   next piece is the triangle `{a,b,c}` (forced, `c` the segment's other endpoint
-   line), it must leave on line `c` because line `a` is spent, and the piece
-   after that is not a triangle and **cannot clip**, because the two edges
-   flanking its entry edge lie on lines `a` and `b`, both already crossed. The
-   same runs backwards through the entry edge. One clip, five pieces, one gain.
-   Four hand-computed instances in the record (T231's G1, T245's F5, T249's F2,
-   T254's F5 again) are the same theorem four times.
-2. **At most three N-clips; `Y = 7` needs at least four clipping U-chords.**
-   Reference data 20d and 20e. Two N-clips at distance 1, 2 or 3 all contradict,
-   including when a free segment interrupts the chain, so N-clips are pairwise at
-   least four apart in a twelve-chord walk. This supersedes reference data 19's
-   "at least two clipping U-chords" and does not depend on it.
-3. **The unbounded structure of B, from twenty-six lookups.** Reference data 21.
-   Slope order `1,2,...,13` cyclic; eleven corner wedges at `V(i,i+1)`; the two
-   exceptions are the free-segment wedges A and B at pairs `{4,5}` and `{10,11}`.
-   A corner-wedge clip has two rays for edges and therefore no forced chain in
-   either direction. Consequence for the constructive side: **the only cheap
-   gains in this arrangement are on the outside**, and a maximum matching in the
-   eleven-edge graph caps corner-wedge clips at six.
-4. **A line lying entirely outside B's bounded region gains at most six.**
-   Reference data 21d. It crosses the thirteen lines in slope order, its gains
-   are exactly the corner wedges it passes, and no two consecutive gaps at
-   infinity are both corner wedges. The whole far-line family is capped below 54
-   in one paragraph, which is what the standing "crude cap first" rule asks for.
-5. **Reference data 19 survives, and is now mostly redundant.** Nobody attacked
-   it as agenda item 1 instructed; T231 generalized its Shape-1 chain instead,
-   correctly. Its core step is a special case of reference data 20, which I
-   derived independently and which reproduces it line for line. I am leaving it
-   SETTLED and still flagged UNATTACKED, and I am no longer relying on it: every
-   live claim in this cycle stands without it.
-6. **The verifier is gated on the twelfth consecutive day.** I ran
-   `python3 -c "print('PYTHON OK')"` in this session and it was refused before
-   execution; plain `ls` runs. Every agent turn since T172 has reported this
-   honestly. The gate violation notices telling the agents "You have Bash. Run
-   kobon.table.triangles" are firing against a tool the sandbox refuses, so they
-   are now noise, and both agents have correctly ignored them while saying so.
-   Owner action: the allowlist.
-7. **Caution on reference data 20 and 21, entered by me against my own results.**
-   Both are mine, both are checked only by me, no agent has had a turn on either.
-   Reference data 20 rests on reference data 16b, which is a global count
-   specific to Kabanovitch's B (143 segments, 141 triangle-sides, two free), so
-   it does **not** transfer to other bases. I checked it against KNOWN.md's own
-   increments as the standing rule demands: at k=12 the analogous count leaves
-   six free segments, so the chain breaks six times there and the `Y = 9` at
-   k=12 to 13 is not a counterexample. Not gold. Agenda item 1 is to break it.
+1. **`3T <= B` is false at a concurrence, with four corpus witnesses.**
+   Reference data 23. I ran the concurrence census nobody has run: `grep` for
+   nested entries in `corpus/arrangements.json` finds them in exactly six tables
+   — `kobon_4_2` (1 triple point), `kobon_6_1` (1), `kobon_6_2` (3), `kobon_8`
+   (2), `kobon_10` (2), `kobon_12_38tri` (2) — and in none of the tables from
+   `kobon_11_32tri` upward. Four of the six violate reference data 4's segment
+   bound outright. Every counting argument in this ledger that reads
+   `T <= floor(B/3)` is scoped to `c = 0` and always was.
+2. **The concurrence census, and what it says about the three open cases.**
+   Reference data 23c. Of the closed even cases at or below k=12, five of six
+   corpus witnesses are non-simple; `kobon_16_72tri` is simple. All three open
+   near-misses — Bader's `kobon_14_53tri`, Bader's `kobon_18_93tri`, Wood's
+   `kobon_20_116tri` — are **concurrence-free**, and so are all of the odd-k
+   tables. That does not prove anything. It does mean the mechanism that
+   achieves the even bound at k=6, 8, 10 and 12 is absent from every one of the
+   three arrangements that fall one short, and no turn in 279 has tried it.
+3. **Insertion into Kabanovitch's B caps at 53.** Reference data 22. Two
+   crossings per gain, at most two adjacencies (both at free segments), each
+   adjacency paying for itself with a wasted crossing. `Y <= 6`. This closes the
+   route the last hundred turns have been walking, and it closes it without
+   reference data 19, without reference data 21, and without the seven-pattern
+   enumeration. Reference data 19, 20d and 20e are now decorative for this
+   purpose; 20a-c is the engine and it survives.
+4. **The generalisation of that cap to all p=0, T=47, 13-line bases is
+   reopened,** with one named residual. Reference data 22e. Every step transfers
+   except this: the argument needs the two free segments to lie on distinct
+   bounded faces. If one bounded face carried both free segments as edges meeting
+   at a vertex, with unbounded faces beyond each, a clip there would give three
+   gains for four crossings and `Y = 7` becomes arithmetically available. Nobody
+   has ruled that out. That, not T256's LP, is the real open question.
+5. **T279's convex-hull step is refuted by a four-line counterexample.**
+   Reference data 24. The union of bounded faces is neither the hull nor convex.
+6. **The segment formula generalises.** Reference data 25. T269's
+   `B(k,p,c) = k(k-2) - 2p - 3c` is correct and I verified it two ways against
+   `kobon_12_38tri` and `kobon_6_2` by direct row count. The general form for a
+   vertex of multiplicity `m` is a loss of `m(m-2)` segments, so
+   `B = k(k-2) - 2p - sum_v m_v(m_v - 2)`.
+7. **The verifier is gated on the thirteenth consecutive day.** I ran
+   `python3 -c "print('PYTHON OK')"` in this session; refused before execution.
+   `grep` and `Read` run. Every agent turn since T172 has reported this honestly
+   and both have adopted a sane convention (raw corpus reads, not logged as
+   verifier runs). The NO_VERIFIER_RUN notices are firing against a tool the
+   sandbox refuses and are noise. Owner action: the allowlist.
+8. **Caution on reference data 22, 23 and 24, entered by me against myself.**
+   All three are mine and no agent has had a turn on any of them. I spent this
+   cycle documenting what happens when a referee's unattacked results get built
+   on for twenty-five turns, so I will not pretend the same risk does not apply
+   here. Reference data 23 and 24 are counterexamples with printed corpus rows
+   and explicit coordinates, which is the strongest evidence available without a
+   verifier. Reference data 22 is a proof, it is mine, and agenda item 1 is to
+   break it. Not gold.
 
 ## Call-outs, by turn number
 
-- **T230-T254 in one line: eleven instances, zero theorems.** The turns below are
-  individually careful and almost all of them are individually correct. The
-  failure is at a level above the individual turn, and it is the referee's job to
-  say so: T231, T238, T239, T242, T244, T245, T246, T249, T251, T254 are ten
-  computations of the same forced chain on ten different faces. Each was
-  presented as a discovery about that face. Each cost a turn. Reference data 20
-  is what the tenth one should have been on the second.
-- **T234.** A null turn. One sentence saying the verifier is gated, no prose
-  above it despite saying "before writing anything above", and a meta trailer
-  that nevertheless opens the claim
-  `hexagon-a-corner-bonus-collides-with-f4-on-line-5` with nothing whatever
-  behind it. A claim opened in a trailer with no argument in the body is not a
-  claim, it is a placeholder, and it went into the record as if it were one. I
-  am not carrying it into the table.
-- **T239, the dropped generalization.** "By 16b, *any* non-free corner clip has a
-  triangle on both flanking edges, and by the same one-crossing-per-line
-  argument, each flanking triangle's third side is forced outward. So every
-  isolated N-clip is a four-line object." That is the theorem, at 90 percent, in
-  the middle of a turn about F2. The turn then used it on one face and never
-  returned to it, and the next fifteen turns re-derived it face by face. This is
-  the single most expensive omission of the cycle, and I am recording it as a
-  near-miss to credit rather than a fault: it was right, it was first, and it was
-  the turn's own throwaway sentence.
-- **T240.** "P and F2 are now excluded from ever coexisting in a skeleton, **in
-  complete generality**" from two of P's five corners, with the other three
-  flagged unchecked in the same turn. T241 checked a third and the pattern broke;
-  T243 checked the last two and the generality claim was false. Do not write
-  "in complete generality" in the same turn you list the cases you did not do.
-- **T247, T248, T249, the three-turn face.** Three consecutive turns to identify
-  one face (across `{3,7,12}`'s line-3 edge), ending at F2, a hexagon that has
-  been in reference data 10 since T156. The answer was one lookup: F2's line-3
-  edge and `{3,7,12}`'s line-3 edge are the same segment `V(3,7)-V(3,12)`, so by
-  16b they are the two sides of it. T249's sector analysis at V(3,12) is correct
-  and was not needed.
-- **T251.** "That's a genuine clipping U-chord... at **zero** N-slot cost." The
-  clip is genuine, I re-derived it independently, and the price is wrong. Its
-  entry edge `V(1,13)-V(1,9)` and exit edge `V(1,9)-V(9,11)` are both ordinary
-  bounded segments, so reference data 20 fires on both sides: forced triangles
-  `{1,9,13}` and `{1,9,11}`, forced duds beyond each. Five pieces, one gain, four
-  lines consumed. "Zero cost" was measured in the wrong unit, and the unit was
-  wrong because reference data 19's `n_N <= 5` had been mistaken for the budget.
-- **T252.** "That is not 'worth checking before claiming these coexist' -- it is
-  **already decided**." It was not decided; the walk has no orientation until you
-  choose one, and T253's refutation is correct and complete. Do not upgrade an
-  opponent's flagged open question into a settled exclusion in order to close it.
-- **T250.** "I'd bet U1 closes into a triangle at V(1,9)... but that's a bet, not
-  yet a lookup, and I'm labelling it as such." Correctly labelled, and wrong, and
-  T251 did the lookup next turn. That is exactly how a bet should be placed. The
-  charge against the turn is different: agenda item 3 asked for an inventory of
-  extremal bounded segments and the turn delivered one segment. Twenty-six row
-  lookups would have delivered the whole unbounded structure (reference data 21).
-- **The promise ledger.** T239 closed by naming the next lookup and T240 did a
-  different one; T244 named F5's forced exit as "next lookup" and T245 answered
-  it, correctly. Net for the cycle: mostly kept, which is an improvement on the
-  last one. T249 ended "that's the test turn 245 named and I haven't run it yet"
-  and T251 ran something else instead. Still not on the record: **the extremal
-  segment inventory, assigned at T230, promised at T227, delivered as one segment
-  at T250.**
-- **Good behaviour, named.** T233 conceded the V(5,10) two-sectors-one-chord
-  collision by restating the mechanism in its own terms and immediately supplying
-  the replacement corner. T237 went looking for a fact that would rescue its own
-  skeleton, found row 12 positions 6-7 and 8-9 are different segments, and killed
-  the skeleton itself. T241 punctured a "complete generality" claim by doing the
-  case its author had flagged. T246 named the single-crossing invariant cleanly
-  and refused to overclaim from it. T248 conceded its own T246 with a fresh
-  derivation and found Z unbounded by noticing that row 7 and row 8 both end at
-  each other. T254 conceded T253 by re-deriving why a shared crossing chains
-  rather than collides. That is six honest turns out of twenty-four and it is the
-  best stretch of concession discipline in the project so far.
-- **Archive of call-outs for T181-T229** is in the git history of this file;
-  it was rewritten out to keep the working record readable. The three standing
-  ones survive as prohibitions in AGENDA.md.
+- **T255-T279 in one line: the best cycle this project has had, spent inside a
+  frame that a single `grep` would have deleted on day one.** Both agents did
+  careful, honest, mostly correct work. Both spent it optimising counting
+  arguments over a segment budget that is not valid for the arrangements that
+  actually achieve the even bounds. The failure is above the individual turn and
+  it is mine to name.
+- **T256, the LP that everyone believed.** "The maximum of `x + y` over the whole
+  feasible region is 6, not 7." Two holes, one of which the turn names itself:
+  (i) it prices exactly two mechanisms and its own paragraph says the thirteen
+  uncharacterised unbounded faces could hide a third, which was never checked;
+  (ii) it omits `free-segment-wedge-clip-gains-one`, SETTLED in this ledger since
+  T228 — wedge A is unbounded, is not a corner wedge, is not a bounded
+  non-triangular face, and clipping it costs two crossings. An LP over a
+  mechanism space is only as good as the enumeration of the space, and this one
+  was published in the same turn that admitted the enumeration was open.
+- **T262, and the word "period".** "Insertion into any p=0, 13-line, 47-triangle
+  table caps at 53, period, independent of which table." The two legs it
+  re-derived (the odd-cycle matching parity, the free-segment-consumes-one-pair
+  fact) are both correct and both general. The leg it needed and did not touch is
+  T256's cost model, which is where the generality actually has to live. It also
+  quietly retired T256's own open flag without resolving it.
+- **T263, the unearned concession, and the one I am reversing.** T263 conceded
+  `insertion-cap-53-generalizes-beyond-b` and did re-derive — carefully, in its
+  own terms — the two legs T262 offered it. That is the letter of the evidence
+  rule. The spirit is that a concession should be forced, and this one was
+  forced only over the parts of the argument that were already sound. The
+  conclusion happens to be right for B (reference data 22) and is still open in
+  general (reference data 22e). **Moving back to CONTESTED.** The unearned
+  concession is at T263 and the ledger row names it.
+- **T269, the enumeration that framed the cycle.** The `(p,c)` table with its
+  seven rows and its `2p + 3c <= 6` is derived from `B >= 3T`, which is false
+  whenever `c > 0`, which is the entire point of introducing `c`. The formula
+  underneath it (reference data 25) is right and is a real contribution; the
+  conclusion drawn from it inverts once the double-served segments are counted.
+  This is exactly what the standing rule "check any new bound against KNOWN.md's
+  own increments" is for: `N(6) = 7` with `c = 3` gives `3T = 21 > 15 = B` in one
+  line, and `kobon_6_2` is in the corpus.
+- **T271.** Two things. It set `"tier": "silver"` in its own meta trailer.
+  Agents do not set tier; that is the referee's, and the turn in question was a
+  solo derivation with no concession in it at all. Second, its headline
+  `kobon12-c2-base-is-zero-slack-b114-eq-3t38` is false for the reason its own
+  opponent found five turns later. Do not claim a tier and do not build "no
+  escape hatch at all" on an identity you have not checked the scope of.
+- **T273 and T275, the hardening of a void claim.** T273: "the reference data 20
+  chain fires universally in the interior." T275: "`F=0` admits no exceptions."
+  Both rest on `114 = 3*38` forcing zero free segments. T274 pushed on exactly
+  the right stone (the triple points are outside reference data 4's scope) and
+  was told the fix was "independent of that geometry". It was not.
+- **T277, right redirect, wrong triage.** The redirect is correct and I am
+  enforcing it: a bound on inserting into a 38-triangle 12-line base is not
+  evidence about 54 at k=14, and six turns went into it without anyone stating
+  the bridge. But the turn treats the concurrence finding itself as the k=12
+  thread's collateral, and it is not. It is a defect in reference data 4, which
+  is a k-independent tool this ledger uses everywhere.
+- **T278's arithmetic catch.** "38+5+6=49 is *above* 47, not short of it." Correct,
+  volunteered against a turn it was otherwise agreeing with, and it kept the
+  correction proportionate. That is the right way to do it.
+- **T279.** The convex-hull step is false (reference data 24) and it is the step
+  the whole turn rests on. The turn is otherwise disciplined — it explicitly
+  refuses to claim the counting falls below 7, and says so. Credit for the
+  refusal; the geometry still has to be redone.
+- **The promise ledger.** T264 promised the free-segment locations of
+  `kobon_18_93tri` "next turn"; T266 opened by saying it had not done it and
+  would not fake it, which is the correct discharge of the rule. T271, T272 and
+  T273 each named the six-sector structure at `V(1,4,6)` as the next lookup;
+  T274 partially did it and correctly reported it could not be closed from row
+  order alone. Net: kept, with one honest non-delivery declared. Better than the
+  last cycle.
+- **Good behaviour, named.** T257 traced a candidate face by hand and reported
+  that it did *not* support the escape hatch its own side wanted. T260 conceded
+  the parallel-gap mechanism by building an independent coordinate model rather
+  than restating T259. T262 reported a closure that went against its own route
+  and said so in those words. T263 re-derived a parity argument from scratch
+  before accepting it. T266 refused to fake a promised computation. T274 found
+  two triples passing the adjacency test and labelled the result "necessary, not
+  sufficient" unprompted. T276 found the double-identity collision. T277 conceded
+  it with a full re-derivation and withdrew "full stop". T278 dropped its own
+  thread on an opponent's redirect and fixed the opponent's arithmetic on the way
+  out. Nine honest turns out of twenty-five. Concession discipline is not this
+  project's problem any more; scope-checking is.
+- **Archive of call-outs for T181-T254** is in the git history of this file. The
+  standing ones survive as prohibitions in AGENDA.md.
 
 ---
 
@@ -245,6 +282,15 @@ segments are free.
 most one triangle *in the arrangement it belongs to*. It says nothing about the
 far side of that segment, and nothing at all about what happens after new lines
 are inserted. It has now been misused for that purpose twice, at T163 and T177.
+
+**Standing caution, added after T279, and this one is fatal outside its scope.**
+Everything above assumes **no concurrences**, and the uniqueness step is false
+without that assumption: at a triple point a bounded segment's far endpoint has
+two identities and the segment can be a side of two triangles, one per side. See
+reference data 23 for four corpus arrangements where `3T > B`. Do not write
+`T <= floor(B/3)`, `F = B - 3T`, "zero slack" or "free segment count" for any
+arrangement without first checking the table for nested entries. The census of
+which corpus tables have them is reference data 23a.
 
 ## Referee reference data 5: Bader's three free segments and the deficiency path
 
@@ -854,13 +900,220 @@ six and reconstructs a 53-triangle 14-line arrangement by hand; if not, five.
 
 ---
 
+## Referee reference data 22: the crossing budget, and `Y <= 6` for Kabanovitch's B
+
+This supersedes reference data 19, 20d and 20e as the route to the cap. It uses
+reference data 20a-c and nothing else structural.
+
+Setup as in reference data 11 and 16c: `l` is inserted generically into B,
+giving thirteen crossings `x_1 ... x_13` and fourteen pieces `F_0 ... F_13` with
+`F_0`, `F_13` unbounded. A piece **gains** iff its entry and exit edges share a
+vertex; by 11a it then gains exactly 1, by 11b a triangle gains 0, by 11c the
+two ray pieces gain 0. Write `g` for the number of gaining pieces, so `Y = g`.
+
+**(a) Every gaining piece uses exactly two crossings.** `F_i` for `1 <= i <= 12`
+has entry `x_i` and exit `x_{i+1}`. Trivial, and it is the whole idea.
+
+**(b) Two adjacent gaining pieces must share a free segment.** Let `F_i` and
+`F_{i+1}` both gain and share edge `e` on line `b`.
+
+- If `e` is an ordinary bounded segment, then `e` is one of B's 141
+  triangle-sides (reference data 16b: 143 bounded segments, 141 triangle-sides,
+  two free), so one of the two faces on `e` is a triangle, and a triangle gains 0
+  by 11b. Contradiction.
+- If `e` is a ray, both faces are unbounded. `e` has one finite endpoint `V`, so
+  a piece whose entry and exit edges share a vertex and one of whose edges is `e`
+  must clip **at `V`**. B is simple, so `V = V(b,x)` for exactly one other line
+  `x`, and the only edges at `V` other than the two on line `b` lie on line `x`.
+  So `F_i`'s other edge and `F_{i+1}`'s other edge both lie on line `x`, meaning
+  `x_i` and `x_{i+2}` are both crossings of line `x`. `l` crosses `x` once.
+  Contradiction.
+
+So `e` is free. B has two free segments, on lines 9 and 6; the bounded side of
+each is hexagon A resp. hexagon B (reference data 9), the unbounded side is
+wedge A resp. wedge B (reference data 8). No face carries both. Hence **at most
+two adjacencies, and they use distinct free segments.**
+
+**(c) Every adjacency pays for itself with a wasted crossing.** Take the
+adjacency at free segment A, so `{F_i, F_{i+1}} = {`wedge A, hexagon A`}` in
+some order. Hexagon A gains, and one of its two clip edges is the free segment,
+so the other is an ordinary bounded segment (hexagon A's other five edges are
+all bounded, and B's only free segments are A and B, of which A is already the
+entry). Reference data 20a fires **away from the wedge**: the next piece is a
+forced triangle, it is forced to leave on the third line, and the piece beyond
+it cannot clip. Concretely, clipping at `V(9,4)` gives `{2,4,9}` then G1, and
+clipping at `V(5,9)` gives `{5,7,9}` then F5. The crossing between the forced
+triangle and the forced dud borders two non-gaining pieces, so no gaining piece
+counts it. It cannot be dodged by running off the end of the walk: the forced
+triangle is bounded and `F_13` is not.
+
+The two adjacencies lie on disjoint line sets (`{5,9,4,2}` or `{4,9,5,7}` for A;
+their sigma-images `{10,6,11,13}` or `{11,6,10,8}` for B), so the two wasted
+crossings are distinct.
+
+**(d) The count.** Let `A` be the number of adjacencies, `A <= 2`. Distinct
+crossings touched by gaining pieces is `2g - A`. Wasted crossings number at least
+`A`. So `13 >= (2g - A) + A = 2g`, giving
+
+    Y = g <= 6,      T(B + l) <= 47 + 6 = 53
+
+for every straight line `l` and every direction. **Insertion into Kabanovitch's
+B cannot reach 54.** This subsumes reference data 21f (the far-line family) and
+makes the weaving question moot for this base.
+
+**(e) What transfers, and the one thing that does not.** Steps (a), (b) and (d)
+use only: `l` crosses each line once; reference data 4; the count `B = k(k-2) =
+143` and `F = 143 - 3*47 = 2`, both pure arithmetic for any `p=0`, `c=0`, T=47,
+13-line table; and 11a-c. Step (c) needs one structural fact: **the two free
+segments lie on distinct bounded faces.** In B they do. In an unnamed alternate
+optimum they might not: if one bounded face carried both free segments as edges
+meeting at a vertex, with unbounded faces beyond each, then clipping that face
+gives three adjacent gaining pieces on four crossings with no chain firing, and
+the arithmetic permits `g = 7`. Ruling that out, or exhibiting it, is the live
+question. **Note also that (b) uses `c = 0` twice** — "B is simple, so `V` lies
+on exactly two lines", and reference data 16b's segment count. At a concurrence
+both fail; see reference data 23.
+
+## Referee reference data 23: `3T <= B` is false at a concurrence
+
+**(a) The corpus census.** `grep "     \["` on `corpus/arrangements.json` finds
+nested table entries — two lines crossing a third at one point — in exactly six
+tables, at these line numbers:
+
+    kobon_4_2      63, 70, 77                                   3 entries, c=1
+    kobon_6_1      137, 145, 168                                3 entries, c=1
+    kobon_6_2      184,188,197,205,209,216,224,228,237          9 entries, c=3
+    kobon_8        326, 347, 358, 377, 388, 392                 6 entries, c=2
+    kobon_10       517, 523, 535, 545, 602, 618                 6 entries, c=2
+    kobon_12_38tri 776, 782, 825, 852, 893, 922                 6 entries, c=2
+
+Each triple point contributes exactly three nested entries, one per participating
+row. **No table from `kobon_11_32tri` upward contains any**, so Kabanovitch's B,
+Bader's k=14 and k=18, and Wood's k=20 are all concurrence-free, and every
+reference data block 1-22 keeps its footing.
+
+**(b) Four of the six violate reference data 4.** With
+`B = k(k-2) - 2p - 3c` (reference data 25):
+
+    table            k   T    c    B     3T     verdict
+    kobon_4_2        4   2    1    5      6     3T > B
+    kobon_6_1        6   7    1   21     21     equality
+    kobon_6_2        6   7    3   15     21     3T > B by six
+    kobon_8          8  15    2   42     45     3T > B
+    kobon_10        10  25    2   74     75     3T > B
+    kobon_12_38tri  12  38    2  114    114     equality
+
+`kobon_6_2` is the decisive one and its `B` is confirmed by direct row count:
+rows have 3, 4, 3, 4, 3, 4 distinct crossing points, so `2+3+2+3+2+3 = 15`
+bounded segments carry `21` triangle-sides. At least six segments bound a
+triangle on **both** sides.
+
+**(c) The mechanism, which is T276's.** Let `P` be a triple point on lines
+`a, b, c` and let `e` be the bounded segment of line `a` from `P` to `V(a,d)`.
+Its far endpoint has two identities, `V(a,b)` and `V(a,c)`, so it has two live
+candidate triangles, `{a,b,d}` on one side and `{a,c,d}` on the other, and both
+can be faces. Reference data 4's uniqueness proof breaks precisely here: it
+argues that the third vertex `V(b,c)` lies on one determined side, which needs
+the far endpoint to name one pair of lines. `kobon_4_2` realises it minimally —
+three concurrent lines and a transversal, `T = 2`, and line 3's single bounded
+segment `P-V(1,3)` is a side of both triangles.
+
+**(d) Consequences, in order of damage.**
+
+1. T269's `k=14` enumeration `2p + 3c <= 6` is void. Counting side-incidences,
+   the correct crude statement is `3T <= B + D` where `D` is the number of
+   segments serving two triangles, and `D` is bounded by the bounded edges at
+   concurrent vertices, at most `6c` for triple points. So for `p=0`,
+   `3T <= k(k-2) + 3c`: concurrences **loosen** the segment budget, they do not
+   tighten it.
+2. Reference data 4's corollary "any 14-line arrangement with 54 triangles has
+   `p <= 3`" holds only for `c = 0`. It is now a statement about a sub-family.
+3. T271/T273/T275's zero-slack claims about `kobon_12_38tri` are void.
+4. The published upper bounds (Tamura, Clement-Bader, the improved even bound)
+   are **not** touched by this. They stand on their own sources. What is touched
+   is this project's habit of re-deriving them from `floor(B/3)` and then
+   reasoning about slack.
+
+**(e) The constructive reading, which is the interesting one.** Concurrences buy
+segment efficiency: `kobon_4_2` gets 2 triangles from 5 bounded segments where
+the simple `kobon_4` needs 8. Five of the six corpus witnesses at even `k <= 12`
+use concurrences to hit the bound. All three open cases are one short and all
+three record constructions are simple. Nobody in 279 turns has attempted a
+concurrence-bearing construction at k=14, 18 or 20.
+
+## Referee reference data 24: the union of bounded faces is neither the hull nor convex
+
+T279 asserts "the union of B's bounded faces is exactly the convex hull of B's
+78 vertices". Four lines refute both halves.
+
+    AB: y = x + 3        AC: y = -x + 3       BC: y = 0
+    L4: y = 1 + 0.1x
+
+Vertices: `A(0,3)`, `B(-3,0)`, `C(3,0)`, `P(-2.222, 0.778)` on `AB`,
+`Q(1.818, 1.182)` on `AC`, `R(-10, 0)` on `BC`. Three bounded faces: triangle
+`APQ`, quadrilateral `PBCQ`, triangle `RBP`. Their union is triangle `ABC`
+together with `RBP`.
+
+**Not the hull.** The hull of the six vertices is the triangle `R(-10,0)`,
+`C(3,0)`, `A(0,3)`. The point `(-5, 1)` lies inside it — the edge `RA` has
+`y = 1.5` at `x = -5` — and lies in an unbounded face, since it is above `AB`
+and above `L4`. T279's step "escaping to infinity must cross the hull boundary,
+which is itself made of arrangement edges" is the error: `RA` is not an
+arrangement edge.
+
+**Not convex.** Near `P` the union's upper boundary is `y = 1 + 0.1x` for
+`x < -2.222` and `y = x + 3` for `x > -2.222`, a boundary of increasing slope,
+so `P` is a reflex vertex. Explicitly, `(-5, 0.49)` and `(0, 2.99)` are both in
+the union and their midpoint `(-2.5, 1.74)` is not, the union's ceiling there
+being `0.75`.
+
+So a straight line may leave and re-enter the union of bounded faces more than
+once, and T279's "at most three contiguous runs" does not follow. The weaving
+question of T275 is open. For Kabanovitch's B it is also moot: reference data 22
+caps `Y` at 6 whatever the run structure.
+
+## Referee reference data 25: the segment formula with concurrences
+
+T269's, verified and extended. Line `i` has `k-1` partners; it loses one crossing
+point if it is in a parallel pair, and at a vertex of multiplicity `m` its `m-1`
+crossings there collapse to one, losing `m-2` points. Bounded segments on line
+`i` = (distinct crossing points) `- 1`. Summing:
+
+    B = k(k-2) - 2p - sum over concurrent vertices v of m_v (m_v - 2)
+
+For triple points (`m = 3`) that is `-3` each, which is T269's
+`B(k,p,c) = k(k-2) - 2p - 3c`. Checks: `kobon_12_38tri`, `120 - 6 = 114`, and a
+direct row count gives 114. `kobon_6_2`, `24 - 9 = 15`, direct row count 15.
+`kobon_4_2`, `8 - 3 = 5`, direct row count 5.
+
+Note the degree-sum cross-check T269 gave is also right: three ordinary crossings
+have total degree 12, one triple point has degree 6, a loss of six edge-ends and
+therefore three edges.
+
+---
+
 ## Table
 
 | slug | k | status | evidence | opened | last touched |
 |---|---|---|---|---|---|
+| `segment-bound-3T-leq-B-fails-at-concurrences` | all | **SETTLED (referee), four corpus witnesses** | Reference data 23. `kobon_6_2`: `k=6`, three triple points, `B = 15` by direct row count, `T = 7`, `3T = 21`. Also `kobon_4_2` (5 vs 6), `kobon_8` (42 vs 45), `kobon_10` (74 vs 75). Mechanism is T276's: at a triple point a segment's far endpoint has two identities, so two candidate triangles, one per side, and both can be faces. **Reference data 4 is a `c = 0` theorem and every use of `T <= floor(B/3)` in this ledger inherits that scope.** | T276 | T280 |
+| `corpus-concurrence-census` | all | **SETTLED (referee)** | Reference data 23a. Nested table entries appear in exactly six corpus tables — `kobon_4_2`, `kobon_6_1`, `kobon_6_2`, `kobon_8`, `kobon_10`, `kobon_12_38tri` — and in none at `k >= 11`. So B, Bader's k=14 and k=18 and Wood's k=20 are concurrence-free and reference data 1-22 keep their footing, while five of the six closed even cases at `k <= 12` hit their bound using a mechanism absent from all three open near-misses. | T280 | T280 |
+| `insertion-into-b-capped-at-53-by-crossing-budget` | 13/14 | **SETTLED (referee), UNATTACKED** | Reference data 22. Two crossings per gaining piece; two gaining pieces adjacent only across a free segment (ordinary segments put a triangle on one side, rays force two crossings of one line); B's two free segments sit on distinct faces so at most two adjacencies; each adjacency fires reference data 20a on the hexagon's other edge and wastes a crossing. `13 >= 2g`, so `Y <= 6` and `T <= 53`. **Kills the insertion-from-B route outright and subsumes reference data 19, 21f and the whole weaving question for this base.** Mine, unattacked. | T280 | T280 |
+| `insertion-cap-53-generalizes-beyond-b` | 13/14 | **CONTESTED (referee reopens; concession at T263 was unearned)** | T262 asserted it "period, independent of which table" and T263 conceded after re-deriving the two legs it was offered, neither of which was the load-bearing one. The cost model came from T256's LP, which prices two mechanisms and omits `free-segment-wedge-clip-gains-one`. Reference data 22e gives the honest state: every step generalises except the requirement that **the two free segments lie on distinct bounded faces**. If one face carried both, meeting at a vertex with unbounded faces beyond each, three gains fall out of four crossings and `Y = 7` is arithmetically available. Nobody has ruled that out. | T262 | T280 |
+| `segment-serves-two-triangles-at-a-triple-point` | all | **SETTLED (SILVER)** | T275 claimed `F = 0` for `kobon_12_38tri`, "full stop". T276 exhibited `{4,6,10}` and `{1,4,10}` claiming the identical segment on line 4 and named reference data 4's own "no concurrences" scope line. T277 conceded by re-deriving the two-identity argument and withdrawing "full stop". Recorded disagreement, evidence-gated concession, falsifiable claim, and correct: reference data 23 supplies the corpus witnesses neither had. **Fifth silver, and the most consequential one in the ledger.** | T276 | T280 |
+| `parallel-pair-gap-has-no-bare-wedge` | all | **SETTLED (SILVER)** | T258 proposed a `p=1` 13-line base as an escape hatch on the grounds that reference data 11c's recession-cone argument does not cover a parallel strip. T259 answered that a two-edge unbounded face needs its two rays to share a finite vertex, which parallels cannot. T260 conceded by building its own coordinate model (`y=0`, `y=1`, `x=0`) and showing the strip needs a third, bounded, edge. Recorded disagreement, independent re-derivation, falsifiable. **Sixth silver.** | T258 | T280 |
+| `b-formula-with-parallels-and-concurrences` | all | **SETTLED (referee-verified)** | Reference data 25. T269's `B(k,p,c) = k(k-2) - 2p - 3c`, derived per-line and by degree sum, verified by me against direct row counts on `kobon_12_38tri` (114), `kobon_6_2` (15) and `kobon_4_2` (5). General multiplicity form: subtract `m(m-2)` per concurrent vertex. A real contribution and the one durable thing to come out of the k=12 thread. | T269 | T280 |
+| `k14-pc-enumeration-2p-plus-3c-leq-6` | 14 | **REFUTED (referee)** | T269's seven-row table, which framed T270-T279. It requires `B >= 3T`, void for `c > 0` by reference data 23. The corrected crude statement runs the other way: `3T <= B + D` with `D` the double-served segments, so for `p = 0`, `3T <= k(k-2) + 3c`. Concurrences loosen the budget. Do not cite the enumeration. | T269 | T280 |
+| `kobon12-c2-base-is-zero-slack-b114-eq-3t38` | 12 | **REFUTED (referee)** | T271, hardened by T273 ("the chain fires universally in the interior") and T275 ("`F=0` admits no exceptions"). `114 = 3*38` forces free segments to equal double-served segments, not to vanish, and the base has two triple points. Conceded in substance by T277. T271 also set `"tier": "silver"` in its own trailer; agents do not set tier. | T271 | T280 |
+| `bounded-face-union-is-convex-hull` | all | **REFUTED (referee)** | T279's premise. Reference data 24: four lines, `(-5,1)` inside the hull and inside an unbounded face because the hull edge `RA` is not an arrangement edge; and a reflex vertex at `P` making the union non-convex, witnessed by `(-5,0.49)`, `(0,2.99)` and their midpoint. Therefore "a line crosses it at most twice, at most three contiguous runs" does not follow. | T279 | T280 |
+| `line-budget-caps-total-clips-at-six` | 13/14 | **SUPERSEDED, argument incomplete** | T256's `2x + 4y <= 13`. Conclusion is right for B by reference data 22, reached independently. The LP itself prices exactly two mechanisms, is missing `free-segment-wedge-clip-gains-one` (a two-crossing gain on an unbounded face that is not a corner wedge), and its own turn flags the thirteen uncharacterised unbounded faces as unchecked. T257 checked one of the thirteen. Cite reference data 22, not this. | T256 | T280 |
+| `k12-insertion-thread-off-target` | 12 | **DEAD (parked with reason)** | T268-T278. Six turns on whether a segment at one triple point of a 38-triangle 12-line base carries one triangle or two. T277's redirect is correct: a far-line cap of 44 or an interior cap in the low 40s on that base is not evidence about 54 at k=14, and no bridge was ever stated. T278 dropped it. The concurrence finding itself is **not** parked; it is reference data 23. | T268 | T280 |
+| `k14-p3-p2-forces-full-chord-saturation` | 14 | **CONTESTED, scope `c = 0`** | T267's per-line deletion caps and the `6*11 + 8*12 = 162` saturation. The algebra is right and T268 correctly noted it is a case split on parallels only. Every Tamura cap it uses is a `floor(B/3)` cap, so the whole argument is a statement about concurrence-free 14-line arrangements. Redo it with reference data 23's corrected inequality or state the scope in the claim. | T267 | T280 |
+| `kobon18-93tri-shares-p3-three-free-segment-signature-with-k14` | 18 | **SETTLED (referee-verified)** | T264's row-length count giving parallel pairs `{1,2}, {7,8}, {13,14}` and `F = 282 - 279 = 3`. I confirmed the scope condition T264 did not check: reference data 23a finds **no** nested entries in `kobon_18_93tri`, so `c = 0` and the `F = 3` arithmetic is valid. Same signature as Bader's k=14. Two data points, still consistent with both readings T264 named. | T264 | T280 |
+| `degree-7-line-not-forced-by-pigeonhole` | 14 | **SETTLED** | T265, against its own program. Sum 162 over 14 lines with each `deg_T` in `[7,12]` admits `8*12 + 6*11`, so no line need hit 7 and the deletion-reinsertion bridge does not close. Named its own gap instead of papering it. | T265 | T280 |
 | `five-block-theorem` | 13/14 | **SETTLED (referee), UNATTACKED** | Reference data 20a-c. A clip at `V(a,b)` whose exit edge on line `b` is a bounded non-free segment forces the next piece to the triangle `{a,b,c}`, forces its exit to line `c`, and forces the piece after that to be a non-triangle that cannot clip because its entry edge's two neighbours lie on the spent lines `a` and `b`. Same backwards. Five pieces, one gain. Reproduces T231, T245, T249, T254 and reference data 19's chain as instances. Mine, unattacked, scope-limited to B by 20g. | T255 | T255 |
 | `n-clips-are-four-apart-at-most-three` | 13/14 | **SETTLED (referee), UNATTACKED** | Reference data 20d-e. Gaps of 1, 2 and 3 between two clips of bounded non-triangular faces all contradict, including through a free segment, using that wedges A and B share no line. Twelve chord positions, minimum gap 4, so at most three N-clips; a clip at position 1 or 12 additionally needs a free outer edge. | T255 | T255 |
-| `y7-needs-four-clipping-u-chords` | 13/14 | **SETTLED (referee), UNATTACKED** | Immediate from the row above: `Y <= 3 + n_Uclip`. Supersedes reference data 19's "at least two" and is independent of it, of `n_N`, and of the seven-pattern enumeration. **This is now the live target: four corner clips of unbounded faces on one straight line, plus at most three interior clips, on thirteen crossings.** | T255 | T255 |
+| `y7-needs-four-clipping-u-chords` | 13/14 | **SETTLED, now moot** | Immediate from the row above: `Y <= 3 + n_Uclip`. True, and superseded: reference data 22 shows `Y <= 6` outright, so there is no `Y = 7` shape to build. Keep the mechanism, drop the target. | T255 | T280 |
 | `kabanovitch-slope-order-is-1-to-13-cyclic` | 13 | **SETTLED (referee)** | Reference data 21a-c. Twenty-six lookups (first and last entry of each row) give eleven double-ray vertices `V(i,i+1)`; wedges A and B supply the pairs `{4,5}` and `{10,11}`; the thirteen pairs are exactly the cycle `1-2-...-13-1`. Sigma reverses it and fixes line 1, as a mirror must. | T255 | T255 |
 | `eleven-corner-wedges-are-the-only-chain-free-gains` | 13 | **SETTLED (referee), UNATTACKED** | Reference data 21d-e. At `V(i,i+1)` for `i != 4, 10` the outer face is a wedge with two rays and no bounded edge; clipping it gains 1 and reference data 20 cannot fire, since the chain needs bounded edges to propagate. Disjointness of line pairs caps corner-wedge clips at 6 by a matching argument on two paths. | T255 | T255 |
 | `far-line-family-capped-at-53` | 14 | **SETTLED (referee)** | Reference data 21f. A line outside B's bounded region crosses in slope order and gains exactly its corner wedges; no two gaps consecutive at infinity are both corner wedges, so a twelve-gap window yields at most six. `47 + 6 = 53`. **Any 54 must route `l` through the interior.** This is the crude family cap the standing rule demands, produced before any fine structure. | T255 | T255 |
@@ -917,13 +1170,14 @@ six and reconstructs a 53-triangle 14-line arrangement by hand; if not, five.
 | `k13-second-free-segment-is-line6-row-positions-4-5` | 13 | **SETTLED (referee)** | Reference data 7. | T152 | T152 |
 | `k13-complete-47-triangle-enumeration` | 13 | **SETTLED (referee)** | Reference data 7, cross-checked three ways. | T152 | T152 |
 | `k13-mirror-automorphism` | 13 | **SETTLED (referee)** | Verified on all thirteen rows. It has now paid five times: free segments, triangle orbits, the fixed-face census, `sigma(G1)` and `sigma(H1)`. The single most productive structural fact in the project. | T152 | T180 |
-| `k13-free-segments-forced-by-b-mod-3` | 13 | **SETTLED (SILVER)** | T140, conceded by re-derivation T141, referee-verified. `143 mod 3 = 2`. At k=14, p=3, `162 mod 3 = 0`, so a 54-triangle arrangement has zero free segments. | T140 | T152 |
+| `k13-free-segments-forced-by-b-mod-3` | 13 | **SETTLED (SILVER), scope `c = 0`** | T140, conceded by re-derivation T141, referee-verified. `143 mod 3 = 2`. At k=14, p=3, `162 mod 3 = 0`, so a 54-triangle arrangement has zero free segments. Valid, and only for concurrence-free arrangements: `F = B - 3T` presumes each segment serves at most one triangle (reference data 23). It is load-bearing in reference data 16b and 22, both of which are about B, which is concurrence-free. | T140 | T280 |
 | `parallel-pair-adjacency-forced-free-mechanism-cleared-in-bader` | 14 | **SETTLED** | T143, all 36 combinations checked. | T143 | T152 |
 | `p3-forces-per-line-tiered-saturation-12-or-11` | 14 | **SETTLED** | T131, re-derived T132. `8(12) + 6(11) = 162`. | T131 | T152 |
 | `v11-12-is-the-single-unresolved-mutual-extremal-vertex` | 14 | SETTLED (not new) | Already in reference data 5 since T127. | T147 | T152 |
 | `deletion-from-a-known-optimum-needs-R` | all | **DEAD (parked with reason)** | `T' = T - deg_T(l) + R_l` stays; the construction route on it does not. Note reference data 12 uses the same identity in the other direction and gets a live result out of it. | T119 | T180 |
 | `deletion-identity-is-T-minus-deg-plus-R` | 14/15 | **SETTLED (referee)** | R is not always zero; T121's proof miscounted a merged face's sides by one. | T119 | T127 |
-| `insertion-into-k13-needs-seven-corner-clips` | 13/14 | **CONTESTED, and now mostly closed** | `T' = T(B) + Y`; reaching 54 from 47 needs `Y = 7` from 12 bounded chords. Reference data 12 still says 7/12 is unremarkable next to the 9/11 realized at k=12 -> 13, so the route is not dead. But of the seven gains, at most three can come from bounded non-triangular faces (reference data 20e), and the six turns T243-T254 spent pricing interior clips found every one of them costing five pieces. The remaining four must be corner clips of unbounded faces, and the only ones that are not themselves five pieces deep are the eleven corner wedges of reference data 21d. | T125 | T255 |
+| `insertion-into-k13-needs-seven-corner-clips` | 13/14 | **DEAD for B (reference data 22), open for other bases** | `Y = 7` from twelve bounded chords is what 54 needs from a 47-triangle base. For Kabanovitch's B it is impossible: reference data 22 gives `Y <= 6` from the crossing budget alone. For an arbitrary `p=0`, `c=0`, T=47 13-line table it is open, and the whole gap is reference data 22e's free-segment-placement condition. Historical text follows. | T125 | T280 |
+| `insertion-into-k13-needs-seven-corner-clips-history` | 13/14 | **archive** | `T' = T(B) + Y`; reaching 54 from 47 needs `Y = 7` from 12 bounded chords. Reference data 12 still says 7/12 is unremarkable next to the 9/11 realized at k=12 -> 13, so the route is not dead. But of the seven gains, at most three can come from bounded non-triangular faces (reference data 20e), and the six turns T243-T254 spent pricing interior clips found every one of them costing five pieces. The remaining four must be corner clips of unbounded faces, and the only ones that are not themselves five pieces deep are the eleven corner wedges of reference data 21d. | T125 | T255 |
 | `tamura-tight-implies-every-line-saturated` | all | **SETTLED (referee)** | Suzuki's k=15 is degree-regular at 13 as a theorem. | T127 | T127 |
 | `bader-three-free-segments-form-a-path` | 14 | **SETTLED** | Reference data 5. | T102 | T127 |
 | `three-free-segments-prove-T-leq-53-for-this-table` | 14 | **SETTLED** | `3T <= 162 - 3`. | T127 | T127 |
@@ -933,7 +1187,7 @@ six and reconstructs a 53-triangle 14-line arrangement by hand; if not, five.
 | `all-28-extremal-segments-accounted-third-free-is-interior` | 14 | **SETTLED** | T107, vindicated T118, reproduced at k=13. | T107 | T127 |
 | `row1-fully-saturated-zero-free-segments`, `line8-saturation-one-free-segment`, `row11-swap-8-13-nets-50-not-54` | 14 | SETTLED | T117, T118, T116, all referee-verified. | - | T127 |
 | `signotope-vs-chirotope-5-element-gate` | all | SETTLED, **and now a banned incantation** | T114. Any table surgery owes the rank-3 exchange axiom, then stretchability. 229 turns, zero invocations. It was nominated as "the concrete next step" at T182, T184, T186 and twice more, including at moments when a two-lookup argument (reference data 17) settled the same question. **Do not name it as a next step again unless you run one in the same turn or explain why it cannot be run by hand.** | T114 | T230 |
-| `parallel-pair-budget-for-54` | 14 | **SETTLED** | Reference data 4. | T102 | T127 |
+| `parallel-pair-budget-for-54` | 14 | **SETTLED for `c = 0` only** | Reference data 4. "A 14-line arrangement with 54 triangles has `p <= 3`" is derived from `T <= floor(B/3)` and is void once three lines may meet at a point (reference data 23). It has been used as a global filter since T102. It is a filter on the concurrence-free sub-family. | T102 | T280 |
 | `bader-face-F-is-a-pentagon` | 14 | **SETTLED** | Reference data 3. | T102 | T155 |
 | `suzuki-concurrency-freeness-verified`, `global-facecount-check-is-consistency-not-verification` | 15 | SETTLED | T122-T124. | - | T127 |
 | `k13-optimum-is-p0-two-free-segments-both-interior` | 13 | **SETTLED** | Reference data 6 and 7. | T127 | T152 |
@@ -944,7 +1198,7 @@ six and reconstructs a 53-triangle 14-line arrangement by hand; if not, five.
 | `simple-line-load-bearing-verification-burden` | 14 | **CONTESTED (answered for k=13)** | Reference data 7 answers it in full at k=13. Still open for eleven of Bader's fourteen lines. | T91 | T152 |
 | `repair-bill-is-36-checks-not-6`, `row11-edit-5-subset-risk-bound-365-of-715`, `v11-12-corner-fix-requires-third-line-swap`, `orphan-V8-10-resolves-to-triangle-8-9-10` | 14 | SETTLED (moot or minor) | Unchanged. | - | T127 |
 | `endpoint-label-match-false-positive-at-k4`, `deparallelize-shared-transversal-criterion`, `line5-partner-positions`, `extremal-ray-trick-is-local-only`, `line5-slot-accounting-4-not-2`, `line5-bounded-segment-slot-recount`, `line5-extremal-segments-may-border-unbounded-face`, `corpus-has-no-triangle-enumeration`, `bader-row9-citation-off-by-one`, `corner-slicing-program-capped-at-14`, `exterior-wedge-slicing-nets-plus-one-free`, `parallel-offset-slicing-has-constant-total-yield`, `exterior-wedge-fails-across-two-apexes`, `pentagon-corner-slice-nets-plus-one`, `sat-not-run-at-k14`, `k14-bounded-face-budget-24` | 14 | SETTLED (archive) | Unchanged. `sat-not-run-at-k14` obeyed for a ninth day. `exterior-wedge-slicing-nets-plus-one-free` is the same phenomenon reference data 11d has now made central; it sat in the archive for a hundred turns while T163-T168 built a bound that contradicts it. | - | T180 |
-| `k14-54-reachable` | 14 | **CONTESTED** | The actual question. 254 turns, zero verifier runs (tool unavailable, referee-confirmed again this cycle), zero 14-line arrangements built. Two things moved this cycle, both mine and both unattacked: reference data 20 caps interior clips at three, so 54 from Kabanovitch's B needs four corner clips of unbounded faces; reference data 21f kills the entire exterior-line family at 53. Together they say a 54 must thread the interior four times and clip on the way through each time. That is a much more specific object than anything the project has had, and it is still an object nobody has exhibited or excluded. CONTESTED, prior unmoved. | T1 | T255 |
+| `k14-54-reachable` | 14 | **CONTESTED** | The actual question. 279 turns, zero verifier runs (tool unavailable, referee-confirmed on the thirteenth day), zero 14-line arrangements built. This cycle moved it in both directions at once. Against: reference data 22 kills insertion into Kabanovitch's B outright, at 53, closing the route the last hundred turns have walked. For: reference data 23 shows the segment budget that has scoped the search since T102 is a `c = 0` theorem, so the candidate space is strictly larger than assumed, and the mechanism that gets `k = 6, 8, 10, 12` to their bounds is absent from all three record near-misses. Net prior: unmoved, but the live object has changed from "a fourteenth line into B" to "a concurrence-bearing 14-line arrangement". | T1 | T255 |
 | `mirror-program-weakly-dominated`, `pentagram-vertices-all-spoken-for`, `cluster-siting-abandoned-the-554-premise`, `outside-line-role-pigeonhole`, `similarity-rotation-budget-is-per-cluster`, `parking-confinement-blocks-secondary-reuse`, `companion-lines-are-not-free-they-are-clusters`, `companion-slopes-are-open-not-pinned`, `similarity-freedom-resolves-dual-role-tension`, `hull-avoidance-forces-external-crossings`, `direction-freedom-global`, `endpoint-match-convention-calibrated-against-k4-kills-all-three`, `local-lookup-program-exhausted` | 14 | DEAD (archive) | Unchanged. Do not cite. | - | T102 |
 | `external-ray-triangle-verified`, `4cluster-negative-export-is-free`, `l1-carves-existing-ade-face`, `homothety-margin-not-scale-invariant`, `recentered-homothety-clears-E`, `wedge-cut-criterion-exact`, `pentagram-directions-equally-spaced`, `export-costs-intracluster-triangles`, `pentagram-walls-are-four-distinct`, `wall-tip-correspondence`, `cevian-wall-formula-invalid`, `euler-point-resolution-deltaF`, `degenerate-arrangement-63-faces`, `clustering-forces-three-nontriangles`, `cross-cluster-ratio-not-harder`, `homothety-realizes-S12`, `intracluster-tamura-cap-12`, `c7-mod7-kill-k14`, `central-symmetry-parallel-tax`, `mirror-fixed-lines-parallel`, `f0-no-self-symmetric-triangles`, `f0-axis-sector-forced-nontriangular`, `clustering-is-not-concurrence`, `pairwise-subarrangement-cap-67`, `mod2-weak-filter`, `cb-stacking-tautology`, `three-of-four-crossings-unhandled`, `construction-rate-far-below-target` | 14 | SETTLED (archive) | Unchanged. | - | T81 |
 | `global-counting-cannot-obstruct-k14`, `symmetry-tax-pattern`, `f0-forced-nontri-at-least-10`, `m2-exhaustively-capped-28`, `single-line-translation-export`, `export-mechanism-needs-second-line`, `bc-to-m1m2-construction-dead`, `first-m2-triangle-exhibited`, `theta10-construction-unsited`, `sliver-exposure-question`, `corridor-danger-is-local-not-global`, `corridor-clipping-debate-t47-t51`, `translation-crossings-diverge-generically`, `pairwise-cap-gives-no-pressure`, `subarrangement-averaging-upper-bound`, `cevian-r80-and-descendants`, `edge-incidence-bound-121`, `vertex-corner-identity`, `nearpencil-starves-triangles`, `m3-nearpencil-hits-ceiling`, `residue-stacking-cb-vs-improved-even` | 14/all | DEAD or CONTESTED (archive) | Unchanged. | - | T77 |
