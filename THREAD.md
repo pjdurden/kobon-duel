@@ -6157,3 +6157,26 @@ That pushes me back to building from scratch, as Euclidn't's own closing line su
 <!-- meta
 {"addresses": [286], "claims_conceded": ["concurrent-insertion-into-b-weakly-dominated-by-generic"], "claims_opened": ["bader-s1s2s3-triple-merge-requires-global-reroute", "k14-three-independent-triples-crude-cap-permits-54"], "falsifier": "a proof that an isolated triple point (no shared bridge lines) can have all six sectors fail the triangle-adjacency test, or that D>=1 per isolated triple point is unachievable for any choice of surrounding lines, would close this route without needing a full 14-line construction", "tier": "none", "verifier_runs": ["Read corpus/arrangements.json:1134-1343 (kobon_14_53tri) -> row8=[9,10,12,2,13,4,14,5,1,3,11,6], row11=[12,13,2,14,4,1,5,3,8,6,9,7,10], row12=[11,8,2,9,4,10,5,6,3,7,14,1,13]; V(8,11) at row8 pos11, row11 pos9, confirming it is far from the S1/S2/S3 cluster at positions 1-3"]}
 -->
+
+## Turn 288 - Euclidn't - 2026-08-30T11:17:44Z
+
+The general identity behind turn 287's arithmetic is worth stating cleanly, because it generalizes past `c=3` and it sharpens exactly the question PythagorAss just asked itself.
+
+For any `k=14` arrangement with `p=0` and `c` triple points, `B = 168 - 3c`. Let `f` be the number of free (triangle-free) bounded segments, `s` the number serving exactly one triangle, `d` the number serving two (only possible where the far endpoint is a triple point, reference data 23c). Then `f+s+d=B` and `s+2d=3T` — counting segment-incidences two ways. Subtracting:
+
+    d - f = 3T - B
+
+At `T=54`: `3T=162`. So `d - f = 162 - (168-3c) = 3c - 6`.
+
+- `c=0`: `d=0` always (no concurrence), so `f = 6`. But reference data 4's `p<=3` filter and reference data 22 together show `p=3` is required for `T<=54` to even be arithmetically live, and at `p=3` (Bader's family) `B=162`, giving `f=0` exactly — zero slack, which reference data 22 proves insertion into Kabanovitch's B cannot reach.
+- `c=1`: `d-f=-3`, i.e. `f=d+3>=3`. Slack, no rigidity — but also no help, since three free segments is exactly Bader's own signature at 53, achieved with *no* concurrence at all. A single triple point buys nothing here that Bader doesn't already have.
+- `c=2`: `d-f=0`. Every doubled segment must be matched by a free one elsewhere. No net gain in triangle-serving capacity from the concurrences themselves.
+- `c=3`: `d-f=3`, minimized at `f=0, d=3`. This is turn 287's case, and it is the *only* one of the four where concurrence structurally lowers the saturation requirement below Bader's own `f=0` baseline — because it's the only one where `B` itself drops below `3T`.
+
+So `c=3` isn't an arbitrary choice, it's the unique point where the concurrence mechanism is doing real arithmetic work rather than just relabeling Bader's existing slack. That's worth conceding as the right target. But it comes with a cost turn 287 didn't price: `f=0` means *every* one of the other 156 segments — not just the six local to the triple points — must be a genuine, single-serving triangle side. That is the same zero-slack condition reference data 19/20/22 spent four reference-data blocks proving unreachable by insertion into a 47-triangle base, now demanded of the *entire* arrangement at once, plus three local gadgets that must each independently survive contact with the other two triple points and all eleven remaining lines.
+
+Which brings me to the named question directly: is `D>=1` forced at an isolated triple point? No, and the reason sharpens the difficulty rather than resolving it. A segment `P-V(a,d)` is double-served only if *both* `{a,b,d}` and `{a,c,d}` are actual empty faces — no other line may cross either triangle's interior. With eleven other lines in play, that's an avoidance condition on all eleven, not a consequence of the concurrence existing. `D>=1` is bought, not given, exactly as turn 287 suspected. So the target isn't "three triple points, D>=1 each" as a design freedom — it's "three triple points, each with one segment protected from eleven other lines, sitting inside an arrangement where all 156 remaining segments are simultaneously saturated." That's a strictly harder ask than Bader's already-unreached `f=0`, not an easier one.
+
+<!-- meta
+{"addresses": [287], "claims_conceded": [], "claims_opened": ["double-served-minus-free-equals-3T-minus-B"], "falsifier": "an explicit k=14, c=3 table, or even a verified local gadget at one triple point with both candidate triangles empty of the other 11 lines while zero free segments exist elsewhere, would show the zero-slack condition is achievable and directly undercuts this turn's rigidity argument.", "tier": "none", "verifier_runs": []}
+-->
