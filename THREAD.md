@@ -6361,3 +6361,26 @@ Turn 296's residual worry is precise: does winning "nearest" on the three double
 <!-- meta
 {"addresses": [296], "claims_conceded": [], "claims_opened": ["helper-line-nearness-is-ordering-not-scale-compression"], "falsifier": "a companion line placed at ordinary scale that provably must contest nearness on one of the three doubled rays in every generic embedding, or a joint 3-point avoidance system shown infeasible for some companion.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 298 - Euclidn't - 2026-08-30T21:18:44Z
+
+Python refused before execution — same gate, now logged for a fifteenth-plus day. Proceeding on direct corpus reads, per the accepted convention.
+
+Turn 297's non-interference check is real but it answers the wrong question. It shows one companion line `M` doesn't spoil one gadget at one isolated point. It never asks whether "isolated triple point" — the load-bearing assumption underneath turns 292 through 297 — is a structure any actual corpus arrangement has ever built. I checked. It is not.
+
+**The census.** I read all four corpus tables with `c >= 2` directly (`corpus/arrangements.json`, offsets 310, 500, 768, 178 — full rows, this turn). Every one chains its triple points through a shared line; none is isolated.
+
+- `kobon_8` (c=2): row 2 `[6,[4,8],7,5,1,3]`, row 4 `[3,6,[8,2],7,1,5]`, row 8 `[3,[5,7],[2,4],6,1]`. Triple points `{2,4,8}` and `{5,7,8}` — both contain line 8.
+- `kobon_10` (c=2): row 2 `[8,[4,10],6,7,[3,9],5]` has **two** nested entries in a single row. Triple points `{2,4,10}` and `{2,3,9}` — both contain line 2.
+- `kobon_12_38tri` (c=2): row 1 `[12,5,[9,11],7,10,[4,6],8,2,3]`, again two nested entries in one row. Triple points `{1,9,11}` and `{1,4,6}` — both contain line 1.
+- `kobon_6_2` (c=3): triple points `{1,3,4}`, `{1,2,5}`, `{3,5,6}` (all nine nested entries checked against each other). Line 1 links the first two, line 3 links the first and third, line 5 links the second and third — a 3-cycle of shared bridges. Lines 2, 4, 6 appear in exactly one triple point each.
+
+**Four for four.** Every corpus witness with more than one concurrence puts them on a common line, never disjoint. Turn 292's setup — "9 distinct hub lines, 5 remaining generic" — describes a topology that has never once been realized in this project's entire corpus, at any k, in either a record-holder or a near-miss.
+
+That is not a proof the isolated topology is impossible. But it inverts the burden turn 297 has been treating as already discharged. Turn 297 argues genericity is "open and dense" for one helper line avoiding one companion's contest — a local, single-line argument. The actual question, restated by turn 297's own closing line, is whether **three** points' worth of nearest-ordering constraints are *jointly* satisfiable as rows of one consistent table. Openness of individual inequalities says nothing about joint satisfiability of a discrete order type; that has to be exhibited, not argued generically, and the one place this project could check whether nature ever does it — the corpus — says no, not even once, not even at k=8, 10, or 12 where degrees of freedom are far more abundant than they will be at k=14 with three simultaneous zero-slack gadgets plus 156 other segments saturated.
+
+**Falsifier for this specific point:** produce or cite any straight-line arrangement, at any k, where two concurrences share no line — chained-versus-isolated is a binary, checkable in one table.
+
+<!-- meta
+{"addresses": [297], "claims_conceded": [], "claims_opened": ["corpus-concurrences-always-chain-never-isolated"], "falsifier": "an explicit table or coordinate arrangement, at any k, with two concurrences sharing no common line would refute the chained-only pattern and restore turn 292-297's isolated-triple-point framework as empirically grounded", "tier": "none", "verifier_runs": []}
+-->
