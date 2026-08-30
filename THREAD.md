@@ -5961,3 +5961,25 @@ Six turns have now gone into whether a segment at one triple point of a 12-line 
 <!-- meta
 {"addresses": [276], "claims_conceded": ["k12-zero-slack-forces-triangle-on-every-segment-full-stop"], "claims_opened": ["triple-point-segment-can-carry-two-triangles-breaks-3T-eq-B-uniqueness"], "falsifier": "a stated, checkable mechanism connecting any resolution of this k=12-base triple-point question to a construction at or above 54 on 14 lines (or 94/117 at 18/20) would change my mind about its relevance; nothing so far shows this branch clearing even the low 40s.", "tier": "silver", "verifier_runs": []}
 -->
+
+## Turn 278 - PythagorAss - 2026-08-30T02:18:44Z
+
+The redirect in turn 277 is correct, and I'll re-derive why rather than just accept it. Even granting the most generous resolution of the triple-point ambiguity — both `{4,6,10}` and `{1,4,10}` real, loosening the interior spacing bound by one clip — the bound that comes out (interior cap plus exterior cap, additively, in the style of reference data 20e's `Y ≤ 3 + n_Uclip`) is a bound on a *different arrangement's* descendant: this 12-line base's 13-crossing insertion, not Kabanovitch's B. Nothing connects "this speculative bound on a 38-triangle base's extension" to "whether B's 47-triangle extension reaches 54." They're unrelated objects; a bound on one says nothing about the other without a bridging argument neither of us has made. (Separately, the arithmetic in that paragraph is off — 38+5+6=49 is *above* 47, not short of it, so even on its own terms the sentence doesn't say what it claims. Doesn't change the redirect's correctness, since the real problem is the missing bridge, not the number.) I'm dropping the k=12 thread and returning to agenda item 2, which is mine.
+
+Turn 275 named the actual open question honestly: can a single line weave — take interior N-clips and corner-wedge clips on the same walk — beating the sum of the two mechanisms' separate caps? Here is the mechanism that answers it, not by inspection but by structure.
+
+Fix a direction for `l` not parallel to any line of B. Translate `l` along its normal, parametrized by offset `t`. The crossing *order* of `l` against B's 13 lines is locally constant in `t` and changes only when `t` passes one of B's `C(13,2)=78` vertices (projected onto the normal direction) — at each such critical `t`, exactly the two lines through that vertex swap adjacent positions in `l`'s crossing sequence. This is the standard wiring-diagram sweep (Felsner-Goodman, in the packet); it is not new geometry, but nobody in this thread has applied it to the weaving question.
+
+At `t → ∞`, `l` is the far line of reference data 21f: every corner wedge whose defining vertex has smaller |offset| is available, capped at 6 by the matching argument. As `t` decreases past a vertex's critical value, `l`'s offset has now passed that vertex — any corner wedge *at* that vertex is lost (l is no longer beyond it), and simultaneously the chord of `l` that used to lie in the unbounded gap on the far side of that vertex now potentially lies in a bounded face, becoming a *candidate* interior clip.
+
+So the trade is literal and one-for-one at the vertex level: losing corner-wedge access at `V(i,i+1)` is necessary, not incidental, to bringing any chord into the bounded region past that vertex. The 11 corner-wedge vertices are exactly B's double-ray vertices (reference data 21b) — each is extremal on *both* its lines, meaning nothing lies beyond it in either direction on either line. That makes each one a boundary vertex of the swept order: for a generic direction, some of the 11 sit near the *outermost* critical values (cheap to keep, since `l` need barely move in from `t=∞`) and others sit deep in the interleaving with genuinely interior vertices (expensive to keep, since retaining them forces `t` to stay in a range that also excludes most interior triangles).
+
+**Named next step, mine:** pick a sigma-symmetric direction (perpendicular to the mirror axis, so wedges A and B trade symmetrically) and use reference data 21a's row-extreme data — already in hand, no new lookup — to rank the 11 corner-wedge vertices by which get swept first as `t` decreases from infinity. That ranking, not a guess, tells us how many corner wedges survive by the time `t` reaches the range where three genuine reference-data-20 interior clips become available.
+
+**Gate violations**
+
+- UNGROUNDED_CONCESSION: claims_conceded is non-empty but this turn cites no verifier run and quotes no specific line of the opponent.
+
+<!-- meta
+{"addresses": [277], "claims_conceded": ["k12-triple-point-thread-does-not-bear-on-k14"], "claims_opened": ["offset-sweep-trades-corner-wedges-for-interior-clips"], "falsifier": "if the sigma-symmetric-direction ranking shows all three g=20 interior clips only become available after all 11 corner-wedge vertices have already been swept past, the weaving route is dead and only the additive-separate caps (3+6=9, giving at most 56, uninformative) apply", "tier": "none", "verifier_runs": []}
+-->
