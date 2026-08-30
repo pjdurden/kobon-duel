@@ -6099,3 +6099,25 @@ My prior is unmoved: the vertex PythagorAss picked is the one place in Kabanovit
 <!-- meta
 {"addresses": [283], "claims_conceded": [], "claims_opened": ["apex-through-merge-destroys-corner-clip-not-escapes-it"], "falsifier": "an explicit direction for l through the merged triple point {4,9,l} that produces a genuine empty triangle (e.g. {2,9,l} or {5,9,l}) not already accounted for by the generic clip's +1, with the crossing lost to the merge priced in.", "tier": "none", "verifier_runs": ["python3 -c \"print('PYTHON OK')\" -> refused before execution", "Read corpus/arrangements.json lines 991-1003 (row4) -> 9,2,10,13,7,11,8,12,5,1,6,3, matches ref data 6/19", "Read corpus/arrangements.json lines 1047-1059 (row9) -> 8,6,7,5,4,2,3,13,1,11,12,10, matches ref data 6/19"]}
 -->
+
+## Turn 285 - PythagorAss - 2026-08-30T08:17:44Z
+
+Turn 284's rebuttal survives contact with the geometry, and I can now show exactly why in terms sharper than "wedge apex."
+
+The gain at V(9,4) is not abstract — it is a specific corner-clip triangle with vertices at V(9,4) itself and l's two nearby crossings on lines 9 and 4, per reference data 11a's "cut off one vertex" mechanism. Route l exactly through V(9,4) and that triangle's three vertices collapse to one point: zero area, gain gone. That is airtight, and Euclidn't's line names the mechanism precisely:
+
+> "A line through the apex of a wedge does not shave off a corner; it splits the wedge into two smaller wedges, both still unbounded"
+
+I'm conceding this specific move. But I went and checked whether picking a *different* on-chain vertex escapes the same trap, and it doesn't, which is worth reporting even though it cuts against me. I re-read the corpus directly: `corpus/arrangements.json:963-976` gives row 2 = `[3,9,4,10,7,13,8,11,5,12,6,1]`, positions of 9 and 4 are 2,3 — adjacent, confirming edge V(2,9)-V(2,4). `arrangements.json:991-1004` gives row 4 = `[9,2,10,13,7,11,8,12,5,1,6,3]`, positions of 9 and 2 are 1,2 — adjacent, confirming edge V(4,9)-V(4,2). `arrangements.json:1061-1074` gives row 9 = `[8,6,7,5,4,2,3,13,1,11,12,10]`, positions of 4 and 2 are 5,6 — adjacent, confirming triangle {2,4,9} exactly as reference data 19 states.
+
+I picked V(2,4) as the alternative — the vertex where G1's forced exit dies in reference data 19's chain, not the clip vertex itself. But V(2,4) is *also* a corner of the piece between the two crossings: it is one of triangle {2,4,9}'s own three vertices (V(2,4), V(2,9), V(4,9)). Routing l exactly through it collapses that intermediate triangle piece to zero length the same way — the crossing with line 2 and the crossing with line 4 merge into one point, and piece 10 (the forced dud {2,4,9}) vanishes rather than becoming ambiguous.
+
+This generalizes past my one bad pick: **every vertex named anywhere in reference data 19/20's forced chain is, by construction, a corner of some polygon that chain passes through — hexagon, triangle, or wedge — and forcing l through it exactly degenerates whichever adjacent piece has that vertex as an endpoint of its two clip edges.** The chain's own vertices are the wrong targets categorically, not just at V(9,4). This isn't a new counterexample from Euclidn't; it's me confirming the failure mode is structural before proposing another instance of it.
+
+The actual lever, if there is one, has to sit in reference data 22 itself, not 19/20 — specifically step (b)'s ray case, which is flagged in 22(e) as using `c=0` and which involves no pre-existing bounded triangle to degenerate (a corner wedge, reference data 21d, has two rays and zero bounded edges). But the same collapse logic applies to corner-wedge clips too — routing through a ray-vertex exactly kills that clip's own gain by the identical argument. So the target vertex for a useful concurrence must be one that is neither a chain-corner nor a wedge-corner: an ordinary vertex of B untouched by any named mechanism, where the benefit comes from perturbing reference data 22's global crossing count rather than from creating a local gain at that point.
+
+**Named next step, mine:** identify a vertex of B not appearing in reference data 9, 10, 14, or 21b's censuses, and check whether routing l through it changes the parity of reference data 22(d)'s `13 >= 2g` inequality itself, rather than trying to rescue any specific named clip.
+
+<!-- meta
+{"addresses": [284], "claims_conceded": ["v9-4-concurrence-breaks-forced-successor-uniqueness"], "claims_opened": ["on-chain-vertex-exact-concurrence-collapses-its-own-corner-piece"], "falsifier": "an exact-concurrence vertex disjoint from every named chain/wedge corner that demonstrably raises the crossing-budget inequality's slack, checked against reference data 22's actual proof text", "tier": "none", "verifier_runs": ["Read corpus/arrangements.json:963-976 (kobon_13 row2) -> [3,9,4,10,7,13,8,11,5,12,6,1], pos(9)=2 pos(4)=3 adjacent", "Read corpus/arrangements.json:991-1004 (row4) -> [9,2,10,13,7,11,8,12,5,1,6,3], pos(9)=1 pos(2)=2 adjacent", "Read corpus/arrangements.json:1061-1074 (row9) -> [8,6,7,5,4,2,3,13,1,11,12,10], pos(4)=5 pos(2)=6 adjacent, confirms {2,4,9}"]}
+-->
