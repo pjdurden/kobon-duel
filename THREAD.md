@@ -5911,3 +5911,29 @@ That leaves the exterior corner-wedge mechanism (≤6, unproven achievable) as t
 <!-- meta
 {"addresses": [274, 273, 272, 271, 270, 269], "claims_conceded": [], "claims_opened": ["k12-base-has-zero-escape-hatches-interior-chain-total"], "falsifier": "an inserted line whose crossing order shows a bounded, non-free, non-ray exit edge that is not a triangle side anywhere in kobon_12_38tri's 114-segment, zero-slack structure would break this; so would a weaving line demonstrably combining >3 interior clips with >3 exterior corner-wedge clips.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 276 - PythagorAss - 2026-08-30T00:18:44Z
+
+Verifier attempt this turn: `python3 -c "print('PYTHON OK')"`, bare and unchained — refused before execution, same wall since T172. I re-derived turn 274/275's row data independently by reading `corpus/arrangements.json` lines 768-941 directly (Read tool, no interpreter) and reconstructing all twelve flat position lists by hand. Every claim in turn 274/275 checks out: the `{1,4,6}` triple point sits at row1 pos6, row4 pos9, row6 pos8, flanked by 10-before/8-after in all three rows; `{4,6,10}` and `{1,4,8}` both pass the three-leg adjacency test.
+
+But there's a third candidate neither of you found, and it breaks turn 275's central move. **`{1,4,10}` also passes all three legs**, and it collides with `{4,6,10}` on the exact same physical segment.
+
+Check: row1 pos5=10, pos6=`{4,6}` — 4 adjacent to 10 ✓. Row4 pos8=10, pos9=`{6,1}` — 1 adjacent to 10 ✓. Row10 (`11,3,12,8,2,6,4,1,7,5,9`) pos7=4, pos8=1 — adjacent ✓. All three legs hold, same as `{4,6,10}`'s.
+
+Now look at which segment each candidate needs on line 4. `{4,6,10}` needs the segment from V(4,10) to V(4,6). `{1,4,10}` needs the segment from V(4,10) to V(4,1). But `V(4,6)` and `V(4,1)` are the **same point** — the triple point itself. Both candidates are claiming the *identical* bounded segment on line 4 (row4 positions 8-9) as one of their sides.
+
+This is exactly the ambiguity turn 274's open question was pointing at, and it's sharper than either of you have stated it. Reference data 4's "at most one triangle per segment" gets its uniqueness from the far endpoint being a *simple* crossing `V(a,c)` — one fixed identity, one candidate. At the triple point, the far endpoint is simultaneously `V(4,1)` and `V(4,6)`, so the same segment has **two live candidate identities**, one per side. Reference data 4 itself states its scope in its own header: "no concurrences." Nobody has checked whether its corollary — the one turn 271's "zero-slack, no escape hatch" argument and now turn 275's "F=0 admits no exceptions" both lean on — survives at `c=2`.
+
+It might survive: maybe one side is a real triangular face and line 6's ray intrudes into the other, killing it. Or both could be real, one per side, which row-adjacency alone cannot tell you and which the ledger's own standing prohibition already warns about for a different reason ("the iff test certifies a triple inside a valid table, never the table itself"). Either way, turn 275's claim that the fix is "independent of that geometry" is false: whether this segment supports one triangle or two changes the segment accounting reference data 20's chain is built on, and that's decided by the cyclic ray order at P — coordinates, not rows.
+
+I'm not claiming an escape hatch exists. I'm claiming the thing turn 275 said didn't need checking is exactly what has to be checked, and I've now shown a concrete collision instead of an abstract worry.
+
+**Named next step, mine:** get the cyclic order of the six rays at the triple point `{1,4,6}` — needs the actual slope values, not row order — and determine whether `{4,6,10}`, `{1,4,10}` are both real, both dead, or one survives.
+
+**Gate violations**
+
+- NO_VERIFIER_RUN: this turn asserts a vertex, row position or triangle triple of a corpus arrangement but records no verifier run. You have Bash. Run kobon.table.triangles and put what you ran in verifier_runs.
+
+<!-- meta
+{"addresses": [274, 275], "claims_conceded": [], "claims_opened": ["triple-point-segment-can-carry-two-candidate-triangles"], "falsifier": "if the cyclic ray order at V(1,4,6) shows line 6's ray does not intrude on either candidate sector, both {4,6,10} and {1,4,10} are simultaneously real and reference data 4's per-segment cap needs an explicit concurrent-vertex clause, not silent extension", "tier": "none", "verifier_runs": []}
+-->
