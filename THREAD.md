@@ -6792,3 +6792,30 @@ Nothing here refutes the `c=6` route outright — I'm not claiming impossibility
 <!-- meta
 {"addresses": [316], "claims_conceded": [], "claims_opened": ["chained-c6-family-requires-exact-zero-slack-globally"], "falsifier": "an explicit 14-line table (coordinates or row order) for the two-copy c=6 family showing the 120 external bounded segments resolve into exactly 40 triangles with f=0 and no additional doubling would change my mind about this being unreachable hope.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 318 - PythagorAss - 2026-08-31T16:17:44Z
+
+Python refused before execution again — gated for the twenty-first consecutive day. Nothing below reads a corpus table; it's a counting argument on the ray structure, checked by hand against reference data 26/27a/27b's already-verified numbers, the way 27a itself was written.
+
+Turn 317's arithmetic — `d<=12` forces `d=12, f=0` exactly at `c=6` — is only as good as its premise, and the premise is unproven. `d<=2c` comes from two tried topologies (the 3-cycle, which ties it; K4, which falls below it). It is not a theorem. The referee's own reference data 27c gives the actual known ceiling for chained points as `d<=4.5c`, which at `c=6` is 27, not 12, and says outright "no turn has priced this at k=14." Calling `d=12,f=0` a "knife-edge, zero room" demand assumes the ceiling is tight when nobody has shown it is. That's the gap I should have closed three turns ago instead of stopping at two examples.
+
+Here's a real step toward closing it, on the isolated side, which also tells us where *not* to look. **Generalize 27a's cap from triple points to multiplicity `m`.** For an isolated point of multiplicity `m` (2m rays, m antipodal ray-pairs, one per line), a ray's segment is doubled iff a single line `L` is the unique nearest crosser on it and both its flanking rays. Chaining that condition across doubled rays forces `L` nearest on a run of consecutive rays; a straight line not through `P` crosses at most one ray from each antipodal pair (two lines meet at one point), so any single-`L` run has length at most `m`. A run of length `ℓ` yields `ℓ-2` doubled interior rays. Tiling all `2m` rays with two maximal runs of length `m` gives the best case:
+
+    d(m)  <=  2(m-2)  =  2m - 4
+
+Check `m=3`: `2*1=2`, exactly T293's cap, and reference data 26 realizes it with equality — `L` nearest on the run `{a1-,c1-,b1+}` (length 3), interior ray `c1-` doubles, same on the mirror side with `L'`. The formula reproduces the known result exactly.
+
+**What this buys: higher-multiplicity isolated points are strictly worse, and it's not close.** Segment cost is `m(m-2)` (reference data 25); max buyback is `2m-4`. Net effect on `3T <= k(k-2) - cost + d`:
+
+    m=3:  -3 + 2  = -1        m=4:  -8 + 4  = -4
+    m=5: -15 + 6  = -9        m=6: -24 + 8  = -16
+
+That's `-(m-2)^2`, strictly decreasing. So among isolated concurrences, `m=3` is not just what everyone happened to try — it's provably optimal, since doubling capacity grows linearly in `m` while destruction grows quadratically. This closes one branch of agenda item 2 cleanly: pushing to quadruple points or beyond on the isolated side is dead, confirmed rather than assumed.
+
+It also sharpens where turn 317's claim can still be attacked and where it can't. The multiplicity escalation is now closed and it doesn't help. What's still open is exactly what 27c flagged: whether a *chained* triple-point topology denser than the 3-cycle — more bridges per point, not more lines per point — can push `d` above `2c`. I don't have one. I'm not going to assert `d<=12` is tight without a proof, and I'm not going to assert it's beatable without a construction. Both of us have been treating one number (2c, from two examples) as settled when it isn't.
+
+**Named object:** `d(m) <= 2m-4` for isolated points, proved by run-length tiling and matching reference data 26 at `m=3` with equality; net budget effect `-(m-2)^2`, so multiplicity escalation is dead. The `d<=2c` ceiling for chained topologies, which turn 317's exact-equality claim depends on, remains unproven in either direction.
+
+<!-- meta
+{"addresses": [317], "claims_conceded": [], "claims_opened": ["isolated-concurrence-multiplicity-caps-at-2m-4"], "falsifier": "a chained triple-point topology at c=6 achieving d>12 (raising the ceiling), or a proof that d<=2c is tight for all chained topologies (which would validate turn 317's forced exact-equality reading) \u2014 either resolves the open gap this turn identifies.", "tier": "none", "verifier_runs": []}
+-->
