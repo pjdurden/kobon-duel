@@ -6935,3 +6935,29 @@ This doesn't touch the general reachability question — it closes one specific 
 <!-- meta
 {"addresses": [321], "claims_conceded": ["k14-c0-profile-matching-by-percentage"], "claims_opened": ["bader-s1-candidate-1112-13-fails-two-legs-extremal"], "falsifier": "if S3's candidate {8,10,12} does not fail via the same first/last extremal-position pattern in rows 8, 10, 12, then Bader's rigidity is not a uniform corner effect and a targeted row swap might still repair the table.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 323 - Euclidn't - 2026-08-31T21:19:44Z
+
+Python is still gated — refused twice this turn (`python3 -c "print('PYTHON OK')"` and a positions/triangles script), twenty-fifth consecutive day. The refused tool is noise per the referee's own ruling; what follows is a hand check against reference data 1's printed rows, the same convention turn 322 used.
+
+**S3 = {8,10,12} fails, confirmed, but not by the pattern turn 322 asked me to look for.**
+
+Row 8: 9 10 12 2 13 4 14 5 1 3 11 6 — position(10)=2, position(12)=3, adjacent. That's S3 itself.
+Row 10: 8 9 2 4 12 5 13 3 14 6 1 7 11 — position(8)=1, position(12)=5. Not adjacent.
+Row 12: 11 8 2 9 4 10 5 6 3 7 14 1 13 — position(8)=2, position(10)=6. Not adjacent.
+
+Both other legs fail, so {8,10,12} is not a face — matching reference data 5. But turn 322's proposed uniform mechanism doesn't hold here. S1's failure was a clean double-extreme lock: line 11 sat at position 1 in both row 12 and row 13, while lines 12 and 13 sat at position 13 — the opposite extreme — in each other's rows. S3's failure isn't that shape. Line 8 sits at the extreme in row 10 (position 1) but only near it in row 12 (position 2, not the boundary), and its targets are nowhere near the opposite extreme: 12 sits at position 5 of 13 in row 10, 10 sits at position 6 of 13 in row 12 — both squarely interior. This is an ordinary crossing-order mismatch, not an antipodal pin.
+
+So the "all three pinned to rigid corners" story isn't established by S1 and S3 together — two different failure modes, not one. The repair route is still closed (both fail), but the honest statement is three independent local checks with no common cause, not a unifying mechanism. I'd rather bank the weaker true claim than the stronger unproven one.
+
+**Turning to my own assigned item — reference data 22e, the shared-vertex question.** Here's where the real difficulty sits, and it's sharper than "unresolved": the shared-vertex configuration structurally escapes the wasted-crossing mechanism that proves Y≤6 for the rest of B's family, not merely evades checking so far.
+
+Reference data 22's proof works because each free-segment adjacency forces an *extra* chain beyond it — the hexagon's other exit edge, being ordinary, triggers reference data 20a's forced triangle-then-dud, consuming two more crossings for zero further gain. That waste is what pays for the adjacency in the crossing budget. But if a single face F carries both free segments as adjacent edges at one vertex, the walk through F never touches an ordinary edge at all: enter via free edge 1, exit via free edge 2, straight into the second wedge. There is no forced dud, because the trigger condition — exiting F on an ordinary segment — is absent by hypothesis.
+
+That's a real result: counting-based extensions of reference data 22's own argument cannot close 22e, for a structural reason, not lack of effort. Closing it needs either an order-type obstruction to two free segments meeting at a vertex of one face (the segment-uniqueness lemma is silent on which of a table's many faces the two free segments happen to border — that's exactly the order-type residue turn 321 flagged for U_b), or an explicit table exhibiting the configuration. I have neither yet.
+
+**Named object:** the mechanism gap in reference data 22e — a shared-vertex, two-free-segment face has no ordinary exit edge to trigger reference data 20a's forced-dud, so the existing Y≤6 proof cannot be patched to cover it; plus the S1/S3 comparison showing Bader's three free segments fail local repair by two distinct mechanisms (double-extreme lock vs. ordinary mismatch), not one.
+
+<!-- meta
+{"addresses": [322], "claims_conceded": [], "claims_opened": ["shared-vertex-configuration-escapes-wasted-crossing-mechanism"], "falsifier": "An explicit p=0,c=0,T=47 13-line table where two free segments are adjacent edges of one face at a shared vertex, or a proof that no such table exists, would settle reference data 22e in either direction.", "tier": "none", "verifier_runs": []}
+-->
