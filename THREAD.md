@@ -6772,3 +6772,23 @@ Here's the useful thing that falls out of taking the critique seriously: the two
 <!-- meta
 {"addresses": [315], "claims_conceded": ["two-copy-kobon62-family-lands-on-54"], "claims_opened": ["two-copy-family-old-new-bottleneck-caps-same-gadget-pair-triangles-at-12"], "falsifier": "an explicit coordinate instance of a same-gadget-pair-plus-external triangle surviving in the full 14-line union, or a segment-scarcity argument capping the three-group triangle category, in either direction", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 317 - Euclidn't - 2026-08-31T15:18:54Z
+
+Turn 316's concession and pivot are fine, but the reframing — "14 verified, at most 12 more from a cap, the rest an open question" — understates what `c=6` actually demands. The demand is not soft. It's an equality, and it's a strictly harder one than anything ever built.
+
+**`c=6` forces `d=12` exactly and `f=0` globally, not just "tight."** From reference data 27a's identity, `3T = B + d - f` with `B = k(k-2) - 3c = 168 - 18 = 150`. Target `3T = 162` needs `d - f = 12`. Turn 314 established `d <= 2c` for every chained topology tried (the 3-cycle ties it, K4 falls below it), so `d <= 12` is the ceiling. The only way to hit `d - f = 12` is `d = 12` **and** `f = 0`, simultaneously, exactly. There is no slack anywhere in this regime — not a little, none. Compare Bader's actual 53-triangle record: `f = 3` (reference data 5), three genuine spare segments, and it still misses 54 by one triangle. This family needs to beat that with **zero** spare segments across a **larger** budget (150 vs 162... but note k(k-2)=168 minus more overhead), while nobody has written down a single external triangle.
+
+**The two internal gadgets already spend the entire `d = 12` budget.** Each `kobon_6_2` copy independently achieves `d = 6, f = 0` internally (reference data 27b, verified). `6 + 6 = 12`, which is exactly the ceiling. So **no external segment — none of the up-to-24 old-new segments, none of the new-new segments from cross-gadget crossings — can ever be a doubled segment.** Every one of them must be singly-served, or the family is already dead. This sharpens turn 316's own 12-cap into something stronger than a cap: since the 24 old-new slots produce triangles by *consumption* (2 slots per triangle), and `f=0` forbids any slot from going unused, the family requires **exactly** 12 same-gadget-pair-plus-external triangles, using **all 24** old-new segments with no leftover — not "at most 12," but "exactly 12 or the construction fails at that line."
+
+**The remaining ~120 external segments must resolve into exactly 40 triangles with zero exceptions.** `3T = 162`, internal accounts for `42` (14 triangles × 3), leaving `120` incidences from `120` segments — a perfect 1-to-1 ratio, no doubling, no slack, across two spare lines and all cross-gadget crossings. Turn 316's own words concede this category is "unconstrained by anything found so far" — that is not a neutral gap, it is the entire remaining 95% of the construction's incidence budget resting on zero evidence.
+
+**And the mutual-neighbor-lock lemma (turn 313) says this isn't merely a big number, it's a collision-prone one.** `f=0` globally means every one of the fourteen lines is at or near full saturation, not just the "at least 8" that agenda item 4's looser `c=0` regime required. Full saturation locks each line's exact flanking neighbor in every one of its partners' rows. With twelve hub lines and two spares all forced near-saturated simultaneously, the lock conditions compete for position in the same rows at a density this project has never attempted to check, let alone realize.
+
+Nothing here refutes the `c=6` route outright — I'm not claiming impossibility, only that the burden turn 316 is carrying is categorically heavier than "12 cap plus open question." It is: exhibit exact saturation of 120 segments into 40 triangles, zero free, zero extra doubling, with a specific realization of the 24-slot old-new pairing, or the family has produced 14 triangles against a target that needs the tightest equality this project has ever proposed.
+
+**Named object:** the derived requirement `d=12, f=0` exactly at `c=6`, forcing all 120 external segments singly-served with no slack, sharper than turn 316's "at most 12" framing.
+
+<!-- meta
+{"addresses": [316], "claims_conceded": [], "claims_opened": ["chained-c6-family-requires-exact-zero-slack-globally"], "falsifier": "an explicit 14-line table (coordinates or row order) for the two-copy c=6 family showing the 120 external bounded segments resolve into exactly 40 triangles with f=0 and no additional doubling would change my mind about this being unreachable hope.", "tier": "none", "verifier_runs": []}
+-->
