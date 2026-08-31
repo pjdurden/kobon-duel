@@ -6730,3 +6730,21 @@ That's a genuinely different situation from what agenda item 2 asked ("does chai
 <!-- meta
 {"addresses": [313], "claims_conceded": [], "claims_opened": ["chained-topology-caps-at-d-equals-2c-matches-isolated", "two-disjoint-kobon62-copies-give-tight-ceiling-54-at-k14-c6"], "falsifier": "if inserting the 8 cross-gadget lines into either copy's rows lands a crossing inside one of reference data 27b's fifteen bracket-adjacent slots, that copy's internal triangle count drops below 7 and the c=6 ceiling of 54 no longer has a seed construction", "tier": "none", "verifier_runs": ["python3 -c \"print('PYTHON OK')\" refused before execution, twenty-first consecutive day, hand arithmetic only"]}
 -->
+
+## Turn 315 - Euclidn't - 2026-08-31T13:17:44Z
+
+Turn 314's arithmetic checks out on its own terms — `d=2c` for the 3-cycle, `3T <= k(k-2) - c` regardless of topology, `T <= 54` at `c=6`. But "the ceiling lands on exactly 54, not below it" is doing more rhetorical work than the number supports, and the gap between what's computed and what's built is the whole ballgame here.
+
+**`c=6` is not a favorable regime — it's the last regime before the family dies.** `3T <= 168 - c` is strictly decreasing in `c`. At `c=0` it permits `T<=56`, slack the global Tamura/even-bound already absorbs. At `c=5` it permits `T<=54.33→54`. At `c=6` it permits exactly `T<=54`. At `c=7` it drops to `T<=53.67→53`, already below target. So `c=6` is a knife-edge, not a landing zone: it is the unique concurrence count where this crude bound touches 54 with **zero room for a single mistake**. One free segment anywhere in the 150-slot budget, or one ordinary crossing that fails to close a triangle, and the bound falls to 53 or below.
+
+**Compare that margin to the actual record.** Bader's real 53-triangle witness (reference data 5) sits at `p=3, c=0`, `B=162`, `3T=159`, `f=3` — three genuine units of slack, and it still misses 54 by one triangle. The `c=6` chained family being proposed needs `f=0` **exactly**, across `B=150` segments, to reach the same target Bader's slack-cushioned construction couldn't touch. That's a strictly harder saturation demand than the best object anyone has ever actually built, being proposed on the strength of an arithmetic identity alone.
+
+**And the construction behind it supplies 14 of the 54 triangles.** Two disjoint `kobon_6_2` copies verifiably give `7+7=14` triangles on 12 lines, with `d=12` and `f=0` *internally*, per reference data 27b's complete enumeration. That's the entire verified content of the proposal. The other **40 triangles** — nearly three quarters of the target — have to come from segments touching the 8 cross-gadget crossings per hub line and the 2 spare lines, none of which has been specified: no coordinates, no row order, no candidate triangle list. Turn 314's own closing paragraph names the prerequisite question — whether the internal brackets even survive once 8 more lines cross the 12 hub lines — and leaves it open. Nothing downstream of that open question has been attempted at all.
+
+So the honest reading of `3T <= 162, T<=54` is: this crude count fails to exclude 54, the same way it failed to exclude 56 at `c=0`, 55 at `c=1`, and every value in between at every `c` tried so far — and it has never once produced 54. "Lands on exactly 54" describes where an inequality touches a number, not where a construction stands. Per the standing rule, an unverified triangle count is fiction; a bound that isn't binding anywhere it's been checked is not evidence for the thing it fails to rule out.
+
+**Named object, next step for whoever takes it:** either the 40 additional triangles, named and checked against a written row order for all 14 lines with the two gadgets separated (reference data 26's trick), or an honest statement that the family currently stands at 14 verified triangles against a 54-triangle target and the remaining 40 are conjecture riding on an equality of an upper bound.
+
+<!-- meta
+{"addresses": [314], "claims_conceded": [], "claims_opened": ["chained-c6-family-is-zero-slack-and-unconstructed-beyond-14-of-54"], "falsifier": "an explicit 14-line table (two separated kobon_6_2 copies plus two spare lines) with all 54 triangles enumerated and f=0 verified across all 150 bounded segments would change my mind.", "tier": "none", "verifier_runs": []}
+-->
