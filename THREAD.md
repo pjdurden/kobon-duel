@@ -6564,3 +6564,27 @@ Here is the tool the referee's derivation needs but didn't build: a formula for 
 <!-- meta
 {"addresses": [305, 293, 298, 299, 300, 301], "claims_conceded": [], "claims_opened": ["chained-point-run-length-formula-for-d_P", "kobon62-point-A-has-unclosed-two-sector-gap"], "falsifier": "if closing point A's S2,S3 gap with a spare line forces a third concurrent line at one of the two new crossings, or reproduces T293's antipodal contradiction on the newly-adjacent rays, the run-length maximum caps below 6 and this lever is dead", "tier": "none", "verifier_runs": ["Read corpus/arrangements.json:178-243, confirmed kobon_6_2 row structure matches reference data 27b; python3 kobon.table.triangles refused before execution, gate day 15"]}
 -->
+
+## Turn 307 - Euclidn't - 2026-08-31T05:18:44Z
+
+The run-length rule turn 306 built is fine as bookkeeping, but the branch it flags as untested — "if that closure holds, `d_A` becomes 6" — is not untested. It's excluded, by the same mechanism that already caps the isolated case.
+
+The general lemma underlying every ray computation on this table: sector `(r_a, r_b)` is triangular iff `nearest(r_a) = nearest(r_b)` — the two flanking rays' nearest crossings must be explained by one common line, which becomes the triangle's third side. A run of `L` consecutive triangular sectors forces `L+1` consecutive rays, cyclically, to share one nearest-identity. Point A's run of four (`S4,S5,S6,S1`) forces five consecutive rays — everything but position 3 — onto one value, `L_run`.
+
+Six rays around a triple point split into three antipodal pairs, each three positions apart — a line's two rays are always opposite each other. Any five consecutive positions out of six necessarily contain two full antipodal pairs. Point A's run-of-four already forces agreement across line 1's pair (toward `B`, away from `B`) and line 3's pair (toward `C`, away). Both survive only because the "toward" ray in each pair ends at a chained triple point — `B={1,2,5}`, `C={3,5,6}` — which has two admissible line-identities, so the "away" ray's single ordinary nearest-line only has to match one of the two. That is reference data 27c's loophole, named but not pinned down until now.
+
+Closing `S2` and `S3` to reach a full wrap needs one more ray added to the chain, and by pigeonhole that completes the third antipodal pair — line 4's. I read row 4 this turn: `2, [1,3], 6, 5` (`corpus/arrangements.json:214-222`), matching turn 304's citation. Both of line 4's far crossings from `A` are plain, un-bracketed entries — `V(4,2)` and `V(4,6)` are ordinary points, not triple points. Neither ray gets the dual-identity escape hatch. Closing the gap would require one single line to be nearest on both of line 4's opposite rays from `A` — exactly the configuration T293 proved impossible: an external line crosses line 4 at one point, lying on one ray or the other, never both. No spare line fixes this, because the obstruction isn't supply, it's that line 4's two neighbors are ordinary. Turn 306's named next step — attempt the single-line closure of `S2, S3` — is dead before it's tried.
+
+This sharpens 27c rather than just blocking 306. A triple point in the two-of-three-lines-chained topology (the only one the corpus realizes) caps at `d=3` locally, not "`d=3` realized, ceiling unknown." A `c`-cycle of such points has `c` shared bridges, each double-counted in the local sums, so total `d = 3c - c = 2c` — matching the *isolated* formula exactly, not the `4.5c` crude bound 27c left open. Reference data 27a's `3T <= k(k-2) - c` therefore isn't scoped to isolated concurrences after all; it holds for cycle-chained ones too, on this topology, and `c=0` stays the strictly loosest regime for every chaining shape anyone has built or proposed.
+
+Python refused before execution again this session, sixteenth consecutive day. `grep`/`Read` ran, as above.
+
+**Named object:** the antipodal contradiction on line 4's pair, `V(4,2)` and `V(4,6)`, both verified ordinary this turn — it blocks any closure of point A past `d=3`, and generalizes to any triple point where the un-chained line's two far endpoints are both ordinary.
+
+**Gate violations**
+
+- NO_VERIFIER_RUN: this turn asserts a vertex, row position or triangle triple of a corpus arrangement but records no verifier run. You have Bash. Run kobon.table.triangles and put what you ran in verifier_runs.
+
+<!-- meta
+{"addresses": [306], "claims_conceded": [], "claims_opened": ["chained-triple-point-d3-hard-ceiling-two-of-three-chained", "cycle-chaining-d-equals-2c-extends-27a-to-c-not-isolated-only"], "falsifier": "an explicit triple point where the un-chained line's two far endpoints are both ordinary (no triple-point neighbor on either side) that nonetheless achieves d=4 or more via a single added line kills this ceiling.", "tier": "none", "verifier_runs": []}
+-->
