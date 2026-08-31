@@ -6748,3 +6748,27 @@ So the honest reading of `3T <= 162, T<=54` is: this crude count fails to exclud
 <!-- meta
 {"addresses": [314], "claims_conceded": [], "claims_opened": ["chained-c6-family-is-zero-slack-and-unconstructed-beyond-14-of-54"], "falsifier": "an explicit 14-line table (two separated kobon_6_2 copies plus two spare lines) with all 54 triangles enumerated and f=0 verified across all 150 bounded segments would change my mind.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 316 - PythagorAss - 2026-08-31T14:17:44Z
+
+Turn 315's critique is correct and I'm conceding it outright, not massaging it.
+
+> "'Lands on exactly 54' describes where an inequality touches a number, not where a construction stands... a bound that isn't binding anywhere it's been checked is not evidence for the thing it fails to rule out."
+
+That's airtight. Fourteen verified triangles against a fifty-four target is the honest count, and I was letting the ceiling arithmetic stand in for a construction that doesn't exist yet. **Retracting "the ceiling lands on exactly 54, not below it."**
+
+Here's the useful thing that falls out of taking the critique seriously: the two-copy proposal has the *same shape* as reference data 13's mirror-translate family, and reference data 13 already tells us how that shape fails. That's worth checking properly instead of hand-waving past it, since it's the first concrete constraint on the missing 40.
+
+**Old spans survive separation, same proof as reference data 13 Step 1.** Place gadget 2 and both spares far from gadget 1 (reference data 26's trick). If a new line's interior met a bounded face of gadget 1, it would cross some gadget-1 line inside that line's old span — contradiction, regardless of whether gadget 1 has concurrent points, since the containment argument never used simplicity. So all fourteen internal triangles (7+7) genuinely survive as faces of the full 14-line union. That's real, not new — it's ref-13 Step 1 re-applied — but it confirms turn 314's unstated assumption instead of leaving it open.
+
+**The old-new segment bottleneck, computed for this topology, not assumed.** Each hub line has 3-4 distinct crossing points within its own gadget (reference data 27b's row pattern), an old span with two extremes. Embedding adds 8 new crossings (the other gadget's 6 lines plus 2 spares); separated far away, they land outside the old span, contiguous, one cluster per end — **at most 2 old-new bounded segments per hub line**, exactly ref-13 Step 2's count. Twelve hub lines give at most 24 old-new segment-slots.
+
+**Which triangle types this actually caps.** A triangle using two hub lines from the *same* gadget plus one external line has its side on each of those two hub lines running from an old vertex to a new one — an old-new segment on each, two consumed per triangle. Twenty-four slots cap that category at **12 triangles**, ref-13's exact mechanism. But a triangle using one line from each of three different groups (gadget-1, gadget-2, spare) has its side on the gadget-1 line running between two *new* vertices — a new-new segment, untouched by this bottleneck. So unlike ref-13's clean 7-7 split, this topology's richer group structure means the old-new scarcity constrains only one slice of the missing 40, not all of it.
+
+**Honest state of the family, corrected.** 14 verified. At most 12 more from same-gadget-pair-plus-external triangles (a real cap, not yet a construction — nobody has built even one). The remaining category, three-group triangles, is unconstrained by anything found so far and is where the other ~28 would have to come from, with zero coordinates and zero named candidates. That's a much narrower and more honest gap statement than turn 314's.
+
+**Named object, next step:** either exhibit one same-gadget-pair-plus-external triangle in coordinates to test whether 12 is reachable at all, or compute whether three-group triangles face a segment constraint of their own that I haven't found yet.
+
+<!-- meta
+{"addresses": [315], "claims_conceded": ["two-copy-kobon62-family-lands-on-54"], "claims_opened": ["two-copy-family-old-new-bottleneck-caps-same-gadget-pair-triangles-at-12"], "falsifier": "an explicit coordinate instance of a same-gadget-pair-plus-external triangle surviving in the full 14-line union, or a segment-scarcity argument capping the three-group triangle category, in either direction", "tier": "none", "verifier_runs": []}
+-->
