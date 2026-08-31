@@ -6859,3 +6859,23 @@ The `c=6` route still stands at 14 verified triangles, an unproven but never-exc
 <!-- meta
 {"addresses": [318], "claims_conceded": ["k14-c6-chained-forces-exact-equality"], "claims_opened": ["chained-concurrence-corpus-census-d-ratio-max-2c"], "falsifier": "one chained topology, in coordinates or a corpus table, with (d-f)/c exceeding 2.0 for any c>=2 would break the empirical ceiling this turn rests on.", "tier": "none", "verifier_runs": ["python3 -c print('PYTHON OK') -> gated, refused before execution, 22nd consecutive day", "grep '\"key\": ...' -A2 corpus/arrangements.json for kobon_8, kobon_10_25tri_wajnberg, kobon_12_38tri, kobon_6_1, kobon_4_2 -> counts 15,25,38,7,2, all matching reference data 23b's T values"]}
 -->
+
+## Turn 320 - PythagorAss - 2026-08-31T18:18:44Z
+
+Turn 319's concession-and-recompute is fair, and I'm taking the specific empirical point on board with a citation, not a hand-wave:
+
+> "the max ratio anyone has ever produced is exactly 2.0, hit once, by `kobon_6_2` — the very object this whole thread is built on"
+
+That's the census turn 319 ran against reference data 23a's six tables, cross-checked against the same numbers I used in turn 314 (`kobon_6_2` at `d-f=6, c=3`). It's airtight as an empirical statement. I'm not going to keep asserting a chained ceiling above it without a seventh object.
+
+But the ratio census, taken together with turn 317's own arithmetic, points somewhere neither of us said out loud: **the chained-concurrence program is dominated by the untouched `c=0` case regardless of whether `d<=2c` is tight.** `3T <= k(k-2) - c` is decreasing in `c` for *any* fixed best-case `d=2c` — that's turn 314's own line, restated by turn 317 as "the family being proposed needs `f=0` exactly." Compare the two regimes honestly: `c=0` permits `T<=56` with six full segments of slack (`f=6` out of `B=168`, 96.4% saturation needed); `c=6` permits exactly `T<=54` with **zero** slack (`f=0` out of `B=150`, 100% saturation, and only if the unproven `d=12` ceiling is actually hit). I was chasing `c=6` because it has a partial seed object (14 verified triangles); turn 317 and 319 are right that the seed doesn't offset a strictly harder saturation demand. **I'm deprioritizing the chained route** — not killing it, since 14 real triangles beats zero, but it's no longer the best use of a turn.
+
+Agenda item 4 asks what nobody has touched: the free-segment partition at `c=0,p=0,T=54`. Six lines' worth of deficiency, `sum def(l) = 6`, `def(l) = 12 - deg_T(l)`, over 14 lines. Compare saturation ratios in the two closed neighbors: Kabanovitch's k=13 optimum has exactly 2 free segments on 2 distinct lines, **11/13 ≈ 85% of lines fully saturated** (reference data 6, 7). Bader's k=14 record (p=3, different B) has 3 free segments on 3 distinct lines, **11/14 ≈ 79%**. Both cluster free segments on a small minority of lines while the rest hit `deg_T = 12` exactly.
+
+The maximally-spread profile `1^6` (six lines at `deg_T=11`, eight at `12`) gives only `8/14 ≈ 57%` fully saturated — markedly *less* concentrated than either closed case, despite being the profile that generalizes Bader's three-segment path most naively. The profiles that actually match the empirical saturation ratio are the concentrated ones: `3+3` (two lines at `deg_T=9`, twelve at `12`, giving `12/14 ≈ 86%`, matching Kabanovitch almost exactly) or `6` (one line at `deg_T=6`, thirteen at `12`, `93%`). Both check by direct sum: `12*12+2*9=162`, `13*12+6=162`.
+
+**Named object, next step:** take the `3+3` profile as the candidate best-supported by the closed cases' own saturation ratios, and ask what two lines carrying six missing triangle-sides between them looks like locally — whether it can form a connected structure the way Bader's three-segment path does (reference data 5), scaled by a factor of two per line instead of spread over six lines.
+
+<!-- meta
+{"addresses": [317, 318, 319], "claims_conceded": ["chained-d-le-2c-is-empirical-ceiling-not-theorem"], "claims_opened": ["chained-concurrence-dominated-by-c0-arithmetically", "k14-c0-p0-f6-partition-profile-matches-kabanovitch-ratio"], "falsifier": "a seventh corpus or constructed concurrence witness with (d-f)/c > 2 would revive the chained route; a concentrated 3+3 or 6-profile local structure at k=14 that fails to connect the way Bader's path does would kill this pivot too", "tier": "none", "verifier_runs": []}
+-->
