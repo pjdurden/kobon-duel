@@ -7406,3 +7406,22 @@ Below this segment (`y<0`): only `L2`'s down-ray and `L3`'s down-ray bound it �
 <!-- meta
 {"addresses": [343], "claims_conceded": [], "claims_opened": ["free-segment-can-have-bounded-quadrilateral-on-far-side"], "falsifier": "an argument showing the k=4 quadrilateral I built is not actually empty (some line among L1-L4 crosses its interior), or that reciprocity between saturated lines' rows can fail for a table that is otherwise order-type-consistent, which would revive item 4 as an obstruction source.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 345 - PythagorAss - 2026-09-01T18:18:44Z
+
+Turn 344 is Euclidn't's own branch — it answers agenda item 3 part 2 (wide faces beyond a free segment), not item 2, and doesn't touch the concurrence ratio or the k=14 construction I promised last turn. Delivering on that promise instead: a symmetric ansatz for k=14, checked for a fatal arithmetic obstruction *before* spending turns on row arithmetic, per the standing rule to produce the crude cap first.
+
+Mirror-translate symmetry (order 2, reference data 13) is dead as a family — capped at 36. Kabanovitch's own k=13 optimum uses only an order-2 involution (`sigma`), which is compatible with any triangle count since orbits under an order-2 group have size 1 or 2. Since 14 = 2×7 factors naturally, the next symmetric ansatz worth pricing before building it is an order-7 rotation: 14 lines split into two free orbits of 7 under `C7`, e.g. two families of 7 lines each tangent to a common circle of its own radius at angles spaced `2π/7` apart, rotated by a phase offset between the two families.
+
+**Orbit-counting kills it outright, and it's cheap to check.** Let `g` generate `C7`, order exactly 7 (prime), acting as a symmetry of the whole 14-line arrangement. Two facts:
+
+1. **No line is individually fixed by `g`.** A line's direction is invariant under rotation by `2π/7` only if `2π/7` is a multiple of `π`, false. So every line-orbit has size exactly 7 (7 is prime, so orbit size divides 7 and can't be 1) — consistent with the two orbits of 7 in the ansatz, and forcing `k` to be a multiple of 7 for *any* `C7`-symmetric arrangement at all.
+2. **No triangle is individually fixed by `g`.** If a triangle were fixed setwise, `g` would induce a permutation of its 3 vertices, giving a homomorphism from `⟨g⟩` (order 7) into `Sym(3 vertices) = S_3` (order 6). The image's order divides both 7 and 6, so the image is trivial — meaning `g` fixes all three vertices individually. But a nontrivial rotation fixes only the center point, never three distinct points. Contradiction. So every triangle-orbit has size exactly 7 as well (same primality argument).
+
+**Consequence: any `C7`-symmetric 14-line arrangement has `T ≡ 0 (mod 7)`.** `54 = 7·7 + 5`, so `54 mod 7 = 5 ≠ 0`. **No 14-line arrangement with exact 7-fold rotational symmetry can hit 54 triangles, full stop, independent of radii, phases, or which 7+7 line split is chosen.** This isn't a search failure — it's a parity-style obstruction on the *symmetry group*, not the target, and it kills the entire pinwheel family before a single row gets written.
+
+This doesn't touch my prior: it rules out one specific construction shape, not the target itself, and it's exactly the kind of check the standing rule demands before building fine structure. What survives: order-2 symmetry, which places no such constraint (`54` is even, so an order-2 involution needs only an even count of non-self-paired triangle-pairs, which is free), matching why the only two constructions in this whole ledger that ever worked — Kabanovitch's `sigma` and reference data 26/28's helper-line gadgets — are order-2, never higher. Next turn: an order-2 ansatz for k=14 specifically, built from two mutually-sigma-image 7-line halves with no fixed line (14 even, so no center-fixed line is required, unlike k=13's `sigma` which fixes line 1) — checking the same orbit arithmetic first before rows.
+
+<!-- meta
+{"addresses": [343, 344], "claims_conceded": [], "claims_opened": ["c7-rotational-symmetry-forces-t-mod-7-kills-k14-pinwheel"], "falsifier": "an explicit triangle shown invariant (setwise) under a nontrivial order-7 rotation, breaking the S_3-homomorphism argument, or a worked C7-invariant 14-line arrangement whose triangle count is not a multiple of 7 would refute the orbit-counting lemma.", "tier": "none", "verifier_runs": []}
+-->
