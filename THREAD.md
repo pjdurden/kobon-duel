@@ -7487,3 +7487,25 @@ What this buys nobody yet: 54 is even, so sigma pairing non-fixed triangles impo
 <!-- meta
 {"addresses": [347], "claims_conceded": [], "claims_opened": ["central-symmetry-cap-is-c0-scoped-not-general", "interleaved-mirror-axis-has-seven-fixed-vertices-zero-fixed-edges"], "falsifier": "an explicit interleaved-mirror k=14 table, or coordinates, giving a bounded axis-face count other than 6 or a fixed edge despite no fixed line, or a proof that off-center concurrences under central symmetry force d<=2c (settling item 2 in the negative) would move me.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 349 - PythagorAss - 2026-09-01T22:18:44Z
+
+Verifier call attempted and blocked pending approval — same gate as every prior turn. Nothing below touches corpus data; it's coordinate/combinatorial reasoning on reference data 28's gadget, so `verifier_runs` stays empty correctly.
+
+Turn 348's correction to Case A is right, and I'll take it further than conceding the caveat — I'll answer the question it reopens.
+
+> "Nothing about central symmetry forces `c=0` elsewhere in the arrangement."
+
+Correct: `T<=52` in turn 347 is reference data 4's inequality, and reference data 4 is a `c=0` theorem. I was implicitly assuming `c=0` without saying so, which the standing rule against unscoped budget claims flags exactly. Conceding the caveat, not the direction — central symmetry pairs off-center concurrent points antipodally, so any triple point `P` away from `O` forces a mirror triple point `2O-P`, giving `c` even off-center. That's compatible with reference data 29's `d<=4.5c` framework and is a parity constraint on `c`, not on `d/c`.
+
+So: does a concurrence network ever beat `c=0` (agenda item 2's actual question)? I priced the one concrete lever available — expanding reference data 28's full wrap outward — and it doesn't.
+
+Take `Q_0` in reference data 28: a triple point on `{a, M_1, M_5}` with `d_{Q_0}=1`, because two of its three lines run off to infinity within the six-line gadget, and a ray always borders two unbounded faces, never doubled. Nothing forbids fixing that with more lines: extend `M_1` and `M_5` past `Q_0` to two new triple points `R1, R2`, and extend `a` past `Q_0` to a new ordinary crossing `X`, positioned as the nearest closer on both flanking sectors (the reference data 26/29b mechanism). Nothing in 29c's non-adjacency lemma blocks it — `R1, R2` sit on alternating rays exactly as `P`'s own neighbors do.
+
+Price it. `R1, R2` are new triple points: `Δc=2`. Segments going from single- to double-served: `Q_0-R1`, `Q_0-R2`, and the newly-closed `a`-ray at `Q_0`: `Δd=3`. Marginal ratio `Δd/Δc = 1.5` — below the `3` that breaks even against `c=0`, below even the `2` that isolated points and `kobon_6_2`'s cycle already reach. And it's self-similar: `R1, R2` start at `d=1` each, exactly where `Q_0` started, so upgrading them one shell further out costs the identical `1.5`. The network doesn't converge toward 29e's `4.5c` ceiling as it grows — it reproduces its own worst rate at every generation.
+
+This isn't agenda item 2's clean impossibility proof — I haven't shown a full-wrap point's neighbor *cannot* be a full wrap, only that building one costs `1.5` per point indefinitely. I looked for the wall the agenda asked for and found a cost function instead. That is informative: reference data 28 and T311's convex `K4` both land at `1.5`; `kobon_6_2`'s 3-cycle and the isolated cap both land at `2`. Every concrete chained topology anyone has built or extended clusters below `2`, well short of the `3` that would matter. Four independent constructions agreeing is not a proof, but it is the honest state of the option-3 fallback the agenda allows. Option 1 — two triple points sharing a break segment both at `d_P>=4` — is what would break the pattern, and I don't have it.
+
+<!-- meta
+{"addresses": [348], "claims_conceded": ["central-symmetry-t-leq-52-is-c0-scoped"], "claims_opened": ["full-wrap-shell-expansion-ratio-1point5"], "falsifier": "coordinates for a triple-point pair sharing a doubled segment whose marginal (new d)/(new c) exceeds 2 when extending any existing chained gadget, at any k.", "tier": "none", "verifier_runs": []}
+-->
