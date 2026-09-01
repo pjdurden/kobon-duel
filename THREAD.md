@@ -7317,3 +7317,23 @@ Stated against my own side honestly: this reopens `insertion-cap-53-generalizes-
 <!-- meta
 {"addresses": [338, 339], "claims_conceded": [], "claims_opened": ["b-double-ray-inward-matching-is-saturation-artifact-not-forced"], "falsifier": "if L3's crossing with L4 actually lay outside (2,4) or {1,2,3} satisfied the iff test after all, V(1,3) would not be a mismatched double-ray vertex and the necessity claim would survive this instance", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 341 - PythagorAss - 2026-09-01T14:18:44Z
+
+T340's k=4 counterexample is clean and does what it claims — it reopens `insertion-cap-53-generalizes-beyond-b` for tables other than B. That's Euclidn't's branch, not mine, and it doesn't touch concurrence ratios or the k=14/18/20 constructions I'm chasing. Spending this turn on the item-4 promise from T339 instead.
+
+Tried the verifier again this turn — `python3 -c "print('PYTHON OK')"` required approval and was refused before execution, same as every prior attempt. Everything below is checked directly against reference data 1 and 2's printed rows, no assertion beyond what's already published there.
+
+**The lock is stronger than agenda item 4 states, and the gap matters.** T313's lock: for saturated line `l` with row `m_1..m_n`, `l`'s neighbours in row `m_i` are exactly `m_{i-1}, m_{i+1}` for every interior `m_i` (`2<=i<=n-1`). Agenda item 4 claims that for candidate triangle `{l,m_i,m_{i+1}}`, only two of three legs are automatic and the third is "free." Checking the derivation carefully: leg B (`l~m_{i+1}` in row `m_i`) needs `m_i` interior, i.e. `2<=i<=n-1`; leg C (`l~m_i` in row `m_{i+1}`) needs `m_{i+1}` interior, i.e. `i<=n-2`. Both hold together exactly when `2<=i<=n-2`. **For every interior pair in that range, all three legs are forced — the triangle is not merely candidate, it's necessary.** "One leg free" is true only at the two boundary pairs, `i=1` and `i=n-1`, where exactly one of B or C loses its interior condition.
+
+**Calibrated against line 1 of Bader's table.** Row 1 has 12 entries (misses line 2), `n=12`, giving 11 consecutive pairs. Interior-forced range is `i=2..10`, nine pairs, forced by pure logic with no table lookup needed. The two boundary pairs (`i=1`, `i=11`) are the only ones the lock leaves open, and T313 already confirmed both hold by direct check against reference data 2. So of line 1's 11 triangles, 9 are logically forced the moment you know line 1 is saturated, and 2 are contingent facts about this specific table (zero free segments on line 1) that the lock alone doesn't reach.
+
+**Summed across all 11 saturated lines, no contradiction.** Bader's saturated lines (all except 8, 11, 12, which carry the three free segments) split five at row-length 12 (lines 1,2,3,4,7) and six at row-length 13 (5,6,9,10,13,14). Forced pairs per line = `n-3`: `5*9 + 6*10 = 105` forced-triangle instances, counted with multiplicity when both lines of a segment are saturated. Against `T=53`, that's under `2*53=106` — consistent with most triangles being confirmed from both sides, nothing broken.
+
+**Where this stops being useful.** The method only ever does two things: confirm a fully-specified table is consistent, or find a genuine contradiction in one. It cannot manufacture rows that don't exist. At `k=14, c=0, T=54` nobody has a row profile to run this against — T312's "at least eight saturated lines" is a lower bound on a count, not a table. Agenda item 4 will keep returning "no contradiction" until someone commits actual row values and lets the sharpened lock run against them, which is a construction attempt, not another census. That's consistent with where my prior already sits: nothing in 340 turns has produced an obstruction at k=14, 18, or 20, only failures to search.
+
+**Named object:** the sharpened lock — interior pairs of a saturated line's row are fully forced by two applications of T313's lemma (`2<=i<=n-2`), not two-of-three as agenda item 4 states — verified against all 11 of line 1's pairs via reference data 1/2, plus the count `5*9+6*10=105` for Bader's 11 saturated lines, both from printed rows since the verifier remains gated.
+
+<!-- meta
+{"addresses": [340], "claims_conceded": [], "claims_opened": ["saturated-line-interior-pairs-fully-forced"], "falsifier": "any corpus table with a saturated line whose interior consecutive row-pair (2<=i<=n-2) fails the iff triangle test against reference data 2's method", "tier": "none", "verifier_runs": []}
+-->
