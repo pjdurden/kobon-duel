@@ -3,233 +3,284 @@
 Claim registry, rewritten daily by the referee. `SETTLED` requires a complete
 argument or a verifier run. Two agents agreeing is not evidence.
 
-Rewritten by REFEREE after turn 305. Turns 280-304 audited.
+Rewritten by REFEREE after turn 329. Turns 306-329 audited.
 
-**The cycle opened the concurrence route I pointed at, worked it honestly for
-twenty-five turns, and closed it on a line count that is false. I built the
-counterexample.** T300 argued that three isolated triple points at `k=14` need
-nine hub lines plus **two dedicated helper lines each, none shared**, hence
-fifteen lines, hence dead. T301 conceded it. Reference data 26 is an explicit
-eight-line arrangement, in coordinates, with **two line-disjoint triple points,
-each carrying two doubled segments, sharing both of its helper lines**. The same
-construction extends to three points on eleven lines, leaving three spare at
-`k=14`. The helper-sharing that T300 declared impossible needs only that the
-triple points be positioned so one line passes near all of them, and T297 had
-already established the governing fact — nearness is an ordering condition, not
-a scale condition — four turns before T301 conceded the opposite.
+**Twenty-four turns, six honest concessions, two genuinely new lemmas, and a
+second consecutive cycle that closed a live branch on an argument that is
+false.** T327 proposed the minimal three-break realization of a fully doubled
+triple point — three lines through `P`, each also passing through a vertex of the
+triangle cut out by three further lines — and concluded it gives `d_P = 0`,
+because "the three outward rays run away from the triangle into unbounded space,
+since nothing in this six-line picture closes them". T328 conceded it in the next
+turn. **It is wrong.** Three concurrent cevians cut a triangle into **six**
+regions, not three; the ray of `PQ_0` opposite to `Q_0` does not escape, it exits
+through the opposite side `Q_2Q_4`, which is a line of the same six-line picture.
+Reference data 28 is that arrangement in coordinates, completely solved: six
+lines, four triple points, seven vertices, eighteen regions, six bounded faces
+all triangular, `B = 12`, `d = 6`, `f = 0`, and **every one of the six segments
+at `P` doubled**. `d_P = 6`, the full wrap, realized. T326's ceiling of six was
+right; T327's floor of three breaks was right; T327's counterexample to both was
+not.
 
-**T301's concession is the unearned one and I am reversing it.** Its stated
-reason is "a helper line close enough to `P1` to beat contenders there is, by
-the same distance argument, far from `P2`". That is exactly the scale framing
-T297 refuted on its own side of the debate, with a worked example, and which
-Euclidn't never contested. A concession should be forced by the opponent's
-evidence. This one was forced by an argument the conceding side had itself
-already shown to be wrong.
+**T328's concession is the unearned one and I am reversing it.** Its stated
+reason is that "the cevian gadget's three triangle sectors are pairwise
+non-adjacent — each pair is separated by an unbounded outward sector". There are
+six sectors, not three, they are all triangles, and they are all adjacent. T328
+also wrote "my turn 326 named the right invariant and then didn't check it
+against my own proposed realization" — that self-criticism is misdirected. T326's
+invariant was correct and T326's realization was never checked by anybody,
+including me, until now. The standing prohibition against conceding to an
+argument your own side has refuted needs a companion: **do not concede to a
+geometric claim about a configuration you can draw in six lines without drawing
+it.**
 
-**And the route is worse than either agent thinks, for a reason neither
-computed.** Take T293's cap — an isolated triple point doubles at most two
-segments, which I re-proved from scratch below and which is right — and put it
-against T288's identity `d - f = 3T - B`. Each triple point destroys three
-bounded segments and buys back at most two doubled ones. So for `p = 0` with
-isolated triple points
+**And the full wrap still loses, which is the part that matters.** Reference
+data 28 has `c = 4` and `d = 6`, so `3T <= k(k-2) - 3c + d = 24 - 12 + 6 = 18`
+against `24` at `c = 0`. The ratio `d/c = 1.5` is **identical** to the convex `K4`
+that T310 computed and T311 bounded and T312 conceded, and it is below the
+isolated ratio of `2` and below `kobon_6_2`'s `2`. Two order types of the same
+six-line four-triple-point configuration; both reach `T = 6` where `N(6) = 7`.
+The local record moved and the family did not.
 
-    3T <= B + d <= k(k-2) - 3c + 2c = k(k-2) - c
+**Nobody looked at the second order type.** T308 wrote "four points `P1..P4` in
+convex position" in the sentence that opened the family, and T309, T310, T311 and
+T312 all worked that case exclusively. Four points in general position have two
+order types. The other one — one point inside the triangle of the other three —
+is exactly where the full wrap lives. Twelve turns on `K4` and the interesting
+half of it was excluded by an adjective in the proposing turn, then declared dead
+at T311 with "for any convex quadrilateral, by counting alone" and conceded at
+T312 as "the complete-quadrilateral K4 branch is dead". The branch was half
+examined.
 
-and at `k=14` the free-segment slack available to a 54-triangle arrangement is
-`f <= 6 - c`. **Concurrence strictly costs slack.** The most permissive regime
-at `k=14, T=54` is `p=0, c=0`, with six free segments; `c=3` allows three;
-`c=6` allows none. Every turn from T288 to T301 argued the opposite.
+**The ray picture, finished; this is agenda item 2's answer.** Reference data 29.
+**At a triple point, two doubled rays whose far endpoints are both ordinary
+crossings cannot be adjacent in the cyclic order of six.** Proof: each of the two
+sectors flanking an ordinary doubled ray closes on the same line, because
+"nearest crossing" on that ray names one line; two adjacent ordinary doubled rays
+therefore force one line to close three consecutive sectors, hence to meet four
+consecutive rays, hence to meet an antipodal pair. So at most three ordinary
+doubled rays per point, `|S_1| <= 3c`, and with `d_P <= 6` and
+`sum_P d_P = |S_1| + 2|S_2|`,
 
-**The inversion traces to one sentence in T288.** It wrote that at `c=0`,
-"reference data 4's `p<=3` filter and reference data 22 together show `p=3` is
-required", and got `f=0`. Reference data 4 gives `p <= 3` — a *permission*, an
-upper bound on parallels, not a requirement — and at `p=0, c=0` the arithmetic
-is `f = 168 - 162 = 6`, the loosest case on the board. T292, T293 and T294 then
-compared the `c=3` budget against that false baseline and concluded `c=3` "is
-exactly as loose as Bader's record". The numbers in T292 and T293 are right
-(I checked: `6*11 + 3*13 + 5*12 = 165 = 168 - c` at `c=3`, matching my formula
-exactly). The comparison they were used for is backwards.
+    d <= 4.5c        and, sharper,      3T <= k(k-2) + |S_1|/2
 
-**The one thing that would make concurrence pay is chaining, and the corpus has
-been saying so for four days without either agent hearing it.** T298's census is
-correct: every corpus arrangement with `c >= 2` puts its triple points on a
-shared line. The reason is in reference data 27. At an isolated triple point the
-"nearest crosser" of a ray is unique, which chains the flanking sectors' third
-lines together and caps doubling at two. When a neighbouring crossing is itself
-a triple point, the uniqueness fails, and `kobon_6_2`'s point `{1,3,4}` carries
-**three** doubled segments — over T293's cap, which is what T293's cap is scoped
-to allow. Chaining is not the corpus being lazy; it is the only version of the
-mechanism that recovers what the concurrence costs.
+where `S_1` is the set of doubled segments with an ordinary far endpoint and
+`S_2` those joining two triple points. **Concurrence beats `c = 0` if and only if
+`d > 3c`.** Nothing on record approaches it: the corpus maximum is `d = 2c`
+(T319's census, correct and checked), `kobon_6_2` sits at `2`, both `K4` order
+types at `1.5`, isolated points at `2`.
 
-**Nobody enumerated `kobon_6_2`.** Eleven turns of this cycle reasoned about its
-structure. T302 named five triangles, T303 built an argument about which lines
-are "committed" on those five, T304 built a tax on top of that argument. The
-corpus prints `"count": 7` two lines above the table. The seven are
-`{1,2,4} {1,2,6} {1,3,5} {2,3,4} {2,5,6} {3,4,6} {4,5,6}` — reference data 27,
-with all fifteen segments assigned and `d = 6`, `f = 0` closed exactly. T302's
-"every pair of unique lines is bridged by a hub line" is true and also
-incomplete: `{2,3,4}` and `{4,5,6}` are two more of the same shape and neither
-agent found them, which is why T302's "all six lines load-bearing, zero generic"
-inference was drawn from five sevenths of the object.
+**The `c` filter at `k = 14` is not what three turns of this cycle said it was.**
+T315 wrote that `c = 7` "drops to `T <= 53`, already below target"; T319 and T320
+inherited it and T320 built its pivot on it. That conclusion is a consequence of
+`d <= 2c`, which T318 correctly identified as not a theorem and T319 conceded.
+Under the proven `d <= 4.5c`, **no concurrence count is excluded at `k = 14`**:
+`f = d - 3c + 6`, so `T = 54` needs only `d >= 3c - 6`, and `4.5c >= 3c - 6`
+holds for every `c >= 0`. The segment budget rules out no `c` and recommends
+none. What it does say, and this survives intact from reference data 27a, is
+which regime demands more saturation: `c = 0` needs `f = 6`, `c = 6` needs
+`f = 0`. That is a statement about difficulty of construction, not about
+existence, and the record at `k = 6, 8, 10, 12` — where every corpus optimum is
+concurrence-bearing and sits at or near equality in the *tighter* budget while
+the looser `c = 0` ceiling is provably unreachable — is a standing caution
+against reading it as strategic advice. I entered that caution against my own
+reference data 27a; see finding 6.
 
-**T304's tax does not exist.** Its verified observation is that the row-neighbour
-of a concurrence bracket is the line completing the doubled triangle. That is
-reference data 4's candidate rule read out loud: a segment's two endpoints
-determine which triples it can serve, so of course the neighbour is the third
-line. Nothing is pinned by it — *which* line sits in the neighbouring slot is a
-free choice, and the real condition (that the neighbour close a genuine triangle
-in its own rows too) is the definition of a doubled segment, already priced by
-T293's cap of two. Calling it "the same mechanism as reference data 4's
-parallel-pair tax" is wrong in the way that matters: a parallel pair deletes a
-crossing point and therefore a segment. This deletes nothing.
+**The eleven double-ray vertices of B: the sweep is complete and I finished it.**
+T324 derived the right necessity condition (a shared free-segment vertex with
+three-sided wedges beyond both edges must be a double-ray vertex) and checked
+two; T325 sharpened it correctly (a closing interior sector *proves* the two
+segments are not free) and checked three more. The remaining six are `V(6,7)`,
+`V(7,8)`, `V(8,9)`, `V(9,10)`, `V(12,13)`, `V(13,1)`, and they close as
+`{6,7,9}`, `{1,7,8}`, `{6,8,9}`, `{9,10,12}`, `{6,12,13}` and `{1,9,13}`. All
+six are in reference data 7 and all eighteen legs check against reference data
+6's printed rows. **Eleven of eleven, zero exceptions.** Reference data 30. What
+this closes is the three-sided-wedge branch of reference data 22e *for B*, which
+reference data 22 already closed by another route; T326's scope flag on it was
+correct and is the reason agenda item 3 is being retired below.
 
 ## The referee's findings this cycle
 
-1. **Two isolated triple points can share both helper lines. Eight lines, in
-   coordinates.** Reference data 26. `P1` and `P2` are line-disjoint triple
-   points ten units apart; `L: y = -0.1` and `L': y = 0.1 + 0.01x` pass near both
-   and are the nearest crosser on three consecutive rays at each. Four tiny
-   triangles per point, two doubled segments per point, all margins better than
-   fifty to one. Three points on eleven lines by the same recipe. **T300's
-   fifteen-line count is refuted and T301's concession of it is reversed.**
-2. **Isolated concurrence strictly costs slack, and nobody computed it.**
-   Reference data 27a. `d <= 2` per isolated triple point (T293, re-proved here)
-   plus `d - f = 3T - B` (T288) gives `3T <= k(k-2) - c` for `p = 0`, and at
-   `k = 14, T = 54` the slack is `f <= 6 - c`. The loosest regime is `c = 0`.
-   The entire T288-T301 program is inside the dominated one.
-3. **T288's `c=0` bullet is the error that inverted the cycle.** It read
-   reference data 4's `p <= 3` as `p = 3`. At `p = 0, c = 0` the requirement is
-   `f = 6`, not `f = 0`. T292's and T293's own numbers are right and I checked
-   them (`6*11 + 3*13 + 5*12 = 165`); the baseline they were compared to is not.
-4. **`kobon_6_2` has seven triangles and the thread found five.** Reference data
-   27b. `{1,2,4} {1,2,6} {1,3,5} {2,3,4} {2,5,6} {3,4,6} {4,5,6}`, every one
-   passing the three-leg adjacency test, all fifteen bounded segments assigned,
-   six doubled, zero free, incidences `3+4+3+4+3+4 = 21 = 3T`. The count is
-   printed in the corpus two lines above the table.
-5. **A chained triple point beats the isolated cap.** Reference data 27c. Point
-   `{1,3,4}` of `kobon_6_2` carries three doubled segments, not two, because two
-   of its six rays end at other triple points and the nearest-crosser uniqueness
-   that proves the cap fails there. This is why the corpus chains, and it is the
-   answer to T298's census that T298, T299, T300 and T301 all missed.
-6. **T304's row-neighbour "tax" is reference data 4's candidate rule restated.**
-   Reference data 27d. True as an observation, empty as a constraint, and not
-   analogous to the parallel-pair tax, which deletes a segment.
-7. **Standing from the last cycle, unchanged and unattacked.** Reference data 22
-   (insertion into B caps at 53), 23 (`3T <= B` fails at a concurrence, four
-   corpus witnesses), 24 (the union of bounded faces is neither hull nor convex),
-   25 (`B = k(k-2) - 2p - sum m(m-2)`). T283-T287 pushed at reference data 22
-   from the concurrent-insertion side and it held; that is the first real attack
-   it has taken and it was a good one. Its steps (b) and (c) are still unchecked
-   by any agent.
-8. **The verifier is gated on the fourteenth consecutive day.** I ran
-   `python3 -c "print('PYTHON OK')"` in this session; refused before execution.
-   `grep` and `Read` run; `sed -i` is refused too, which is why this file is
-   rewritten by edit rather than by splice. Every agent turn this cycle reported
-   the gate honestly. The NO_VERIFIER_RUN notice fired once, on T281, against a
-   tool the sandbox refuses; it is noise. Owner action: the allowlist.
-9. **Caution on reference data 26 and 27, entered by me against myself.** Both
-   are mine and unattacked. Reference data 26 is a coordinate construction with
-   every crossing parameter written down, which is the strongest evidence
-   available without a verifier, and it is falsifiable by anyone who redoes six
-   nearest-crosser comparisons. Reference data 27b is a complete enumeration and
-   its own cross-check is that the incidences sum to `3T` on the nose. Reference
-   data 27a is a proof, it is mine, and agenda item 1 is to break it. Not gold.
+1. **The full wrap `d_P = 6` is realized, in six lines and coordinates.**
+   Reference data 28. `P = (1,1)` inside the triangle `Q_0 = (0,0)`,
+   `Q_2 = (4,0)`, `Q_4 = (0,4)`; hub lines `y = x`, `y = (4-x)/3`, `y = 4-3x`;
+   side lines `y = 0`, `x + y = 4`, `x = 0`. Six distinct slopes, four triple
+   points, three ordinary crossings, `V = 7`, 18 regions, 6 bounded and all six
+   triangular, `B = 12`, `d = 6`, `f = 0`, incidences `6*2 + 6*1 = 18 = 3T`, and
+   `d - f = 6 = 3T - B`. Every emptiness claim checked line by line. **T327's
+   `d_P = 0` is refuted and T328's concession of it is reversed.**
+2. **The full wrap loses anyway, and that is the load-bearing number.** `c = 4`,
+   `d = 6`, ratio `1.5`, the same ratio T311 derived for the convex `K4` and T312
+   conceded. `3T <= 18` against `24` at `c = 0`. A local ceiling was reached and
+   the family is exactly as dead as it was at T312.
+3. **The non-adjacency lemma, and `d <= 4.5c` derived rather than guessed.**
+   Reference data 29. Two doubled rays at a triple point cannot be adjacent if
+   both have ordinary far endpoints, because the shared sector's unique closing
+   line would have to meet four consecutive rays and hence an antipodal pair.
+   Hence `|S_1| <= 3c`, and with `d_P <= 6`, `d <= 4.5c` and
+   `3T <= k(k-2) + |S_1|/2`. **Concurrence beats `c = 0` iff `d > 3c`.** This is
+   the object agenda item 2 asked for. The gap between the proven `4.5c` and the
+   observed `2c` is now the whole of the concurrence question.
+4. **No `c` is excluded at `k = 14`.** `f = d - 3c + 6`, so `T = 54` needs
+   `d >= 3c - 6`, which `d <= 4.5c` never contradicts. T315's `c = 7` kill, and
+   T319's and T320's use of it, rest on `d <= 2c`, which T318 correctly flagged
+   as an empirical ceiling and T319 conceded. Correct statement: `c >= 7` is dead
+   *under the observed ceiling*, live under the proven one.
+5. **The double-ray sweep of B is 11 of 11.** Reference data 30. T324 did two,
+   T325 did three, I did the remaining six: `{6,7,9}`, `{1,7,8}`, `{6,8,9}`,
+   `{9,10,12}`, `{6,12,13}`, `{1,9,13}`, all against reference data 6's printed
+   rows and all present in reference data 7. Every double-ray vertex of B closes
+   as a triangle, so no pair of B's segments meeting there is free.
+6. **Caution against my own reference data 27a, entered by me.** 27a's
+   arithmetic is right and its strategic reading is thin. At `k = 6, 8, 10, 12`
+   every corpus record is concurrence-bearing and sits in the *tighter* budget,
+   while the looser `c = 0` ceiling is provably unreachable there
+   (Clement-Bader). `kobon_6_2` reaches `N(6) = 7` at `3T = B + d` exactly, with
+   a ceiling of 21 against `c = 0`'s 24. "Loosest arithmetic regime" and "where
+   the records live" have been opposites at every closed even `k`. 27a says
+   `c = 0` demands the least saturation. It does not say `c = 0` is where to
+   look.
+7. **Two agent lemmas worth banking, both general, both unattacked.** T313's
+   mutual-neighbour lock: if line `l` is fully saturated with row order
+   `m_1..m_n`, then for every interior `m_i`, `l`'s two neighbours in row `m_i`
+   are exactly `m_{i-1}` and `m_{i+1}`. Proof is two applications of the iff
+   test and it holds for any `k`, any table. I re-verified it on rows 12 and 13
+   of Bader's table and confirmed line 1 is saturated by matching all eleven
+   consecutive row-1 pairs against reference data 2. And T318's
+   `d(m) <= 2m - 4` for an isolated point of multiplicity `m`, with net budget
+   effect `-(m-2)^2`, so multiplicity escalation is strictly worse and `m = 3`
+   is optimal among isolated concurrences. Both are real contributions.
+8. **Standing from earlier cycles, unchanged and unattacked.** Reference data 22
+   (insertion into B caps at 53), 23, 24, 25, 26, 27. Reference data 22's steps
+   (b) and (c) are still unchecked by any agent, seventy-four turns after I first
+   flagged it.
+9. **The verifier is gated on the twenty-ninth consecutive day.** Every agent
+   turn this cycle reported the gate honestly and correctly declined to log the
+   refusal as a run. The NO_VERIFIER_RUN notice fired twice, on T307 and T322,
+   against a tool the sandbox refuses; it is noise. Owner action: the allowlist.
+   In this session `head`, `tail` and `wc` were also refused, which is why this
+   file is rewritten by edit rather than by splice.
+10. **Not gold.** Reference data 28 is a construction, so it can never be gold in
+   phase 1. Reference data 29 is a proof and it is mine and unattacked; agenda
+   item 1 is to break it.
 
 ## Call-outs, by turn number
 
-- **T280-T304 in one line: the first cycle in this project's history that built
-  something.** T295's coordinate gadget and T299's two-copy arrangement are real
-  objects with real numbers, and both check out. The cycle then talked itself out
-  of the program those objects support, on a line count that is false, while the
-  arithmetic that actually condemns the program sat uncomputed in T288's and
-  T293's own results.
-- **T288's `c=0` bullet, the sentence the cycle was built on.** "Reference data
-  4's `p<=3` filter and reference data 22 together show `p=3` is required for
-  `T<=54` to even be arithmetically live." Reference data 4 gives `p <= 3` as an
-  upper bound on parallel pairs. Reading a permission as a requirement turned the
-  loosest case on the board (`p=0, c=0, f=6`) into the tightest (`f=0`), and
-  three turns of comparison were run against it. The rest of the turn — the
-  identity `d - f = 3T - B` — is the best piece of general algebra any agent has
-  produced in eighty turns. One sentence, uninspected, cost the cycle.
-- **T292, T293 and T294: right numbers, wrong baseline.** T292's per-line budget
-  and T293's corrected `d <= 2` cap are both correct; I re-derived the cap from
-  scratch and re-checked the budget (`6*11 + 3*13 + 5*12 = 165`, which is exactly
-  `168 - c` at `c=3`). They were used to conclude `c=3` "is exactly as loose as
-  Bader's record". Against the true `c=0` baseline of `f=6` it is half as loose.
-  Neither turn wrote down `3T <= k(k-2) - c`, which is one substitution away from
-  what both of them had in hand.
-- **T298, the census that answered its own question and did not notice.** Four
-  corpus arrangements with `c >= 2`, all chained, none isolated: correct, checked,
-  and a good use of a turn. The turn then framed it as "the isolated topology has
-  never been realized, so the burden inverts". The reason for the chaining is
-  arithmetic (reference data 27c: chaining is the only version that gets three
-  doubled segments out of a point instead of two), and it was available from the
-  same rows the census was read off.
-- **T300, the fifteen-line count, and the inference that does not follow.** "The
-  isolated `d=2` model needs 2 dedicated helpers per point with **none shared
-  between points**, since that's exactly what turn 299 built and verified." T299
-  used four helpers; that is not evidence that four are required. The supporting
-  arc argument proves only that one line cannot double both rays *at one point*.
-  Nothing in it stops a line from being the nearest crosser at two different
-  points, and reference data 26 exhibits one doing exactly that.
-- **T301, the unearned concession, and the one I am reversing.** T301 conceded
-  it "can't" exhibit a shared helper because "a helper line that's close enough
-  to `P1` to beat contenders there is, by the same distance argument turn 299
-  itself used, far from `P2`". T297 — PythagorAss's own turn, four earlier —
-  established with a worked example that nearness is an **ordering** condition,
-  not a scale condition, and Euclidn't never contested it. Conceding to an
-  argument you have already refuted is worse than conceding to a good one.
-  **Moving `isolated-d2-program-needs-fifteen-lines` to REFUTED and reopening the
-  program.**
-- **T302 and T303, an argument over five sevenths of an object.** T302's five
-  verified triangles are all genuine (I checked each against the rows). Its
-  structural claim — every pair of unique lines bridged, all six lines
-  load-bearing, "zero lines in this witness are generic" — was drawn without
-  `{2,3,4}` and `{4,5,6}`, which are two more triangles of the same shape.
-  `"count": 7` is printed two lines above the table in the file both turns read.
-  T303 then argued the coupling is "free" and T302's inference overreaches; both
-  were pricing a mechanism against no defined budget, when `d <= 2` per point had
-  been on the record since T293.
-- **T304, a tautology dressed as a tax.** "The row-neighbors of a concurrence
-  bracket are not free — they are committed to whichever lines are doing the
-  doubling." A segment's candidate triangles are determined by its two endpoints;
-  that is reference data 4's first line. Which line occupies the neighbouring
-  slot is chosen, not forced, and the doubling condition it does impose is
-  already what `d` counts. "This is the same mechanism as reference data 4's
-  parallel-pair tax, generalized" is the false step: a parallel pair removes a
-  crossing point and therefore a bounded segment. This removes nothing.
-- **T281's `D <= 2c` and where it came from.** T281 wrote "even the pessimistic
-  `D<=2c` I'd get from bounding isolated-point sectors" and used it to conclude
-  the family is not crudely dead. The bound was not derived until T293, twelve
-  turns later, by the opponent's side of the argument. Asserting the number you
-  were asked to derive, and calling it pessimistic, is the failure mode the
-  standing partition rule exists to catch.
-- **The promise ledger, and the item that has now failed three cycles.** The
-  k=18 free-segment locations were promised at T264, re-assigned by me at T280,
-  and are still not on the record. I am killing the item rather than assigning it
-  a fourth time: enumerating 93 triangles from an eighteen-row table is roughly
-  eight hundred adjacency tests, it is a verifier job, the verifier is gated, and
-  an agenda item that cannot be executed by hand is my error, not theirs. Turn
-  promises otherwise: T287 promised a from-scratch crude cap and delivered it in
-  the same turn; T291 named the isolated-gadget budget and T292 produced it;
-  T293's named coordinate realization was delivered by T295, two turns late, in
-  full. Net: much better than the last cycle, with the one standing failure now
-  retired by me.
-- **Good behaviour, named.** T283 opened a genuinely new line (non-generic
-  insertion through a vertex) and T284 killed it with the right geometric
-  reason; T285 conceded, then went and showed the *same* failure mode applies to
-  its own next candidate before proposing it, which is the single most useful
-  paragraph of the cycle. T286 generalised the kill from two vertices to all 78,
-  and T287 conceded it and immediately reported that its cheapest instantiation
-  on Bader's deficiency path was dead too, against its own route. T292 ran a
-  sum-check that could have refuted its own turn and reported that it passed.
-  T294 re-derived T293's antipodal chain independently before conceding. T295
-  answered a challenge with coordinates instead of an argument. T299 built a
-  second gadget and stated plainly which of turn 298's points it did *not*
-  dissolve. T302, T303 and T304 all read raw rows. Eleven honest turns out of
-  twenty-five, and the two best objects in the project's history. What went
-  wrong this cycle was not honesty and was not effort; it was that neither agent
-  ever recomputed the budget the whole program was aimed at.
+- **T306-T329 in one line: the best-argued cycle in the project's history, which
+  reached its central conclusion at T314 and then spent fifteen more turns
+  arriving at it again.** T314 conceded that chaining ties isolated concurrence at
+  `d = 2c`. T319 confirmed it empirically across six corpus tables. T320 concluded
+  "the chained-concurrence program is dominated by the untouched `c=0` case" and
+  deprioritized it. T326 reopened agenda item 2 anyway; T329 closed it again with
+  "chaining ties, does not beat", which is T314's own sentence. Four turns to
+  re-derive a conceded claim. Meanwhile the quantity that would have settled it —
+  the ratio `d/c` needed to beat `c = 0`, which is 3 — was never written down by
+  either side, and neither was the `4.5c` ceiling the agenda explicitly asked for.
+- **T308's adjective, and the twelve turns it cost.** "Four points `P1,P2,P3,P4`
+  in convex position." Four points in general position have two order types. The
+  convex one gives `d_P = 2` at every vertex (T310, correct). The other gives
+  `d_P = 6` at the interior point — the full wrap, the thing agenda item 2 was
+  asking for, three turns before T326 asked whether it could exist and five
+  before T327 said its natural realization gives zero. T311's "for any convex
+  quadrilateral, by counting alone" is correctly scoped and T312's concession is
+  correctly worded; nobody noticed that the scope excluded the interesting case.
+- **T310, the best hand computation of the cycle, and the one that should have
+  caught it.** T310 fixed coordinates, solved all three leftover pairwise systems,
+  found the fifth triangle `P1-P2-X` at `X = b∩d = (-12,-48)`, checked its
+  emptiness against `c, e, f`, and then flagged its own tension honestly: "if this
+  pattern is symmetric... 8 triangles, exceeding Clement-Bader's `T<=7`. Something
+  has to give... I have not checked P2, P3, P4 yet." That is exactly right and it
+  is how a turn should read. T311 resolved it correctly. Neither turn asked what
+  happens when the quadrilateral is not convex.
+- **T313's mutual-neighbour lock is the best general lemma an agent has produced
+  since T288's identity.** For a fully saturated line `l` with row order
+  `m_1..m_n`, every interior partner's row has `l` flanked by exactly `m_{i-1}`
+  and `m_{i+1}`. Two applications of the iff test, valid for any `k`, any table,
+  verified twice against Bader's rows in the same turn. I re-checked both
+  instances and also confirmed the premise the lemma needs: line 1 of Bader's
+  table is saturated, its eleven consecutive row pairs matching reference data 2's
+  eleven line-1 triangles exactly. Banked.
+- **T318, the second-best object of the cycle, and the correction that made it
+  possible.** T317 asserted `d = 12, f = 0` "exactly, or the family fails" on the
+  strength of `d <= 2c`. T318 said plainly that `d <= 2c` "comes from two tried
+  topologies. It is not a theorem", and then instead of stopping there produced
+  `d(m) <= 2m - 4` for isolated multiplicity-`m` points with net budget effect
+  `-(m-2)^2`, closing the multiplicity-escalation branch for good. T319 conceded
+  the overreach and answered with a corpus census rather than an assertion. That
+  is the exchange the project exists to produce.
+- **T320's percentage matching, and T321's kill.** T320 ranked free-segment
+  profiles at `k=14, c=0` by how closely their saturation percentage resembles
+  Kabanovitch's `11/13` and Bader's `11/14`, and picked `3+3`. T321's answer is
+  correct and its identity `S = 174 - U_b` checks (`2B = 336`, `3T = 162`,
+  78 bounded faces, 24 non-triangular at degree `>= 4`, so `U_b <= 78`). Two data
+  points at different `k`, different `B`, different `p` are not a prior over
+  partitions. T322 retracted cleanly.
+- **T322's "uniform mechanism" and T323's refusal to bank it.** T322 found S1's
+  double-extreme lock in Bader's rows and proposed that all three free segments
+  fail repair for one reason. T323 checked S3, found an ordinary crossing-order
+  mismatch instead, and wrote "I'd rather bank the weaker true claim than the
+  stronger unproven one." Both computations are correct against reference data 1
+  and the refusal is the right call.
+- **T326's scope flag is correct and its central mechanism is T306's.** The flag
+  — that even a complete double-ray sweep only settles insertion-into-B, not a
+  from-scratch concurrent 14-line arrangement — is right and it is why agenda item
+  3 is retired below. But "turn 326's own run-length mechanism", cited again in
+  T328, is T306's run-length rule, stated twenty turns earlier by the same agent.
+  Restating your own result is not a contribution; say which turn it came from.
+- **T327, the cevian, and the failure to draw it.** "Connecting `P` to the three
+  vertices divides the triangle into exactly **three** sub-triangles (standard
+  fact)". The standard fact is that three concurrent cevians divide a triangle
+  into **six** regions. T327's own construction has `P` joined to each vertex by a
+  *line*, not a segment, and each such line continues past `P` and exits through
+  the opposite side. All six sectors close. The turn's other content — the
+  three-break floor, derived cleanly from 27a's antipodal mechanism — is correct
+  and is a real contribution; it was attached to a counterexample that refutes
+  nothing and that six lines of coordinates disprove.
+- **T328, the unearned concession, and the one I am reversing.** "That's airtight
+  for the reason turn 327 gives, and it's actually a sharper diagnosis than either
+  of us had." It is not airtight and the diagnosis is of an object that does not
+  exist. T328 then wrote "My turn 326 named the right invariant and then didn't
+  check it against my own proposed realization. That's the actual bug" — the
+  invariant was right, the realization was right, and nothing was checked by
+  anyone. **Moving `cevian-three-break-gadget-gives-zero-doubling` to REFUTED and
+  `full-wrap-d6-realizable` to SETTLED.** New standing prohibition: do not concede
+  a geometric claim about a configuration you can draw in six lines without
+  drawing it.
+- **T329, correct and one comparison short.** Its arithmetic is right and I
+  checked it: the chained `c=3` necklace gives `3T <= 159 + 6 = 165`, identical to
+  the isolated `168 - 3 = 165`. Its critique of T328's genericity move is the
+  sharpest paragraph of the exchange — reference data 26 dodged finitely many
+  *directions*, T328's eight lines must dodge *positions* while also carrying
+  triangles, and those are different problems. What it does not do is compare
+  either number against `c = 0`'s `168`, which is the comparison that decides the
+  route and which T314 and T320 had already made. Right answer, stale framing.
+- **The promise ledger.** Kept: T308 promised coordinates for the quadrilateral
+  "next turn" and T310 delivered them in full. T320 promised the `3+3` local
+  structure and T322 opened by retracting the pick instead, with the reason
+  stated — that is the rule working. T324 and T325 both delivered exactly the
+  double-ray checks they named. Broken: **T316 promised "exhibit one
+  same-gadget-pair-plus-external triangle in coordinates" and T318 delivered the
+  multiplicity generalization instead without saying why.** The multiplicity
+  result is better than the promise, and the rule still says open by naming the
+  substitution. **T326 promised to price the cost of a hub's neighbouring triple
+  points "next turn" and T328 conceded a false argument instead**, never returning
+  to it. Two breaks in twenty-four turns, against three in the previous
+  twenty-five. Slightly better.
+- **Good behaviour, named.** T310's honest tension report ("something has to give
+  ... I have not checked P2, P3, P4 yet") is the single most useful paragraph of
+  the cycle. T311 produced a coordinate-free cap for a family before analysing it,
+  which is the standing rule and it was obeyed without prompting. T312 conceded a
+  branch it had opened, in its own words, and redirected to the untouched agenda
+  item rather than defending. T318 corrected an opponent's overreach and then
+  produced a general theorem in the same turn instead of stopping at the
+  correction. T319 conceded, then ran a six-table census that could have gone
+  against it. T321 killed a heuristic with an identity rather than an objection.
+  T323 refused to bank a stronger claim its own opponent had invited. T325
+  strengthened its opponent's mechanism before extending it. T329 stated its
+  critique in terms of what has zero coordinate verification, naming the standard
+  reference data 26 set. Ten strong turns out of twenty-four. What went wrong this
+  cycle was not honesty and was not effort; it was that two turns took a picture
+  on trust.
 - **Archive of call-outs for T181-T279** is in the git history of this file. The
   standing ones survive as prohibitions in AGENDA.md.
 
@@ -1274,13 +1325,185 @@ segment, from the budget.
 
 ---
 
+## Referee reference data 28: the full wrap `d_P = 6`, realized in six lines
+
+T327 claimed the minimal three-break gadget gives `d_P = 0`; T328 conceded it.
+Here is the gadget with coordinates and every face checked.
+
+    P   = (1,1)          inside the triangle Q_0 Q_2 Q_4
+    Q_0 = (0,0)   Q_2 = (4,0)   Q_4 = (0,4)
+
+    hubs   a = P Q_0 : y = x          b = P Q_2 : y = (4-x)/3
+           c = P Q_4 : y = 4 - 3x
+    sides  M_1 = Q_0 Q_2 : y = 0      M_3 = Q_2 Q_4 : x + y = 4
+           M_5 = Q_4 Q_0 : x = 0
+
+**(a) The arrangement.** Slopes `1, -1/3, -3, 0, -1, infinity` — six distinct, so
+`p = 0`. Of the 15 line pairs, 12 collapse into four triple points
+`P = {a,b,c}`, `Q_0 = {a,M_1,M_5}`, `Q_2 = {b,M_1,M_3}`, `Q_4 = {c,M_3,M_5}`; the
+remaining three are ordinary: `a∩M_3 = (2,2)`, `b∩M_5 = (0,4/3)`,
+`c∩M_1 = (4/3,0)`. So `c = 4`, `V = 7`. Every line has exactly 3 distinct
+crossing points and hence 2 bounded segments, giving `B = 12`, which is
+`k(k-2) - 3c = 24 - 12` by reference data 25. Zaslavsky's count
+`1 + k + sum (m_v - 1) = 1 + 6 + (2+2+2+2+1+1+1) = 18` regions, `2k = 12`
+unbounded, **6 bounded.**
+
+**(b) All six bounded faces are triangles, and all six are the sectors at `P`.**
+
+    1  P, (2,2),   Q_4        on a, M_3, c
+    2  P, Q_4,     (0,4/3)    on c, M_5, b
+    3  P, (0,4/3), Q_0        on b, M_5, a
+    4  P, Q_0,     (4/3,0)    on a, M_1, c
+    5  P, (4/3,0), Q_2        on c, M_1, b
+    6  P, Q_2,     (2,2)      on b, M_3, a
+
+Emptiness, checked one at a time: within each triangle the only candidate
+intruders are the three lines not carrying a side; two of them meet the triangle
+only at a vertex and the third misses its coordinate range. Worked instance for
+face 1: `b` passes through the vertex `P` with rays at `341.6` and `161.6`
+degrees, outside the sector `(45, 108.4)`; `M_1` needs `y = 0` and the face has
+`y >= 1`; `M_5` meets the face only at the vertex `(0,4)`. The other five go the
+same way.
+
+**(c) `d_P = 6`, the full wrap.** The six rays at `P` are, by angle,
+`a-` 45, `c→Q_4` 108.4, `b-` 161.6, `a→Q_0` 225, `c-` 288.4, `b→Q_2` 341.6. Each
+of the six segments at `P` is a side of the two faces flanking its ray:
+
+    P-Q_0      (on a)  faces 3, 4        P-(2,2)    (on a)  faces 1, 6
+    P-Q_2      (on b)  faces 5, 6        P-(0,4/3)  (on b)  faces 2, 3
+    P-Q_4      (on c)  faces 1, 2        P-(4/3,0)  (on c)  faces 4, 5
+
+**Six doubled segments at one point.** The other six bounded segments (two on
+each of `M_1`, `M_3`, `M_5`) each serve exactly one face, so `d = 6`, `f = 0`,
+incidences `6*2 + 6*1 = 18 = 3T` with `T = 6`, and `d - f = 6 = 3T - B` closes
+T288's identity exactly.
+
+**(d) Three breaks, alternating, as T327's own floor requires.** The rays
+`a→Q_0`, `b→Q_2`, `c→Q_4` each terminate at a triple point; the rays `a-`, `b-`,
+`c-` each terminate at an ordinary crossing. Breaks and ordinary rays alternate,
+which is the tightest possible arrangement under reference data 29's
+non-adjacency lemma, and it is why the full wrap needs exactly three neighbouring
+triple points, not six.
+
+**(e) And it loses.** `3T <= k(k-2) - 3c + d = 24 - 12 + 6 = 18`, against `24` at
+`c = 0`. Ratio `d/c = 6/4 = 1.5`, below `kobon_6_2`'s `2` and below the isolated
+`2`. `T = 6` where `N(6) = 7`. This is the *other* order type of the four-point
+configuration T308 opened; the convex one (T310, T311) has `d_{P_i} = 2` at each
+of its four vertices and reaches the same totals `T = 6, d = 6, f = 0, B = 12`.
+Both halves of the `K4` family are now computed and both are dominated.
+
+## Referee reference data 29: the non-adjacency lemma, and `d <= 4.5c`
+
+Notation for `p = 0`: `c` triple points, `d` doubled segments (serving a triangle
+on each side), `f` free segments, `B = k(k-2) - 3c`, and `d - f = 3T - B` (T288).
+Write `S_1` for the doubled segments whose far endpoint is an ordinary crossing
+and `S_2` for those joining two triple points, so `d = |S_1| + |S_2|`.
+
+**(a) Every doubled segment has at least one triple-point endpoint.** If a
+segment on line `a` has both endpoints ordinary, they are `V(a,b)` and `V(a,c)`
+for unique `b, c`, its only candidate triangle is `{a,b,c}`, and `V(b,c)` lies on
+one determined side. Reference data 4.
+
+**(b) A triangle sector closes on one line, met at the nearest crossing of each
+bounding ray.** If sector `(r, r')` at `P` is a triangle `P, X, Y`, then any line
+crossing `r` strictly between `P` and `X` enters the interior, so `X` is the
+nearest crossing on `r`; same for `Y`. The third side lies on one line.
+
+**(c) The non-adjacency lemma.** *Two doubled rays at a triple point cannot be
+adjacent in the cyclic order of six if both terminate at ordinary crossings.*
+Let rays `r` and `r+1` both be doubled and ordinary. Ray `r` doubled makes
+sectors `s_{r-1}` and `s_r` triangles; `r` ordinary means the nearest crossing on
+`r` lies on a single other line, so by (b) both close on the same line `M`.
+Ray `r+1` doubled and ordinary makes `s_r` and `s_{r+1}` close on one line, which
+is `M` since `s_r`'s third side is unique. Then `M` meets rays `r-1, r, r+1, r+2`
+— four consecutive rays of six, containing the antipodal pair `r-1, r+2`. A
+straight line not through `P` meets at most one ray of an antipodal pair.
+Contradiction.
+
+Hence at most three ordinary doubled rays per triple point, and
+
+    |S_1| <= 3c        d_P <= 6        sum_P d_P = |S_1| + 2|S_2| <= 6c
+
+**(d) The bound.** `d = sum_P d_P - |S_2| <= 6c - |S_2|` and
+`d = |S_1| + |S_2| <= 3c + |S_2|`. Adding, `2d <= 9c`:
+
+    d <= 4.5c        and        3T <= k(k-2) - 3c + d <= k(k-2) + |S_1|/2
+
+**(e) The decision rule.** Concurrence beats `c = 0` **iff `d > 3c`**. Equality
+in (d) needs every triple point to be a full wrap *and* `|S_2| = 1.5c`, i.e. the
+doubled break segments forming a 3-regular graph on the triple points. Nothing on
+record is close: T319's six-table corpus census maxes at `d = 2c` (`kobon_6_2`),
+both `K4` order types give `1.5c` (reference data 28, T311), isolated points give
+`2c` (reference data 27a), and reference data 28 is the only realization of even
+one full-wrap point — with three `d_Q = 1` neighbours attached.
+
+**(f) The `k = 14` consequence, which corrects T315.** `f = d - 3c + 6`, so
+`T = 54` needs `d >= 3c - 6`, and `4.5c >= 3c - 6` for every `c >= 0`. **No
+concurrence count is excluded at `k = 14` by the segment budget.** T315's
+"`c=7` drops to `T <= 53`", repeated at T319 and used at T320, is a consequence of
+`d <= 2c`, which is an unbroken empirical ceiling and not a theorem — as T318
+said and T319 conceded. State the scope when citing it.
+
+**(g) Scope.** All of this assumes `p = 0` and multiplicity exactly 3. T318's
+`d(m) <= 2m - 4` covers isolated points of higher multiplicity, with net budget
+effect `-(m-2)^2`; the chained analogue at `m >= 4` is unexamined and, given (e),
+uninteresting unless someone first exhibits `d > 2c` at `m = 3`.
+
+## Referee reference data 30: B's eleven double-ray vertices all close as triangles
+
+Reference data 21b lists eleven vertices of Kabanovitch's B carrying rays of both
+their lines. T324 showed that a shared free-segment vertex with three-sided
+wedges beyond both edges must be one of them, and checked `V(1,2)` and `V(11,12)`;
+T325 checked `V(2,3)`, `V(3,4)`, `V(5,6)`. The remaining six, checked here
+against reference data 6's printed rows by the iff test of reference data 2 and
+cross-confirmed in reference data 7:
+
+    vertex     row-p pos 1/last   row-q pos 1/last   inward pair   triangle
+    V(6,7)     row6[1]=7          row7[1]=6          9, 9          {6,7,9}
+    V(7,8)     row7[12]=8         row8[12]=7         1, 1          {1,7,8}
+    V(8,9)     row8[1]=9          row9[1]=8          6, 6          {6,8,9}
+    V(9,10)    row9[12]=10        row10[12]=9        12, 12        {9,10,12}
+    V(12,13)   row12[1]=13        row13[1]=12        6, 6          {6,12,13}
+    V(13,1)    row13[12]=1        row1[1]=13         9, 9          {1,9,13}
+
+Third legs: row 9 has `6 7` at positions 2-3; row 1 has `7 8` at 6-7; row 6 has
+`9 8` at 2-3; row 12 has `10 9` at 10-11; row 6 has `13 12` at 6-7; row 9 has
+`13 1` at 8-9. All six are in reference data 7's list of 47.
+
+**Eleven of eleven, zero exceptions.** By T325's sharpening, a closing interior
+sector proves both incident segments already serve a triangle, so neither is
+free, so **no two free segments of B meet at a double-ray vertex** and the
+three-sided-wedge branch of reference data 22e is closed for B. It was already
+closed for B by reference data 22 through a different route. What is *not*
+settled, and what T326 correctly flagged: whether inward-neighbour matching at a
+double-ray vertex is forced by extremality in general, or is an artifact of B's
+141/143 saturation. Eleven instances in one table is one table.
+
+---
+
 ## Table
 
 | slug | k | status | evidence | opened | last touched |
 |---|---|---|---|---|---|
+| `full-wrap-d6-realizable` | all | **SETTLED (referee), UNATTACKED** | Reference data 28. Six lines in explicit coordinates: `P=(1,1)` inside the triangle `(0,0),(4,0),(0,4)`, hubs `y=x`, `y=(4-x)/3`, `y=4-3x`, sides `y=0`, `x+y=4`, `x=0`. Four triple points, three ordinary crossings, `V=7`, 18 regions, 6 bounded and **all six triangular**, `B=12` by formula and by direct per-line count, `d=6`, `f=0`, incidences `6*2+6*1=18=3T`, `d-f=6=3T-B`. All six segments at `P` are doubled: the full wrap, `d_P=6`, the ceiling T326 named. Emptiness of each face checked against the three non-side lines. Three break rays alternating with three ordinary rays, matching T327's own floor and reference data 29c's non-adjacency. **A construction, so never gold in phase 1.** | T305 | T329 |
+| `cevian-three-break-gadget-gives-zero-doubling` | all | **REFUTED (referee); concession at T328 was unearned** | T327: "connecting `P` to the three vertices divides the triangle into exactly three sub-triangles... the three outward rays run away from the triangle into unbounded space", hence `d_P = 0`. Three concurrent cevians divide a triangle into **six** regions; the ray of `PQ_0` opposite `Q_0` exits through side `Q_2Q_4`, a line of the same six-line picture. Reference data 28 is the configuration solved: all six sectors are triangular faces and all six segments at `P` are doubled. T328 conceded it as "airtight" in the next turn without drawing it. | T327 | T329 |
+| `ordinary-doubled-rays-are-nonadjacent` | all | **SETTLED (referee), UNATTACKED** | Reference data 29c. Two doubled rays at a triple point cannot be cyclically adjacent if both terminate at ordinary crossings: each sector flanking an ordinary doubled ray closes on the same line (unique nearest crossing), so the shared sector forces one line to close three consecutive sectors and hence meet four consecutive rays, containing an antipodal pair. At most three ordinary doubled rays per point. Consistent with reference data 28, where the three ordinary doubled rays alternate with the three breaks, and with reference data 27a, whose isolated cap of 2 is strictly stronger in its own scope. | T329 | T329 |
+| `d-at-most-4point5c-and-concurrence-pays-only-above-3c` | all | **SETTLED (referee), UNATTACKED** | Reference data 29d-e, the object agenda item 2 asked for. From `|S_1| <= 3c` (the non-adjacency lemma) and `d_P <= 6`: `d <= 6c - |S_2|` and `d <= 3c + |S_2|`, so `2d <= 9c` and `d <= 4.5c`; sharper, `3T <= k(k-2) + |S_1|/2`. **Concurrence beats `c=0` iff `d > 3c`.** Observed maximum across every object on record is `d = 2c` (`kobon_6_2`, T319's six-table census); both `K4` order types give `1.5c`; isolated points give `2c`. The gap between the proven `4.5c` and the observed `2c` is now the entire concurrence question. | T329 | T329 |
+| `k14-segment-budget-excludes-no-concurrence-count` | 14 | **SETTLED (referee), corrects T315** | Reference data 29f. `f = d - 3c + 6`, so `T=54` needs `d >= 3c - 6`, and `d <= 4.5c` never contradicts it. T315's "`c=7` drops to `T<=53`, already below target", repeated at T319 and used to frame T320's pivot, is a consequence of `d <= 2c`, which T318 correctly called not a theorem and T319 conceded. The correct statement is that `c >= 7` is dead under the observed ceiling and live under the proven one. | T315 | T329 |
+| `chained-d-le-2c-is-empirical-not-theorem` | all | **SETTLED (SILVER)** | T317 asserted `d=12, f=0` "exactly, or the family fails" at `c=6`, treating `d <= 2c` as proven. T318 refuted the premise plainly — "it comes from two tried topologies. It is not a theorem" — and cited reference data 27c's `4.5c`. T319 conceded the word "exactly" and the "forces" framing, and then ran a six-table corpus census of `(d-f)/c` rather than merely agreeing: `kobon_4_2` 1.0, `kobon_6_1` 0.0, `kobon_8` 1.5, `kobon_10` 0.5, `kobon_12_38tri` 0.0, `kobon_6_2` 2.0. Recorded disagreement, evidence-gated concession, falsifiable claim, and both halves correct. I have now proved the true ceiling is `4.5c` (reference data 29), which vindicates T318's caution exactly. **Ninth silver.** | T317 | T329 |
+| `k14-c0-profile-matching-by-percentage` | 14 | **SETTLED (SILVER), the heuristic REFUTED** | T320 ranked free-segment profiles at `k=14, p=0, c=0, T=54` by how closely their saturation percentage resembles Kabanovitch's 11/13 and Bader's 11/14, and picked `3+3`. T321 killed it with an identity rather than an objection: `2B=336`, `3T=162`, so 174 segment-sides face non-triangles; 78 bounded faces, 24 non-triangular at degree `>= 4`; hence `S = 174 - U_b` and `U_b <= 78`, where `U_b` is order-type data no counting argument reaches. I re-derived it and it checks. T322 retracted the `3+3` pick and re-derived the identity independently in the same turn. Recorded disagreement, evidence-gated concession, falsifiable. **Tenth silver.** | T320 | T329 |
+| `saturated-line-forces-mutual-neighbour-lock` | all | **SETTLED (referee-verified)** | T313. If line `l` is fully saturated with row order `m_1..m_n`, then for every interior `m_i` the two neighbours of `l` in row `m_i` are exactly `m_{i-1}` and `m_{i+1}`. Two applications of the iff test; holds for any `k`, any table, `p` and `c` arbitrary provided the row order is well defined. Verified in-turn on rows 12 and 13 of Bader's table; I re-checked both and also confirmed the premise, that line 1 is saturated, by matching all eleven consecutive pairs of row 1 against reference data 2's eleven line-1 triangles. **The best general lemma an agent has produced since T288's identity.** Unattacked. | T313 | T329 |
+| `isolated-multiplicity-m-caps-at-2m-4` | all | **SETTLED (referee-verified), scope isolated** | T318. At an isolated point of multiplicity `m` there are `2m` rays in `m` antipodal pairs; a line not through `P` meets exactly `m` of them, consecutively, so a single-nearest-line run has length `<= m` and yields `<= m-2` doubled interior rays; two maximal runs give `d(m) <= 2m - 4`. Reproduces T293's cap at `m=3` with equality, realized by reference data 26. Net budget effect against reference data 25's cost `m(m-2)` is `-(m-2)^2`, strictly decreasing, so **`m = 3` is provably optimal among isolated concurrences and multiplicity escalation is dead.** | T318 | T329 |
+| `complete-quadrilateral-family-dominated-both-order-types` | all | **SETTLED (referee)** | T308 opened it, restricted to "four points in convex position". T309 established `K4` forces exactly four triple points; T310 fixed coordinates, found the fifth triangle `P1P2X` at `X = b∩d`, and reported honestly that a symmetric extrapolation would exceed Clement-Bader; T311 capped it coordinate-free at `T <= 4 + 2 = 6` by counting the three ordinary crossings; T312 conceded. All correct. **The other order type — one point inside the triangle of the other three — was never examined and is reference data 28: same totals `T=6, d=6, f=0, B=12, c=4`, but with `d_P=6` at the interior point instead of `2` at each of four.** Both halves give `d/c = 1.5`, below isolated. Family dead, now for the right reason and over its whole range. | T308 | T329 |
+| `chained-necklace-c3-ties-isolated-c3` | 14 | **SETTLED (referee-verified)** | T328 proposed six `kobon_6_2` necklace lines plus eight generic lines at `k=14`: `B = 168 - 9 = 159`, `d = 6`, `3T <= 165`. T329 observed this is numerically identical to the isolated `c=3` bound `168 - 3 = 165` — the three bridges are shared, so `3*3 - 3 = 6 = 2c`, not above it. I checked both. What neither turn wrote is the comparison that decides it: `c = 0` gives `168`. Both regimes are dominated, which T314 had conceded and T320 had stated fifteen turns earlier. | T328 | T329 |
+| `eight-generic-lines-cannot-be-placed-by-genericity-alone` | 14 | **SETTLED (referee)** | T329, the sharpest paragraph of the cycle. Reference data 26 had to dodge finitely many *directions* to avoid new concurrences; T328's eight added lines must dodge finitely many *positions* to preserve six named triangles' interiors and the nearest-crosser identity on each break ray, while simultaneously being sited to generate triangles of their own. Those are different problems and "standard genericity, same move as reference data 26" conflates them. Zero coordinate verification exists for the eight-line placement. | T329 | T329 |
+| `b-double-ray-vertices-all-close-as-triangles` | 13 | **SETTLED (referee), 11 of 11** | Reference data 30. T324 derived the necessity condition (a shared free-segment vertex with three-sided wedges beyond both edges must have both lines ray-extremal) and checked `V(1,2)`, `V(11,12)`; T325 sharpened it — a closing interior sector *proves* non-freeness rather than offering an alternative — and checked `V(2,3)`, `V(3,4)`, `V(5,6)`. I did the remaining six: `{6,7,9}`, `{1,7,8}`, `{6,8,9}`, `{9,10,12}`, `{6,12,13}`, `{1,9,13}`, eighteen legs against reference data 6, all six in reference data 7. **No two free segments of B meet at a double-ray vertex.** Closes the three-sided-wedge branch of 22e for B, which reference data 22 had already closed another way. | T324 | T329 |
+| `shared-vertex-face-escapes-the-wasted-crossing-mechanism` | 13/14 | **SETTLED (referee-checked)** | T323. Reference data 22c pays for a free-segment adjacency by firing reference data 20a on the hexagon's *ordinary* other exit edge, forcing a triangle then a dud. If one face carried both free segments as edges meeting at a vertex, the walk enters on one free edge and leaves on the other, never touching an ordinary edge, so the trigger condition is absent by hypothesis. Correct, and it is the precise reason 22e cannot be closed by extending 22's own counting. Closing it needs an order-type obstruction or an explicit table. | T323 | T329 |
+| `opposite-face-non-triangular-generalizes-beyond-b` | all | **SETTLED (referee-verified)** | T321. Reference data 4's uniqueness needs only `p=0, c=0`, so for any such arrangement, if a bounded segment is a side of a triangle then the face on its other side is not a triangle. This is the general form of reference data 16b, which was stated only for B. Load-bearing in the `S = 174 - U_b` identity and in any transfer of reference data 22 to another 13-line base. | T321 | T329 |
+| `bader-free-segments-fail-repair-by-two-mechanisms-not-one` | 14 | **SETTLED** | T322 checked S1's candidate `{11,12,13}`: line 11 at position 1 in both rows 12 and 13, targets at position 13 in each other's rows — a double-extreme lock. T323 checked S3's `{8,10,12}` and found line 8 at position 1 in row 10 but position 2 in row 12, with targets at interior positions 5 and 6 — an ordinary mismatch. Both fail, so the row-edit repair of Bader's table is closed, but **T322's proposed unifying "rigid corner" mechanism is not established** and T323 correctly declined to bank it. Three independent local checks, no common cause. | T322 | T329 |
 | `isolated-triple-points-can-share-helper-lines` | all | **SETTLED (referee), UNATTACKED** | Reference data 26. Eight lines in explicit coordinates: `P1=(0,0)` on `y=x, y=-x, y=3x`; `P2=(10,0)` on `y=2(x-10), y=-2(x-10), y=0.5(x-10)`; helpers `L: y=-0.1` and `L': y=0.1+0.01x`. Every crossing parameter computed. `L` is nearest on the three lower rays at **both** points (0.141, 0.105, 0.141 at `P1`; 0.224, 0.112, 0.112 at `P2`) against competitors no closer than 4.7, and `L'` mirrors it above. Four triangles and two doubled segments per point, `d=2` each, `p=0`, `c=2`, isolated. Eleven lines gives `c=3, d=6` with three spare at `k=14`. | T305 | T305 |
 | `isolated-d2-program-needs-fifteen-lines` | 14 | **REFUTED (referee); concession at T301 was unearned** | T300: nine hub lines plus "2 dedicated helpers per point with **none shared between points**", hence 15. Its evidence for non-sharing is that T299 happened to use four distinct helpers, which is not evidence, and its arc argument proves only that one line cannot double both rays *at a single point*. Reference data 26 exhibits two lines each serving as nearest crosser at two disjoint triple points. T301 conceded on the grounds that a helper near `P1` must be far from `P2` — the scale framing its own T297 had already replaced with an ordering condition. **Program reopened; see 27a for why it is dominated anyway.** | T300 | T305 |
-| `isolated-concurrence-strictly-costs-slack` | all | **SETTLED (referee), UNATTACKED** | Reference data 27a. `d <= 2` per isolated triple point (T293, re-proved from the antipodal-ray chaining here) with `d - f = 3T - B` (T288) gives `3T <= k(k-2) - c` for `p=0`, and `f <= 6 - c` at `k=14, T=54`. Each triple point destroys three segments and buys back at most two. **The loosest regime for 54 is `p=0, c=0` with six free segments**, not `c=3`. Cross-checks against T292/T293's independent per-line budget: `6*11 + 3*13 + 5*12 = 165 = 168 - 3`. | T305 | T305 |
+| `isolated-concurrence-strictly-costs-slack` | all | **SETTLED (referee), UNATTACKED** | Reference data 27a. `d <= 2` per isolated triple point (T293, re-proved from the antipodal-ray chaining here) with `d - f = 3T - B` (T288) gives `3T <= k(k-2) - c` for `p=0`, and `f <= 6 - c` at `k=14, T=54`. Each triple point destroys three segments and buys back at most two. **The loosest regime for 54 is `p=0, c=0` with six free segments**, not `c=3`. Cross-checks against T292/T293's independent per-line budget: `6*11 + 3*13 + 5*12 = 165 = 168 - 3`. **Referee caution added T329, against my own claim:** the arithmetic is right and the strategic reading is thin. At every closed even `k` the record arrangement is concurrence-bearing and sits in the *tighter* budget while the looser `c=0` ceiling is provably unreachable (Clement-Bader). `kobon_6_2` hits `N(6)=7` at `3T = B + d` exactly, ceiling 21, against `c=0`'s 24. "Loosest regime" means "demands least saturation", not "is where the records live". | T305 | T329 |
 | `k14-c0-p0-requires-six-free-segments-not-zero` | 14 | **SETTLED (referee), corrects T288** | T288 wrote that reference data 4's `p<=3` filter "shows `p=3` is required" and derived `f=0` at `c=0`. `p <= 3` is an upper bound on parallel pairs, not a requirement. At `p=0, c=0`, `B=168` and `f = 168 - 162 = 6`. Every comparison in T292, T293 and T294 of the `c=3` budget against "Bader's zero-slack baseline" is anchored to this error. | T288 | T305 |
 | `double-served-minus-free-equals-3T-minus-B` | all | **SETTLED (referee-verified)** | T288. `f + s + d = B` and `s + 2d = 3T` give `d - f = 3T - B`. Verified against `kobon_6_2` (`6 - 0 = 21 - 15`), `kobon_4_2` (`1 - 0 = 6 - 5`) and the `k=5` gadget of reference data 26 (`2 - 0 = 12 - 10`). The right generalisation of `F = B - 3T` to arrangements with concurrences, and the most useful general algebra any agent has produced since T140. | T288 | T305 |
 | `isolated-triple-point-caps-at-d-2` | all | **SETTLED (SILVER)** | T292 asserted one doubled segment per triple point, copied from `kobon_4_2`. T293 refuted it with the six-sector picture and proved the true cap is two, both on one line, via the antipodal-arc fact. T294 conceded after independently tracing the chaining argument to the point where it breaks. I re-proved it from scratch (reference data 27a: adjacent and two-apart doubled rays each force one line to be nearest on an antipodal pair). Recorded disagreement, evidence-gated concession, falsifiable, correct. **Seventh silver.** | T292 | T305 |
@@ -1296,7 +1519,7 @@ segment, from the budget.
 | `segment-bound-3T-leq-B-fails-at-concurrences` | all | **SETTLED (referee), four corpus witnesses** | Reference data 23. `kobon_6_2`: `k=6`, three triple points, `B = 15` by direct row count, `T = 7`, `3T = 21`. Also `kobon_4_2` (5 vs 6), `kobon_8` (42 vs 45), `kobon_10` (74 vs 75). Mechanism is T276's: at a triple point a segment's far endpoint has two identities, so two candidate triangles, one per side, and both can be faces. **Reference data 4 is a `c = 0` theorem and every use of `T <= floor(B/3)` in this ledger inherits that scope.** | T276 | T280 |
 | `corpus-concurrence-census` | all | **SETTLED (referee)** | Reference data 23a. Nested table entries appear in exactly six corpus tables — `kobon_4_2`, `kobon_6_1`, `kobon_6_2`, `kobon_8`, `kobon_10`, `kobon_12_38tri` — and in none at `k >= 11`. So B, Bader's k=14 and k=18 and Wood's k=20 are concurrence-free and reference data 1-22 keep their footing, while five of the six closed even cases at `k <= 12` hit their bound using a mechanism absent from all three open near-misses. | T280 | T280 |
 | `insertion-into-b-capped-at-53-by-crossing-budget` | 13/14 | **SETTLED (referee), UNATTACKED** | Reference data 22. Two crossings per gaining piece; two gaining pieces adjacent only across a free segment (ordinary segments put a triangle on one side, rays force two crossings of one line); B's two free segments sit on distinct faces so at most two adjacencies; each adjacency fires reference data 20a on the hexagon's other edge and wastes a crossing. `13 >= 2g`, so `Y <= 6` and `T <= 53`. **Kills the insertion-from-B route outright and subsumes reference data 19, 21f and the whole weaving question for this base.** Attacked once, at T283-T287, from the non-generic side: route `l` through a vertex of B to manufacture a concurrence where step (b) assumes simplicity. It held, and the attack strengthened it — a concurrent `l` has twelve distinct crossings, so `12 >= 2g` gives `Y <= 6` even faster. Steps (b) and (c) themselves are still unchecked by any agent. | T280 | T305 |
-| `insertion-cap-53-generalizes-beyond-b` | 13/14 | **CONTESTED (referee reopens; concession at T263 was unearned)** | T262 asserted it "period, independent of which table" and T263 conceded after re-deriving the two legs it was offered, neither of which was the load-bearing one. The cost model came from T256's LP, which prices two mechanisms and omits `free-segment-wedge-clip-gains-one`. Reference data 22e gives the honest state: every step generalises except the requirement that **the two free segments lie on distinct bounded faces**. If one face carried both, meeting at a vertex with unbounded faces beyond each, three gains fall out of four crossings and `Y = 7` is arithmetically available. Nobody has ruled that out. **Assigned to Euclidn't as agenda item 2 on T280 and not touched in twenty-five turns**; the concurrence thread swallowed the cycle. | T262 | T305 |
+| `insertion-cap-53-generalizes-beyond-b` | 13/14 | **CONTESTED (referee reopens; concession at T263 was unearned)** | T262 asserted it "period, independent of which table" and T263 conceded after re-deriving the two legs it was offered, neither of which was the load-bearing one. The cost model came from T256's LP, which prices two mechanisms and omits `free-segment-wedge-clip-gains-one`. Reference data 22e gives the honest state: every step generalises except the requirement that **the two free segments lie on distinct bounded faces**. If one face carried both, meeting at a vertex with unbounded faces beyond each, three gains fall out of four crossings and `Y = 7` is arithmetically available. Nobody has ruled that out. Assigned to Euclidn't at T280 and again at T305; **worked properly at last in T323-T325**. T323 showed why reference data 22's own counting cannot be extended to cover it (the shared-vertex face has no ordinary exit edge, so reference data 20a never fires). T324 narrowed the three-sided-wedge case to double-ray vertices; T325 sharpened the test; reference data 30 completes the sweep of B at 11 of 11. What remains open and is now the whole of it: whether inward-neighbour matching at a double-ray vertex is forced in general or is an artifact of B's 141/143 saturation, and the case where the face beyond a free segment has more than three sides, which nothing has touched. **Still CONTESTED, and now for a well-specified reason instead of neglect.** | T262 | T329 |
 | `segment-serves-two-triangles-at-a-triple-point` | all | **SETTLED (SILVER)** | T275 claimed `F = 0` for `kobon_12_38tri`, "full stop". T276 exhibited `{4,6,10}` and `{1,4,10}` claiming the identical segment on line 4 and named reference data 4's own "no concurrences" scope line. T277 conceded by re-deriving the two-identity argument and withdrawing "full stop". Recorded disagreement, evidence-gated concession, falsifiable claim, and correct: reference data 23 supplies the corpus witnesses neither had. **Fifth silver, and the most consequential one in the ledger.** | T276 | T280 |
 | `parallel-pair-gap-has-no-bare-wedge` | all | **SETTLED (SILVER)** | T258 proposed a `p=1` 13-line base as an escape hatch on the grounds that reference data 11c's recession-cone argument does not cover a parallel strip. T259 answered that a two-edge unbounded face needs its two rays to share a finite vertex, which parallels cannot. T260 conceded by building its own coordinate model (`y=0`, `y=1`, `x=0`) and showing the strip needs a third, bounded, edge. Recorded disagreement, independent re-derivation, falsifiable. **Sixth silver.** | T258 | T280 |
 | `b-formula-with-parallels-and-concurrences` | all | **SETTLED (referee-verified)** | Reference data 25. T269's `B(k,p,c) = k(k-2) - 2p - 3c`, derived per-line and by degree sum, verified by me against direct row counts on `kobon_12_38tri` (114), `kobon_6_2` (15) and `kobon_4_2` (5). General multiplicity form: subtract `m(m-2)` per concurrent vertex. A real contribution and the one durable thing to come out of the k=12 thread. | T269 | T280 |
@@ -1395,7 +1618,7 @@ segment, from the budget.
 | `simple-line-load-bearing-verification-burden` | 14 | **CONTESTED (answered for k=13)** | Reference data 7 answers it in full at k=13. Still open for eleven of Bader's fourteen lines. | T91 | T152 |
 | `repair-bill-is-36-checks-not-6`, `row11-edit-5-subset-risk-bound-365-of-715`, `v11-12-corner-fix-requires-third-line-swap`, `orphan-V8-10-resolves-to-triangle-8-9-10` | 14 | SETTLED (moot or minor) | Unchanged. | - | T127 |
 | `endpoint-label-match-false-positive-at-k4`, `deparallelize-shared-transversal-criterion`, `line5-partner-positions`, `extremal-ray-trick-is-local-only`, `line5-slot-accounting-4-not-2`, `line5-bounded-segment-slot-recount`, `line5-extremal-segments-may-border-unbounded-face`, `corpus-has-no-triangle-enumeration`, `bader-row9-citation-off-by-one`, `corner-slicing-program-capped-at-14`, `exterior-wedge-slicing-nets-plus-one-free`, `parallel-offset-slicing-has-constant-total-yield`, `exterior-wedge-fails-across-two-apexes`, `pentagon-corner-slice-nets-plus-one`, `sat-not-run-at-k14`, `k14-bounded-face-budget-24` | 14 | SETTLED (archive) | Unchanged. `sat-not-run-at-k14` obeyed for a ninth day. `exterior-wedge-slicing-nets-plus-one-free` is the same phenomenon reference data 11d has now made central; it sat in the archive for a hundred turns while T163-T168 built a bound that contradicts it. | - | T180 |
-| `k14-54-reachable` | 14 | **CONTESTED** | The actual question. 279 turns, zero verifier runs (tool unavailable, referee-confirmed on the thirteenth day), zero 14-line arrangements built. This cycle moved it in both directions at once. Against: reference data 22 kills insertion into Kabanovitch's B outright, at 53, closing the route the last hundred turns have walked. For: reference data 23 shows the segment budget that has scoped the search since T102 is a `c = 0` theorem, so the candidate space is strictly larger than assumed, and the mechanism that gets `k = 6, 8, 10, 12` to their bounds is absent from all three record near-misses. Net prior: unmoved, but the live object has changed from "a fourteenth line into B" to "a concurrence-bearing 14-line arrangement". **T280-T305 update.** 304 turns, zero verifier runs, and the first real arrangements: T295's `k=5` gadget, T299's `k=10` two-copy build, my `k=8` and `k=11` shared-helper builds (reference data 26). All are small and none has more than a handful of triangles. The concurrence route survives as *possible* — reference data 26 kills the line-count obstruction — and loses on arithmetic: reference data 27a says an isolated triple point costs one unit of segment budget, so `c=0` is the loosest regime for 54 and the whole `c=3` program was aimed at a strictly tighter target than the one it was trying to escape. The one thing that might pay is a **chained** concurrence (27c), which no turn has priced at `k=14`. | T1 | T305 |
+| `k14-54-reachable` | 14 | **CONTESTED** | The actual question. 279 turns, zero verifier runs (tool unavailable, referee-confirmed on the thirteenth day), zero 14-line arrangements built. This cycle moved it in both directions at once. Against: reference data 22 kills insertion into Kabanovitch's B outright, at 53, closing the route the last hundred turns have walked. For: reference data 23 shows the segment budget that has scoped the search since T102 is a `c = 0` theorem, so the candidate space is strictly larger than assumed, and the mechanism that gets `k = 6, 8, 10, 12` to their bounds is absent from all three record near-misses. Net prior: unmoved, but the live object has changed from "a fourteenth line into B" to "a concurrence-bearing 14-line arrangement". **T280-T305 update.** 304 turns, zero verifier runs, and the first real arrangements: T295's `k=5` gadget, T299's `k=10` two-copy build, my `k=8` and `k=11` shared-helper builds (reference data 26). All are small and none has more than a handful of triangles. The concurrence route survives as *possible* — reference data 26 kills the line-count obstruction — and loses on arithmetic: reference data 27a says an isolated triple point costs one unit of segment budget, so `c=0` is the loosest regime for 54 and the whole `c=3` program was aimed at a strictly tighter target than the one it was trying to escape. The one thing that might pay is a **chained** concurrence (27c), which no turn has priced at `k=14`. **T306-T329 update.** 329 turns, zero verifier runs, and the concurrence route is now priced: reference data 29 gives `d <= 4.5c` and the decision rule `d > 3c`, against an observed maximum of `2c` across every object anyone has produced or found. Two chained topologies were worked end to end this cycle — the `kobon_6_2` 3-cycle (`d/c = 2`, T307/T314) and both order types of `K4` (`d/c = 1.5`, T310/T311 and reference data 28) — and neither beats `c=0`. The budget excludes no `c` at `k=14` (29f), so the arithmetic has stopped being the discriminator in either direction. What is actually known: 14 verified triangles exist in the two-copy `c=6` seed (T314/T315), 40 do not, and no 14-line table or coordinate set at any `c` has ever been written down. | T1 | T329 |
 | `mirror-program-weakly-dominated`, `pentagram-vertices-all-spoken-for`, `cluster-siting-abandoned-the-554-premise`, `outside-line-role-pigeonhole`, `similarity-rotation-budget-is-per-cluster`, `parking-confinement-blocks-secondary-reuse`, `companion-lines-are-not-free-they-are-clusters`, `companion-slopes-are-open-not-pinned`, `similarity-freedom-resolves-dual-role-tension`, `hull-avoidance-forces-external-crossings`, `direction-freedom-global`, `endpoint-match-convention-calibrated-against-k4-kills-all-three`, `local-lookup-program-exhausted` | 14 | DEAD (archive) | Unchanged. Do not cite. | - | T102 |
 | `external-ray-triangle-verified`, `4cluster-negative-export-is-free`, `l1-carves-existing-ade-face`, `homothety-margin-not-scale-invariant`, `recentered-homothety-clears-E`, `wedge-cut-criterion-exact`, `pentagram-directions-equally-spaced`, `export-costs-intracluster-triangles`, `pentagram-walls-are-four-distinct`, `wall-tip-correspondence`, `cevian-wall-formula-invalid`, `euler-point-resolution-deltaF`, `degenerate-arrangement-63-faces`, `clustering-forces-three-nontriangles`, `cross-cluster-ratio-not-harder`, `homothety-realizes-S12`, `intracluster-tamura-cap-12`, `c7-mod7-kill-k14`, `central-symmetry-parallel-tax`, `mirror-fixed-lines-parallel`, `f0-no-self-symmetric-triangles`, `f0-axis-sector-forced-nontriangular`, `clustering-is-not-concurrence`, `pairwise-subarrangement-cap-67`, `mod2-weak-filter`, `cb-stacking-tautology`, `three-of-four-crossings-unhandled`, `construction-rate-far-below-target` | 14 | SETTLED (archive) | Unchanged. | - | T81 |
 | `global-counting-cannot-obstruct-k14`, `symmetry-tax-pattern`, `f0-forced-nontri-at-least-10`, `m2-exhaustively-capped-28`, `single-line-translation-export`, `export-mechanism-needs-second-line`, `bc-to-m1m2-construction-dead`, `first-m2-triangle-exhibited`, `theta10-construction-unsited`, `sliver-exposure-question`, `corridor-danger-is-local-not-global`, `corridor-clipping-debate-t47-t51`, `translation-crossings-diverge-generically`, `pairwise-cap-gives-no-pressure`, `subarrangement-averaging-upper-bound`, `cevian-r80-and-descendants`, `edge-incidence-bound-121`, `vertex-corner-identity`, `nearpencil-starves-triangles`, `m3-nearpencil-hits-ceiling`, `residue-stacking-cb-vs-improved-even` | 14/all | DEAD or CONTESTED (archive) | Unchanged. | - | T77 |
