@@ -7124,3 +7124,23 @@ I owed the referee a named object under option 1, 2, or 3. This is option 2, del
 <!-- meta
 {"addresses": [330], "claims_conceded": [], "claims_opened": ["cevian-vertex-outward-rays-confined-to-interior-angle"], "falsifier": "an explicit non-cevian-family construction where a full-wrap point's break-neighbor also reaches d_Q >= 4 without adding a fourth line through it", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 332 - Euclidn't - 2026-09-01T05:17:44Z
+
+Turn 331's vertical-angle lemma is correct, and I can confirm it without a verifier run since it's hand-checkable directly against reference data 28's own coordinates, not a new corpus fact.
+
+> "All three outward rays at any triangle vertex, in this whole family of cevian gadgets, are confined to a θ_A-degree arc"
+
+I concede this specific sub-claim, verified independently. At `Q_0 = (0,0)`, the three lines are `a: y=x`, `M1: y=0`, `M5: x=0`. By angle: `M1+`=0°, `a+`=45°, `M5+`=90°, so the P-facing wedge `θ_Q0 = 90°`. The vertically-opposite wedge runs 180°–270°, containing `M1-`=180°, `a-`=225°, `M5-`=270° exactly as claimed. The lemma holds.
+
+But it establishes less than the turn's framing suggests, and reference data 28's own numbers show the gap precisely. Q0 needs **four** more sectors closed to reach a full wrap, not two. By cyclic angle: `(M1-,a-)` and `(a-,M5-)`, 45° each, together forming the 90° vertically-opposite wedge — call this the **inner pair**, the one turn 331 actually analyzed. And `(M5+,M1-)`, `(M5-,M1+)`, 90° each — the **outer pair**, untouched by the argument entirely. In the realized arrangement the outer pair isn't even a candidate for symmetric reuse of `a, M1, M5`: `M5+` already terminates at `Q4`, itself a triple point, and `M1-` runs unbounded to infinity. Turn 331's lemma says nothing about whether the outer pair could close via two independently-placed lines that aren't `a`, `M1`, or `M5` acting as hubs — ordinary crossers, not a symmetric new triangle. And even the inner pair: the lemma rules out exactly one closure mode, a single new triangle using both outward rays symmetrically as spokes to a full circle of new vertices. It says nothing about `(M1-,a-)` and `(a-,M5-)` closing separately, via two unrelated lines, each nearest-crosser on its own pair of rays with no shared third vertex.
+
+So the accurate statement is narrower than "self-nesting is ruled out": it is "the cheapest, single-mechanism nesting is ruled out; four independent sector closures at Q0 remain completely unexamined by either side." That is real, and I'm not disputing the geometry. But treating it as evidence toward `d ≤ 2c` in general overstates what was shown — nobody has demonstrated the four sectors can't close independently, and nobody has demonstrated they can. Given my prior, the burden sits with the side proposing the construction, and independently closing four sectors around one vertex without disturbing P's own six triangles or any of the arrangement's existing nearest-crosser identities is exactly the placement problem turn 329 already flagged as unpriced for the eight spare lines — recurring one level deeper, now at a single vertex instead of across the whole arrangement.
+
+Nothing here required Python; it's angle arithmetic against coordinates already in reference data 28.
+
+**Named object:** the four-sector split at `Q0` — inner pair (45°+45°, the one turn 331's lemma addresses, ruling out only its single symmetric-closure mode) and outer pair (90°+90°, entirely unexamined) — with independent per-sector closure of all four left open on both sides.
+
+<!-- meta
+{"addresses": [331], "claims_conceded": ["q0-outward-rays-confined-to-theta-q-arc"], "claims_opened": ["q0-full-wrap-needs-four-independent-sector-closures-inner-outer-split"], "falsifier": "coordinates for any triple point with all four remaining sectors (inner and outer pairs) closed as triangles simultaneously with a break-neighbor also achieving d>=4, i.e. a chained double-full-wrap, checked by hand or by table.triangles() once the verifier is unblocked.", "tier": "none", "verifier_runs": []}
+-->
