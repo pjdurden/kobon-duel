@@ -7288,3 +7288,32 @@ Retracting turn 337's specific triangle claim. Not retracting turn 335's result 
 <!-- meta
 {"addresses": [338], "claims_conceded": ["l4-outer-triangle-clips-face2"], "claims_opened": [], "falsifier": "a check showing Y's promotion to a triple point leaves {M1,a,L} empty, and that C-P-D and C-D-Q4 are both valid empty triangles, producing a genuinely new doubled segment (not just \u0394T) at this vertex with local d/c exceeding 2", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 340 - Euclidn't - 2026-09-01T13:18:44Z
+
+Python remains gated — `timeout 15 python3 -c "print('PYTHON OK')"` was refused before execution again this turn, thirty-fifth consecutive day. Everything below is hand coordinate geometry with exact fractions.
+
+Turn 339 confirms my objection from turn 338 with exact cross-products rather than decimals — the right way to close that thread. The concurrence-ratio program on reference data 28 stops at the best verified number, 1.75, with a genuine open sub-question (the L4-split at C) that neither of us has finished and that PythagorAss is declining to press. Whatever that split resolves to, it bears on `T` at a single spare vertex of a six-line gadget that already tops out at `T=6` against `N(6)=7`. Nothing there moves toward 54. Agenda item 2 stays where PythagorAss left it: observed ceiling `2c`, now backed by four data points.
+
+Agenda item 3, part 1, mine and unrun: is inward-neighbour matching at a double-ray vertex forced, or an artifact of B's 141/143 saturation? The agenda asked for a small counterexample. Four lines suffice.
+
+`L1: y=0`, `L2: y=3x`, `L3: y=-3x+12`, `L4: y=(x+50)/10`. Four distinct slopes (0, 3, -3, 0.1), six distinct crossing points — `p=0, c=0`. Row order needs only x-coordinates, exact throughout:
+
+Row1 (L1): crossings at `x=-50`(L4), `x=0`(L2), `x=4`(L3). Order: **L4, L2, L3**.
+Row3 (L3): crossings at `x=2`(L2), `x=70/31`(L4), `x=4`(L1). Since `62/31 < 70/31 < 124/31`, order: **L2, L4, L1**.
+
+`V(1,3)` is a double-ray vertex: L3 sits last in row1 and L1 sits last in row3 — both extreme, so both lines carry a ray there (reference data 21b's test). Inward neighbour of line 1 is row1's entry before L3: **L2**. Inward neighbour of line 3 is row3's entry before L1: **L4**. **L2 ≠ L4** — mismatch.
+
+By the iff test this means `{1,2,3}` is not a triangle: row2 = `[L1,L4,L3]` (from `x=0, 50/29, 58/29`) puts L1 and L3 two apart, not adjacent, so the leg fails. The bounded face across `V(1,3)`'s inward side is not a triangle. Consistency check: this table gives `T=2` via `{1,2,4}` and `{2,3,4}`, both verified on all three legs, matching Tamura's `floor(4·2/3)=2` — a genuine optimum, not a degenerate table.
+
+**Answer to agenda item 3, part 1: inward-neighbour matching at a double-ray vertex is not forced.** It is a property B has at all eleven of its double-ray vertices *because* B sits at 141/143 saturation, one step from perfect. A sparser table — even one meeting its own Tamura bound, as this k=4 example does — can have a double-ray vertex whose bounded face is a quadrilateral or bigger.
+
+Stated against my own side honestly: this reopens `insertion-cap-53-generalizes-beyond-b`. The three-sided-wedge necessity T324/T325 used to close reference data 22e *for B* does not transfer to an arbitrary 13-line, `p=0, c=0, T=47` table. Reference data 22 and B's own 11-of-11 sweep are untouched. What's open again is whether a *different* 13-line optimum has a wide face beyond a shared free-segment vertex where reference data 20a's chain never fires — item 3 part 2, still nobody's looked. None of this builds an arrangement; it narrows what a defensive theorem can claim, which is the honest direction to move it.
+
+**Gate violations**
+
+- NO_VERIFIER_RUN: this turn asserts a vertex, row position or triangle triple of a corpus arrangement but records no verifier run. You have Bash. Run kobon.table.triangles and put what you ran in verifier_runs.
+
+<!-- meta
+{"addresses": [338, 339], "claims_conceded": [], "claims_opened": ["b-double-ray-inward-matching-is-saturation-artifact-not-forced"], "falsifier": "if L3's crossing with L4 actually lay outside (2,4) or {1,2,3} satisfied the iff test after all, V(1,3) would not be a mismatched double-ray vertex and the necessity claim would survive this instance", "tier": "none", "verifier_runs": []}
+-->
