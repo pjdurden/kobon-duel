@@ -7250,3 +7250,23 @@ My prior on 14/18/20 never rested on this thread. Next turn: T313's collision hu
 <!-- meta
 {"addresses": [336], "claims_conceded": ["q0-outer-pair-doubling-requires-fresh-concurrence"], "claims_opened": ["l4-two-point-reuse-ratio-one-closes-q0-outer-sector"], "falsifier": "coordinates for a single new line (or shared-hub nesting) that doubles two segments at two distinct triple points for \u0394c=1, pushing d/c above 2 anywhere in this family", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 338 - Euclidn't - 2026-09-01T11:19:44Z
+
+Turn 337's `L4` construction has a gap in its own verification, and it's checkable exactly, no decimals required. Python is still gated — the harness refused Bash again this turn — so this is coordinate geometry on reference data 28's six lines plus `L4`.
+
+`L4` passes through `C = (0,4/3) = b∩M5`, which is not empty space — it's a vertex of face 2 (`P, Q_4, C` on `c, M_5, b`, reference data 28b), one of `P`'s six original hub triangles. Turn 337 checked `L4` against the two *new* triangles from turn 335 (`{M1,a,L}` and `{a,M5,L}`) and declared "`L4` doesn't clip anything" — but never checked it against the original six faces at `P`, despite routing directly through one of their vertices.
+
+**Face 2's interior wedge at `C`, exactly.** The two edges of face 2 meeting at `C` are `C→Q_4` (along `M5`, direction straight up, slope undefined/vertical) and `C→P` (along `b`, direction `(1,-1/3)`, slope `-1/3`). Face 2 is convex, so its interior at `C` is exactly the angular wedge between these two rays: any ray `(1,m)` with `m > -1/3`, finite, lies strictly inside it — this needs no decimal comparison, just `80/3 > -1/3`. `L4`'s slope is `80/3`. So `L4`, leaving `C` in the `+x` direction, enters face 2's interior **by construction**, for any slope it could have taken above `-1/3` — turn 337's specific choice was never going to miss it, because it had to connect to `Y` in the third quadrant, which forces exactly this kind of steep positive slope through `C`.
+
+**Where it goes from there.** `L4 ∩ c` (line `P`-`Q_4`) is at `x = 8/89`, strictly between `Q_4` (`x=0`) and `P` (`x=1`) — a genuine crossing on the shared, already-doubled segment `P`-`Q_4` (reference data 28c: this segment already serves faces 1 and 2). So `L4` doesn't graze face 2's boundary, it cuts through its interior and exits through an edge that itself borders face 1. Whether the two resulting pieces (`C,P,D` and `C,D,Q_4` where `D = L4∩c`) end up as clean empty triangles, or whether the piece extending toward `P` gets cut again by `M3` near `Q_4`'s neighborhood (`M3` also passes through `Q_4`, and I have not finished checking it against `C,P,D` with the same rigor I applied to the wedge argument), is exactly the kind of six-sector decomposition reference data 28 did explicitly at `P` before certifying any segment doubled. Turn 337 skipped that step at `C`.
+
+This is the standing prohibition from the agenda applied to a fresh case: don't concede — or in this case, don't bank — a geometric claim about a configuration you can draw without drawing it. `C` just became a genuine triple point of `b, M5, L4` with six sectors of its own, and none of them have been enumerated the way `P`'s were.
+
+None of this moves my prior. This whole gadget already tops out at `T=6` against `N(6)=7`, unrelated to whether `Δd/Δc` at one spare vertex is `1`, `2`, or something else — and Turn 337 itself was already closing this branch to move to agenda item 4. I'm flagging it so the ledger doesn't inherit an unverified "doesn't clip anything" claim, not to reopen the ratio program.
+
+**Named object:** `L4`'s wedge argument at `C` — exact slope comparison `80/3 > -1/3` places `L4` inside face 2's interior on leaving `C`, and `L4∩c` at `x=8/89 ∈ (0,1)` confirms a genuine interior crossing on the doubled segment `P`-`Q_4`, which turn 337's clip-check never examined.
+
+<!-- meta
+{"addresses": [337], "claims_conceded": [], "claims_opened": ["l4-clips-face-2-unverified"], "falsifier": "a six-sector decomposition at C showing both C,P,D and C,D,Q_4 are empty and valid, with no interaction with face 1 or line M3, would clear L4's construction and I'd withdraw this", "tier": "none", "verifier_runs": []}
+-->
