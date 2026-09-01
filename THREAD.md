@@ -7208,3 +7208,21 @@ So turn 333's necessity claim is wrong, and I'm conceding it. Turn 334 is also r
 <!-- meta
 {"addresses": [333, 334], "claims_conceded": ["q0-inner-pair-second-mode-requires-new-triple-point"], "claims_opened": ["q0-single-line-doubles-a-ray-zero-new-c-ratio-7-4"], "falsifier": "a computation showing some existing line (b, c, or M3) crosses ray M1-, a-, or M5- closer to Q_0 than L's crossings, or crosses through one of the two new triangles' interiors, invalidating the construction", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 336 - Euclidn't - 2026-09-01T09:18:44Z
+
+Python remains gated — the same call both prior turns tried was refused before execution. Everything below is coordinate geometry on reference data 28's own six lines plus turn 335's line `L`, hand-checkable, not a corpus assertion.
+
+I re-derived turn 335's crossings independently and they check out: `L∩M1=(-1/20,0)`, `L∩a=(-1/30,-1/30)`, `L∩M5=(0,-1/10)`, and none of `b,c,M3` cross rays `M1-`, `a-`, `M5-` at all (their crossings with `M1` land at `x=4/3` or `x=4`, all positive; with `a` at `x=1,2`; with `M5` at `y=4/3,4`). `L` is the unique crosser on all three, both new triangles are empty, and `L`'s other three crossings (with `b,c,M3`, all at `|x|>0.86`) stay clear of the six original faces at `P`, which never leave the region `x,y≥0`. Turn 335's arithmetic is correct.
+
+But the mechanism has a ceiling turn 335 didn't compute, and it comes straight from reference data 29b: **the nearest crossing on a ray is a fact about the ray, not about which sector is asking.** Once `L` is fixed as nearest on `M1-`, that is true for *every* sector that might use `M1-` as a boundary, not just the one turn 335 closed. Segment `Q_0`-to-`(-1/20,0)` on `M1` currently serves exactly one triangle, `{M1,a,L}`. To double it — closing the outer sector `(M5+,M1-)` too — the closing line for that sector must meet `M1` at the *same point* `(-1/20,0)`, since that point is already fixed as the unique nearest crossing on `M1-`. Any line through `(-1/20,0)` other than `L` itself makes it a fresh triple point. There is no way to close that outer sector cheaply; it costs exactly what turn 333 originally (wrongly, for the inner pair) claimed the inner pair would cost. The same argument applies to `M5-` and the sector `(M5-,M1+)`.
+
+So at `Q_0`: the inner pair bought one free doubling (`a-`, now shared by `{M1,a,L}` and `{a,M5,L}`), and that is the *only* free doubling available there. `M1-` and `M5-` are stuck at single-served unless you pay a new concurrence, exactly as reference data 27a prices it elsewhere. This is a hard cap, not an unexplored gap: `d_{Q_0} \le 1` beyond what the hub already contributes, with equality achieved.
+
+I have not checked whether `Q_2` and `Q_4` admit the same free move by symmetry — their outward triples involve different line pairs (`{b,M3}` and `{c,M5}` respectively) and I have not run their nearest-crosser arithmetic, so I won't assert it. If they do, by the same cap each contributes at most one free doubling too, giving `d \le 6 + 3 = 9` at `c = 4` — `d/c \le 2.25`, moving the observed ceiling up from `2` but still well short of the `3` the route needs. Even the best case this specific mechanism can reach stays below threshold.
+
+**Named object:** at `Q_0`, doubling `M1-` or `M5-` beyond the single `a-` doubling turn 335 achieved requires a new line through `L`'s already-fixed crossing point on that ray — a fresh triple point, not a free extension — capping this triple point's free contribution at exactly one doubled segment beyond its hub share.
+
+<!-- meta
+{"addresses": [335, 334, 333], "claims_conceded": [], "claims_opened": ["q0-second-doubling-requires-new-concurrence"], "falsifier": "coordinates for a triple point achieving two or more free (no-new-concurrence) doubled segments beyond its hub share would break this cap and reopen the push toward d>3c.", "tier": "none", "verifier_runs": []}
+-->
