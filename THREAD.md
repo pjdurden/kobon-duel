@@ -7270,3 +7270,21 @@ None of this moves my prior. This whole gadget already tops out at `T=6` against
 <!-- meta
 {"addresses": [337], "claims_conceded": [], "claims_opened": ["l4-clips-face-2-unverified"], "falsifier": "a six-sector decomposition at C showing both C,P,D and C,D,Q_4 are empty and valid, with no interaction with face 1 or line M3, would clear L4's construction and I'd withdraw this", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 339 - PythagorAss - 2026-09-01T12:18:44Z
+
+Turn 338's objection is correct, and I can confirm it exactly rather than by decimal comparison.
+
+> `L4`'s wedge argument at `C` — exact slope comparison `80/3 > -1/3` places `L4` inside face 2's interior on leaving `C`
+
+Cross-product check, exact fractions, no decimals. Face 2's wedge at `C=(0,4/3)` is bounded by `C→Q_4 = (0,1)` and `C→P = (1,-1/3)`; `cross((0,1),(1,-1/3)) = -1`. The ray of `L4` continuing past `C` away from `Y` has direction `C-Y = (1/20, 4/3)`. `cross((0,1),(1/20,4/3)) = -1/20`, `cross((1/20,4/3),(1,-1/3)) = -81/60` — both negative, same sign as `-1`, so the direction is strictly inside the wedge, confirmed without rounding. And `L4 ∩ c`: solving `4-3x = 4/3+80x/3` gives `89x = 8`, `x = 8/89 ∈ (0,1)`, matching turn 338's figure exactly. **Conceded**: turn 337's "`L4` doesn't clip anything" is false; it cuts face 2 at `D=(8/89, 332/89)`.
+
+But the consequence isn't simply "more cost." If `C,P,D` and `C,D,Q_4` are both valid empty triangles, splitting face 2 doesn't destroy a triangle net — it replaces one triangle with two, `ΔT=+1` from that alone, on top of the `+1` from `{M1,M5,L4}` itself (`Q_0,Y,C`). Against `Δc=2` (`Y` becomes a triple point of `M1,L,L4`; `C` becomes one of `M5,b,L4`) that's `ΔT=2` for `Δk=1, Δc=2` — and `Y` was already `M1∩L`, a vertex of turn 335's triangle `{M1,a,L}`, so I'd also need to check whether `L4` passing through `Y` disturbs *that* triangle's interior the same way it disturbed face 2's. I haven't checked it, and by the same standing prohibition turn 338 invoked against me, I won't assert it either way.
+
+I'm not running that check this turn. This sub-branch has now cost five turns (333, 335, 337, and the replies at 334/336/338) chasing single-vertex closures at `Q_0`, and every result so far — `1.75`, `1`, and now an unresolved split that could land better or worse than `1` depending on a check I haven't done — bears on `T`, not on `d`. Agenda item 2 tracks doubled *segments*, and I have not shown the split produces any new doubled segment beyond what turn 335 already priced. Even a generous `ΔT=2` at `Δc=2` doesn't by itself move `d/c`.
+
+Retracting turn 337's specific triangle claim. Not retracting turn 335's result (`{M1,a,L}`, `{a,M5,L}`, `d/c=1.75`), which turn 338's cross-product argument doesn't touch — face 2 borders neither line `a` nor `L`'s crossing at `(-1/30,-1/30)`, so that triangle's interior is untouched by this wedge. Agenda item 2 stays closed on my side at the best verified number, `1.75`, below `2` and far below `3`. Next turn: agenda item 4, the two-of-three-leg count on Bader's table, calibration first as specified, actually run rather than named again.
+
+<!-- meta
+{"addresses": [338], "claims_conceded": ["l4-outer-triangle-clips-face2"], "claims_opened": [], "falsifier": "a check showing Y's promotion to a triple point leaves {M1,a,L} empty, and that C-P-D and C-D-Q4 are both valid empty triangles, producing a genuinely new doubled segment (not just \u0394T) at this vertex with local d/c exceeding 2", "tier": "none", "verifier_runs": []}
+-->
