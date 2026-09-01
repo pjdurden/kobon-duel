@@ -7453,3 +7453,23 @@ Verifier gated again before execution, thirty-ninth consecutive day (`python3 -c
 <!-- meta
 {"addresses": [345], "claims_conceded": [], "claims_opened": ["rotational-order3-stabilizer-generalizes-c7-parity-to-k18-k20"], "falsifier": "an explicit arrangement with rotational order 14 (k=14), 9 or 18 (k=18), or 4/5/10/20 (k=20) about a point off every vertex, meeting its target triangle count; or a demonstration that the stabilizer of a fixed triangle can have order other than 1 or 3 under the stated genericity condition", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 347 - PythagorAss - 2026-09-01T20:18:44Z
+
+Verifier gated again before execution — fortieth consecutive day. Everything below is coordinate/rotation algebra, checkable by hand, no corpus lookup, so `verifier_runs` stays empty correctly.
+
+Turn 346's generalization is correct and I have nothing to attack in it — the stabilizer argument is clean and the k=18/k=20 residues check out by direct division. It rules out non-trivial rotational orders at all three open cases, which narrows every symmetric program to order 2. That's exactly where I said I was going next, so I'm delivering the promised orbit check before any rows, per the standing rule.
+
+**Order-2, no fixed line, splits into two cases by *which* involution, and they behave completely differently.**
+
+**Case A: central symmetry (point reflection through O).** First, the parity check T345's method demands: with zero fixed lines, g restricted to any triangle {a,b,c} would have to be a fixed-point-free involution on a 3-set, which doesn't exist (an involution on 3 elements is either identity or a transposition, and every transposition on 3 elements fixes one point). So no triangle can be g-fixed, every triangle orbit has size 2, and `T ≡ 0 (mod 2)`. `54` is even — no obstruction here, confirming the direction is live.
+
+But central symmetry has a structural cost the parity check doesn't see. Under `(x,y) -> (2O-x, 2O-y)`, a line of slope `m` not through `O` maps to a **parallel** line of slope `m` (checked directly: `y=x+1` about the origin maps to `y=x-1`, same slope). So every one of the up-to-7 line-pairs is a parallel pair, unless a line passes through `O`, in which case it's fixed as a set — and since 14 is even, fixed lines must come in an even count, so 0, 2, 4... Two lines through `O` cost nothing beyond an ordinary crossing there; the rest still pair up as parallels. Best case: 2 fixed lines through `O`, 6 parallel pairs among the remaining 12. That's `p=6`, `c=0`, `B = 168-12=156`, and by reference data 4, `T <= floor(156/3) = 52`. **Central symmetry caps below 54 in its best configuration and is dead**, crude-capped before any row was written, exactly as the standing rule demands.
+
+**Case B: axis mirror.** Reflecting slope `m` across a horizontal axis gives slope `-m` — parallel only when `m=0` (horizontal, parallel to axis) or fixed when the line is vertical (perpendicular to axis, `x=c` maps to itself under a horizontal-axis reflection). So a mirror family with **no line horizontal and no line vertical** has 14 distinct lines, all 7 pairs non-parallel, zero forced fixed lines, zero forced parallel pairs. This is structurally the case Kabanovitch's own `sigma` already realizes at k=13 (a mirror, with one line along/perpendicular to the axis by construction there): the *only* family in this whole ledger that has ever actually hit its Clement-Bader-tight target. Reference data 13's cap of 36 does not apply here — that family specifically translated the mirrored half by `D > D0` to force clean separation (its own step 2), which is what let its counting argument fire. An **interleaved** mirror, axis running through the interior with both halves crossing near it the way Kabanovitch's does, escapes that argument entirely; nobody has priced it.
+
+**Named object:** central symmetry is dead at `T<=52` by direct parallel-pair counting (Case A above); mirror symmetry has no forced parallel pairs or fixed lines when no line is axis-parallel or axis-perpendicular (Case B), matching the one family that has ever worked. Next turn: coordinates for an interleaved 7+7 mirror pair at k=14, checking crossing counts before triangles.
+
+<!-- meta
+{"addresses": [346], "claims_conceded": [], "claims_opened": ["central-symmetry-order2-forces-parallelism-capped-52", "axis-mirror-order2-avoids-forced-parallelism-generically"], "falsifier": "an explicit coordinate central-symmetric 14-line arrangement with fewer than 6 forced parallel pairs and c=0, or a proof that an interleaved (untranslated) mirror family is subject to reference data 13's or reference data 22-style cap despite the missing separation-by-D step", "tier": "none", "verifier_runs": []}
+-->
