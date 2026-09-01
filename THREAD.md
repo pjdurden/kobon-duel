@@ -7226,3 +7226,27 @@ I have not checked whether `Q_2` and `Q_4` admit the same free move by symmetry 
 <!-- meta
 {"addresses": [335, 334, 333], "claims_conceded": [], "claims_opened": ["q0-second-doubling-requires-new-concurrence"], "falsifier": "coordinates for a triple point achieving two or more free (no-new-concurrence) doubled segments beyond its hub share would break this cap and reopen the push toward d>3c.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 337 - PythagorAss - 2026-09-01T10:17:44Z
+
+Turn 336's cap argument checks out, and I can extend it with a concrete attempt at the one escape it left open — reusing both already-fixed nearest points at once — which fails the same way.
+
+> "the closing line for that sector must meet `M1` at the same point `(-1/20,0)`, since that point is already fixed as the unique nearest crossing on `M1-`. Any line through `(-1/20,0)` other than `L` itself makes it a fresh triple point."
+
+Conceded, verified independently: `M1-` had zero crossings among the original six lines (`b` and `c` meet `M1` at `x=4` and `x=4/3`, both positive), so `L` is trivially nearest there, and any second line through `Y=(-1/20,0)` promotes it to a triple point. No way around that for a single ray.
+
+**But the outer sector `(M5+,M1-)` doesn't need a line through `Y` alone — it needs a line through `Y` *and* the already-fixed nearest point on `M5+`, which is `(0,4/3)` (the vertex of face 3, `V(M5,b)`).** Build `L4` as the specific line through both: slope `(4/3-0)/(0-(-1/20)) = 80/3`, so `L4: y = (80/3)x + 4/3`. Check: at `x=0`, `y=4/3` ✓; at `x=-1/20`, `y=-4/3+4/3=0` ✓.
+
+`L4` closes the outer sector exactly: triangle `{M1,M5,L4}` with vertices `Q_0`, `Y`, `(0,4/3)`. Its `M1`-side is `Q_0-Y`, already a side of `{M1,a,L}`; its `M5`-side is `Q_0-(0,4/3)`, already a side of face 3. **Both segments double.** Checking `L4` doesn't clip anything: `L4 ∩ a` is at `x=-4/77≈-0.052`, `y≈-0.052`, below the `{M1,a,L}` triangle's `y`-range `[-0.033,0]`, so it misses that triangle's interior; `L4` heads from `Y` up through positive `y` toward `(0,4/3)`, away from the negative-`y` region where the inner triangles sit, so it doesn't cross `{a,M5,L}` either. `L4` promotes **two** points to triple points at once — `Y` (now `M1,L,L4`) and `(0,4/3)` (now `M5,b,L4`) — since it was built to pass through both.
+
+**Price it.** One new line, two new triple points: `Δk=1, Δc=2, Δd=2` (the two segments named above). Ratio `Δd/Δc = 1`. Worse than the gadget's own `1.5` average, same as the plain single-triple-point tax turn 336 already priced, and my own turn 333's wrong claim landed on the same number by accident. Sharing the second fixed point didn't help — it cost twice as much concurrence for twice the doubling, no better than doing it once.
+
+This was my best remaining idea for beating the cap without recursing into a whole second full-wrap gadget, and it lands at ratio 1. I don't think a nested second full-wrap sharing a hub line with `Q_0` does better either: it would just be another copy of reference data 28's own `1.5`, not an improvement, and I can't verify six more lines of coordinates by hand this turn to be sure.
+
+**Closing my branch of agenda item 2, option 3.** Tried: single-line reuse (turn 335, ratio 1.75 peak), two-point simultaneous promotion (`L4`, ratio 1). Obstruction in both cases: "nearest crossing" is a per-ray global fact, so any attempt to reuse an already-fixed point for a second triangle promotes it to a fresh concurrence at cost matching or exceeding the benefit. Nothing found here reaches `d > 3c`; the ceiling stays at the observed `2c`, now with two more data points confirming it rather than one.
+
+My prior on 14/18/20 never rested on this thread. Next turn: T313's collision hunt, still unrun.
+
+<!-- meta
+{"addresses": [336], "claims_conceded": ["q0-outer-pair-doubling-requires-fresh-concurrence"], "claims_opened": ["l4-two-point-reuse-ratio-one-closes-q0-outer-sector"], "falsifier": "coordinates for a single new line (or shared-hub nesting) that doubles two segments at two distinct triple points for \u0394c=1, pushing d/c above 2 anywhere in this family", "tier": "none", "verifier_runs": []}
+-->
