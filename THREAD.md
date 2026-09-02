@@ -7651,3 +7651,26 @@ Cross-check against `N`: the 6 axis quadrilaterals contribute `6×4=24` (even), 
 <!-- meta
 {"addresses": [354, 355], "claims_conceded": [], "claims_opened": ["axis-quad-free-edge-pigeonhole-forces-three-all-triangle", "axis-unbounded-face-chain-parity-even"], "falsifier": "an explicit 14-line Case B table where more than 3 axis quadrilaterals carry a free edge, or where U_b/N come out odd, would break part 1 or part 2 respectively", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 357 - Euclidn't - 2026-09-02T05:18:38Z
+
+Turn 356's pigeonhole on the axis quadrilaterals holds up under a careful check — the two edges of `F_i` touching `V_i` really are forced into or out of freeness together (sigma maps `F_i` to itself, swapping those two edges, and freeness is sigma-invariant), so each free vertex-incidence spends a whole sigma-pair, and `6/2 = 3` is a genuine cap. But the second half of the turn — "`U_b` is even... consistent with `N+U_b=174`" — is circular, not a finding. `174` is fixed and even; the moment `N` is shown even (which follows immediately from every non-axis contribution coming in mirror pairs and the axis contributing `6×4=24`), `U_b = 174-N` is even *by arithmetic*, with zero input from the circle-at-infinity argument. The ray-pairing computation is correct but idle: it doesn't narrow anything that wasn't already forced. Neither of these findings dents the arrangement's consistency, which is exactly what T352 already established — Case B still has no obstruction, symmetric or not, and no fourteen-line table exists.
+
+On my own assignment: item 3, `C3` at `k=18`. Reference data 32e pins `s ∈ {1,4}`, one or four concentric equilateral faces. Here is why `s=4` is impossible, and it needs no coordinates, only the standard incircle-containment fact.
+
+**Lemma.** No two distinct `C3`-fixed candidate triangles can both be faces of the arrangement.
+
+A `C3`-fixed triangle is invariant under 120° rotation about `O`, hence equilateral with `O` as centroid = incenter. Since the rotation is an isometry fixing `O`, it maps each bounding line to the next, so all three lines sit at one common distance `ρ` from `O` — the triangle's inradius — and the incircle of radius `ρ` about `O` is contained in the closed triangle, touching only the three sides.
+
+Take two candidates `T_k` (orbit `k`, inradius `ρ_k`) and `T_j` (orbit `j`, inradius `ρ_j`), both claimed as faces, `k≠j`.
+
+- If `ρ_k < ρ_j`: each line of orbit `k` sits at distance `ρ_k` from `O`, strictly less than `ρ_j`, so it crosses the open disk of radius `ρ_j` about `O` — a line at distance `d` from a circle's center meets the open disk iff `d <` radius. That disk lies inside `T_j`. So an orbit-`k` line passes through `T_j`'s interior, and `T_j` is not an uncut face. Contradiction.
+- If `ρ_k = ρ_j = ρ`: both triangles share one incircle but are rotated relative to each other by some `φ ∈ (0°,120°)` (distinct orbits, distinct lines). A side of `T_k`, tangent to the shared incircle at angle `φ`, touches that circle at a point that is *not* one of `T_j`'s three tangency points (those sit at `0°,120°,240°` relative to `T_j`), hence lies in `T_j`'s open interior (the incircle touches `T_j`'s boundary only at the three tangency points; every other circle point is strictly inside). The tangent line passes through that interior point. Contradiction.
+
+Either way, two distinct orbits cannot both survive as faces. So **`s ≤ 1`** unconditionally. Combined with `s ≡ 94 ≡ 1 (mod 3)` and `0 ≤ s ≤ 6`, the only value satisfying both `s≤1` and `s≡1 mod 3` is `s = 1`. **`s = 4` is dead; `C3` at `k=18` requires exactly one fixed equilateral face, not one-or-four.**
+
+This sharpens reference data 32e but does not close item 3: the surviving requirement is that the other five orbits' candidate triangles must each be cut by some other line, which is generically easy and proves nothing yet either way. I attempted the verifier for a numeric sanity check of the tangent-line computation; blocked at approval, so `verifier_runs` is empty and the argument above stands on the incircle-containment fact alone, which is elementary and checkable by hand.
+
+<!-- meta
+{"addresses": [356], "claims_conceded": [], "claims_opened": ["c3-fixed-triangles-mutually-exclusive-s-leq-1"], "falsifier": "an explicit pair of C3-fixed triangles (same or different inradius, different orbits) both surviving as uncut faces of one consistent arrangement would refute the incircle-containment lemma and reopen s=4", "tier": "none", "verifier_runs": []}
+-->
