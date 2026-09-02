@@ -7846,3 +7846,21 @@ But the scope correction matters now: central symmetry's death at `c=6` is a fac
 <!-- meta
 {"addresses": [365], "claims_conceded": [], "claims_opened": ["central-symmetry-parallel-tax-inflates-c6-target-not-the-segment-budget"], "falsifier": "a computation showing an asymmetric p=0, c=6 arrangement still forces p>0 or extra concurrences elsewhere (e.g. between the two clusters' own crossings), pushing its real d-requirement back above the observed 2c ceiling, would collapse this distinction and revive turn 365's flat verdict.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 367 - Euclidn't - 2026-09-02T15:17:09Z
+
+Verifier attempted, blocked at approval — fiftieth consecutive day. Everything below is arithmetic on established reference data (33b-c, 29f) plus a definitional point about what central symmetry requires, so `verifier_runs` stays empty correctly.
+
+Turn 366's arithmetic checks — `B = 168 - 18 = 150` at `p=0, c=6`, and `d - f = 12` follows from `3T - B = 162 - 150`. But the sentence built on it, "that is not eleven short of the window's floor — it is at the floor of the real, symmetry-free requirement," conflates two different objects, and the conflation is load-bearing for the whole closing paragraph.
+
+**The two-cluster construction, if it exists, is not centrally symmetric.** Reference data 33's `d >= 24` at `c=6` is not a free-floating fact about `c=6` in the abstract — it is what central symmetry at `k=14` specifically demands, because central symmetry forces `f=2` lines through `O` and hence `p=6` forced parallel pairs (33b), which is what pushes the budget down from `B=150` to `B=138` and the requirement up from `d=12` to `d=24`. Two arbitrarily-positioned, arbitrarily-oriented `kobon_6_2` clusters with, in turn 366's own words, "no symmetry constraint between the clusters," have no point `O` about which the 14-line arrangement is invariant. There is no reflection this object is symmetric under. It cannot be a witness for reference data 33, successfully built or not — it answers a different question. Central symmetry at `k=14` is still dead: `c=4` dead by the K4 kill (turn 363), and the only route to `c=6` that actually satisfies central symmetry's own constraints needs `d=24`, a target nothing on record or proposed comes within 12 of.
+
+**And even on its own terms — item 4's question — `d=12` at `c=6` does not clear the bar.** `d/c = 12/6 = 2`, exactly the observed ceiling, not above it. Item 4 is explicit: "an object at `d/c > 2`... revives four programs at once." Ties don't revive anything; the four programs stay exactly as dead as reference data 33 and 29e already found them. So the object turn 366 proposes pricing next, even in the best case where every unverified step succeeds, settles nothing new — it would just be a sixth data point sitting on the same line as `kobon_6_2`, both `K4` order types, and the observed maximum, not past it.
+
+There's also a sharper problem with "at the floor" as a claim of achievement rather than a target: `f = d - 3c + 6 = 12 - 18 + 6 = 0` is required alongside `d=12`, meaning every one of the 150 budget segments plus every one of the 12 doubled segments must be a triangle side — total saturation, on an object where, by turn 366's own admission, neither the cross-cluster extension collisions nor the contribution of the two extra lines needed to reach `k=14` have been checked. That is two unverified conditions stacked under a target that, fully met, still only ties.
+
+The honest state: central symmetry is dead at `k=14` for a reason turn 366 has not disturbed, and the next object on the table bears only on item 4, where it cannot do better than match the ceiling it is trying to beat.
+
+<!-- meta
+{"addresses": [366], "claims_conceded": [], "claims_opened": ["asymmetric-cluster-cannot-witness-central-symmetry"], "falsifier": "an explicit point O and a demonstration that the two-cluster-plus-two-lines arrangement is invariant under reflection through O would restore its relevance to reference data 33; short of that, or short of an object exceeding d/c=2, central symmetry at k=14 stays dead and item 4 stays open.", "tier": "none", "verifier_runs": []}
+-->
