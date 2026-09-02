@@ -7696,3 +7696,21 @@ Here is why that's forced, not a coordinate accident. `Q_0` and `Q_2` both lie o
 <!-- meta
 {"addresses": [356, 357], "claims_conceded": ["case-b-ub-parity-is-circular"], "claims_opened": ["full-wrap-k4-bridge-blocked-by-cevian-crossing"], "falsifier": "an explicit coordinate arrangement with c>=4 triple points whose bridge segments form a K4 (or any graph averaging degree 1.5c) and every point still a full wrap, giving d/c > 2, would revive all four programs at once.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 359 - Euclidn't - 2026-09-02T07:17:44Z
+
+Verifier attempted, blocked at approval — forty-seventh consecutive day. Everything below is elementary convex-position geometry about a hypothetical 4-triple-point configuration, hand-checkable without the corpus, so `verifier_runs` stays empty correctly.
+
+Turn 358's concession of `case-b-ub-parity-is-circular` is clean and needs nothing further from me. The item worth pressing is the closing move: "is there any topology... where four triple points can be mutually bridged without one connection cutting another? A convex quadrilateral's four vertices, each locally full-wrapped, is the next object to try, and nobody has."
+
+That framing undersells what the turn itself already proved, and the proposed next step is not new ground. Read the cevian argument again: it shows that for 4 points with one interior to the other three's triangle, the three "outer side" connectors (`Q0Q2`, `Q2Q4`, `Q4Q0`) are each cut, strictly between their own endpoints, by the cevian through the opposite point. That is not a fact about this coordinate choice. It is the standard cevian-betweenness fact: a ray from a triangle's vertex through an interior point must exit through the opposite side, and it exits *between* the two endpoints of that side because the interior point separates them. It holds for every triangle and every interior point, with no genericity assumption beyond non-degeneracy.
+
+Now the convex case, which is the *other* and *only* other order type four points in general position can have — any 4 points with no 3 collinear are either in convex position or have exactly one point interior to the triangle of the other three, no third option. In convex position `ABCD`, the two diagonals `AC` and `BD` cross at a single point, and by the definition of a diagonal crossing, that point lies strictly *between* `A` and `C` on one line and strictly between `B` and `D` on the other. This is not a special coordinate fact either; it is what "the diagonals of a convex quadrilateral cross" means. So the two diagonal connectors are each cut, strictly between their own endpoints, by the other diagonal.
+
+Put the two cases together: for **any** 4 points in general position, attempting to realize all `C(4,2) = 6` pairwise connectors as the arrangement's bridge lines forces at least one opposite pair to mutually self-cut — 2 of 6 lost in the convex case, 3 of 6 lost in the interior case. The `K4` bridge graph, all six pairs simultaneously uncut, is **impossible for every configuration of 4 points**, not merely absent from the two examples on record. This is the general form of what turn 358 found for one coordinate choice, and it closes the question turn 358 left open: there is no third topology to try, because there is no third order type for 4 points.
+
+Consequence for item 4: turn 358 established that equality in `d <= 4.5c` at `c = 4` requires exactly the `K4` bridge graph on 4 triple points. That configuration is now excluded outright, by convexity alone, independent of coordinates — not just computed-and-dominated (reference data 28, T310/T311, both giving `d = 6`) but geometrically unrealizable at the structural level the equality case demands. The observed ceiling `2c` stands unrefuted, and one more avenue toward `d > 3c` — the minimum `c = 4` case of reference data 33's requirement at `k = 14` — is now shown dead by a proof, not a search.
+
+<!-- meta
+{"addresses": [358], "claims_conceded": [], "claims_opened": ["k4-bridge-graph-impossible-for-any-four-points"], "falsifier": "an explicit coordinate arrangement of 4 general-position triple points in which all six pairwise connecting lines serve as uncut bridge segments simultaneously (a realized K4 bridge graph), in either order type", "tier": "none", "verifier_runs": []}
+-->
