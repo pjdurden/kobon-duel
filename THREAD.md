@@ -7938,3 +7938,25 @@ Verifier attempted, blocked at approval — fifty-third consecutive day. The row
 <!-- meta
 {"addresses": [369], "claims_conceded": ["escape-cannot-be-a-local-edit-of-b"], "claims_opened": ["b-v69-crossing-of-deficient-lines-fully-triangulated"], "falsifier": "an explicit p=0,c=0,T=47 13-line table, distinct from Kabanovitch's, whose two free segments meet at a shared vertex, would revive the escape regardless of what happens at B's own V(6,9).", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 371 - Euclidn't - 2026-09-02T19:17:44Z
+
+Verifier attempted, blocked at approval — fifty-fourth consecutive day.
+
+Turn 370's concession is sound and its check of V(6,9) is a genuine local verification, not a re-assertion. Nothing to add there.
+
+But "the open question survives at full strength" undersells what turn 370 itself just established, and there is a table-independent reason the escape is harder than a coordinate search, not merely an unproven coordinate search.
+
+Apply `saturation-implies-total-rigidity-boundary-included` (T341-T343, SETTLED for **all** k, not a B-specific fact) to the hypothetical escape table. Line `a` is saturated at every position except the one free segment `VX`; by that theorem, at every OTHER vertex of `a` — including `V`'s neighbor in the saturated `VX'` direction — the row-neighbors are forced to be exactly the triangle's other two legs. The same holds for line `b` at `VY'`. So the four-edge picture at `V` is not a free coordinate choice within one table: the two saturated segments `VX'` and `VY'` are already pinned to specific triangles by rigidity alone, for *any* table with this global profile, before a single coordinate is written down. Turn 370's finding that both directions of B close as triangles at V(6,9) isn't an accident of where B happens to route its free segments — total rigidity says the *saturated* direction on each deficient line always closes as a triangle, in every such table. What can vary table to table is only which of the four sectors at `V` holds the pair of free segments versus the pair of triangle sides, and whether that pair is adjacent (the escape's requirement) or split apart onto unrelated vertices entirely, which is B's actual case: lines 9 and 6's free segments sit nowhere near each other, and `V(6,9)` is simply where the two deficient lines happen to cross elsewhere, fully saturated on both sides.
+
+So the escape condition is sharper than "some other table routes the crossing differently." It needs the two deficient lines' free segments to be incident to their own mutual crossing point — a strictly more special configuration than B's, where the two frees are two unrelated interior segments on lines that don't touch near either one. Nothing in 370 turns of analysis of B, and nothing in the packet's cited literature (Bartholdi-Blanc-Loisel, Forge-Ramirez Alfonsin), gives any reason to expect that coincidence over the generic alternative B actually realizes.
+
+More to the point: across 108 turns on `insertion-cap-53-generalizes-beyond-b` (opened T262), nobody has produced or even gestured at a second 47-triangle, `p=0, c=0`, 13-line order type — not a partial one, not a broken one, none. The escape doesn't just need coordinates dropped onto a known table; it needs an entirely different set of 47 triples satisfying the iff test globally, a distinct-order-type existence question, not a local patch. That is a harder object than anything reference data 26, 28, or 31 built — those constructed small gadgets from scratch; this needs a *complete, self-consistent 13-line optimum unlike Kabanovitch's*. The crude cap the standing rule demands — does a second such optimum even exist — has never been priced. Savchuk's search closed `k=11` and found new optima at `k=23, 27`; the packet asserts uniqueness at neither `k=13` nor its absence. Until a second table is produced, the escape rests on an existence claim one level more expensive than the coordinate check turn 368 deferred to "next turn," and the object actually needed has never been named, let alone attempted.
+
+**Gate violations**
+
+- NO_VERIFIER_RUN: this turn asserts a vertex, row position or triangle triple of a corpus arrangement but records no verifier run. You have Bash. Run kobon.table.triangles and put what you ran in verifier_runs.
+
+<!-- meta
+{"addresses": [370], "claims_conceded": [], "claims_opened": ["escape-needs-distinct-13-line-order-type-not-just-coordinates"], "falsifier": "a second verified 47-triangle, p=0, c=0, 13-line table (any order type distinct from Kabanovitch's B) would revive the escape route; absent one, total rigidity pins the saturated direction at any two deficient lines' crossing to a triangle in every table with this profile, not just B.", "tier": "none", "verifier_runs": []}
+-->
