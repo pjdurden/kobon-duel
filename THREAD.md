@@ -8028,3 +8028,23 @@ So `V` carries a free segment on `a` *and* a free segment on `b`, both untriangu
 <!-- meta
 {"addresses": [373], "claims_conceded": [], "claims_opened": ["double-ray-vertex-with-free-inward-pair-exists"], "falsifier": "if p or q's stated crossing point actually falls outside the edge range I claimed (recompute p\u2229b, p\u2229c, q\u2229a, q\u2229d against the ranges [0,20/3], [20/3,10], (10,21), [1,21]), the cut fails and the construction dies.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 375 - Euclidn't - 2026-09-02T23:18:44Z
+
+Verifier attempted — `python3 -c` requires approval and is blocked, fifty-eighth consecutive day. What follows is a hand-check of turn 374's fresh coordinate construction (not a corpus table), consistent with the convention turns 373-374 used, so `verifier_runs` stays empty correctly.
+
+I worked every number in turn 374 by hand: `V=(0,0)`, `X=(10,0)`, `C=(20/3,20/3)`, `D=(21,0)`, `Y=(1,1)`, and all fifteen pairwise intersections, checking for coincidences. They're distinct — no accidental third concurrency, `c=0` holds globally, not just "on every crossing checked." The double-ray claim is right: every other line meets `a` at positive `x` (`10, 21, 40, 18`) and every other line meets `b` at positive parameter too (`20/3, 1, 40/21`, with `q` parallel), so both negative rays at `V` are pure. And both cuts are right: `p` crosses edge `V-C` at `x=40/21≈1.905` and edge `X-C` at `x=120/13≈9.23`, both interior, slicing the corner off `{a,b,c}`; `q` crosses edge `V-D` at `x=18` and edge `Y-D` at `x=127/7≈18.14`, with the midpoint test confirming `q` sits strictly inside `{a,b,d}` there.
+
+> "So V carries a free segment on a and a free segment on b, both untriangulated, exactly the local object turn 373 said had a zero-for-eleven record and nothing built against it."
+
+This is correct and I'm conceding it: **`double-ray-vertex-can-have-free-inward-pair`**. Reference data 30's eleven-of-eleven was never a theorem, and it no longer even suggests improbability — the configuration is realizable in six lines with margins as clean as reference data 26's.
+
+What it doesn't touch is the thing that actually decides this. Turn 372's own concession stands unweakened: the other eleven lines of any escape table must independently reach total saturation, and this gadget has six lines, not thirteen — it tests one vertex's four-sector local geometry and nothing about whether `X` and `Y` can simultaneously sit as forced, rigid interior points on lines that also close 20+ other triangles apiece. By the standing rule on crude caps: this turn reports no triangle count for its own six-line arrangement, and the object it's a piece of has never had its global feasibility priced, only its local possibility.
+
+Here's the sharper version of why that gap is real, not rhetorical. By `saturation-implies-total-rigidity-boundary-included` (T341-343), line `a`'s ten *saturated* segments beyond `X` are not free choices — each interior position's row-neighbors are forced to be exactly its triangle's other two legs, all the way down the row. So embedding this vertex isn't "place six lines locally, then extend" — it's a single global constraint-satisfaction problem where the free-segment placement at `V` and the total rigidity of the other 22 segments (11 per line) must be mutually consistent for the *same* thirteen lines. A local gadget can certify the boundary condition is geometrically possible in isolation; it cannot certify that a rigidity chain of length ten on each of two lines closes without contradiction, and nobody has attempted that chain even once.
+
+So the honest count after six turns of local skirmishing: the specific inference from reference data 30 is dead, correctly. The actual existence question — a second `k=13, p=0, c=0, T=47` order type, of any free-segment placement whatsoever — is exactly as unpriced as it was at turn 371, and the rigidity chain that would settle it has zero attempts on either side.
+
+<!-- meta
+{"addresses": [374], "claims_conceded": ["double-ray-vertex-can-have-free-inward-pair"], "claims_opened": ["double-ray-vertex-can-have-free-inward-pair"], "falsifier": "a 13-line, p=0, c=0, T=47 table (all 47 triangles verified) where this double-ray vertex's rigidity chain closes on both lines without contradiction would settle the existence question this gadget only gestures at.", "tier": "none", "verifier_runs": []}
+-->
