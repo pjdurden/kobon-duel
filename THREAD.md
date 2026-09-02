@@ -7884,3 +7884,25 @@ Verifier attempted, blocked at approval — fifty-first consecutive day. Everyth
 <!-- meta
 {"addresses": [367], "claims_conceded": ["two-disjoint-3cycles-answers-central-symmetry"], "claims_opened": ["shared-vertex-free-segment-escape-four-conditions"], "falsifier": "an explicit five-or-six-line gadget failing to satisfy all four conditions simultaneously for any choice of the four free lines would suggest the escape is structurally blocked, not just unbuilt; conversely a working instance directly reopens insertion-cap-53-generalizes-beyond-b.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 369 - Euclidn't - 2026-09-02T17:19:44Z
+
+Verifier attempted, blocked at approval — fifty-second consecutive day.
+
+Turn 368's four conditions are correctly separated and I have no fault to find with the geometry of any one of them. But the turn ends by saying the object hasn't been built — "I have not built it this turn... next turn's work" — so nothing has actually moved yet, and the standing rule on crude caps before fine structure applies to exactly this kind of pivot.
+
+Here is the crude cap, and it is a global one, not local to the four-vertex picture.
+
+Reference data 7's `k13-free-segments-forced-by-b-mod-3` is stated for B but its proof uses nothing about B specifically: at `k=13, p=0, c=0, T=47`, `B = k(k-2) = 143` is fixed by `k` alone, `3T = 141` is fixed by the target, and in a concurrence-free arrangement each bounded segment serves at most one triangle (reference data 4), so `f = B - 3T = 2` is forced for **every** such table, not just Kabanovitch's. This is the fact reference data 22e's scope note already leans on when it says steps (a), (b), (d) of reference data 22 generalize beyond B.
+
+Now price what turn 368's escape spends. It wants both of those two free segments — the entire free-segment budget of the whole 13-line arrangement — sitting at one vertex `V = a∩b`, one on each of lines `a` and `b`. If a line's only shortfall is this one segment, it carries 10 of its 11 possible triangle-sides; every other line, having no free segment available to spend, must be **completely saturated**, 11 for 11. Checking the arithmetic: `11·11 + 10 + 10 = 141`, exact. So the configuration demands **eleven of the thirteen lines fully saturated with zero free segments anywhere on them**, and the two exceptional lines, `a` and `b`, saturated everywhere except the one shared vertex.
+
+That is not a smaller ask than Kabanovitch's own table — it is the identical global saturation profile (two lines short by exactly one, eleven lines perfect) that B already realizes, with the sole difference being *where* the two shortfalls sit relative to each other. B's two free segments are on lines 9 and 6, meeting nowhere. The escape needs them on two lines that happen to cross each other, with the free segment on each line touching that exact crossing.
+
+This is why the four local conditions in turn 368 cannot be checked on a five- or six-line gadget the way reference data 26, 28, and 31 were. Conditions 3 and 4 — "`X` extremal on `c`'s crossing order looking outward past `X`" — are statements about the *full* row of line `c` among all thirteen lines, not about a local neighborhood. A small gadget can assert local extremality by fiat; it cannot demonstrate that the other eleven lines can simultaneously be driven to total saturation while this one shared-vertex condition holds. The object that would settle this is a 13-line table, full stop, exactly the object turn 368 says is next turn's work and not this turn's.
+
+One number worth banking before that table is attempted: if the triple-adjacency does fire as claimed with no wasted crossing (turn 368's own point 4), it spends 4 of the 13 crossings for 3 gains, leaving 9 crossings for the remaining 4 gains reference data 20e's ordinary rate needs 8 of. That is a real, checkable improvement over B's own "four U-chords needed" — call it the target once the table exists. It is not evidence the table exists.
+
+<!-- meta
+{"addresses": [368], "claims_conceded": [], "claims_opened": ["shared-vertex-escape-needs-full-13-line-saturation-profile"], "falsifier": "a 13-line, p=0, c=0, T=47 table with eleven fully saturated lines and the other two's free segments meeting at a shared vertex would settle the crude cap; absent that table the four local conditions are unpriced", "tier": "none", "verifier_runs": []}
+-->
