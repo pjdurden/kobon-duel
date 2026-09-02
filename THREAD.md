@@ -7814,3 +7814,17 @@ Given that, and given item 4's real bar is `d/c>2`, not full saturation — I'd 
 <!-- meta
 {"addresses": [363, 362], "claims_conceded": [], "claims_opened": ["offset-matching-prism-dies-too"], "falsifier": "An explicit uncut 9-edge realization of the triangular prism bridge graph on six triple points, symmetric or asymmetric, delivering d in [24,27] at c=6, would revive central symmetry at k=14.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 365 - Euclidn't - 2026-09-02T13:17:44Z
+
+Turn 364's arithmetic on the offset matching is correct — I recomputed line `A1B2`: slope `7/√3`, `y = (7/√3)x + 3`, meeting `y = -3/2` at `x = -9√3/14 ≈ -1.113`, strictly inside `[-2.598, 2.598]`. Both symmetric matchings are dead. Nothing to dispute there.
+
+But the turn's closing move — pivot to pricing "a partial `c=6` structure... against the observed `2c=12`" — quietly swaps the target. Turn 363 fixed the bar precisely: central symmetry at `k=14` needs `d ∈ [24,27]` at `c=6`, not `d > 12`. Item 4's question ("does anything beat `2c` anywhere, at any `k`") and reference data 33's `k=14` requirement are different bars by a factor of two, and the turn's own proposed next step only aims at the smaller one. Even a fully successful `d=13` partial structure — clearing item 4's general question — would leave central symmetry at `k=14` exactly as dead as it is now, eleven short of the window's floor.
+
+And there's a sharper problem: the natural partial structure the turn is heading toward is not new ground. If the prism's three matching edges are dropped (dead in both tested topologies) and only the two triangle-sides survive as bridges — outer `A1A2A3`, inner `B1B2B3` — what remains is two disjoint 3-cycles of triple points, structurally identical to two independent copies of `kobon_6_2`'s own bridge topology (reference data 27b/27c: three triple points bridged in a 3-cycle, `d=6, c=3`, ratio 2, the *chained* mechanism, not full wrap). Two such copies give `d=12, c=6` — exactly the observed ceiling, not above it. This is turn 362's own "chain two 3-cycles" idea, and it lands precisely on `2c` whether or not the two triangles interfere with each other at all: an upper estimate, since any unchecked cross-triangle extension collision can only remove doubled segments, never add beyond what the two isolated 3-cycles already supply.
+
+So the prism, having failed on both symmetric matchings, degrades toward its own weakest fallback exactly at the point where item 4's general bar sits, and stays a full twelve short of what reference data 33 actually requires at `k=14`. There is no partial reading of "drop the failed matching, keep the triangle sides" that gets anywhere near 24. To reach the window, some structure has to beat every chained topology on record — the 3-cycle, both `K4` order types, turn 335's 1.75, turn 350's 1.0 — by more than double, using bridges the prism's own matching edges have now twice failed to supply. Central symmetry at `k=14` needs a construction that does not currently exist even in outline, not a partial-credit reading of one that has already failed twice.
+
+<!-- meta
+{"addresses": [364], "claims_conceded": [], "claims_opened": ["c6-partial-fallback-caps-at-2c-not-k14-window"], "falsifier": "an explicit c=6 bridge structure with coordinates for six triple points and the segments doubled at each, computed to give d >= 24, or a proof tightening d <= 4.5c below that window for every even c, would change my mind about k=14's central-symmetry route specifically.", "tier": "none", "verifier_runs": []}
+-->
