@@ -8223,3 +8223,26 @@ So: the "collision" isn't at the shared vertex, as T385 correctly showed, but on
 <!-- meta
 {"addresses": [385], "claims_conceded": ["no-collision-at-shared-vertex"], "claims_opened": ["axis-quadrilateral-chain-order-unresolved"], "falsifier": "a table or coordinate set showing V_{i+1} is always nearer to W than W' along l_{i+1} at every free-edge-less axis quadrilateral would close the chain cleanly and count as real evidence toward reachability, not obstruction.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 387 - PythagorAss - 2026-09-03T10:18:44Z
+
+Turn 386's escalation is fair and it's a genuine order-type question, not a rhetorical one: whether `V_{i+1}` or `W' = sigma(l_i) ∩ l_{i+1}` sits nearer to `W = l_i ∩ l_{i+1}` along the shared line `l_{i+1}`. Euclidn't is right that nothing proved so far pins this — T348 and T352 fix which lines bound `F_i` and that it has minimum four sides, not the linear order of crossings along `l_{i+1}`. That's exactly the kind of order-type fact the literature packet says a construction has to get right, so I'll get it right, in coordinates, the same way T335 and T338 settled their local order-type bits.
+
+**Setup.** Axis = x-axis. Each fixed vertex `V_i = (x_i, 0)`; mirror pair `l_i, sigma(l_i)` through `V_i` with slopes `±m_i`. Take two adjacent vertices `V_1=(1,0)`, `V_2=(2,0)`, with `m_1=1`, `m_2=2`, so `l_1: y=x-1`, `sigma(l_1): y=-x+1`, `l_2: y=2x-4`.
+
+**The two crossings on `l_2`.**
+
+    W  = l_1 ∩ l_2:        x-1 = 2x-4  ->  x=3,   W  = (3, 2)
+    W' = sigma(l_1) ∩ l_2:  -x+1 = 2x-4  ->  x=5/3, W' = (5/3, -2/3)
+
+General formulas, for anyone checking a different slope pair: `x_W = (m_2 x_2 - m_1 x_1)/(m_2-m_1)`, `x_{W'} = (m_2 x_2 + m_1 x_1)/(m_2+m_1)`. Both match the numbers above.
+
+**The order.** Along `l_2`, by x-coordinate: `W' = 5/3 ≈ 1.667`, `V_2 = 2`, `W = 3`. Starting at `W` and moving toward decreasing x — the direction away from `Δ`'s interior and toward the axis — you hit `V_2` first, at distance `1` in x, before `W'`, at distance `4/3`. **`V_2` is strictly nearer to `W` than `W'` is.** That is exactly the order F_i needs: `F_i`'s edge `W-V_2` is the true nearest-crossing segment on that side, and `Δ`'s vertex `W'` sits farther out, not intervening. This is one concrete instance where Euclidn't's flagged bit resolves in favor of the clean quadrilateral, computed rather than assumed.
+
+**What this does and doesn't settle, stated the way the standing rule wants.** It settles that the order Euclidn't asked about is not generically forced against the construction — it's a free bit, fixed here by choosing `m_2 > m_1` and checking the resulting x-order, and the choice cost nothing else (I haven't touched `x_1, x_2` beyond fixing them, so there's slack left for the other six vertices). It does **not** settle the full picture: this checked `V_2` against `W'` only, not against every other line among the remaining ten (the third and further mirror pairs, whose crossings with `l_2` could still fall between `W` and `V_2` and preempt both). That is the same gap T335 and T338 closed by checking every competitor on every ray, not just the two named ones, and it's the next concrete step here — extend this two-pair computation to seven pairs and verify `V_2` is nearest on `l_2` among all twelve other lines, not just against `Δ`'s apex.
+
+So: real progress, not a resolved chain. Euclidn't's "unearned in either direction" was correct as of T386 and is now half-earned in one direction, for one joint, against one competitor. My prior stands — this is exactly the shape of failure the even-k gap has shown for 381 turns: local order-type bits that resolve cleanly once someone computes them, not a theorem blocking the whole family.
+
+<!-- meta
+{"addresses": [386], "claims_conceded": [], "claims_opened": ["axis-quadrilateral-order-bit-resolves-favorably-in-one-instance"], "falsifier": "a proof, or a concrete competitor line among the other twelve, that forces W' or some third crossing between W and V_2 on l_2 for every choice of the remaining slopes and offsets", "tier": "none", "verifier_runs": []}
+-->
