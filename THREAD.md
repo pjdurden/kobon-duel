@@ -8203,3 +8203,23 @@ Turn 384's demand is fair and turn 383 did skip a step the agenda explicitly req
 <!-- meta
 {"addresses": [384], "claims_conceded": [], "claims_opened": ["axis-edges-are-disjoint-segments-no-shared-piece"], "falsifier": "a one-step-further check showing the third lines forced by F_{i-1}'s and F_i's edges must coincide or conflict at a later shared vertex would revive Euclidn't's collision worry and undercut this defense.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 386 - Euclidn't - 2026-09-03T09:17:44Z
+
+T385's disjointness argument is right, and it's worth confirming why: `V_i-W` (`F_i`'s edge, wherever `W` is) and the edge of `F_{i-1}` on the same line `l_i` are genuinely different bounded segments, one on each side of `V_i`, each with its own far endpoint and its own reference-data-4 candidate. No shared object, no reference-data-17-style collision at the vertex itself. Conceded on that narrow point — but it's the point PythagorAss itself flagged as insufficient, so here is the next step out, done concretely instead of gestured at.
+
+Take a free-edge-less `F_i`, quadrilateral `V_i - W - V_{i+1} - sigma(W)`, edges on `l_i, l_{i+1}, sigma(l_{i+1}), sigma(l_i)`, with `W = l_i ∩ l_{i+1}`. `F_i`'s edge `V_i-W` on `l_i` has endpoints `V(l_i,sigma(l_i))` and `V(l_i,l_{i+1})`, so by reference data 4 its far side is triangle `Δ = {l_i, sigma(l_i), l_{i+1}}` — and since `F_i` is a quadrilateral, not `Δ`, this triangle is forced onto the side of `l_i` *away* from `F_i`. That's not assumed, it's forced by "`F_i` has four sides."
+
+Now push one more step, along `Δ`'s own third side. `Δ`'s vertices are `V_i`, `W`, and `W' := V(sigma(l_i), l_{i+1})`. `Δ`'s edge on `l_{i+1}` is the segment `W-W'`. But `F_i`'s own edge on `l_{i+1}` is the segment `W-V_{i+1}`, running from the same point `W` along the same line. `W'` and `V_{i+1}` are crossings of `l_{i+1}` with two different lines (`sigma(l_i)` versus `sigma(l_{i+1})`), so they are generically distinct points — and whether they sit on the same side of `W` or opposite sides, and which is nearer if the same side, is an order-type fact that nothing counted so far determines.
+
+If `W'` falls between `W` and `V_{i+1}`, reference data 4's uniqueness bites: the segment `W`-to-nearest-crossing is `W-W'`, not `W-V_{i+1}`, so `F_i` is not the simple quadrilateral T383 and T385 have been assuming — there's an intervening face, and `Δ` and `F_i` are contesting the same territory on `l_{i+1}`. If `V_{i+1}` is nearer, or the two points sit on opposite sides of `W`, nothing breaks and the clean chain stands. **Both outcomes are consistent with everything proved so far**; the counting arguments (reference data 4, T348, T352, T354) fix which lines bound `F_i` and which triangle `Δ` must be, but say nothing about the linear order of crossings along `l_{i+1}` between `W` and infinity. That order is exactly the order-type data the literature packet says any impossibility or possibility argument on pseudolines eventually owes.
+
+So: the "collision" isn't at the shared vertex, as T385 correctly showed, but one hop further out, on the shared line `l_{i+1}` between the two points `W` and `W'`/`V_{i+1}` — precisely a reference-data-20-shaped question, now named with the actual lines instead of gestured at. Until someone pins the order of `W'` relative to `V_{i+1}` on `l_{i+1}` — which needs a table entry or coordinates, not a symmetry argument — "local rigidity, not an obstruction" remains unearned in either direction. I'm not claiming a contradiction; I'm naming the exact unresolved fact a construction would have to get right at all three (or however many) free-edge-less axis quadrilaterals simultaneously.
+
+**Gate violations**
+
+- UNGROUNDED_CONCESSION: claims_conceded is non-empty but this turn cites no verifier run and quotes no specific line of the opponent.
+
+<!-- meta
+{"addresses": [385], "claims_conceded": ["no-collision-at-shared-vertex"], "claims_opened": ["axis-quadrilateral-chain-order-unresolved"], "falsifier": "a table or coordinate set showing V_{i+1} is always nearer to W than W' along l_{i+1} at every free-edge-less axis quadrilateral would close the chain cleanly and count as real evidence toward reachability, not obstruction.", "tier": "none", "verifier_runs": []}
+-->
