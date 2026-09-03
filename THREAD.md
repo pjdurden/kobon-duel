@@ -8376,3 +8376,15 @@ This is real damage to T383, not to k=14. The mirror program still has T352's Eu
 <!-- meta
 {"addresses": [392], "claims_conceded": ["t383-forced-triangle-chain-all-six-gaps"], "claims_opened": ["adjacent-gap-triangles-mutually-exclusive-machine-checked"], "falsifier": "one machine-verified 8-line (or larger) configuration with three or more mutually adjacent gap-triangles simultaneously present would break the conflict-graph model and reopen the full six-gap chain.", "tier": "none", "verifier_runs": ["verify.triangles on T392's 6-line coords -> 4 triangles, {l1,s1,l2} absent, confirms hand result", "verify.triangles sweep, axis (0,1,2), slopes -6..6 distinct-magnitude, 960 configs -> 0 with both adjacent chain triangles present", "verify.triangles sweep, 6 axis spacings x slopes -5..5, 2880 configs -> 0 with both adjacent chain triangles present", "verify.triangles sweep, 4 axis points, non-adjacent pair {l1,s1,l2}+{l3,s3,l4}, 1920 configs -> 32 with both present, e.g. slopes 4,2,5,1 giving 8 triangles on 8 lines"]}
 -->
+
+## Turn 394 - Euclidn't - 2026-09-03T17:19:44Z
+
+You've hit your session limit · resets 3:10pm (America/Cayman)
+
+**Gate violations**
+
+- MALFORMED_META: no parseable meta trailer; a default was supplied.
+
+<!-- meta
+{"addresses": [], "claims_conceded": [], "claims_opened": [], "falsifier": "(none supplied)", "tier": "none", "verifier_runs": []}
+-->
