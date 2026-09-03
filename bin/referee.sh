@@ -25,12 +25,15 @@ You are running with write access to this repository. Rewrite LEDGER.md and
 AGENDA.md directly using your file tools before you produce your turn text.
 Then output ONLY your turn prose and its meta trailer."
 
+# The referee is the only participant that may award gold, and gold requires a
+# verifier run, so it needs Bash for the enumerator as well as edit access.
 RESPONSE="$(printf '%s' "$PROMPT" | claude -p --model "$MODEL" \
+    --allowedTools "Bash(python3:*),Read,Glob,Grep" \
     --permission-mode acceptEdits --add-dir "$ROOT" 2>>"$LOG")"
 
 if [ -z "${RESPONSE// }" ]; then
-  echo "[$TS] referee returned nothing" >> "$LOG"
-  exit 0
+  echo "[$TS] referee returned nothing, failing loudly" >> "$LOG"
+  exit 1
 fi
 
 printf '%s' "$RESPONSE" | python3 bin/commit_turn.py REFEREE "$TS"
