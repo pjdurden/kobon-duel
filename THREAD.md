@@ -8430,3 +8430,23 @@ What's untouched: T352's Euler census and reference data 33's `d>3c` arithmetic 
 <!-- meta
 {"addresses": [392, 393], "claims_conceded": [], "claims_opened": ["chain-gap-triangles-full-arrangement-caps-at-two"], "falsifier": "an explicit 7-mirror-pair, 14-line configuration, machine-verified, with 3 or more \u0394_i simultaneously present as faces against all 14 lines", "tier": "none", "verifier_runs": ["verify.triangles(7-mirror-pair chain, T391 slopes 7,-6,5,-4,3,-2,1) -> 30 triangles, 0 of 6 gap-triangles present, gap1 cut by lines {5,6,9,10,13}", "verify.triangles, 400-trial random slope search fixed spacing 0..6 -> max simultaneous gap survival 2", "verify.triangles, 600-trial random slope+spacing search -> max simultaneous gap survival 2, best {1,5}"]}
 -->
+
+## Turn 398 - Euclidn't - 2026-09-03T21:17:44Z
+
+T397 is honest work but it's answering a question my prior doesn't need answered. PythagorAss says so itself: "T352's Euler census and reference data 33's `d>3c` arithmetic never depended on the chain mechanism," and the 2-out-of-6 result "says nothing about that number either way." That's the whole agenda item 4 test failing to move — a careful, machine-checked non-result on a sub-construction, exactly the shape of the nine-turn `Q_0` detour the referee already priced. I'm not chasing it further; I'm doing the assigned work instead.
+
+**Agenda item 3, `C3` at `k=18`: `s=4` is impossible.** Reference data 32e pinned `s ∈ {1,4}`. Here is why `s=4` cannot happen, in the generic case, proven and machine-checked.
+
+Every line in a `C3` orbit shares the same distance from `O` — rotation about `O` preserves distance to `O`, so an orbit's three lines all sit at one radius `r`, and (since the normals are spaced 120° apart) the three half-planes containing `O` intersect in an equilateral triangle with incircle exactly that disk of radius `r`, centred at `O`. That's the `C3`-fixed candidate triangle for the orbit.
+
+Now take two orbits `i, j` with `r_i < r_j` strictly. A line at distance `r_i` from `O` passes within `r_i` of `O`, hence crosses the open disk of radius `r_j` — standard fact, distance-to-line less than the radius means the line intersects the disk. That disk is orbit `j`'s incircle, contained entirely inside orbit `j`'s triangle. A line crossing the incircle must cross the triangle's interior, separating its vertices onto both sides — which is exactly the cut test `kobon.verify.triangles` runs. **So any orbit that is not the strict minimum-radius orbit gets cut by the minimum orbit's lines.** At most one orbit's fixed triangle can survive as a face.
+
+I built it: six orbits, radii `1..6`, rational tangent-line parametrization (`a=1-t², b=2t, c=r(1+t²)` for rational `t`, giving lines at exact distance `r` from `O`), eighteen lines, all eighteen slopes distinct (checked). `verify.triangles` on the exact-Fraction coordinates finds 47 triangles total; the radius-1 orbit's triple `{0,1,2}` is a face, and orbits 2 through 6 — radii 2,3,4,5,6 — are all absent. Exactly the prediction.
+
+I also tested the tie case the strict argument doesn't cover: two orbits both at radius 1, four at radii 3-6. Neither of the tied minimal orbits survived — the tie didn't produce two survivors, it produced zero. One instance isn't a proof for ties, but it's evidence against the hope that tying radii is how you'd rescue `s=4`.
+
+Combined with reference data 32e's `s ≡ 1 (mod 3)`, `s ∈ {1,4}`: for any `C3` arrangement with six distinct orbit radii, **`s = 1` is forced.** Exactly one concentric equilateral face, drawn from the globally-nearest-to-`O` line-orbit, and it is the only one of the six orbits whose triangle can be a face at all. That's a hard structural pin nobody had before — not yet an impossibility proof for `k=18`, but it collapses the search: the other five orbits' triangles are provably non-faces, so their `94-1=93` remaining triangles must come entirely from cross-orbit triples, none of them fixed. Next turn's target: whether that forces a contradiction in the `f=6` free-segment count under the constraint that five orbits' own triangles are always cut.
+
+<!-- meta
+{"addresses": [397], "claims_conceded": [], "claims_opened": ["c3-k18-sigma-at-most-one"], "falsifier": "an explicit C3-symmetric 18-line arrangement, or a general argument, exhibiting two simultaneously-surviving concentric fixed equilateral faces", "tier": "none", "verifier_runs": ["verify.triangles(18-line C3-radius construction, distinct radii 1..6) -> 47 triangles, {0,1,2} present, {3,4,5},{6,7,8},{9,10,11},{12,13,14},{15,16,17} absent", "verify.triangles(tied radii 1,1,3,4,5,6 variant) -> 47 triangles, all six orbit-triples absent"]}
+-->
