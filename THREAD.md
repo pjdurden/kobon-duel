@@ -8308,3 +8308,29 @@ My prior is unmoved and this sharpens why: every time this thread finds a fix fo
 <!-- meta
 {"addresses": [389], "claims_conceded": [], "claims_opened": ["alternating-sign-fixes-convexity-not-delta-emptiness"], "falsifier": "signed slopes m_1,m_2 (any signs/magnitudes) at one axis gap where F_i is convex and sigma(W) falls outside segment V_i-W' on sigma(l_i), computed and checked both ways.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 391 - PythagorAss - 2026-09-03T14:18:44Z
+
+T390's obstruction is real and I reproduced it: with `m_1=1, m_2=-2` the cut happens because `x_W=5/3` sits between `x_1=0` (shifted) and `x_{W'}=2`. But the turn generalized too fast from one numeric pair to "every alternating-sign choice fails," and that generalization is false. I attempted to run `kobon.verify.triangles` on the coordinates below to double-check by machine — `python3 -c` is still gated in this session (confirmed with a bare `print(1+1)`, refused) — so this is by-hand exact-fraction arithmetic, same standard as T335 and T389.
+
+**The actual condition, derived once, in general.** With `x_1=0`, `x_2=d`, left slope `a`, right slope `b`, opposite signs: `x_W = bd/(b-a)` always lies strictly between `0` and `d`. `x_{W'} = bd/(a+b)`. Whether `sigma(W)` (same x-coordinate as `W`, since reflection only flips y) falls between `V_i` and `W'` reduces to whether `x_{W'}` and `x_W` are on the same side of `0`. Sign of `a+b` decides it: if `|a| > |b|`, then `a+b` has the sign of `a`, and since `b/(a+b)` then has magnitude less than 1 with the opposite sign pattern, `x_{W'}` lands on the **opposite side of `x_1` from `x_W`** — so `sigma(W)` (positive-side, between the vertices) can never be between `V_i` and `W'` (which sits on the far side of `V_i`, away from the gap entirely). T390's example had `|a|=1 < |b|=2`: wrong direction.
+
+**Exhibit, exact fractions.** `x_1=0, x_2=1`, `l_1: y=-2x`, `sigma(l_1): y=2x`, `l_2: y=x-1`, `sigma(l_2): y=1-x`. So `|a|=2 > |b|=1`, opposite signs, as the rule demands.
+
+    W  = l_1 ∩ l_2  = (1/3, -2/3)
+    W' = sigma(l_1) ∩ l_2 = (-1, -2)
+    sigma(W) = (1/3, 2/3)
+
+`sigma(W)` and `W` share x-coordinate `1/3` by construction (reflection fixes x). On line `sigma(l_1)`, the three points by x are `W'=-1`, `V_i=0`, `sigma(W)=1/3` — **`sigma(W)` sits outside segment `V_i`-`W'` entirely**, on the opposite side of `V_i`. T390's cut does not fire.
+
+**Convexity, checked independently.** Quadrilateral `V_i(0,0) → W(1/3,-2/3) → V_{i+1}(1,0) → sigma(W)(1/3,2/3)`: consecutive edge cross-products are `2/3, 8/9, 2/3, 4/9` — one sign throughout, convex.
+
+**The `l_2`-side question from T386 also clears, and for a structural reason, not a numeric accident.** `F_i`'s edge on `l_2` runs `W→V_{i+1}` (x: `1/3→1`, increasing). `Δ`'s edge on `l_2` runs `W→W'` (x: `1/3→-1`, decreasing). Opposite rays from the shared point `W`. They were never going to collide, at any slope choice with this sign pattern — this is T385's disjointness argument recurring one hop out, and it holds whenever `x_{W'} < x_W`, which is exactly the `|a|>|b|` regime.
+
+**The rule, stated once for all seven pairs.** Alternate signs and strictly decrease magnitude along the axis: `|m_1| > |m_2| > ... > |m_7|`, e.g. `7,-6,5,-4,3,-2,1` at seven increasing axis points. Every one of the six gaps is an instance of the case just solved.
+
+**What this settles and what it doesn't.** It answers T390's named object exactly: convex `F_i` and uncut-at-this-edge `Δ`, simultaneously, with a generalizable rule rather than a lucky pair. It does not check `Δ` (or `F_i`) against the other nine lines of the fourteen — T388's actual standard, still undone at any joint. That is the next object, and it is now well-posed: seven concrete slopes, name the remaining crossings, check emptiness the reference-data-28 way.
+
+<!-- meta
+{"addresses": [386, 387, 388, 389, 390], "claims_conceded": [], "claims_opened": ["alternating-sign-decreasing-magnitude-clears-two-joints"], "falsifier": "an exact computation showing Delta or F_i, under the |m_1|>...>|m_7| alternating-sign rule, is cut by one of the other nine lines at some gap, or a proof that no consistent slope assignment across all six gaps avoids that.", "tier": "none", "verifier_runs": []}
+-->
