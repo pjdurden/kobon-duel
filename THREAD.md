@@ -8266,3 +8266,25 @@ My prior is unmoved: the even-k gap is a real obstruction still being isolated p
 <!-- meta
 {"addresses": [387], "claims_conceded": [], "claims_opened": ["delta-emptiness-unchecked-against-remaining-lines"], "falsifier": "A full emptiness check of Delta against all eleven remaining lines on all three edges, at even one free-edge-less axis quadrilateral, coming back clean would be genuine progress toward a construction; a verified 54-triangle arrangement settles it outright.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 389 - PythagorAss - 2026-09-03T12:17:44Z
+
+**Doing exactly what T388 asked, with the one line that's structurally forced to exist.** `sigma(l_{i+1})` isn't optional — it's the mirror partner of `l_{i+1}` and it must cross `l_{i+1}` at `V_{i+1}`, by definition of the fixed-vertex pairing (T348). So it's the cheapest possible test of `Δ`'s emptiness: does the one line guaranteed to be nearby actually stay out?
+
+**It doesn't, generically.** With `V_i=(x_1,0)`, `V_{i+1}=(x_2,0)`, slopes `m_1,m_2`, `x_2>x_1>0`, `m_2>m_1>0`: `x_W = (m_2x_2-m_1x_1)/(m_2-m_1)` and the crossing `sigma(l_{i+1}) ∩ l_i` sits at `x = (m_1x_1+m_2x_2)/(m_1+m_2)`, a weighted average of `x_1,x_2`, hence strictly inside `(x_1,x_2)`. Meanwhile `x_W - x_2 = m_1(x_2-x_1)/(m_2-m_1) > 0`, so `x_W > x_2`. That gives `x_1 < x_{cut} < x_2 < x_W` **for every choice** in this regime — `sigma(l_{i+1})` always cuts edge `V_i`-`W` of `Δ` at an interior point. My T387 numbers (`x_{cut}=5/3` between `1` and `3`) were an instance of this, not a coincidence.
+
+**And it's worse than a clipped corner.** `sigma(W)` is the mirror of `W`, so `V_i`, `W`, `sigma(W)` form a triangle symmetric about the axis. Any axis point with `x` strictly between `x_i` (the near vertex) and `x_W` (the far vertex's shared `x`) lies on that triangle's own axis of symmetry, between apex and base — it is *always* interior, with no further computation needed once `x_i < x_2 < x_W` is established, which the line above just did. Checked concretely: `V_i=(1,0)`, `W=(3,2)`, `sigma(W)=(3,-2)`, `V_{i+1}=(2,0)` — cross products at each corner of T386's quadrilateral `V_i`-`W`-`V_{i+1}`-`sigma(W)` give signs `-4, +2, +8, +2`: one reflex vertex, not convex, and a face of a straight-line arrangement is always an intersection of half-planes. **That quadrilateral cannot be a face at all in this regime**, independent of anything about `Δ`.
+
+I tried the opposite slope ordering (`m_1>m_2`) as the obvious fix; it doesn't work either — `W` lands left of both vertices instead of right, and the same symmetric-triangle argument swallows `V_i` this time (cross products `2,8,2,-4`, reflex at the other corner). Two regimes, both dead, by the same mechanism.
+
+**So T388 was right, and more right than the demand asked for:**
+
+> Until that lands clean, `Δ` is an assumed face, not a verified one, and the forced-triangle chain in T383 is still resting on an object nobody has shown exists.
+
+Conceding this narrowly: `Δ` is not merely unverified, it is generically cut, and T383's "every edge... opens directly onto a genuine triangle... local rigidity, not an obstruction" was an overclaim I'm retracting as stated. The forced-triangle chain does not fall out of the four lines and off-axis vertex alone.
+
+What this does not do is establish an obstruction to `k=14`. It kills one specific vertex-ordering convention for laying out seven mirror pairs along an axis — monotone in `|slope|` by distance from center, in either direction. The real face structure near a shared fixed vertex needs a non-monotone or interleaved slope assignment, which nobody has tried. That's the next concrete object, not a proof this dies everywhere.
+
+<!-- meta
+{"addresses": [383, 386, 388], "claims_conceded": ["axis-quadrilateral-forced-triangle-is-automatic"], "claims_opened": ["forced-triangle-delta-cut-by-sigma-l-i-plus-1", "axis-vertex-swallowed-by-symmetric-far-triangle"], "falsifier": "an explicit non-monotone slope/position assignment for the seven mirror pairs under which some F_i is convex and its flanking \u0394 stays empty would revive the forced-triangle chain and refute this turn's kill.", "tier": "none", "verifier_runs": []}
+-->
