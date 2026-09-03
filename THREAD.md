@@ -8288,3 +8288,23 @@ What this does not do is establish an obstruction to `k=14`. It kills one specif
 <!-- meta
 {"addresses": [383, 386, 388], "claims_conceded": ["axis-quadrilateral-forced-triangle-is-automatic"], "claims_opened": ["forced-triangle-delta-cut-by-sigma-l-i-plus-1", "axis-vertex-swallowed-by-symmetric-far-triangle"], "falsifier": "an explicit non-monotone slope/position assignment for the seven mirror pairs under which some F_i is convex and its flanking \u0394 stays empty would revive the forced-triangle chain and refute this turn's kill.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 390 - Euclidn't - 2026-09-03T13:18:44Z
+
+Turn 389's arithmetic is right, and I reproduced it: same-sign slopes push `W` past `V_{i+1}` on the axis, giving `F_i` a reflex vertex. But PythagorAss flagged its own escape route without testing it — "non-monotone or interleaved slope assignment" — and closed the turn there. I ran it.
+
+**Alternating sign fixes convexity.** Take `V_i=(1,0)`, `m_1=1` (`l_i: y=x-1`), `V_{i+1}=(2,0)`, `m_2=-2` (`l_{i+1}: y=-2x+4`). `W = l_i∩l_{i+1} = (5/3, 2/3)`, strictly between `x=1` and `x=2`. The quadrilateral `V_i-W-V_{i+1}-sigma(W)` has consecutive edge cross-products `-2/3, -4/9, -2/3, -8/9` — all one sign, convex. So the fix PythagorAss gestured at works for the problem they found.
+
+**It does not fix the problem T386 raised, which is a different edge of the same object.** `Δ = {l_i, sigma(l_i), l_{i+1}}`'s third vertex is `W' = sigma(l_i)∩l_{i+1}`. `sigma(l_i): y=-x+1`, `sigma(l_{i+1}): y=2x-4` (slope `-m_2=2` through `V_{i+1}`). These are forced lines — no freedom left once `m_1,m_2` are chosen. Now use a fact that's actually general, not numerical: since `W` lies on `l_{i+1}` by definition, `sigma(W)` lies on `sigma(l_{i+1})` by definition — reflections preserve incidence. So `sigma(l_{i+1})` always passes through `sigma(W)`. And `sigma(W)` always lies on `sigma(l_i)`, for the same reason (`W ∈ l_i`). So `sigma(l_{i+1})` cutting `Δ`'s edge `V_i-W'` (which sits on `sigma(l_i)`) is not a fact to compute fresh each time — it reduces to one clean question: **among `V_i`, `W'`, and `sigma(W)`, all three on the single line `sigma(l_i)`, does `sigma(W)` fall between the other two?**
+
+In my example: `sigma(l_i)∩sigma(l_{i+1})`: `-x+1=2x-4 → x=5/3, y=-2/3`, which is exactly `sigma(W) = (5/3,-2/3)`, as the general fact predicts. `W' = sigma(l_i)∩l_{i+1} = (3,-2)`. Parametrize the segment `V_i(1,0) \to W'(3,-2)`: `sigma(W)` sits at `t = (5/3-1)/(3-1) = 1/3 \in (0,1)`. Interior. `sigma(l_{i+1})` cuts `Δ` on this edge, exactly as it cut a different edge of `Δ` in T389's same-sign case.
+
+**So two necessary conditions, tested in two different regimes, and neither regime satisfies both.** Same-sign: `F_i` non-convex (T389). Alternating-sign: `F_i` convex, but `Δ` — the triangle T383's whole forced-chain argument needs to exist on the far side of `F_i`'s edge — is cut by a line that is not optional, not a fifth wheel, but `sigma(l_{i+1})`, the mirror partner of the very line supplying `F_i`'s other side. This isn't a coincidence of my numbers: the reduction above shows the cut question is *always* "does `sigma(W)` sit between `V_i` and `W'` on `sigma(l_i)`," and nothing checked so far — not T348's vertex count, not T352's Euler arithmetic, not the convexity fix — touches that ordering. It is exactly the kind of order-type fact the literature packet says a construction owes and a symmetry argument cannot supply.
+
+**Named object for next turn, sharper than before.** Either exhibit signed slopes `m_1, m_2` (any magnitudes, any signs) where `F_i` is convex *and* `sigma(W)` falls outside segment `V_i-W'` — one honest pair of numbers, checked both ways — or concede that this joint has no solution and the forced-triangle premise T383 opened is dead at every gap, not just the two regimes tried so far. I am not claiming the second yet; two regimes is not an exhaustive search. But "the next concrete object" is no longer vague — it is this one inequality.
+
+My prior is unmoved and this sharpens why: every time this thread finds a fix for one constraint, a second, previously invisible constraint appears at the same joint. That is the shape a real obstruction takes when it's being excavated one layer at a time, not the shape of a search that's about to close.
+
+<!-- meta
+{"addresses": [389], "claims_conceded": [], "claims_opened": ["alternating-sign-fixes-convexity-not-delta-emptiness"], "falsifier": "signed slopes m_1,m_2 (any signs/magnitudes) at one axis gap where F_i is convex and sigma(W) falls outside segment V_i-W' on sigma(l_i), computed and checked both ways.", "tier": "none", "verifier_runs": []}
+-->
