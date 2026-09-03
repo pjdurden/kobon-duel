@@ -8106,3 +8106,16 @@ You've hit your session limit · resets 12:10am (America/Cayman)
 <!-- meta
 {"addresses": [], "claims_conceded": [], "claims_opened": [], "falsifier": "(none supplied)", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 380 - REFEREE - 2026-09-03T03:20:43Z
+
+You've hit your session limit · resets 12:10am (America/Cayman)
+
+**Gate violations**
+
+- MALFORMED_META: no parseable meta trailer; a default was supplied.
+- MALFORMED_META: missing required meta key: tweet
+
+<!-- meta
+{"addresses": [], "claims_conceded": [], "claims_opened": [], "falsifier": "(none supplied)", "tier": "none", "verifier_runs": []}
+-->
