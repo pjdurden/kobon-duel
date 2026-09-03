@@ -8246,3 +8246,23 @@ So: real progress, not a resolved chain. Euclidn't's "unearned in either directi
 <!-- meta
 {"addresses": [386], "claims_conceded": [], "claims_opened": ["axis-quadrilateral-order-bit-resolves-favorably-in-one-instance"], "falsifier": "a proof, or a concrete competitor line among the other twelve, that forces W' or some third crossing between W and V_2 on l_2 for every choice of the remaining slopes and offsets", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 388 - Euclidn't - 2026-09-03T11:18:44Z
+
+Turn 387's arithmetic checks out — I redid it. `W = l_1 ∩ l_2 = (3,2)`, `W' = sigma(l_1) ∩ l_2 = (5/3,-2/3)`, and along `l_2` by x-coordinate `W' = 5/3 < V_2 = 2 < W = 3`, so `V_2` is strictly nearer `W` than `W'` is. That specific relational fact is correct.
+
+But look at what it actually establishes and what it doesn't. It answers exactly one question: given `Δ = {l_1, sigma(l_1), l_2}` and given that `Δ`'s vertex `W'` lies on `l_2`, does `W'` fall between `W` and `V_2`? No. That rules out one specific way `F_i` could fail to be a clean quadrilateral. It says nothing at all about whether `Δ` is actually a face of the arrangement — and that is the question that matters, because `Δ` was never checked for emptiness against anything.
+
+Compare this to the standard the project has actually met twice this cycle. T335's `L` was checked against every competitor on all three of its outward rays before either new triangle was banked — three rays, three winners, margins of a hundred to one. T338's wedge test at `C` was an exact inequality, `80/3 > -1/3`, checked against the specific line that mattered. Reference data 28 checked all three non-side lines against all six sectors at `P` before calling any of them a face. In every one of those cases "empty" was verified by checking the candidate triangle against every other line in the arrangement, not by checking one relational order on one of its three sides.
+
+Here, `Δ` has three edges: `V_1-W` on `l_1`, `W-W'` on `l_2`, `W'-V_1` on `sigma(l_1)`. T387 checked the position of one point (`W'`) relative to one other point (`V_2`) on one of those three lines. It never asked whether any of the *other* eleven lines of the 14-line arrangement — the five remaining mirror pairs — passes through `Δ`'s interior. At `k=14` that's eleven live candidates, each of which needs checking against all three edges the way reference data 26 checked six rays at two points and reference data 28 checked three lines against six sectors. None of that has been attempted. "Real progress, not a resolved chain" undersells the gap: the order-type fact resolved is necessary for `F_i` to be a clean quadrilateral, but `Δ`'s existence as a face is a completely separate, unchecked condition, and it's the one that actually decides whether the forced-triangle picture in T383 holds up.
+
+And this has to succeed *simultaneously* at up to three free-edge-less quadrilaterals, sharing the same fourteen lines, each spawning its own `Δ` that needs the same treatment against the same shrinking pool of remaining lines — the degrees-of-freedom accounting nobody has done yet. One two-line toy check against one competitor is not that.
+
+Named object for next turn, in the spirit of agenda item 5: pick coordinates for all seven mirror pairs (not two), name `Δ`'s three edges explicitly, and check all eleven non-`Δ` lines against all three edges for emptiness — the reference-data-28 standard, not the reference-data-… order-type shortcut. Until that lands clean, `Δ` is an assumed face, not a verified one, and the forced-triangle chain in T383 is still resting on an object nobody has shown exists.
+
+My prior is unmoved: the even-k gap is a real obstruction still being isolated piece by piece, and every time this thread has pushed one level deeper it has found another unverified assumption underneath, not a construction.
+
+<!-- meta
+{"addresses": [387], "claims_conceded": [], "claims_opened": ["delta-emptiness-unchecked-against-remaining-lines"], "falsifier": "A full emptiness check of Delta against all eleven remaining lines on all three edges, at even one free-edge-less axis quadrilateral, coming back clean would be genuine progress toward a construction; a verified 54-triangle arrangement settles it outright.", "tier": "none", "verifier_runs": []}
+-->
