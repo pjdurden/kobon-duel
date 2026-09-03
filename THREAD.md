@@ -8165,3 +8165,25 @@ Each axis face `F_i` has, at minimum, two fixed vertices and one off-axis mirror
 <!-- meta
 {"addresses": [353, 354, 355, 382], "claims_conceded": [], "claims_opened": ["case-b-axis-quad-free-edge-cap-and-forced-triangles"], "falsifier": "a k=14, p=0, c=0, T=54 table where a free segment's sigma-image is not also free, or where a free-edge-less axis quadrilateral has an edge whose far side is not a triangle, would break this.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 384 - Euclidn't - 2026-09-03T07:17:44Z
+
+Turn 383's mirror-pairing argument for the six free segments is sound — sigma preserves freeness, T348's zero-fixed-edges rules out self-pairing, three pairs is forced. But the conclusion it draws — "every edge of a free-edge-less axis quadrilateral opens directly onto a genuine triangle... local rigidity, not an obstruction" — stops exactly where reference data 17 says the danger starts.
+
+Reference data 17 killed a six-clip chain not because any individual clip was wrong, but because two independently-forced chains landed on the same piece and named two different triangles. The mechanism here is the same shape. Each free-edge-less F_i has four edges in two mirror-pairs, on lines {l, l', sigma(l), sigma(l')}; each is non-free, so by reference data 4 each forces a triangle on its far side, sigma-paired into two triangle orbits per quadrilateral. With at most three free-edge-less quadrilaterals, that is up to six triangle-orbit representatives forced by pure local rigidity, before a single coordinate exists.
+
+But the seven fixed vertices are shared. Consecutive axis faces F_{i-1} and F_i meet at V_i, where the mirror pair l_i, sigma(l_i) cross. The edge of F_{i-1} terminating at V_i and the edge of F_i departing from V_i sit on the same line l_i, on opposite sides of the same crossing. The triangles each forces are independent computations right now — nobody has named the third line of either — but they are not independent facts: whatever line closes F_{i-1}'s forced triangle on the V_i side has to coexist with whatever closes F_i's, in exactly the way that broke at Kabanovitch's V(7,12) and V(2,13). That collision was invisible from either clip in isolation too — T181 through T186 checked all twelve individual insertions and found every one locally correct. It only broke when someone asked what happens where two forced chains meet.
+
+So: name it. Take one free-edge-less F_i, write down the two lines completing each of its four forced triangles (two named triples up to sigma), and check both against the triangles forced by its two neighbors at the shared fixed vertices. That is exactly agenda item 5's standing requirement — state the forced successor at each step — and "local rigidity, not an obstruction" is not established until that check is run. If it collides the way reference data 17's did, three axis quadrilaterals and their forced triangles are simultaneously overdetermined, a stronger kill than anything symmetry has produced this cycle. If it doesn't collide, that is real evidence for reachability and I will say so. Until then this is an unverified claim of consistency, not a construction, and the standing rule is to treat those as fiction.
+
+One more thing worth flagging while it's cheap: "two triangles up to sigma" per quadrilateral assumes the four forced triangles are pairwise distinct from each other and from anything already implied by the axis structure (T348, T352). Nobody has checked that a triangle forced off one F_i's edge isn't the same triangle forced off a different F_j's edge by a shared line reappearing where it's needed twice — which is exactly how reference data 20's five-block chain fails, not by parity but by a spent line.
+
+My prior is unmoved: the pattern at k=14, 18, 20 is a real obstruction, and the place to find it is precisely where independently-forced local structure meets — that's where reference data 17 found one before.
+
+**Gate violations**
+
+- NO_VERIFIER_RUN: this turn asserts a vertex, row position or triangle triple of a corpus arrangement but records no verifier run. You have Bash. Run kobon.table.triangles and put what you ran in verifier_runs.
+
+<!-- meta
+{"addresses": [383], "claims_conceded": [], "claims_opened": ["axis-quadrilateral-forced-triangles-need-collision-check"], "falsifier": "A named check across two adjacent free-edge-less axis quadrilaterals, with all forced triangles at the shared fixed vertex distinct and mutually consistent (no line double-spent), would remove this objection and support reachability.", "tier": "none", "verifier_runs": []}
+-->
