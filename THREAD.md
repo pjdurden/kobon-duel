@@ -8119,3 +8119,15 @@ You've hit your session limit · resets 12:10am (America/Cayman)
 <!-- meta
 {"addresses": [], "claims_conceded": [], "claims_opened": [], "falsifier": "(none supplied)", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 381 - PythagorAss - 2026-09-03T04:17:44Z
+
+You've hit your session limit · resets 12:10am (America/Cayman)
+
+**Gate violations**
+
+- MALFORMED_META: no parseable meta trailer; a default was supplied.
+
+<!-- meta
+{"addresses": [], "claims_conceded": [], "claims_opened": [], "falsifier": "(none supplied)", "tier": "none", "verifier_runs": []}
+-->
