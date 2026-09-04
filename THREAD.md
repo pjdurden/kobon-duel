@@ -8736,3 +8736,30 @@ What I haven't checked: whether these 20 triangles are the *correct* ones toward
 <!-- meta
 {"addresses": [410, 411], "claims_conceded": [], "claims_opened": ["hexagon-skeleton-self-services-s2-targets-without-free-lines"], "falsifier": "if adding any of the remaining 4 lines at k=14 necessarily cuts one of the 20 skeleton triangles that d_P=5 depends on at every hexagon vertex simultaneously, the zero-tax claim collapses back into a real shortage", "tier": "none", "verifier_runs": ["verify.triangles(10-line hexagon skeleton: 6 bridges + L1,L2,H2,H5, slope H=7) -> 20 empty triangles, including B01xB45xB50 at (4.75,-5.25)/(1,-4)/(3,0) and B01xB12xB23 at (2,3)/(-1,4)/(0.6,7.2)"]}
 -->
+
+## Turn 413 - Euclidn't - 2026-09-04T11:17:44Z
+
+T412's 10-line skeleton is real and its 20 triangles check out — I reran the exact construction and matched every one of T412's coordinates, including `B01×B45 = (19/4,-21/4)`. But I ran one more check T412 didn't: what lines actually pass through each hexagon point, computed directly from the coordinates rather than assumed from the design. `hub_5` was picked as "slope 7, generic: not parallel to any bridge slope, not through O." Nobody checked whether it passes through any *other* hexagon vertex.
+
+It does. `H5: 7x - y = 11` was built to pass through `P5 = (1,-4)`: `7(1)-(-4) = 11`. Check it against `P1 = (2,3)`: `7(2)-3 = 11`. **Identical.** `P1` and `P5` are collinear with slope exactly 7 in this hexagon (`(3-(-4))/(2-1) = 7`), so the "generic" hub slope was chosen to exactly match an existing hexagon diagonal. By central symmetry the same collision hits the other hub: `H2: 7x-y=-11` through `P2=(-1,4)` also passes through `P4=(-2,-3)`: `7(-2)-(-3) = -11`.
+
+I confirmed this isn't a hand-slip by extracting, from the verifier's own triangle output, every (line, target-vertex) pair touching each hexagon point:
+
+```
+P0: 6 distinct ray-uses (B01×2, B50×2, L1×2)
+P1: 8 distinct ray-uses (B01×2, B12×2, H5×2, L2×2)
+P2: 6 distinct ray-uses (B12×2, B23×2, H2×2)
+P3: 6 distinct ray-uses (B23×2, B34×2, L1×2)
+P4: 8 distinct ray-uses (B34×2, B45×2, H2×2, L2×2)
+P5: 6 distinct ray-uses (B45×2, B50×2, H5×2)
+```
+
+`verifier_runs`: `verify.triangles` on the exact 10-line skeleton (`B01..B50, L1, L2, H2, H5`) → 20 triangles matching T412's set exactly; per-vertex line-incidence extraction confirms `P1` and `P4` carry **four** lines each, not three.
+
+This isn't a bonus triangle to prune — it's a fourth line through two of the six hexagon points. `P1` and `P4` are quadruple points, not triple points. That breaks every piece of local accounting this thread has built on since T406: the `d_P = 5`-of-6-rays target assumes exactly 3 lines / 6 rays per point; `P1` and `P4` now have 4 lines / 8 rays. Reference data 18 gives the real cost of multiplicity `m`: cap on doubled rays is `2m-4` and the parallel-segment tax is `m(m-2)`. At `m=3` that's a 3-segment tax (already budgeted, `c=6` gives `3c=18` for `S_1`). At `m=4` it's `m(m-2)=8` — more than double, and **entirely unbudgeted**, since the design's `B=138, d=24` target was computed assuming six triple points, full stop.
+
+The fix is presumably available — pick a hub slope that avoids not just the five already-listed slopes but all three hexagon main diagonals (`P0P3`, `P1P4`, `P2P5` — the last of which is degenerate since it's the axis of `O`, but `P1P4`'s slope, here 7, is exactly the trap). That's a checkable, fixable condition. But "generic" was asserted, not checked, against the one thing that mattered — the standing rule about verifying identity before claiming it, applied to a slope instead of a coordinate. Until a hub slope is chosen and verified clean against all four other hexagon points, T412's "10-line skeleton, zero tax" claim describes a 10-line arrangement with the wrong multiplicity structure at two of its six triple points. My prior stands: no complete, verified 14-line construction exists, and the object in front of us right now has an accidental quadruple point nobody priced.
+
+<!-- meta
+{"addresses": [412], "claims_conceded": [], "claims_opened": ["hub-slope-7-hits-p1-p4-quadruple-point"], "falsifier": "a hub slope through P2 (and its central-symmetric partner through P5) verified, by the same per-vertex incidence extraction, to touch only P2 and P5 among the six hexagon points, with the resulting d_P=5 count and B=138 segment budget closing exactly on all six triple points", "tier": "none", "verifier_runs": ["verify.triangles(10-line hexagonal-ring skeleton: B01,B12,B23,B34,B45,B50,L1,L2,H2,H5) -> 20 triangles, matches T412 exactly, including B01xB45=(19/4,-21/4)", "per-vertex line-incidence extraction from the same 20-triangle set -> P0,P2,P3,P5 each touched by 3 lines (6 ray-uses); P1,P4 each touched by 4 lines (8 ray-uses): H5 passes through P1 (7*2-3=11=7*1-(-4)), H2 passes through P4 (7*-2-(-3)=-11=7*-2-(-3))"]}
+-->
