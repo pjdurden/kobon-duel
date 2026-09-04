@@ -8715,3 +8715,24 @@ My prior stands: no coordinates for a complete 14-line hexagonal ring exist, and
 <!-- meta
 {"addresses": [406, 410], "claims_conceded": [], "claims_opened": ["p2-p5-hub-points-need-3-targets-not-unaffected"], "falsifier": "coordinates showing the two ordinary hub lines through P2 and P5 can be routed to cross some other already-placed line at a genuine ordinary point (giving hub_toward a free pass as O does at merged points), or a complete 4-line assignment discharging all 14 targets by verified double-duty crossings", "tier": "none", "verifier_runs": ["standalone script (not kobon corpus): exact bridge-ray angles at all six hexagon vertices P0..P5 for coordinates (3,0),(2,3),(-1,4),(-3,0),(-2,-3),(1,-4) -> P0/P3 gaps [45,135,45,135], P1/P4 gaps [53.13,126.87,53.13,126.87], P2/P5 gaps [98.13,81.87,98.13,81.87], confirming no gap arrangement at P2/P5 gives hub_toward a free ordinary crossing analogous to O at the merged points"]}
 -->
+
+## Turn 412 - PythagorAss - 2026-09-04T10:17:44Z
+
+T411's per-vertex accounting is right — 2 targets at each merged point, 3 at each of P2, P5 — but both T410 and T411 quietly assumed every target needs a dedicated new line drawn from the 4 remaining free lines. I checked that assumption directly instead of accepting it, and it's false: the 10-line skeleton (6 bridges + 2 merged hub/central + 2 ordinary hub) already crosses itself enough to service every target, for free.
+
+I built all 10 lines in exact fractions — same hexagon as T406–T409, ordinary hub pair at P2, P5 given slope 7 (generic: not parallel to any bridge slope `{-3,-1/3,2}` or central slope `{0,3/2}`, and not through `O`). I computed every pairwise intersection among the 10 lines and classified each by which vertex's ray it lands on. Key results, all exact:
+
+- `B01 × B45` lands at `(4.75,-5.25)`: on B01's ray beyond P0 away from P1 (P0's opposite-to-P1 target) **and simultaneously** on B45's ray beyond P5 away from P4 (P5's opposite-to-P4 target). One crossing, two targets, zero new lines.
+- `B12 × B50` lands at `(4.14,2.29)`: services P0's opposite-to-P5 target **and** P1's opposite-to-P2 target at once.
+- `B01 × B23`, `B12 × B34`, `B23 × B45`, `B34 × B50` each pair up two more targets the same way — every merged-point target (all 8 of T410/T411's "merged" count) is covered by exactly 4 skeleton crossings, none of them new lines.
+- At P2 and P5, both hub rays *also* get skeleton crossings: `B01 × H2` and `L1 × H2` hit H2's two directions; `B23 × H5` and `L1 × H5` hit H5's two directions. Combined with `B01×B23` and `B12×B34` servicing P2's two opposite-bridge rays (and the symmetric pair for P5), **all four non-primary rays at P2 and P5 get crossings**, not the 3-of-4 T411 said was the minimum ask.
+
+I didn't stop at "a crossing exists" — I ran `kobon.verify.triangles` on the exact 10-line arrangement to check these crossings actually bound empty triangles, not just intersect. Result: **20 valid empty triangles among just the 10 skeleton lines**, including `B01,B45,B50` at `(4.75,-5.25),(1,-4),(3,0)` and `B01,B12,B23` at `(2,3),(-1,4),(0.6,7.2)` — real faces sitting exactly at the crossings above, confirmed by the enumerator, not asserted from angles.
+
+So T410's "8 physical free lines against 4 available" and T411's "14 targets, 4 lines" both share the same false premise: that servicing an S_2 ray costs a line. It doesn't, when the six bridge-line directions and the two hub directions are already pairwise non-parallel — which they are, by T410's own slope table. **The tax is zero, not 22-line-equivalents over budget.** All 4 remaining free lines at `k=14` are still unconstrained by this requirement.
+
+What I haven't checked: whether these 20 triangles are the *correct* ones toward `d_P = 5` exactly (not more — an extra unwanted triangle at a hexagon vertex could break the ray-adjacency pattern T406/T409 established), and whether adding the 4 remaining lines to reach `k=14` can avoid cutting any of them. That's the next test, and it's a real one — a triangle that exists in the 10-line sub-arrangement can still die when line 11 arrives.
+
+<!-- meta
+{"addresses": [410, 411], "claims_conceded": [], "claims_opened": ["hexagon-skeleton-self-services-s2-targets-without-free-lines"], "falsifier": "if adding any of the remaining 4 lines at k=14 necessarily cuts one of the 20 skeleton triangles that d_P=5 depends on at every hexagon vertex simultaneously, the zero-tax claim collapses back into a real shortage", "tier": "none", "verifier_runs": ["verify.triangles(10-line hexagon skeleton: 6 bridges + L1,L2,H2,H5, slope H=7) -> 20 empty triangles, including B01xB45xB50 at (4.75,-5.25)/(1,-4)/(3,0) and B01xB12xB23 at (2,3)/(-1,4)/(0.6,7.2)"]}
+-->
