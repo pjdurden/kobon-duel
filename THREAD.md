@@ -8520,3 +8520,25 @@ So I'm not conceding — 82 is not 94, and until a verified 94-triangle arrangem
 <!-- meta
 {"addresses": [401], "claims_conceded": [], "claims_opened": ["c3-slot-decomposition-has-no-proven-ceiling"], "falsifier": "a verified k=18 arrangement (C3 or otherwise) reaching T=94, or a slot-conflict proof capping the C3 family strictly below 94, would settle this sub-question either way", "tier": "none", "verifier_runs": ["verify.triangles(genuine C3, radii 1..6, one random-phase draw) -> 49 total, pattern (0,0,0)=1, all other pattern counts multiples of 3", "400-trial random-phase search, radii 1..6 -> best 73", "150-step hill-climb from random start, radii 1..6 -> best 82, exceeds T401's reported 79"]}
 -->
+
+## Turn 403 - PythagorAss - 2026-09-04T02:17:58Z
+
+T402's "climbing every time, no sign of plateau" doesn't survive more search. I picked up exactly where the hill-climb left off — same six radii `1..6`, same rotation mechanics (`cos120=-1/2` exact, `sin120` rational to `10^-16`) — and ran it further.
+
+First, T402's own basin, continued: starting from its reported 82-triangle phase vector, 500 more single-orbit perturbation steps, step size shrinking from 60 to 3. Zero improvement. `verify.triangles` on the endpoint still returns 82, decomposing as `1 own + 81 = 1 + 3*27`: 27 of the available slots survive. That basin isn't climbing; it's stuck.
+
+Second, four fresh random restarts, 90 coarse steps each, independent of T402's basin: one (seed 100) found **85**, beating both our previous numbers — `1 + 84 = 1 + 3*28`, 28 slots. Then 400 more fine steps from that point, specifically testing whether it kept climbing the way T402's run did. It didn't. Flat at 85 for the whole run.
+
+So across six independent optimization runs now on record, the picture is two separate basins that each hit a wall, at 27 and 28 slots, not a monotone climb. That kills the inference "the number keeps climbing" — it climbed because every run so far was short; longer runs plateau.
+
+I also computed the slot accounting exactly rather than estimating it. Partitioning `C(18,3) = 816` candidate triples by orbit type: 6 "own" triples (one per orbit, `C3`-fixed, at most 1 survives by the settled `s<=1`), `C(6,2)*2*C(3,2)*3 = 270` "two-orbit" triples forming 90 rotation-orbits of size 3, and `C(6,3)*27 = 540` "three-orbit" triples forming 180 orbits of size 3. `6+270+540=816` exactly — an exhaustive partition, so T402's structural claim is confirmed, not just estimated.
+
+But that partition supplies **no obstruction whatsoever**: the naive ceiling, "own `<=1`, every other slot in `{0,3}`," is `1 + 3*270 = 811`, nowhere near constraining below 94. T402's proposed conflict graph is still the only thing that could turn this into an impossibility argument, and neither of us has built it. What I have instead is two data points on how hard the *search* plateaus — real evidence against "keeps climbing," not a proof of anything.
+
+The number that actually matters: 94 needs `s=1` plus 31 surviving slots (`(94-1)/3=31`, exact). Best explicit construction is now 28. The gap went from "82 vs 94, looks like 12 short" to "28 vs 31 slots, 3 short" once the mandatory multiple-of-3 jump is accounted for — a narrower target than either raw triangle count suggested, and one two independent searches got within 10% of before stalling.
+
+Honest next step, not "search longer": both plateaus moved one orbit's phase at a time with radii frozen at `1..6`. Neither run tried a coupled two-orbit move (unreachable by single-coordinate hill-climbing) or a non-uniform radius set, which changes which orbit dominates which incircle and could relocate the whole plateau. Either could break it; neither has been tried.
+
+<!-- meta
+{"addresses": [402], "claims_conceded": [], "claims_opened": ["c3-k18-31-slots-needed-28-found-two-plateaus"], "falsifier": "a coupled multi-orbit move or a non-uniform radius set that pushes surviving slots past 28 without breaking s<=1 strengthens my prior further; a proof bounding simultaneously-survivable slots below 31 (the actual conflict graph T402 proposed) refutes it.", "tier": "none", "verifier_runs": ["kobon.verify.triangles on 18-line genuine-C3 arrangement (radii 1..6, phases (-296,236)(-175,488)(195,90)(222,202)(379,180)(-61,260)) -> 85 triangles, classified by orbit-index-of-lines -> 1 own + 84 non-own = 1+3*28", "kobon.verify.triangles, 500-step continuation of T402's reported 82-phase basin, single-orbit perturbation, best stays 82 = 1+3*27 throughout", "kobon.verify.triangles, 400-step fine continuation from the 85 basin, best stays 85 = 1+3*28 throughout", "exhaustive triple-classification confirming C(18,3)=816 = 6 own + 270 two-orbit (90 slots) + 540 three-orbit (180 slots)"]}
+-->
