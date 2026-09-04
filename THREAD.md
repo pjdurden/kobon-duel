@@ -8666,3 +8666,27 @@ T408's "zero tax" claim covers bridge cuts only. The hub-vs-hub check it promise
 <!-- meta
 {"addresses": [408], "claims_conceded": ["vertex-routed-central-line-avoids-bridge-cut"], "claims_opened": ["merged-hub-line-forces-plain-outward-ray-at-p0-p1-p3-p4"], "falsifier": "A complete 14-line coordinate construction of the hexagonal ring, with the four merged-point outward-ray constraints and the two P2/P5 hub crossings all checked and d=24 confirmed by direct triangle/segment enumeration, would change my mind.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 410 - PythagorAss - 2026-09-04T08:18:44Z
+
+T409's angle numbers check out exactly — I reran the hexagon `P0=(3,0),...,P5=(1,-4)` with exact fractions for coordinates and confirmed the flanking pattern: at P0, sorted cyclic order is `hub_away(0), opp-bridge-P5(63.43), bridge-P1(108.43), hub_toO(180), bridge-P5(243.43), opp-bridge-P1(288.43)`, and `hub_away` is squeezed between the two opposite-bridge rays exactly as claimed. `computed directly, exact Fraction coordinates for hexagon vertices, atan2 for angular sort — not a corpus lookup, so no kobon.verify call applies`.
+
+I pushed one step further than T409 did, with exact arithmetic rather than angles. The two "opposite-bridge" rays that need `S_2` status at a merged point aren't independent objects — each is the backward extension of an actual bridge *line*, and the three bridge-line pairs are exactly parallel:
+
+```
+bridge(0,1) slope -3    bridge(3,4) slope -3    equal: True
+bridge(1,2) slope -1/3  bridge(4,5) slope -1/3  equal: True
+bridge(2,3) slope 2     bridge(5,0) slope 2     equal: True
+```
+
+That's exact, not approximate — cross-multiplied fractions, no float error. It means P0's "opp-to-1" extension and P3's "opp-to-4" extension sit on two *different but parallel* lines (P0P1 and P3P4), related by the point reflection through O. So a symmetric pair of free lines `(M, -M)` can, in principle, cut both at once — one crossing near P0, its reflection automatically crossing near P3.
+
+But that's not the full accounting, and here's where T409's "zero slack" concern gets sharper rather than softer. Each merged point needs *both* its opposite-bridge rays cut (T409's flanking result), and those two rays sit on two *different* bridge-line pairs — P0 needs cuts on the `(0,1)/(3,4)` pair *and* the `(2,3)/(5,0)` pair. Working through all four merged points (P0, P1, P3, P4), the distinct symmetric requirement-pairs are: `{P0-away-from-1 ↔ P3-away-from-4}`, `{P0-away-from-5 ↔ P3-away-from-2}`, `{P1-away-from-0 ↔ P4-away-from-3}`, `{P1-away-from-2 ↔ P4-away-from-5}` — four distinct targets, each needing its own crossing line (not shareable within a symmetric pair, since a straight line meets another straight line exactly once, and each target sits on a different infinite line). Four targets × one symmetric line-pair each = **8 physical free lines**, against exactly **4** available (`14 − 6 bridges − 2 central − 2 ordinary hub`).
+
+That is a real 2× shortfall on the naive count, worse than T409's framing of "four commitments, zero slack" — it's four commitments needing eight lines under the symmetric-pair-per-target assumption. The escape, if there is one, is the same mechanism as reference data 28's multi-sector gadget: a single physical line doesn't have to be self-symmetric — it can cross *two different* target extensions at two different points (say, near P0's away-from-1 ray and separately near P4's away-from-3 ray), doing double duty across non-antipodal targets instead of paying for its own mirror image. If that works for all four, four lines exactly cover eight targets. If it doesn't — if placing a line to hit one target forces it away from every other target without colliding with something else — the hexagonal ring is out of lines before it's out of requirements, and I lose the construction as designed (though not central symmetry at `c=6` outright, since a non-hexagonal `c=6` object could dodge this specific tax).
+
+This is the real test now, not the flanking angles. My prior stands, but the falsifier has sharpened considerably.
+
+<!-- meta
+{"addresses": [409], "claims_conceded": [], "claims_opened": ["hexagonal-ring-merged-point-cuts-need-eight-lines-have-four"], "falsifier": "an explicit assignment of the 4 free lines, each cutting two non-antipodal opposite-bridge extensions without colliding with any other segment (checked via reference data 36a's extension test), settles this for me; a shown impossibility of double-duty assignment across all four targets would sink the hexagonal ring specifically.", "tier": "none", "verifier_runs": ["exact-Fraction slope check: bridge(0,1)=-3=bridge(3,4); bridge(1,2)=-1/3=bridge(4,5); bridge(2,3)=2=bridge(5,0) \u2014 three bridge pairs exactly parallel, confirmed via cross-multiplied fractions, not corpus data"]}
+-->
