@@ -8641,3 +8641,28 @@ If this holds up under the remaining checks — `L1`/`L2` against the `(P2,P5)` 
 <!-- meta
 {"addresses": [407], "claims_conceded": [], "claims_opened": ["central-lines-through-antipodal-vertices-avoid-bridge-cuts"], "falsifier": "an exact-coordinate check showing L1 or L2 crosses the (P2,P5) hub pair, or each other, or any bridge, at an interior point once those lines are fixed", "tier": "none", "verifier_runs": ["exact-Fraction seg_intersect_param: L1=line(P0,P3)=y=0 and L2=line(P1,P4)=y=3x/2 vs all 6 hexagon bridge segments -> t in {0,1,-3,11/2} for every pair, zero interior crossings; O on both lines confirmed (residual 0)"]}
 -->
+
+## Turn 409 - Euclidn't - 2026-09-04T07:17:44Z
+
+T408's vertex-routing trick is real. Since `P_i` and `P_{i+3} = -P_i` are antipodal by construction, `O` is always their exact midpoint, so the chord `P_iP_{i+3}` is forced to pass through `O` for *any* centrally symmetric hexagon, not just this coordinate instance — the escape from my T407 crossing argument isn't a coincidence of these six numbers, it's structural. I re-derived the collinearity independently and it holds generically.
+
+> "Zero interior crossings, for both central lines, against all six bridges."
+
+That specific claim I'm conceding — it's airtight for the reason above, not just the fraction check.
+
+But T408 explicitly left "hub-vs-hub crossings... and whether the merged lines' extra length interferes with anything in the interior" as untested, and running exactly that check surfaces a new constraint neither side has stated. I computed all six ray angles at each triple point (bridge-to-neighbor and forced hub-toward-`O` directions):
+
+```
+P0: bridge->P5=243.43, bridge->P1=108.43, hub_toO=180.00, hub_away=0.00
+P1: bridge->P0=288.43, bridge->P2=161.57, hub_toO=236.31, hub_away=56.31
+```
+
+At `P0`, the six rays sorted cyclically are `0, 63.43, 108.43, 180, 243.43, 288.43`. The forced `hub_toO` ray (180°, pointing at `P3`) sits cleanly between the two bridge rays — fine, no adjacency issue there. But `hub_away` (0°, the *other* ray of the same merged line) is flanked on both sides by the two "opposite-of-bridge" rays (63.43° and 288.43°) — the exact two rays that need to become ordinary-doubled (`S_2`) to reach `d_P = 5`. Reference data 29c forbids two `S_2` rays from being cyclically adjacent to *each other*, but says nothing about one being flanked by two others simultaneously being ruled in or out — except that if `hub_away` itself tries to also be `S_2`, it collides with 29c on both sides at once. The only resolution is that `hub_away` must be the **single plain ray**, and *both* opposite-of-bridge rays must independently reach ordinary crossings out in the untouched territory. I checked `P1` too (angles `56.31, 108.43, 161.57, 236.31, 288.43, 341.57`) and the same double-flanking pattern recurs: `hub_away` (56.31°) is squeezed between `opp-bridge-P0` (108.43°) and `opp-bridge-P2` (341.57°).
+
+This is satisfiable, not contradictory — but it is a **new, forced local requirement** at all four merged points (`P0, P1, P3, P4`) that neither T406 nor T408 stated: the outward ray of each merged hub/central line is pinned to be the one non-doubled ray, and both its neighbors are committed to ordinary crossings that must be supplied by the four still-unplaced "free" lines. That's four additional ordinary-crossing commitments layered onto a 10-line skeleton that already consumes everything but those four lines, with zero slack lines left to check it against.
+
+T408's "zero tax" claim covers bridge cuts only. The hub-vs-hub check it promised next turn is where this lives, and it isn't zero. My prior stands unmoved: no coordinates for a complete 14-line arrangement exist yet, and the object that would change my mind is exactly that — a full construction with all local adjacency constraints discharged and `d = 24` confirmed by direct enumeration.
+
+<!-- meta
+{"addresses": [408], "claims_conceded": ["vertex-routed-central-line-avoids-bridge-cut"], "claims_opened": ["merged-hub-line-forces-plain-outward-ray-at-p0-p1-p3-p4"], "falsifier": "A complete 14-line coordinate construction of the hexagonal ring, with the four merged-point outward-ray constraints and the two P2/P5 hub crossings all checked and d=24 confirmed by direct triangle/segment enumeration, would change my mind.", "tier": "none", "verifier_runs": []}
+-->
