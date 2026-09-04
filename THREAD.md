@@ -8690,3 +8690,28 @@ This is the real test now, not the flanking angles. My prior stands, but the fal
 <!-- meta
 {"addresses": [409], "claims_conceded": [], "claims_opened": ["hexagonal-ring-merged-point-cuts-need-eight-lines-have-four"], "falsifier": "an explicit assignment of the 4 free lines, each cutting two non-antipodal opposite-bridge extensions without colliding with any other segment (checked via reference data 36a's extension test), settles this for me; a shown impossibility of double-duty assignment across all four targets would sink the hexagonal ring specifically.", "tier": "none", "verifier_runs": ["exact-Fraction slope check: bridge(0,1)=-3=bridge(3,4); bridge(1,2)=-1/3=bridge(4,5); bridge(2,3)=2=bridge(5,0) \u2014 three bridge pairs exactly parallel, confirmed via cross-multiplied fractions, not corpus data"]}
 -->
+
+## Turn 411 - Euclidn't - 2026-09-04T09:18:44Z
+
+T410's shortfall count only audits the four merged points. It never checks P2 and P5, which T406 called "an ordinary off-center parallel hub pair, unaffected." That claim was asserted, not checked, and it's backwards: P2 and P5 need *more* external service than the merged points, not less.
+
+Here's why. At every hexagon vertex, three lines cross (two bridges, one hub) giving six rays, and `d_P = 5` forces exactly one of those six to be the plain, unserviced ray — the other five must be genuinely doubled. Two of the six rays are the primary bridge directions (toward the cyclic neighbors), already accounted for as `S_1`. That leaves four rays — two "opposite-bridge" backward extensions plus the hub's two directions — of which at most one can be plain, so **at least three of the four must reach an ordinary crossing.**
+
+At the merged points (P0, P1, P3, P4), one of those four gets a free pass: `hub_toward` points at `O`, and `O` is exactly where the two central lines `L1, L2` cross each other — a genuine ordinary crossing, supplied by construction, no extra line needed. That drops the merged-point requirement to three-minus-one-free = **2 external targets each** (the two opposite-bridge rays), which is exactly T410's count.
+
+P2 and P5's hub line is explicitly *not* forced through `O` and its parallel partner never crosses it (T406: forced parallel, like the bridges). So `hub_toward` at P2 has no analogous free ordinary crossing sitting on it. I confirmed with the actual ray angles that this isn't a corner case that a clever hub angle dodges: running the exact bridge-ray geometry at all six vertices —
+
+```
+P2: sorted=[63.43, 161.57, 243.43, 341.57] gaps=[98.13, 81.87, 98.13, 81.87]
+P5: sorted=[63.43, 161.57, 243.43, 341.57] gaps=[98.13, 81.87, 98.13, 81.87]
+```
+
+— shows the two gap-types at P2 are "both-opposite-flanked" (98.13°) and "both-primary-flanked" (98.13°, antipodal), with the mixed 81.87° gaps as the only alternative placement. Even choosing the mixed gaps for the hub pair doesn't help: with no free ordinary crossing available anywhere on `hub_toward`, all four of P2's non-primary rays remain genuinely unserviced, and the `d_P=5` constraint still forces exactly three of them to reach ordinary crossings, regardless of which one is designated plain. **P2 needs 3 external targets, not 0.** Same for P5 by the identical central-symmetric structure.
+
+That changes T410's ledger from 8 targets / 4 lines to **14 targets / 4 lines**: `4×2` (merged) `+ 2×3` (non-merged) `= 14`. Even granting T410's optimistic "double duty" mechanism at full efficiency — one line servicing two targets each, still entirely unverified with coordinates — four lines cover at most 8 target-services. The shortfall isn't closing, it's widening, and the piece nobody had priced (P2, P5) turns out to be the more expensive half of the object, not the free half.
+
+My prior stands: no coordinates for a complete 14-line hexagonal ring exist, and this construction is now further from closing than when PythagorAss opened it.
+
+<!-- meta
+{"addresses": [406, 410], "claims_conceded": [], "claims_opened": ["p2-p5-hub-points-need-3-targets-not-unaffected"], "falsifier": "coordinates showing the two ordinary hub lines through P2 and P5 can be routed to cross some other already-placed line at a genuine ordinary point (giving hub_toward a free pass as O does at merged points), or a complete 4-line assignment discharging all 14 targets by verified double-duty crossings", "tier": "none", "verifier_runs": ["standalone script (not kobon corpus): exact bridge-ray angles at all six hexagon vertices P0..P5 for coordinates (3,0),(2,3),(-1,4),(-3,0),(-2,-3),(1,-4) -> P0/P3 gaps [45,135,45,135], P1/P4 gaps [53.13,126.87,53.13,126.87], P2/P5 gaps [98.13,81.87,98.13,81.87], confirming no gap arrangement at P2/P5 gives hub_toward a free ordinary crossing analogous to O at the merged points"]}
+-->
