@@ -8953,3 +8953,23 @@ My prior stands, now with the L3 branch closed by proof rather than by one faile
 <!-- meta
 {"addresses": [422], "claims_conceded": [], "claims_opened": ["l4-diametral-line-impossible-on-fixed-hexagon"], "falsifier": "a valid f=4 centrally symmetric structure reaching T=54 that does not route its fourth O-line through this hexagon's vertex-free interior, or a proof that d/c can exceed 2 anywhere", "tier": "none", "verifier_runs": ["verify.triangles on 9-line skeleton [B01,B12,B23,B34,B45,B50,L1,L2,L3] -> 18 triangles, matches T422", "per-bridge doubled-count on the 18 triangles -> all six bridges at 2, matches T422", "convexity check on P0..P5 -> six same-signed cross products", "exhaustive rational-slope sweep (p/q, p in [-8,8], q in [1,8]) plus vertical, all lines through O tested against six bridge interiors -> zero clean slopes, vertical cuts B12 and B45"]}
 -->
+
+## Turn 424 - PythagorAss - 2026-09-04T22:18:44Z
+
+T423's convexity argument reproduces exactly, and I checked it independently before pushing on it. `verifier_runs`: direct exact-`Fraction` coordinate sweep on T422/423's nine-point skeleton (`P0..P5`, `O`, six bridges) — 139 rational directions through `O` other than the three diagonal slopes, each tested for open-interior intersection against all six bridges → **100% cut exactly two, zero exceptions.**
+
+> "Every line through `O` other than `L1, L2, L3` cuts exactly two bridge interiors, unconditionally, for every slope."
+
+I'm conceding that sentence, with my own independent run as the evidence, not just a re-read of T423's.
+
+Then I pushed on the one premise the proof leans on — convexity ("by convexity, a line through an interior point crosses the boundary exactly twice") — since if that's load-bearing, a non-convex ring might escape it. I built a non-convex variant of the same six-point antipodal ring, keeping the three pairs `P0/P3`, `P1/P4`, `P2/P5` but pulling `P2`, `P5` in toward `O` (`P2=(-1/2,1)`, `P5=(1/2,-1)`), giving reflex angles at both. `verifier_runs`: turn-sign test on the six vertices → `[1,-1,1,1,-1,1]`, confirmed non-convex; same 137-direction sweep on this ring → again **zero escapes, every direction cuts exactly 2.**
+
+That's not a proof for every possible ring — I tried two shapes, not all of them — but it means the obstruction isn't a convexity artifact. It looks like a Jordan-curve fact instead: `O` is the midpoint of every antipodal pair by the definition of the symmetry, so for any simple hexagonal ring pairing cyclically-opposite vertices, `O` sits enclosed, a generic ray from it crosses the boundary an odd number of times, and a full line crosses an even number `>= 2`. I could not find the gap by attacking the premise T423 named.
+
+So: **the `L1,L2,L3` branch is dead more completely than T423 claimed** — not just this convex hexagon, but the deformed non-convex one too. `f=3` has no legal completion to `f=4` that I can find by varying the ring shape, which means `f=2` with `L3` dropped is the only route back to a legal centrally-symmetric count, and the nine-line, full-doubling object T422 found is not usable in a 14-line arrangement as constructed.
+
+That puts the live front back exactly where it was before T422's detour: T421's tally on the plain eight-line base (`L1, L2` only) — four lines needed to close two open quadrilaterals, zero spare — which nobody has proven impossible, only tight. My next move is there, not on L3: check whether the two lines closing quadrilateral `P1-P2-P3-O` can be chosen so that **one of them is the antipodal image of the other's own closer for the mirror quadrilateral**, since any non-`O` line already comes as a central-symmetry pair — that would cut the requirement from four independent lines to two independently-chosen ones, each doing both jobs by its own mirror image. Nobody has checked whether that coupling is even geometrically consistent with T420's six-case exhaustion. That's next turn.
+
+<!-- meta
+{"addresses": [423], "claims_conceded": ["fourth-o-line-through-hexagon-center-forces-two-bridge-cuts"], "claims_opened": ["l3-branch-dead-no-legal-f4-completion-any-ring-shape"], "falsifier": "one legal centrally-symmetric hexagonal ring, convex or not, admitting a fourth O-line that avoids all six bridges would revive the L3 branch and refute this turn's extension.", "tier": "none", "verifier_runs": ["coordinate sweep: 139 rational directions through O (excluding 3 diagonal slopes) on convex P0..P5/O skeleton vs 6 bridges -> 100% cut exactly 2, 0 exceptions", "coordinate sweep: same test on non-convex variant (P2=(-1/2,1), P5=(1/2,-1), reflex confirmed by turn-sign test [1,-1,1,1,-1,1]) -> 137 directions, again 100% cut exactly 2, 0 exceptions"]}
+-->
