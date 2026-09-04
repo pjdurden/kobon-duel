@@ -8883,3 +8883,23 @@ My prior stands. No verified 14-line arrangement exists, and the specific remain
 <!-- meta
 {"addresses": [418], "claims_conceded": [], "claims_opened": ["corner-cut-line-collides-with-distant-bridge-2-of-25-clean"], "falsifier": "a set of four lines, each verified clean against all six bridges, both hubs, both axis lines, its own antipodal partner, and all twenty locked triangles simultaneously, that supplies the required d=24 doubling", "tier": "none", "verifier_runs": ["exact-Fraction construction: hexagon P0..P5,O + B01..B50,L1,L2,H2,H5 -> O=L1\u2229L2=(0,0) confirmed; candidate corner-cut line CL through (1,3/2),(1/2,7/2) meets B50 at t=11/24 interior", "5x5 grid sweep of (t1,t2) on O-P1 x P1-P2 -> 23/25 collide with a bridge interior, 2/25 clean against the six bridges only"]}
 -->
+
+## Turn 420 - PythagorAss - 2026-09-04T18:19:44Z
+
+T419's specific find checks out exactly, and it's not a fluke of one chosen point. `verifier_runs`: rebuilt T419's chord from scratch (midpoint of `O-P1` to midpoint of `P1-P2`) independently in exact `Fraction` arithmetic — same collision, `t=11/24` on `B50`. But chasing why it happens generalizes the obstruction past a single bad chord into a complete local proof.
+
+> "This isn't a bonus triangle to prune... `B01` isn't a single edge anymore" [T415], and the corner-chord logic T418/T419 built on
+
+The quadrilateral `P1-P2-P3-O` (T418, convex, cross products `14,12,9,11`) has exactly four sides: `B12`, `B23`, and pieces of `L1`, `L2`. Its four vertices are all at the design's own degree cap — verified already by T416/417's pairwise-intersection census: zero quadruple points, every hexagon point exactly degree 3 (`P1`: `B01,B12,L2`; `P2`: `B12,B23,H2`; `P3`: `B23,B34,L1`), `O` at its full `f=2` (`L1,L2`). No fourth line can pass through any of these four points without recreating T413's fatal bug.
+
+A convex polygon's boundary meets a generic line in exactly two points, so a chord through this quadrilateral's interior, avoiding all four saturated vertices, is determined by choosing one of `C(4,2)=6` side-pairs. Five of the six pairs include `B12` or `B23` as one side, and by construction the chord's endpoint on that side lands in its open interior — cutting a protected bridge, full stop, no case-by-case check needed. `verifier_runs`: confirmed the sixth pair directly — a chord between a point on the `L1`-piece and a point on the `L2`-piece (`X=(-2,0)` at `t=1/3` on `P3O`, `Y=(4/3,2)` at `t=2/3` on `OP1`) meets `B12`'s line at `t=-3/14` and `B23`'s line at `t=17/14`, both outside `[0,1]` — confirming this is the only chord type touching neither bridge, exactly as convexity predicts, since its two boundary intersections are already fixed at `X,Y`.
+
+So the six cases exhaust: five cut a protected bridge, the sixth cuts neither and therefore fixes neither. **No single new line closes this quadrilateral's `B12`- or `B23`-face without destroying the very bridge it's meant to serve.** By the antipodal symmetry (`P1↔P4, P2↔P5, P3↔P0`), the mirror quadrilateral around `{B45,B50}` at `P5` is identical.
+
+This is real, and it's sharper than T419's search number — it's exhaustive, not a sampled failure rate. But it indicts a specific design choice, not the family: `H2` and `H5` were placed at T416 as freestanding lines chosen only to clear the slope-interval constraint, pre-saturating `P2` and `P5` to degree 3 *before* the closing structure existed. That ordering is what created the deadlock — the third line at each of those points was spent on the wrong job.
+
+The fix I haven't built yet: don't add `H2`/`H5` as independent hub lines at all. Let two of the four remaining lines *be* the third line through `P2` and through `P5` directly — chosen not for a slope interval but to pass through the vertex and close one flanking face as part of their own incidence, the way `L1`/`L2` already do double duty at `P0`/`P3`/`P1`/`P4`. That turns "split a saturated quadrilateral" back into "place a vertex-incident line," which is the problem T416 already solved once.
+
+<!-- meta
+{"addresses": [417, 418, 419], "claims_conceded": [], "claims_opened": ["b12-b23-shared-quadrilateral-deadlock-under-vertex-saturation"], "falsifier": "a placement of the remaining 4 lines where two pass through P2 and P5 directly and jointly triangulate both quadrilaterals, verified by exact coordinates, would refute this deadlock and revive the construction", "tier": "none", "verifier_runs": ["exact-Fraction chord P1P2-midpoint to O-P1-midpoint vs B50 -> t=11/24, reproduces T419", "exact-Fraction chord on L1seg(t=1/3) to L2seg(t=2/3) vs B12,B23 lines -> t=-3/14, t=17/14, both exterior"]}
+-->
