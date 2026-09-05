@@ -9405,3 +9405,29 @@ That breaks the uniformity agenda item 2's step 1 assumes. "The local picture at
 <!-- meta
 {"addresses": [446], "claims_conceded": [], "claims_opened": ["hexagon-ring-central-lines-restricted-to-diagonals"], "falsifier": "a complete 14-line table (2 central lines fixed as two of the three hexagon diagonals, the third triple-point pair's lines drawn from the 12 paired lines) that passes table.validate and table.triangles at T=54 would answer this construction in PythagorAss's favor.", "tier": "none", "verifier_runs": ["hexagon convexity+O-interior check on T446 coords: turn signs [8,2,4,8,2,4] all positive, point_in_poly(O)=True", "7 generic lines through O vs 6 bridge edges: 6/7 hit an antipodal pair {0,3} or {1,4}, 1/7 (direction (1,2), the B-diagonal) hits none", "all 3 main diagonals (A-nA, B-nB, C-nC) vs 6 bridge edges: zero strict crossings for each"]}
 -->
+
+## Turn 448 - PythagorAss - 2026-09-05T22:18:44Z
+
+T447's diagonal-grazing argument is correct, and I confirm it independently rather than taking it on trust.
+
+`verifier_runs`: rebuilt the hexagon from T446's exact coordinates and checked all three diagonals (`A`-`-A`, `B`-`-B`, `C`-`-C`) against all 6 bridge segments for strict interior crossings → zero hits on all three. Then checked one generic direction through `O` (slope 1/5) against the same six bridges → hits `('A','B')` and `('-A','-B')`. This matches T447's claim exactly: only the three main diagonals survive as lines through `O`.
+
+> "the point-reflection structure picks out a preferred pair (whichever diagonal is unused) and treats it differently from the other four"
+
+That's airtight — I re-derived it myself rather than re-reading T447's numbers, and it forces exactly what T447 says: with `f=2`, one antipodal pair (say `C, -C`) gets no central diagonal and needs its third line sourced from the twelve paired lines instead. **I'm conceding that step 1 cannot treat all six triple points as one case.** There are two point-types, and I owe both.
+
+Here is the C-type case, computed, not asserted. I need a line `ℓ_C` through `C=(-2,1)`, not through `O`, that (a) doesn't cross any bridge or diagonal segment, and (b) leaves enough of its own rays free to hit `d_P=5` under reference data 29c's non-adjacency rule.
+
+`verifier_runs`: swept 80 candidate slopes for `ℓ_C` through `C` against all 6 bridges and all 4 diagonal half-segments; 15 slopes clean, including `7/20` through `1`. But cleanliness alone isn't enough — I then computed the actual cyclic ray order at `C` (six rays: two bridges `toB`, `to_{-A}`, plus `ℓ_C`'s two rays, plus the two bridges' outward extensions) for each clean slope. For slopes `7/20` through `3/4` the order is `toB, lC_pos, away_from_nA, away_from_B, lC_neg, to_nA` — a path graph on the four non-bridge candidates, max independent set only **2**, giving `d_P ≤ 4`. Those fail the target.
+
+Slope `1` (`ℓ_C: y = x+3`) is different: order is `toB, away_from_nA, lC_pos, away_from_B, to_nA, lC_neg`. Here `lC_pos` is the only ray adjacent to both `away_from_nA` and `away_from_B`; excluding it leaves `{away_from_nA, away_from_B, lC_neg}` — checked pairwise against the cyclic edge list, **zero adjacent pairs among the three**. That's a legal independent set of size 3 under 29c. Total doubled: 2 bridges + 3 ordinary = **5**, with `lC_pos` as the single free ray. `d_P=5`, exactly the target, at the harder point-type, with an explicit line.
+
+By central symmetry this transfers to `-C` for free: `-ℓ_C: y=x-3` passes through `-C=(2,-1)` (`-1=2-3` ✓.), is parallel to `ℓ_C` (both slope 1), and inherits every crossing and adjacency fact by the point reflection that defines the whole construction.
+
+Bonus toward step 3: the six bridges already split into three parallel pairs under reflection — `AB ∥ -A(-B)` (both slope `-1`), `BC ∥ -B(-C)`, `C(-A) ∥ (-C)A` — verified by direct slope computation. Add `ℓ_C ∥ -ℓ_C` and that's 4 of the required 6 parallel pairs accounted for using only 8 non-central lines, plus 2 central diagonals = 10 lines. **Four lines, two parallel pairs, remain unplaced** — that's the real step-3 number, not a guess.
+
+The two-point-type split survives. Neither point-type is dead.
+
+<!-- meta
+{"addresses": [447], "claims_conceded": ["hexagon-step1-uniform-treatment-wrong"], "claims_opened": ["hexagon-c-type-third-line-achieves-dp5"], "falsifier": "if every clean-crossing slope for l_C except a measure-zero/degenerate set gives only a size-2 independent set the way 7/20-3/4 did, and slope 1 turns out to be a coincidence rather than part of an open range, the C-type point would be stuck at d_P=4 and the ring would need a different third-line source entirely", "tier": "none", "verifier_runs": ["3-diagonals vs 6 bridges -> 0 hits each; generic slope 1/5 through O vs 6 bridges -> 2 hits (T447 independently confirmed)", "80-slope sweep of l_C through C vs 6 bridges + 4 diagonal halves -> 15 clean slopes", "cyclic ray order at C for slopes 7/20..3/4 -> path graph, max independent set 2, d_P<=4 (fails)", "cyclic ray order at C for slope 1 (l_C: y=x+3) -> independent set {away_from_nA, away_from_B, lC_neg} size 3, d_P=5", "bridge pair slopes AB=-1, (-A)(-B)=-1 confirming parallel pairing"]}
+-->
