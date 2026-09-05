@@ -9383,3 +9383,25 @@ This clears the crossing test at the ring level. What's still open, honestly: st
 <!-- meta
 {"addresses": [445], "claims_conceded": ["kabanovitch-b-single-concurrency-extension-capped-at-53"], "claims_opened": ["centrally-symmetric-hexagon-bridges-survive-extension-test"], "falsifier": "a triangle {a,P(a),13} in some other k=13 order type, or any 14-line construction (Kabanovitch-derived or not) exceeding 53, would bear on this; the hexagon result stands only until step 1's local ray-adjacency or step 3's line budget breaks it", "tier": "none", "verifier_runs": ["two-disjoint-cevian-split table.validate+triangles(kobon_13_m_sym_47tri+line14) -> 50, lost {1,2,6}&{3,7,11}, gained 4 splits + {9,10,14} only", "exact-Fraction crossing check on 6-edge centrally symmetric hexagon (A=(3,0),B=(1,2),C=(-2,1) + antipodes) -> 0 of 9 non-adjacent bridge-pairs cross, hexagon simple"]}
 -->
+
+## Turn 447 - Euclidn't - 2026-09-05T21:17:44Z
+
+T445/T446 closed the tail-insertion lever cleanly — I have nothing to add there, it's a real result and it's PythagorAss's own concession to my construction, not the other way round. But the pivot to the hexagonal ring (agenda item 2) opens a gap PythagorAss's own crossing test didn't cover, and I ran it before writing this.
+
+The ring's 6 bridge lines were tested against each other — 9 non-adjacent pairs, zero strict crossings. Never tested: the two lines through `O` that `f = 2` requires. I checked what a line through `O` does to this hexagon.
+
+`verifier_runs`: exact-rational hexagon from T446's own coordinates (`A=(3,0), B=(1,2), C=(-2,1)`, antipodes). Turn signs at all 6 vertices are `[8,2,4,8,2,4]`, all positive — the hexagon is convex. Point-in-polygon on `O=(0,0)` returns `True` — the center is strictly interior.
+
+`verifier_runs`: swept 7 generic directions through `O` against all 6 bridge-edge segments (strict interior crossing test, `0 < t < 1`). Six of seven hit exactly two edges each, always an antipodal pair — `{0,3}` or `{1,4}`. The seventh, direction `(1,2)`, hit none — because `(1,2)` is exactly the direction of vertex `B`, i.e. a line through `O` and `B` grazes a vertex instead of cutting an edge interior.
+
+This is not a coordinate accident. `O` interior to a convex hexagon plus Jordan curve: every line through `O` crosses the boundary exactly twice, and central symmetry forces the two crossings onto an antipodal edge pair — *unless* the line passes through a vertex, which happens for exactly three directions, the three main diagonals `A(-A)`, `B(-B)`, `C(-C)`.
+
+`verifier_runs`: checked all three diagonals directly against all 6 edges for strict interior crossings — `A-nA`, `B-nB`, `C-nC` each return `[]`. Confirmed: these three are the *only* directions through `O` that don't destroy two bridges.
+
+Consequence for `f = 2`: the two central lines are not free choices through `O` — the program needs them, on pain of losing up to four of the six bridges, to be exactly two of these three diagonals. That's a real constraint nobody wrote down, and it has a cost. Two of three diagonals get used, each supplying the "third line" to *two* triple points at once (a diagonal through `A` and `-A` serves both). That covers four of the six triple points for free. The third diagonal is unused — so the remaining antipodal pair (say `C, -C`) gets no central line through it at all, and must draw its third line from the twelve paired lines instead.
+
+That breaks the uniformity agenda item 2's step 1 assumes. "The local picture at one point" was proposed as if all six triple points are interchangeable under the hexagon's own symmetry — but the point-reflection structure picks out a preferred pair (whichever diagonal is unused) and treats it differently from the other four. Step 1's claim that bridges at positions 1 and 3 leave `{2,4,6}` non-adjacent needs to be checked separately for both point-types, not once. And the "third line" for `C, -C`, drawn from the six remaining paired lines, still owes its own version of this same crossing test against all six bridges — untested, and now known to be the harder case, since a paired line has no reason to pass through a vertex at all.
+
+<!-- meta
+{"addresses": [446], "claims_conceded": [], "claims_opened": ["hexagon-ring-central-lines-restricted-to-diagonals"], "falsifier": "a complete 14-line table (2 central lines fixed as two of the three hexagon diagonals, the third triple-point pair's lines drawn from the 12 paired lines) that passes table.validate and table.triangles at T=54 would answer this construction in PythagorAss's favor.", "tier": "none", "verifier_runs": ["hexagon convexity+O-interior check on T446 coords: turn signs [8,2,4,8,2,4] all positive, point_in_poly(O)=True", "7 generic lines through O vs 6 bridge edges: 6/7 hit an antipodal pair {0,3} or {1,4}, 1/7 (direction (1,2), the B-diagonal) hits none", "all 3 main diagonals (A-nA, B-nB, C-nC) vs 6 bridge edges: zero strict crossings for each"]}
+-->
