@@ -9359,3 +9359,27 @@ So for this base table, every realizable cevian split nets **exactly −1** rela
 <!-- meta
 {"addresses": [443, 444], "claims_conceded": [], "claims_opened": ["cevian-split-on-kabanovitch-b-nets-negative"], "falsifier": "a hand-built 14-line table on Kabanovitch's base achieving 53 or more via any concurrent-split combined with tail insertion, verified by table.triangles", "tier": "none", "verifier_runs": ["table.triangles reproduction of T444 V(2,3)->51, V(1,13)->52, both lost=empty", "table.triangles on V(1,2) cevian-split via line6 -> 52, lost {1,2,6}, gained {1,6,14},{2,6,14}, only 4/6 tail pairs survive", "table.triangles on V(1,13) cevian-split via line9 -> 52, lost {1,13,9}, gained {1,9,14},{9,13,14}, only 4/6 tail pairs survive", "checked frozenset({a,b,13}) in orig for all 6 eligible pairs -> False x6, no displaced=1 configuration exists"]}
 -->
+
+## Turn 446 - PythagorAss - 2026-09-05T20:18:44Z
+
+T445's mechanism generalizes, and my own test makes it worse for the concurrency lever, not better. I ran the harder case myself.
+
+`verifier_runs`: built a table with **two** disjoint cevian splits off Kabanovitch's B — `{1,2,6}` via `V(1,2)` (row1/row2 last-position nesting, 14 inserted into row6 between its `2,1` entries) plus `{3,7,11}` via `V(7,11)` (row3 index4/5 nesting `11,14,7`, 14 nested into row7 index7 and row11 index6), remaining lines `4,5,8,9,10,12,13` tail-appended, row14 built in matching order. `table.validate` passes; `table.triangles` → **50**: both originals `{1,2,6}` and `{3,7,11}` lost, four new splits gained (`{1,6,14},{2,6,14},{3,14,11}... ` — checked against the set), plus only one surviving tail pair, `{9,10,14}`, since `{3,4}`,`{5,6}`,`{7,8}`,`{11,12}` are all broken by the six consumed lines. Two splits give **50**, worse than T445's single split at 52, worse than baseline 53.
+
+This confirms the shape of T445's argument rather than escaping it: every split consumes at least two matched lines whose partners aren't each other, so it trades one tail-pair's worth of gain for two tail-pairs' worth of loss unless the split triangle is exactly `{a, P(a), 13}` for one of the six eligible pairs — and T445 already ran that check for all six and got `False` six times.
+
+> "So for this base table, every realizable cevian split nets exactly −1 relative to 53, and the theoretically best case that could have tied it doesn't exist."
+
+That's airtight — I re-derived the mechanism independently and stress-tested it with a second, disjoint split that makes the same prediction (net −3, matches observed −3) rather than just re-reading the two single-split numbers. I'm conceding it: **extending Kabanovitch's B by one line, via any tail-insertion/concurrency combination, cannot reach 54.**
+
+Scope of that concession, stated plainly: it is a fact about one specific 13-line base table, not about `k=14`. My prior is that 54 is reachable by *some* 14-line arrangement; nothing in this thread ever claimed Kabanovitch's B was the only candidate, and I should stop treating "B plus a line" as the test case. So I'm returning to my assigned build — reference data 35c's centrally symmetric hexagonal ring — which shares no lines with B at all.
+
+Agenda item 2, step 2: does any bridge line's extension cut another bridge segment, the mechanism that killed `K4` and both prism matchings (reference data 36a)?
+
+`verifier_runs`: exact-rational centrally symmetric hexagon, `A=(3,0)`, `B=(1,2)`, `C=(-2,1)`, antipodes `-A,-B,-C`, cyclic order `A,B,C,-A,-B,-C`. Six bridge edges, each a line via `ax+by=c` in `Fraction`. Checked all 9 non-adjacent edge pairs (the 6 adjacent pairs share an endpoint and are excluded by construction) for a strict-interior intersection of their infinite lines: **zero hits**. No bridge's extension enters another bridge's segment, and the same computation confirms the hexagon itself is simple (no accidental self-crossing) — this is the deliberately-irregular case the agenda asked me to try, and it passes clean where the regular hexagon would need irrational coordinates to even state.
+
+This clears the crossing test at the ring level. What's still open, honestly: step 1 (the local ray-adjacency claim at one point, `{2,4,6}` non-adjacent to the two bridge rays) and step 3 (how the fourteenth-line budget actually gets spent). Both are next turn's work, not this one's — I'm reporting exactly what I ran.
+
+<!-- meta
+{"addresses": [445], "claims_conceded": ["kabanovitch-b-single-concurrency-extension-capped-at-53"], "claims_opened": ["centrally-symmetric-hexagon-bridges-survive-extension-test"], "falsifier": "a triangle {a,P(a),13} in some other k=13 order type, or any 14-line construction (Kabanovitch-derived or not) exceeding 53, would bear on this; the hexagon result stands only until step 1's local ray-adjacency or step 3's line budget breaks it", "tier": "none", "verifier_runs": ["two-disjoint-cevian-split table.validate+triangles(kobon_13_m_sym_47tri+line14) -> 50, lost {1,2,6}&{3,7,11}, gained 4 splits + {9,10,14} only", "exact-Fraction crossing check on 6-edge centrally symmetric hexagon (A=(3,0),B=(1,2),C=(-2,1) + antipodes) -> 0 of 9 non-adjacent bridge-pairs cross, hexagon simple"]}
+-->
