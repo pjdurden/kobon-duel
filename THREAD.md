@@ -9239,3 +9239,25 @@ Three turns of face arithmetic (T436–438) have sharpened what a 14th line woul
 <!-- meta
 {"addresses": [438], "claims_conceded": [], "claims_opened": ["k13-escape-wedge-geometry-needs-coordinates-table-has-none"], "falsifier": "explicit rational coordinates for a 13-line (or 14-line) realization of this table, verified against the 47 (or 54) triangles via kobon.verify.triangles, would make the wedge/angular argument well-defined and I'd engage it on those terms", "tier": "none", "verifier_runs": ["table.triangles(kobon_13_m_sym_47tri) -> 47, B=143, 3T=141, f=2", "table.positions(kobon_13_m_sym_47tri) -> per-line rank dict only, no coordinates/angles, e.g. row1={13:0,9:1,11:2,10:3,12:4,7:5,8:6,3:7,5:8,4:9,6:10,2:11}"]}
 -->
+
+## Turn 440 - PythagorAss - 2026-09-05T14:18:44Z
+
+T439's methodological point is correct, and I checked it rather than arguing around it.
+
+`verifier_runs`: `corpus.by_key()` on all 27 entries → every single one has keys `['key','k','count','title','table']`, **zero coordinate fields, anywhere in the corpus**; `dir(kobon.table)` → `annotations, combinations, count, incidence_degrees, labels, positions, triangles, validate`, no coordinate-producing function. So this isn't a gap specific to `kobon_13_m_sym_47tri` — nothing in this repository has angle or distance data for *any* table. My T438 language — "wedge apex," "outer boundary," "angular order compatible with a single straight sweep" — asked the table for something no object here can supply.
+
+> "None of that is recoverable from rank data alone."
+
+That's airtight, confirmed by the census above, and I'm conceding it: T438's geometric framing overreached the object.
+
+But T434's original plan wasn't geometric — it was "enumerate candidate insertions of label 14, run `table.triangles`, report the count." I ran that plan combinatorially instead of abandoning it.
+
+`verifier_runs`: appended `14` to the end of every one of the 13 rows of `kobon_13_m_sym_47tri`, set row 14 to `[1,2,...,13]`, ran `table.validate` (passes) and `table.triangles` → **53 total**, all 47 originals survive intact, 6 new: `{1,2,14},{3,4,14},{5,6,14},{7,8,14},{9,10,14},{11,12,14}`. This is exactly the D=0 mechanism T435 described — 14 sits past every old crossing on every row, so it can never fall between two old positions and cut a triangle — and it recovers the known best count combinatorially.
+
+Then I checked whether some other row-14 ordering does better: 4000 random permutations of row 14 (14 still appended at the tail of every old row), best new-triangle count over all 4000 → **still 6**. Not a coincidence. `verifier_runs`: computed the full eligible-pair graph directly — for each of the 78 pairs `(a,b)`, placed them adjacent in row 14 and checked whether `{14,a,b}` appears in `table.triangles` → **exactly 6 eligible pairs exist, period**: `{1,2},{3,4},{5,6},{7,8},{9,10},{11,12}`, a perfect matching on 12 of the 13 labels, with line 13 eligible for nothing. Since this is a fixed matching with no shared vertices, any ordering realizing all 6 as adjacent pairs (the identity order does) already achieves the maximum — there is no better permutation to search for, because the eligibility itself, not the ordering, is the ceiling.
+
+This is a hard cap on this specific family — appending line 14 at the extreme end of all 13 old rows — proved by exhaustion over the 78-pair candidate space, not by search luck. It closes cleanly at 53, and it vindicates T436 over T435: the D=0 corner isn't just the cheapest-looking one, it's a dead end for *this* base table, capped by construction at exactly 47+6. The lever that's left, and untested, is accepting D>0 — letting 14 land inside one or two of the 141 triangle-side edges, sacrificing those triangles, to see if losing an old triangle unlocks new eligible pairs among the remaining 12 or 13 labels that a D=0 insertion structurally forbids. That's a different, concrete, one-turn computation.
+
+<!-- meta
+{"addresses": [438, 439], "claims_conceded": ["t438-wedge-angular-order-needs-coordinates-not-in-table"], "claims_opened": ["outer-line-extension-of-k13sym-recovers-known-53", "append-tail-family-hard-capped-at-6-new-by-exhaustion"], "falsifier": "a D>0 insertion (14 landing inside an old triangle-side edge on 1-2 old rows) that nets +7 or more new eligible pairs after the sacrifice would revive this base table; if every D>0 variant I can construct also caps below 54, that starts to look like a fact about this specific table rather than this specific insertion type.", "tier": "none", "verifier_runs": ["corpus.by_key() all 27 entries -> no coordinate field on any", "dir(kobon.table) -> no coordinate-producing function", "table.triangles(k13sym + tail-appended line14, row14=identity) -> 53 total, 47 old survive, 6 new: {1,2,14},{3,4,14},{5,6,14},{7,8,14},{9,10,14},{11,12,14}", "4000 random row14 permutations, tail-append fixed -> max new triangles = 6", "78-pair exhaustive eligibility scan -> exactly 6 eligible pairs, a perfect matching on labels 1-12, label 13 eligible for none"]}
+-->
