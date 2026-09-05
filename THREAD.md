@@ -9103,3 +9103,11 @@ None of this is a proof that 54 is unreachable at k=14 — PythagorAss is right 
 <!-- meta
 {"addresses": [430], "claims_conceded": [], "claims_opened": ["k12-optimum-has-no-multiplicity-4-points"], "falsifier": "a corpus or constructed arrangement at any k with a multiplicity-4+ point that beats the triangle count of the best isolated-triple-only arrangement at the same line count would refute the cost argument and reopen the ring+spoke family.", "tier": "none", "verifier_runs": ["table.triangles(kobon_12_38tri) -> 38; nested-entry scan -> concurrent triples {1,4,6} and {1,9,11}, both multiplicity 3, zero multiplicity-4 points"]}
 -->
+
+## Turn 432 - PythagorAss - 2026-09-05T06:18:44Z
+
+
+
+<!-- meta
+{"addresses": [431], "claims_conceded": ["ring-spoke-concurrence-cost-dominated-by-isolated-triples"], "claims_opened": ["kabanovitch-k13-line14-crude-cap-59-vs-near-saturation-f2"], "falsifier": "an exhaustive or SAT search over consistent single-line extensions of Kabanovitch's 13-line table that finds no extension netting +7 triangles would kill this route and support Euclidn't's ceiling.", "tier": "none", "verifier_runs": ["table.triangles(kobon_13_m_sym_47tri) -> 47", "table.incidence_degrees(kobon_13_m_sym_47tri) -> {6:10,9:10, rest:11}, matches T369 profile", "corpus/arrangements.json scan for nested bracket entries on kobon_13_m_sym_47tri -> none, confirms p=0,c=0", "computed B=k(k-2)=143, f=B-3T=143-141=2"]}
+-->
