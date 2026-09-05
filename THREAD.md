@@ -9111,3 +9111,25 @@ None of this is a proof that 54 is unreachable at k=14 — PythagorAss is right 
 <!-- meta
 {"addresses": [431], "claims_conceded": ["ring-spoke-concurrence-cost-dominated-by-isolated-triples"], "claims_opened": ["kabanovitch-k13-line14-crude-cap-59-vs-near-saturation-f2"], "falsifier": "an exhaustive or SAT search over consistent single-line extensions of Kabanovitch's 13-line table that finds no extension netting +7 triangles would kill this route and support Euclidn't's ceiling.", "tier": "none", "verifier_runs": ["table.triangles(kobon_13_m_sym_47tri) -> 47", "table.incidence_degrees(kobon_13_m_sym_47tri) -> {6:10,9:10, rest:11}, matches T369 profile", "corpus/arrangements.json scan for nested bracket entries on kobon_13_m_sym_47tri -> none, confirms p=0,c=0", "computed B=k(k-2)=143, f=B-3T=143-141=2"]}
 -->
+
+## Turn 433 - Euclidn't - 2026-09-05T07:18:44Z
+
+T432 landed empty — a session-limit placeholder, the same failure mode the ledger flagged for T378–381 and T394–396. Nothing to rebut, so I'm picking up my own standing assignment: agenda item 3.1, extracting `kobon_21_133tri_1`'s structure, which nobody has done with a live verifier run yet.
+
+First, a correction against myself. My first attempt at the orbit census used 0-indexed line labels; the corpus labels lines 1–21, not 0–20, and mod-21 arithmetic on the wrong base silently produces a different-but-plausible-looking wrong answer (35/97 instead of the true 39/93) — the same "looks solved, isn't" trap T427 flagged for vertex-membership checks. Redone with `sigma(i) = ((i-1+7) % 21) + 1`, confirmed `sigma` actually permutes the triangle set onto itself:
+
+`verifier_runs`: `table.triangles(kobon_21_133tri_1)` → 133, 7 line-orbits under `i -> ((i-1+7)%21)+1`, orbit-of-sigma-image check → `sigma` maps the triangle set to itself exactly. Pattern census by orbit-membership: `(3,)`-type 1 (`{2,9,16}`), `(2,1)`-type 39, `(1,1,1)`-type 93. This matches reference data 34c exactly and is the first independent re-derivation of it, not a re-read.
+
+New arithmetic nobody wrote down: `(2,1)`-type triangles come from choosing 2 of 3 lines in one orbit and 1 of 3 in another, `C(3,2)×3 = 9` combinations per unordered orbit-pair, splitting into 3 triangle-orbits under the free C3 action — 6 triangle-orbits per pair, `C(7,2)×6 = 126` total two-orbit slots at k=21, of which 13 are used. At k=18 (6 line-orbits): `C(6,2)×6 = 90` two-orbit slots, and `(1,1,1)`-type gives `C(6,3)×(27/3) = 20×9 = 180` three-orbit slots — **90+180 = 270**, which is exactly T402's conflict-graph size in the agenda, now derived rather than asserted.
+
+The more interesting number is how unevenly the 13 used two-orbit slots at k=21 are spread:
+
+`verifier_runs`: per-pair triangle counts on the same construction → 12 of the 21 possible line-orbit pairs used at all, 9 entirely empty. Orbit 6 — the orbit containing the fixed triangle `{2,9,16}` — appears in exactly **one** of its six possible pairings; orbit 3 appears in **all six** of its possible pairings. Degree sequence across the 7 orbits: `{5,3,3,6,2,4,1}`.
+
+That is a real structural fact, not a percentage: the realized k=21 template does not spread its two-orbit usage uniformly, it concentrates on a few orbit-pairs and leaves most untouched, and the orbit carrying the fixed triangle is the most starved. If the same holds at k=18 — plausible, since `s=1` there too — then the six line-orbits are not interchangeable slots for T402's independent set; whichever orbit ends up hosting `s=1`'s fixed triangle is likely to be excluded from most of its own possible two-orbit pairings, which shrinks the effective slot pool below 270 before any geometric conflict is even checked. That is the piece the conflict graph still needs and doesn't have: not just which pairs of slots geometrically exclude each other, but which orbits are pair-starved by the fixed-triangle constraint itself.
+
+None of this builds or bounds the k=18 conflict graph — that's still open, still item 3.2, still unbuilt by either side. It sharpens the target. My prior stands: no verified table meets 94 at k=18, and until the conflict graph or a direct construction says otherwise, the improved bound stays unreached there.
+
+<!-- meta
+{"addresses": [430, 431], "claims_conceded": [], "claims_opened": ["c3-k18-slot-arithmetic-matches-t402-270", "c3-k21-two-orbit-usage-is-uneven-fixed-orbit-starved"], "falsifier": "a verified k=18 C3 table (or a direct 94-triangle construction, symmetric or not) closes this; a completed 270-slot conflict graph with an independent set >=31 would concede the feasibility question even without coordinates.", "tier": "none", "verifier_runs": ["table.triangles(kobon_21_133tri_1) -> 133, sigma(i)=((i-1+7)%21)+1 confirmed automorphism, pattern census (3,):1 (2,1):39 (1,1,1):93 matching reference data 34c", "per-line-orbit-pair triangle count on kobon_21_133tri_1 -> 12 of 21 pairs used, orbit containing fixed triangle {2,9,16} appears in 1 of 6 possible pairings, others up to 6 of 6"]}
+-->
