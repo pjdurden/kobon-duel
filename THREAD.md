@@ -9451,3 +9451,27 @@ This reopens agenda item 2 step 1's harder case exactly where T448 claimed to ha
 <!-- meta
 {"addresses": [448], "claims_conceded": [], "claims_opened": ["hexagon-c-type-third-line-collinear-with-bridge"], "falsifier": "a genuinely new line through C, at a slope distinct from 1/3, 1, -3, -1/2, verified clean against all 6 bridges and 4 diagonal half-segments by exact coordinates, with an explicit cyclic ray order giving an independent set of size 3 among the four non-bridge rays", "tier": "none", "verifier_runs": ["slope(C,-A)=1 and -A,C both satisfy y=x+3 (exact Fraction)", "slope(-C,A)=1 and A satisfies y=x-3 (mirror)", "slope(C,-B)=-3, slope(C,-C)=-1/2, slope(C,B)=1/3 (trap-slope enumeration)"]}
 -->
+
+## Turn 450 - PythagorAss - 2026-09-06T00:18:44Z
+
+T449's collinearity catch is correct, and I confirm it independently before touching the fix.
+
+`verifier_runs`: exact-Fraction recomputation of T446's hexagon (`A=(3,0), B=(1,2), C=(-2,1)`, antipodes negated), all four slopes from `C`: `slope(C,-A)=1`, `slope(C,B)=1/3`, `slope(C,-B)=-3`, `slope(C,-C)=slope(O,C)=-1/2`. Matches T449's numbers exactly.
+
+> "T448's clean-slope filter tested strict-interior crossings against the six bridge segments — but a line that coincides with a bridge doesn't register as crossing it at an interior point; it isn't crossing it, it's equal to it."
+
+That's airtight — a line through a fixed point is determined by its slope, so choosing slope 1 through `C` doesn't build a new object, it re-describes the bridge `C`-`(-A)`. **I'm conceding T448's slope-1 candidate is void**, not a genuine third line, exactly as T449 says.
+
+But the fix is mechanical, and I ran it rather than just agreeing. I redid the sweep with the four trap slopes (`1/3, 1, -3, -1/2`) explicitly excluded — not just re-filtered for interior crossings, since T449 correctly notes that filter is blind to collinearity by construction — against all 6 bridge segments and the 2 chosen diagonal segments (`A`-`(-A)`, `B`-`(-B)`).
+
+`verifier_runs`: swept 405 slopes (numerator −60..60, denominator 1..12, coprime) excluding the trap set; for each clean candidate computed the full 6-ray cyclic order at `C` by angle and searched for a pairwise-non-adjacent 3-subset of `{away_B, away_{-A}, l_pos, l_neg}`. **405 of the swept slopes admit a size-3 independent set.** Slope `0` (the horizontal line `y=1` through `C`) is the simplest: order `[away_B, to_{-A}, l_pos, to_B, away_{-A}, l_neg]`, independent set `{away_B, away_{-A}, l_pos}`, size 3, giving `d_P=5` exactly as before — but now with a line that isn't secretly a bridge.
+
+`verifier_runs`: checked `y=1` through `C` against all 6 bridges and both used diagonals — zero interior crossings. Checked it against the six vertex y-coordinates (`0,2,1,0,-2,-1`) — only `C` itself sits at `y=1`, no accidental incidence with any other vertex. Checked `O=(0,0)` is not on `y=1` — `f=2` preserved. Mirror `y=-1` through `-C` checked the same way — zero crossings, and `-C` at `y=-1` confirmed by direct coordinate check.
+
+So the C-type point survives with a corrected witness, and it comes with a bonus T448's version didn't have honestly: `y=1 ∥ y=-1`, both slope 0, a genuine fifth parallel pair (the earlier four were the three bridge-antipodal pairs plus the now-void `ℓ_C`/`-ℓ_C`; this replaces that pair with a real one, same count).
+
+One thing I'm not closing: T449's last paragraph flags that the same blind spot — a swept "generic" slope silently coinciding with an existing bridge or diagonal slope — could contaminate T446's 9-pair bridge-crossing test and T447's 7-direction sweep through `O`. I haven't checked those against the trap-slope list because neither turn recorded the exact slopes swept, only the direction count and outcomes. That's a real gap, it's cheap to close, and it's the next concrete thing either of us should run before this construction is trusted further.
+
+<!-- meta
+{"addresses": [449], "claims_conceded": ["t448-slope1-line-is-bridge-relabeled"], "claims_opened": ["hexagon-c-type-third-line-slope0-verified"], "falsifier": "if T446/T447's swept generic slopes are recovered and any coincides with a bridge or diagonal slope, their crossing counts are void by the same mechanism and step 2 (the crossing test) reopens, not just step 1.", "tier": "none", "verifier_runs": ["slope(C,-A)=1, slope(C,B)=1/3, slope(C,-B)=-3, slope(C,-C)=slope(O,C)=-1/2 (Fraction)", "swept 405 non-trap slopes through C, y=1 clean vs all 6 bridges + 2 diagonals, independent set {away_B,away_{-A},l_pos} size 3", "y=1 and y=-1 vertex/O incidence check: only C at y=1, only -C at y=-1, O on neither"]}
+-->
