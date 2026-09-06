@@ -3,381 +3,331 @@
 Claim registry, rewritten daily by the referee. `SETTLED` requires a complete
 argument or a verifier run. Two agents agreeing is not evidence.
 
-Rewritten by REFEREE after turn 404. Turns 356-404 audited.
+Rewritten by REFEREE after turn 453. Turns 405-453 audited. Forty-nine turns,
+one empty (T432, session limit), forty-eight with real `verifier_runs`. **The
+verifier gate is fully retired: every substantive turn in this window carried at
+least one run, most of them exact-`Fraction` coordinate work or a `table.*`
+call, and several caught real bugs in the opponent's object.** On that axis this
+was the best cycle the project has had.
 
-**The referee turn at T380 died on a session limit, so this pass covers two
-cycles: forty-nine turns, seven of which (T378, T379, T380, T381, T394, T395,
-T396) are empty session-limit placeholders.** That failure is mine, not the
-agents', and it cost more than any agent error in the window: the agenda item
-that asked whether `s = 4` is possible for `C3` at `k = 18` was answered
-completely at **T357**, the very next turn after it was set, and because the
-agenda was never rewritten it was answered again at T382, again at T398, and
-declared settled at T400 after four numerical instances at T401. Twenty-two
-turns re-deriving a lemma that was on the record and had already been checked by
-the opposing agent at T358.
+On every other axis it was the most wasteful. **T446 through T453 re-ran T406
+through T425 on a different hexagon, and neither agent noticed.** The
+bridge-extension test, the "lines through `O` cut an antipodal bridge pair
+unless they are a main diagonal" theorem, and the two-point-type split were all
+established between T406 and T423, by these same two agents, in this same
+thread; T446 re-tested the first, T447 re-derived the second and called it "a
+real constraint nobody wrote down," and T448 conceded the third as new. That is
+the same failure the last audit named against T357 — twenty-two turns
+re-deriving a lemma its own opponent had already checked — repeating at forty
+turns' distance instead of twenty-two. **My agenda is again part of the cause:
+item 2's three steps stayed on the board while T406-T430 answered all three and
+buried the family, and I did not rewrite them.**
 
-**And the verifier came back on at T393.** The owner unblocked it (commit
-`f0ef399`) between T392 and T393, ending a sixty-day gate. T393 used it the same
-hour, with a 2880-configuration sweep. Every turn from T393 onward carries real
-`verifier_runs`. The "attempted, blocked at approval" boilerplate is retired;
-from T405 an assertion about a corpus row or a coordinate object with no
-verifier run is a bare assertion.
+I have also, this pass, done what the agenda asked and neither agent did: I
+proved the hexagonal ring impossible at `k = 14`, closed the last untested lever
+in the `k = 13` extension thread with a run of my own, and computed a corpus-wide
+census that reframes all three open cases. Details below.
 
 ## What actually moved
 
-**1. Two real impossibility proofs, at T359 and T361, and I have checked both.**
-T358 noticed that equality in `d <= 4.5c` forces the bridge segments into a
-3-regular graph on the triple points, so at `c = 4` it forces `K4`, and gave the
-cevian mechanism. T359 turned that into a complete proof: four points in general
-position are either in convex position (the diagonals cross, so two of the six
-connectors cut each other) or have one point interior to the triangle of the
-other three (each cevian's extension exits through the opposite side, killing
-three of six). There is no third order type. **`K4` is unrealizable as a bridge
-graph on any four points, in any position.** T361 then supplied the missing
-general principle — two bridge segments crossing disqualifies both, so the bridge
-graph must admit a crossing-free *straight-line* drawing on its own points,
-hence must be planar — and killed `K_{3,3}` by Kuratowski, on any six points, in
-any position. Both are correct, both are coordinate-free, and they are the first
-genuine non-existence results any agent has produced about concurrence topology.
-Reference data 36.
+**1. The `k = 13` extension thread closed, correctly, and I closed its last
+hole.** T434 through T446 asked whether Kabanovitch's `B` plus one line reaches
+54. The answer is no, and the argument is now complete:
 
-**2. And then the thread declared victory two cases early, and the concession at
-T368 was unearned.** T363 correctly derived that central symmetry at `k = 14`
-with `c = 4` needs `d = 18 = 4.5c` exactly, hence `K4`, hence is dead. Correct,
-and it is the first hard kill of a `c` value in this project. What followed is
-not. T363 wrote "the next parity-admissible value is `c = 6`, and there
-`d ∈ [24,27]`, **no forced equality**" — and then T360, T362, T364 and T365 spent
-four turns testing 3-regular graphs on six points, which is the equality case
-that T363 had just said is not required. **At `c = 6` the requirement is
-`|S_2| >= d - 3c = 6` bridges, not nine, and any planar graph on six vertices
-with between 6 and 12 edges will do.** The natural object is a centrally
-symmetric hexagonal ring of six triple points, `d_P = 5` at each, `d = 24` on the
-nose. Nobody wrote it down. Worse, **nobody mentioned `c = 8` at all**, and the
-requirement `4.5c >= 6 + 3c` is satisfied for every even `c >= 4` — the ladder
-has no top. T365 and T367 nonetheless wrote "central symmetry at `k=14` needs a
-construction that does not currently exist even in outline" and "central
-symmetry at `k=14` is still dead", and T368 conceded the whole front on that
-basis. **I am reopening it.** Reference data 35 and 36.
+- **T437's face lemma, which is the best general tool produced in this window.**
+  Every bounded face of a line arrangement is convex, and a straight line meets a
+  convex region in at most one segment, so line `k+1`'s `k-1` bounded pieces lie
+  in `k-1` **distinct** faces. A piece landing in a triangular face kills that
+  triangle (`D+1`) and carves off one corner triangle (`G+1`): net **zero**. So
+  `G - D` is bounded by the number of non-triangular faces the new line's zone
+  visits. `D` is not a dial you turn up to buy slack. Reference data 38.
+- **T440's eligibility computation.** Tail-appending 14 to every row of `B`
+  gives 53 with all 47 originals intact, and exactly **six** pairs `{a,b}` make
+  `{a,b,14}` a triangle: `{1,2},{3,4},{5,6},{7,8},{9,10},{11,12}` — a perfect
+  matching on lines 1-12, with line 13 eligible for nothing. I re-ran all 78
+  pairs and reproduce it exactly.
+- **T445's exhaustive kill of the cevian lever.** A cevian split at triangle
+  `{a,b,c}` loses the original, gains two, and loses every eligible pair
+  containing `a`, `b` or `c`. Breaking even needs the split triangle to be
+  `{a, P(a), 13}` for one of the six pairs; T445 checked all six and got `False`
+  six times. I re-ran it and confirm.
+- **The hole, and my run.** T444, T445 and T446 tested five instances, all
+  one-sided: line 14 through `V(a,b)` entering **one** flanking triangle.
+  Nobody ran the two-sided split, where line 14 through `V(a,b)` enters the
+  triangles in **both** opposite sectors — `D = 2, G = 4`, the only shape whose
+  arithmetic could have beaten 53. **I ran all 63 vertices of `B` that have two
+  flanking triangles, 120 row-14 orderings each. Maximum: 53. Never 54.** The
+  reason is structural and I checked it: **not one of those 63 vertices has
+  `(a,b)` among the six eligible pairs**, so the two lines through the vertex
+  always spend two distinct pairs. Reference data 38d.
 
-**3. Reference data 34, mine, from a verifier run: the corpus has a hidden
-rotational census, and it contains the exact object the `C3` program at `k = 18`
-is trying to build.** I computed the full table-automorphism group of every
-concurrence-free corpus arrangement by fixing the image of one line (each choice
-determines the whole map, so there are only `2k` candidates to test). Results:
+**2. The centrally symmetric hexagonal ring at `k = 14` is dead, by proof, and
+the proof is mine.** Reference data 39. T453 got the combinatorial half and
+honestly flagged that its geometric half was one hexagon and one diagonal
+choice. The missing step is one sentence:
 
-    kobon_9_3_rot_symmetry    k=9   order 3, l_i -> l_{i+3}   T=21   s=0
-    pentagram_5_rot_symmetry  k=5   order 5, l_i -> l_{i+1}   T=5    s=0
-    kobon_15_5_rot_symmetry   k=15  order 5, l_i -> l_{i+3}   T=65   s=0
-    kobon_21_133tri_1         k=21  order 3, l_i -> l_{i+7}   T=133  s=1
-    kobon_21_133tri_2         k=21  order 3, l_i -> l_{i+7}   T=133  s=1
-    kobon_27_225tri_2         k=27  order 3, l_i -> l_{i+9}   T=225  s=0
+> The ray configuration at a ring point that admits `d_P = 5` requires the third
+> line to have a ray **inside the hexagon's interior cone at that point**. A ray
+> from a vertex into the interior of a simple polygon must leave through the
+> boundary — through the relative interior of a non-incident edge, or through
+> another vertex. The edges are the bridges. So it either cuts a bridge or makes
+> a second vertex multiplicity 4.
 
-Every one is fixed-point-free on lines, every one is a **label shift by `k/n`**
-(the signature of a genuine rotation acting on lines indexed in slope order),
-and every one satisfies `T ≡ s (mod n)` — `21 ≡ 0`, `65 ≡ 0`, `133 ≡ 1`,
-`225 ≡ 0`. Reference data 32's residue rule is now confirmed on six independent
-objects, and `s <= 1` holds in all six. Nobody in 404 turns has looked at the
-automorphism group of a corpus table.
+The only escape is a main diagonal, whose interior ray exits exactly at the
+antipodal vertex. There are three main diagonals, `f` must be even, so `f <= 2`,
+so at most four of the six points are served and **at least two are stuck at
+`d_P <= 4`**. With `d_P <= 5` everywhere (four candidate rays in a 6-cycle
+cannot be pairwise non-adjacent), `Σ d_P <= 28`, and `d = Σ d_P - |S_2| <= 22`
+against the required `d >= 24`. **Dead by two.** I verified the numerical
+shadow of this on five distinct convex centrally symmetric hexagons: 4836 slopes
+each, and the set of slopes that clear all far bridges and both diagonals is
+**exactly disjoint** from the set that admits `d_P = 5`, every time, because the
+first set is the supporting directions at `C` and the second is the interior
+cone.
 
-**4. `kobon_21_133tri_1` refutes T404's closing paragraph.** T404 asked whether
-four or five of six line-orbits can be simultaneously saturated under a `C3`
-action with `s = 1`, called it "a strictly harder joint condition than any single
-line being saturated in isolation", and — correctly, by the standing rule —
-checked a baseline first. It checked `kobon_18_93tri`, found `p = 3`, and
-honestly flagged it as inapplicable. It checked the wrong object.
-`kobon_21_133tri_1` is a `C3` table with **seven** line-orbits, `s = 1` (the
-unique fixed triangle is `{2,9,16}`, one whole line-orbit), `p = 0`, `c = 0`,
-`f = 0`, and **all twenty-one lines at their individual maximum of 19**. In
-T404's own currency that is `Σd_i = 0` across seven orbits. The `k = 18` target
-is `Σd_i = 2` across six. **The joint condition T404 called strictly harder than
-single-line saturation is realized, at the Tamura bound, in a file already in
-this repository.** Reference data 34c.
+**3. The ring family has a general ceiling, and it is above 3.** Reference data
+39c. For a centrally symmetric convex `2n`-ring of triple points bridged in a
+`2n`-cycle, with `f` main diagonals as the central lines,
 
-**5. T404's identity is right, and it answers agenda item 3.3 fifty turns late.**
-`T = 96 - Σd_i` at `k = 18, p = 0, c = 0` is `f = B - 3T = 288 - 3T` rewritten
-with the orbit structure attached, and the orbit structure is the new part: no
-bounded segment is fixed by an order-3 rotation (a fixed segment needs a fixed
-line and there are none), so the six free segments form **exactly two orbits of
-three**. Either one line-orbit carries both (`d_i = 2`) or two carry one each
-(`d_i = 1, 1`), and the remaining four or five orbits are perfectly saturated.
-That is what the `C3` action does to the six free segments, which is exactly
-what agenda item 3.3 asked for at T355.
+    d / c <= 3 + f/n,   f even, f <= n.
 
-**6. Fifteen turns on the mirror axis, T383 to T397, and the consequence nobody
-drew.** T389 killed its own T383 overclaim with exact cross-products in both
-slope regimes; T390 found the second constraint at the same joint; T391 found the
-signed rule that clears both; T392 broke it at the third mirror pair; T393 ran
-the first real verifier sweep in the project's history (960, then 2880, then
-1920 configurations) and conceded the general form of T383's chain; T397 then
-corrected **its own T393** downward, from a cap of 3 to a cap of 2, on a
-thousand-configuration sweep of the full fourteen lines. That is a model
-sequence. What none of the seven turns did is close the loop: at most three of
-the six axis faces can carry a free edge (T356, T383, correct), so **at least
-three are free-edge-less**; a free-edge-less axis face that is a *quadrilateral*
-forces its `Δ_i` by reference data 4; the sweeps say at most two `Δ_i` can
-coexist; therefore **at least one free-edge-less axis face has six or more
-sides**, `j >= 2` in T353's `2 + 2j`. That is the first structural consequence
-the mirror program has produced. It is conditional on two search results that are
-not proofs, and it is on the agenda.
+So `d > 3c` — agenda item 1, the whole question — is **structurally available to
+this family and to no other object anyone has proposed**, and the hexagonal ring
+fails at `k = 14` only because `k = 14` demands `d/c >= 4` and `n = 3` caps it at
+`11/3`. The cheapest untried instance is the **4-point ring**: a parallelogram of
+triple points, both diagonals central, `c = 4`, ceiling `d/c <= 4`, bridge graph
+`C_4` (planar, and each side's line supports the parallelogram, so reference data
+36 does not touch it). Nobody has built it. It is agenda item 2.
 
-**7. The `k = 13` escape thread, T368 to T377, reduced correctly and then reduced
-past its own target.** T369 priced the escape: it needs the identical global
-saturation profile as Kabanovitch's B (eleven lines at 11/11, two at 10/11),
-because `f = B - 3T = 2` is forced for *any* `k=13, p=0, c=0, T=47` table. T370
-checked `V(6,9)`, the crossing of B's own two deficient lines, and found all four
-segments there already triangulated. T373 reduced the escape to "a double-ray
-vertex with a free inward pair"; T374 built one in six lines; T375 verified every
-number by hand and conceded. Then T376 pointed out T373's two peripheral
-extremality conditions were never load-bearing once reference data 31 is in play,
-and T377 pointed out **the double-ray requirement was not load-bearing either**.
-T377 is right, and it is right about the shape of the thread: five turns, each
-correcting one thing and leaving the next error standing. The minimal local
-condition is "any crossing `V`, both flanking candidate triangles cut", which
-reference data 31 already satisfies in five lines. **The entire local programme
-was solving a strictly harder problem than the one on the table**, and what
-survives is a single global existence question that nothing has touched.
+**4. T441 found that `table.validate` does not validate.** Reference data 37. It
+checks label range, self-reference, and reciprocity. Nothing else — no rank-3
+consistency, no realizability, no walk condition. T441 demonstrated it: five
+random shuffles of row 14 all pass, with triangle counts 48, 48, 47, 47, 47.
+I read the source and confirm. **T442 then got the direction exactly right in
+the very next turn**: an upper bound computed over the superset `validate`
+accepts is still a valid upper bound over the realizable subset, so T440's cap of
+six eligible pairs survives, and only the word "closed" was unearned. That
+exchange is the model for how a tooling critique should be received.
+
+**5. Reference data 40, mine: the tail-append operator, run over the whole
+corpus, reproduces the best-known even value at every open case.** For each
+concurrence-free, parallel-free corpus table I appended label `k+1` to the tail
+of every row and counted eligible pairs. Every one is a perfect matching:
+
+    k=3   T=1     1 pair  ->  2  = N(4)
+    k=5   T=5     2       ->  7  = N(6)   [closed]
+    k=7   T=11    2       -> 13  < N(8)=15
+    k=9   T=21    4       -> 25  = N(10)  [closed]
+    k=11  T=32    3       -> 35  < N(12)=38
+    k=13  T=47    6       -> 53  = best known at 14, UB 54
+    k=15  T=65    7       -> 72  = N(16)  [closed, at the bound]
+    k=17  T=85    8       -> 93  = best known at 18, UB 94
+    k=19  T=107   9       -> 116 = best known at 20, UB 117
+    k=21  T=133  10       -> 143, UB at 22 is 144
+
+**All three open cases are exactly "odd optimum plus a perfect matching on `k-1`
+of the `k` lines", and the missing triangle in each is exactly the unmatched
+line.** At `k+1 = 6, 10, 16` the same operator hits the even upper bound on the
+nose. **The honest counterweight, which I state because it cuts against the
+pattern:** at `k+1 = 8` and `12` the operator misses by 2 and 3 and those cases
+are nonetheless closed at their bounds by other constructions. So this is not
+evidence that `N(14) = 53`. It is evidence that the three open cases share one
+mechanism and that closing any of them requires beating this operator, which
+reference data 38 now says a single line cannot do from `B`.
+
+**6. T423 is the best agent proof in the window, and T424 is the best
+stress-test.** T423: the only lines through `O` that touch a hexagon vertex are
+the three main diagonals, because point reflection fixes such a line and swaps
+`P_i` with `-P_i`; every other line through `O` meets the convex boundary at two
+edge interiors, hence cuts exactly two bridges, **for every slope, not for the
+sampled ones**. T424 then confirmed it on 139 directions of the convex ring and
+137 of a deliberately non-convex one, reported `100%, zero exceptions` **against
+its own construction**, and said plainly it could not find the gap by attacking
+the premise T423 named. That pair is what this project is for.
+
+**7. T413, T415, T449, T451: four bug-catches on live coordinate objects, all
+real, all conceded by rebuild.** A "generic" hub slope that was exactly the
+`P1P4` diagonal (T413, quadruple point). A replacement slope that cleared all
+nine forbidden values and still cut two bridges at `t = 3/4` (T415). A "new"
+third line at `C` that was the existing bridge `C(-A)` (T449 — and the diagnosis
+is the good part: an interior-crossing filter is **blind to collinearity by
+construction**, since a line equal to a bridge does not cross it). A replacement
+that was genuinely new, avoided all four trap slopes, and cut a bridge on the far
+side of the hexagon (T451). T414, T416, T450 and T452 each conceded by
+recomputing, and **T416 was the only turn in the thread to solve the constraint
+instead of guessing past it**: it derived the safe slope interval `(-1/3, 2)`
+exactly, and noted that T413's `7` and T414's `5` were both outside it on the
+same side.
 
 ## The referee's findings this cycle
 
-1. **`K4` is impossible as a bridge graph on four points (T358, T359), and
-   `K_{3,3}` is impossible on six (T361).** Reference data 36. I re-derived both.
-   The four-point dichotomy is complete — convex or one-interior, no third order
-   type — and each case forces a self-cut among the six connectors. The bridge
-   graph's edges are straight segments between the points, so two crossing edges
-   disqualify each other; hence the graph needs a crossing-free straight-line
-   drawing, hence planarity, hence no `K_{3,3}`. Consequence, correctly drawn at
-   T363: **central symmetry at `k = 14` is dead at `c = 4`**, because there
-   `d >= 6 + 3c = 18 = 4.5c` forces equality and equality forces `K4`.
-2. **The `c` ladder does not terminate, and the T360-T368 arc could never have
-   finished.** Reference data 35. `d <= 4.5c` and `d >= 6 + 3c` are jointly
-   satisfiable for every even `c >= 4` at `k = 14` (`c >= 8` at `k = 18`,
-   `c >= 6` at `k = 20`), so no finite case analysis in `c` closes any open case.
-   Only a general theorem bounding `d/c` below 3, or a single object above it,
-   ever will. **This is why agenda item 4 is the whole of it, and it is why the
-   prism analysis was doomed before it started.** Additionally, at `c = 6` the
-   equality condition does not apply and the 3-regular graphs T360-T364 tested
-   were never required: `|S_2| >= 6` on six points, and the **centrally symmetric
-   hexagonal ring with `d_P = 5` at each point, `d = 24`** is combinatorially
-   clean, respects reference data 29c's non-adjacency (bridges at two of six
-   rays, three ordinary doubled rays at the alternate positions), and has never
-   been drawn.
-3. **The corpus automorphism census, and the `k = 21` `C3` template.** Reference
-   data 34. Six arrangements carry a fixed-point-free rotational automorphism;
-   all are label shifts by `k/n`; all satisfy `T ≡ s (mod n)`; `s <= 1`
-   throughout. `kobon_21_133tri_1` realizes `s = 1` with seven orbits, `f = 0`
-   and every line saturated — the structure `k = 18` needs, with **less** slack
-   than `k = 18` is allowed. Its triangle census by orbit pattern: one fixed
-   `(3)`-type, 39 in `(1,2)`-type (13 orbits), 93 in `(1,1,1)`-type (31 orbits),
-   using 45 of 448 available slots.
-4. **`s = 1` for `C3` at `k = 18` was proved at T357, in full, including ties.**
-   T357's lemma has two cases and both are correct: strict radii (the smaller
-   orbit's lines cross the larger orbit's incircle) and **equal radii** (a side
-   of one triangle is tangent to the shared incircle at a point that is not one
-   of the other triangle's three tangency points, hence lies in its open
-   interior). T358 checked both and said so. T382, T398, T400 and T401 proved,
-   re-proved and numerically instantiated the same result without once citing
-   T357. The standing prohibition "confirm an assigned computation has not
-   already been done before starting it" was violated by both sides, repeatedly,
-   for twenty-two turns.
-5. **T404's `T = 96 - Σd_i` is correct** and I re-derived it: `B = 18 · 16 = 288`
-   bounded segments, each a side of at most one triangle, so `3T = 288 - f` and
-   `f = 3Σd_i` because a `C3` orbit's three lines carry identical counts. `T = 94`
-   forces `Σd_i = 2`. Its corpus check of `kobon_18_93tri` is also correct — six
-   rows of length 16 and twelve of 17, so `p = 3`, `B = 282`, profile
-   `[14,14,14,15,15,15,16×12]`, exactly as reported. I verified all of it.
-6. **The mirror-axis consequence nobody drew:** at least one free-edge-less axis
-   face is not a quadrilateral, conditional on T393's and T397's sweeps. See
-   finding 6 above and the agenda.
-7. **T374's gadget is correct and I checked it**, and it is also unnecessary.
-   `a: y=0`, `b: y=x`, `c: y=-2x+20`, `d: y=-x/20+21/20`, `p: y=-x/20+2`,
-   `q: y=x-18`; `V=(0,0)` is a genuine double-ray vertex, `p` cuts `{a,b,c}` at
-   `x = 40/21` and `x = 120/13`, `q` cuts `{a,b,d}` at `x = 18` and `x = 127/7`.
-   T375 re-derived every number by hand. But T377 is right that a double-ray
-   vertex was never required, so what the object establishes is that reference
-   data 30's eleven-of-eleven is not even suggestive — which is real, and was
-   already the state of the ledger after T340.
-8. **Not gold.** Reference data 34 rests on a verifier run and a corpus lookup;
-   35 and 36 are proofs, they are mine, and they are unattacked. Reference data
-   36 is the closest thing to a gold-tier object this project has produced — two
-   coordinate-free non-existence results — but it rules out two graphs, not a
-   case.
+1. **The hexagonal ring at `k = 14` is impossible.** Reference data 39a-b, mine,
+   proved above and checked numerically on five hexagons. `d <= 22 < 24`. The
+   one step I have not covered is a **non-convex** ring, where the interior angle
+   at a reflex vertex exceeds 180 and the ray classification changes; T406's
+   single non-convex instance failed reference data 36a's extension test with
+   four cuts, which is suggestive and is not a proof. **That is the only hole,
+   and it is on the agenda.** Not gold: it kills a construction family at one
+   `k`, not a case, and it has a stated gap.
+2. **`d/c <= 3 + f/n` for cyclic bridge rings.** Reference data 39c. This is the
+   first bound anyone has produced that is *specific to the family agenda item 1
+   cares about*, and it is above 3, which means the family is not excluded by the
+   observed ceiling — it is the one route to breaking it. It also kills, in one
+   line, the small-`c` rings at every open `k`: `c = 6` at `k = 20` needs
+   `d/c >= 4.5`, ring ceiling `11/3`; `c = 8` at `k = 18` needs `4.25`, ring
+   ceiling `4`; `c = 8` and `c = 10` at `k = 20` both fail. The first live
+   instance is `k = 20, c = 12, n = 6, f = 6`: ceiling 48 against a requirement
+   of 45.
+3. **The two-sided cevian split caps at 53 on Kabanovitch's `B`.** My run, 63
+   vertices, 120 orderings each. Reference data 38d. This was the last arithmetic
+   shape that could have beaten 53 and nobody ran it.
+4. **`table.validate` checks reciprocity and nothing else.** Reference data 37.
+   Confirmed from source. Every combinatorial table result in this project's
+   history is a statement about a superset of the realizable tables; that is fine
+   for upper bounds and worthless for existence, and T442 is the only turn to
+   have said so.
+5. **The corpus tail-append census.** Reference data 40, mine. Twelve tables, one
+   operator, and the three open cases line up as `N(k) + (k-1)/2` with the even
+   bound one higher. Nobody has run a corpus-wide operator in this project
+   before; every previous census was per-object.
+6. **T437's face lemma is general and is not yet in the ledger's toolkit.**
+   Reference data 38a. It applies to any `k`, any base arrangement, and it prices
+   single-line extension exactly. It is the correct generalization of T435's
+   per-crossing framing and of T436's `(D, G)` arithmetic, and both of those are
+   subsumed.
+7. **T430's refutation of the "+15 budget" is correct and is the second time this
+   project has caught an optimal-sequence increment used as a per-arrangement
+   bound.** T429 argued that `38 -> 53` caps what any 12-line base gains from two
+   lines. It does not: the increment between *optima* says nothing about an
+   arbitrary base, and the real crude cap is `~2(n-1)` per added line. The first
+   offence was `k14-c0-profile-matching-by-percentage` at T320. Same error,
+   different dress.
+8. **Not gold.** Reference data 39 is the strongest impossibility result in the
+   project's history and it has a stated gap (non-convex rings) and a narrow
+   scope (one family, one `k`).
 
 ## Call-outs, by turn number
 
-- **T357, the turn nobody read.** It proved `s <= 1` for `C3` at `k = 18` in two
-  cases, both correct, both elementary, in the turn immediately after the agenda
-  asked for exactly that. T358 checked it and reported it clean. Then **T382**
-  re-proved the strict-radius case only, omitted ties, and wrote "`s = 4` is
-  dead, full stop" — a "full stop" in a turn that does not cover all its cases,
-  which is a standing prohibition by name. **T398** re-proved the strict case
-  again, with a machine check, and honestly flagged that ties were uncovered.
-  **T400** declared `s = 4` dead. **T401** ran four numerical tie instances and
-  called it "the generalization T400 flagged as needed but didn't run". It had
-  been proved forty-four turns earlier by T401's own opponent. Neither agent
-  searched the ledger, and my missing T380 turn is why the agenda still said
-  `s ∈ {1,4}` throughout.
-- **T358 and T359, the best pair in the window.** T358 found the cevian
-  mechanism, checked it in reference data 28's coordinates (`c: y = 4-3x` meets
-  `y=0` at `x = 4/3 ∈ (0,4)`), and explicitly framed it as forced rather than
-  accidental. T359 replaced "the star fails" with "every four-point
-  configuration fails", by a dichotomy with no third case. That is the right
-  generalization made at the right moment, and it is the shape T352 was praised
-  for last cycle.
-- **T361, and the principle that should have arrived two hundred turns ago.**
-  "For every edge of a proposed bridge graph to survive as an uncut bridge
-  simultaneously, the graph must admit a drawing on those points, using literal
-  straight segments, with zero crossings among its own edges." That single
-  sentence converts a geometry question into a graph question and it is correct.
-  It also, as T361 itself noted, does *not* kill `K4` (which is planar) — so the
-  turn correctly declined to claim the prism's survival as progress. Model
-  behaviour.
-- **T360, T362, T364, T365: four turns testing a hypothesis their own thread had
-  already discharged.** T363 wrote `d ∈ {24,...,27}`, "no forced equality", in
-  the same turn. Equality is what makes the bridge graph 3-regular. Without
-  equality there is no reason to look at the prism or `K_{3,3}` at all. Four
-  turns, two symmetric embeddings, two correct kills, zero relevance.
-  **Before testing the equality case of a bound, check whether your target needs
-  equality.**
-- **T365 and T367, the two turns that overstated a real result, and T368, which
-  banked it.** "Central symmetry at `k=14` needs a construction that does not
-  currently exist even in outline" (T365) and "central symmetry at `k=14` is
-  still dead" (T367) are true only under the observed `d <= 2c`, which is not a
-  theorem and which both sides are under a standing prohibition to qualify in
-  the same sentence. Neither qualified it. Neither mentioned `c >= 8`. T368
-  conceded the whole front — "the whole central-symmetry/prism/K4 thread has now
-  run its course" — on that basis. **The concession was correct about the
-  two-cluster object and wrong about the thread.** Reopened as
-  `central-symmetry-k14-dead-above-c4`.
-- **T366 and T367, the scope exchange, correctly resolved.** T366 was right that
-  `d >= 24` is a fact about central symmetry's parallel tax and not about `c = 6`
-  in the abstract, and right that `p = 0, c = 6` needs only `d = 12`. T367 was
-  right that an object with no invariant point cannot witness a claim about
-  point reflection, and right that `d/c = 2` exactly does not clear a strict
-  bar. Both turns are correct; T368 conceded to the correct one. Clean.
-- **T369, the crude cap done properly.** `f = B - 3T = 2` at `k=13, p=0, c=0,
-  T=47` uses only `k` and the target, so the escape inherits B's exact global
-  saturation profile — eleven lines at 11/11, two at 10/11, `11·11 + 10 + 10 =
-  141`. That is the crude-cap discipline the standing rule asks for, applied
-  before any coordinates, and it reframed the rest of the thread correctly.
-- **T370's `V(6,9)` check, and the automorphism it re-derived by hand.** Applying
-  `i -> 15-i` to row 6's entries returns row 9 exactly; both candidate triangles
-  at `V(6,9)` are present on all three legs. Correct, checked, and honestly
-  labelled as a fact about B rather than a theorem. The NO_VERIFIER_RUN notice
-  that fired here was against a gated tool and is noise. From T405 it will not
-  be.
-- **T372, which corrected a citation against its own interest and then
-  conceded.** It pointed out that T371 reached for
-  `saturation-implies-total-rigidity-boundary-included` where `f = B - 3T` by
-  exhaustion suffices, then conceded
-  `local-gadget-cannot-witness-adjacent-free-segments` anyway. Citing the
-  load-bearing mechanism rather than the strongest available one is a standing
-  rule and this is the first turn to enforce it on an opponent.
-- **T373's reduction, which was wrong, and T374, which certified it by building
-  an object that satisfies it.** T373 derived "V must be a double-ray vertex"
-  from reference data 8's wedge mechanism — the mechanism reference data 31 had
-  already refuted as a universal, at T355, in the agenda both agents read. T374
-  then built a six-line object satisfying the over-strong condition, and T375
-  verified it. All three turns are arithmetically flawless and all three are
-  about a condition that T376 and T377 then showed was never required. **Check
-  whether a derived condition survives the ledger's own refutations before you
-  spend three turns satisfying it.**
-- **T377, the turn that named the pattern.** "Five turns, and the local condition
-  still hasn't been stated correctly. Each turn corrected exactly one thing and
-  left the next error standing." Correct, and it is the second-most useful
-  sentence in the window. Its conclusion — that there is no partial-credit path
-  from a six-line gadget to a thirteen-line optimum, because the whole 47-triple
-  set has to be posited and checked atomically — is also correct and is now the
-  agenda's `k=13` item.
-- **T383's overclaim and T389's retraction of it.** T383 wrote "every edge of a
-  free-edge-less axis quadrilateral opens directly onto a genuine triangle...
-  local rigidity, not an obstruction". T384 demanded the collision check by name,
-  citing reference data 17. T385 answered the immediate vertex correctly
-  (`F_{i-1}` and `F_i` use opposite rays of `l_i`, so there is no shared object
-  to collide on) and said plainly that the chain beyond it was unchecked. T386
-  pushed one hop out and named the exact unresolved ordering. T387 computed it
-  for one slope pair. T388 refused to bank it, citing the reference data 28
-  standard — check every competitor, not one. **T389 then went further than T388
-  asked**, found that `sigma(l_{i+1})` cuts `Δ` for every same-sign choice, found
-  the quadrilateral is *non-convex* in that regime (cross-products `-4, +2, +8,
-  +2`), tested the opposite ordering, found it dies too, and retracted its own
-  T383. That is the best self-correction in the window.
-- **T393, the first verifier-backed concession in this project.** 960
-  configurations, then 2880 with varied axis spacing, then 1920 on the
-  non-adjacent case with 32 hits. It conceded the general form of its own T383
-  chain, not merely the instance T392 caught, and it stated the partition
-  (adjacent versus non-adjacent gaps) and what was in the leftover category.
-  Then **T397 corrected T393's own conclusion downward** — the path-graph
-  independent-set bound of 3 is necessary, not sufficient, because a triangle can
-  be cut by a line four mirror-pairs away — with a thousand full-fourteen-line
-  configurations. Two consecutive turns by the same agent, each demolishing the
-  previous one's number, both against its own side. Name it and copy it.
-- **T393's and T397's numbers are search results and neither turn called them
-  proofs**, which is correct, and neither turn is entitled to the word "cannot".
-  T393 wrote "two adjacent gap-triangles sharing a mirror line **cannot** both be
-  faces, at least nowhere in 2880 systematically varied configurations" — the
-  qualifier saves it, barely. The ledger records both as CONTESTED with machine
-  evidence.
-- **T398's construction bug, and T399 and T400, which handled it exactly right.**
-  T398 built eighteen lines from a rational tangent parametrization with an
-  independent parameter per line and called the result `C3`-symmetric. T399
-  found the counterexample first (zero orbits survive, including radius 1, because
-  the triangles were not equilateral and reached to distance ~5.1), diagnosed the
-  cause, and gave the support-function repair (`d >= 2r_min` clears an
-  equilateral triangle in every direction). T400 conceded the exact sentence,
-  named the reason — `tan 60° = √3` is irrational, so rational-`t` lines cannot be
-  rotation images — and **rebuilt the object correctly**, with a 24-digit
-  rational approximation to the rotation matrix. Concession by reconstruction,
-  which is the strongest form.
-- **T401, T402, T403: the escalating search, priced.** 79, then 73 and 82, then
-  85, across a thousand-plus trials on six fixed radii and random phases. T402
-  named the danger itself — "a number that keeps climbing every time someone
-  looks harder is not evidence of a ceiling" — and then correctly refused to run
-  trial 401. T403 answered it with two plateaus and an exact partition of
-  `C(18,3) = 816 = 6 + 270 + 540`, which I checked and which is right. But the
-  standing rule is a crude cap **before** the search, and the crude cap for this
-  family was sitting in the corpus: `kobon_21_133tri_1` shows what a `C3` table
-  at the bound looks like, and it has `Σd_i = 0`. The searches are at
-  `Σd_i = 11` against a target of 2. **Nobody checked whether a realized `C3`
-  optimum exists anywhere before spending three turns hill-climbing.**
-- **T404, which did the baseline check the standing rule demands and checked the
-  wrong baseline.** It recomputed `kobon_18_93tri` before citing it, found
-  `p = 3`, and flagged it as inapplicable rather than using it as false
-  corroboration. That is exactly right and I verified every number. It then
-  asserted that simultaneous per-orbit saturation under `C3` with `s = 1` is
-  "strictly harder" than isolated line saturation, having cited a corpus census
-  of saturated arrangements that includes `kobon_21_133tri_1` — the object that
-  refutes the assertion. **The census it ran contained the counterexample to the
-  claim it drew from the census.**
-- **The promise ledger.** Kept: T362 promised the prism's offset matching and
-  T364 delivered it exactly; T368 promised a gadget "next turn's work" and T374
-  delivered it (six turns late, but T369-T373 explain why and each says so);
-  T385 promised the next step out and T387 delivered coordinates; T391 promised
-  the seven-pair extension and T397 delivered the full fourteen-line sweep;
-  T397 promised nothing it did not deliver. Broken: **T353's axis-quadrilateral
-  free-segment count, promised for T355, was swallowed by the session-limit
-  turns and finally delivered at T383** — twenty-eight turns late, with T356
-  delivering part 1 on time and T383 redoing it. Also **T403 promised a coupled
-  two-orbit move and a non-uniform radius set, and T404 did neither** — it is
-  Euclidn't's turn, so the promise falls due at T405.
-- **Good behaviour, named.** T357 answered its assignment in one turn with a
-  complete proof. T358 conceded its own turn's second half in three lines and
-  declined to bank a concession it had not been forced into. T359 generalized an
-  opponent's mechanism instead of attacking it. T361 refused to claim the
-  prism's survival as progress for its own side. T363 stated the target
-  `d ∈ [24,27]` *before* the construction, as the standing rule demands. T372
-  corrected a citation in its opponent's favour. T375 re-derived all fifteen
-  pairwise intersections of an opponent's gadget before conceding. T377 named a
-  five-turn failure pattern including its own contributions to it. T389
-  retracted its own prior turn with new exact arithmetic. T393 ran the verifier
-  the hour it came back. T397 demolished its own previous turn's number. T399
-  diagnosed a construction bug rather than dismissing the construction. T400
-  conceded by rebuilding. T402 refused an escalating search on principle. T404
-  recomputed a baseline before citing it. **That is sixteen named strong turns
-  out of forty-two live ones.** The failure in this window was not rigour and it
-  was not honesty. It was memory: T357's proof, reference data 31's refutation of
-  the wedge mechanism, and `kobon_21_133tri_1`'s automorphism were all on record
-  and all ignored.
-- **Archive of call-outs for T181-T355** is in the git history of this file. The
+- **T446 through T453, the forty-turn rediscovery.** T446 ran the
+  bridge-extension crossing test on an irregular hexagon and reported it as the
+  agenda's step 2. **T406 had already proved it for every convex centrally
+  symmetric hexagon**, by the supporting-line argument — each edge of a strictly
+  convex polygon has every other vertex in one closed half-plane, so no other
+  edge can cross its line — and had contrasted it against a non-convex instance.
+  T406's result is coordinate-free and strictly stronger; T446's nine-pair check
+  is an instance of it, uncited. T447 then re-derived **T423's theorem** and
+  wrote "That's a real constraint nobody wrote down." It was written down at
+  T423, proved there, and confirmed at T424 across 276 directions on two ring
+  shapes. T447's two-point-type consequence is **T408** (which merged the central
+  lines through antipodal vertex pairs and said in so many words that the third
+  pair "keeps an ordinary off-center parallel hub pair") plus **T411** (which
+  established that pair as the *more* expensive half). T448 conceded it as new.
+  **Both agents own this. Neither searched forty turns back in their own thread.**
+- **T430 buried the family and T446 revived it without naming T430.** T430:
+  "Agenda item 2 assigned me this family; I think it's earned a burial, on
+  evidence rather than on Euclidn't's argument for it," followed by an explicit
+  pivot. T446: "So I'm returning to my assigned build — reference data 35c's
+  centrally symmetric hexagonal ring." The standing prohibition is *if a
+  concession contradicts an earlier turn of yours, say which turn and which of
+  the two is wrong*. T446 said neither. As it happens the revival was right — the
+  burial at T430 was greedy-search evidence on the *ring-plus-spokes* variant,
+  not on the `f=2` ring — but that distinction is exactly what the rule exists to
+  force onto the record.
+- **T453's "dead, full stop."** Second offence in two audits against a named
+  standing prohibition: *do not write "in complete generality", or "period", or
+  "full stop", in a turn that also lists the cases you did not check.* T453's
+  next paragraph begins "Two things this does not close." T382 was named for this
+  at T405. The underlying work in T453 is good — the wedge dichotomy is a
+  genuine combinatorial proof and I have verified it — which makes the phrase
+  gratuitous as well as prohibited.
+- **T441, the most valuable single turn in the window.** It read
+  `inspect.getsource(table.validate)`, found the function checks only range and
+  reciprocity, and then *demonstrated* the consequence rather than asserting it:
+  five random row-14 shuffles, all passing, with four different triangle counts.
+  Every table-level claim in this project changed meaning that turn. **T442's
+  reception is equally good**: it re-read the source itself, conceded the exact
+  overclaim ("proved by exhaustion" and "period"), and then stated correctly and
+  against its own instinct that the eligibility cap survives as an upper bound
+  because realizable tables are a subset. Neither turn overshot.
+- **T443, the sentence that should have been the first line of T434.** "53 is not
+  new information — it is the value already sitting in KNOWN.md as best-known for
+  `k=14`. So the coordinate-reconstruction project T442 is committing to next
+  turn, even if it succeeds completely, proves only that the already-known 53
+  survives realizability." Correct, decisive, and nine turns late. The standing
+  rule is *produce a construction family's crude cap before analysing its fine
+  structure*. **In mitigation: T440's 53 was not knowable in advance, and the
+  concurrency lever was genuinely open until T445.** The cost was the coordinate-
+  reconstruction plan T442 had committed to, which T443 correctly cancelled.
+- **T432, empty, and T433's handling of it.** T432's body is a session-limit
+  blank; its meta trailer nonetheless names `kabanovitch-k13-line14-crude-cap-59`.
+  Standing rule: a claim opened in a meta trailer with no argument in the body is
+  not a claim, and it is not recorded. **T433 did the right thing** — named T432
+  as empty, declined to shadowbox, and spent the turn on its own standing
+  assignment.
+- **T433, the only turn in forty-nine to touch agenda item 3, and it corrected
+  itself first.** It caught its own 0-indexed orbit arithmetic (35/97 instead of
+  39/93) before reporting, re-derived reference data 34c independently, and then
+  produced the number the agenda had asserted: `C(6,2)x6 = 90` two-orbit slots
+  plus `C(6,3)x9 = 180` three-orbit slots `= 270`, T402's conflict-graph size,
+  **derived rather than assumed**. Its new structural fact — that
+  `kobon_21_133tri_1` uses only 12 of 21 orbit-pairs and the orbit carrying the
+  fixed triangle appears in exactly 1 of its 6 possible pairings — is a real lead
+  and is on the agenda. Item 3.2 remains unbuilt after two cycles.
+- **T426's universal from a fixed skeleton, refuted one turn later.** T426: "a
+  bridge only doubles when both its endpoints are hub vertices... This
+  generalizes past this one coordinate instance." It does not; T427's ear chords
+  double all six bridges with no hub at `P2` or `P5` at all. 223 configurations
+  of one 10-line skeleton do not license a universal, and the standing
+  prohibition against exactly this shape has been in force since T318.
+- **T427, the right way to answer a question you are about to make useless.** It
+  gave T426's literal question a "yes," verified it (20 triangles, all six
+  bridges doubled), and then said plainly that the object "does it by not
+  building the target object at all" — four multiplicity-4 points, `P2` and `P5`
+  still bare. Answering the letter and flagging the spirit in the same turn is
+  the correct move and it is rare here.
+- **T429's multiplicity pricing, and T431's corpus confirmation of it.** Six
+  points at multiplicity 4 cost `6 x 8 = 48` by reference data 18's `m(m-2)`
+  against the two multiplicity-3 points (`2 x 3 = 6`) of `kobon_12_38tri`, which
+  holds the `k=12` record at 38 while the ring-plus-spokes object at the same
+  line count reaches 28. That is a cited cost formula checked against ground
+  truth at the one line count where ground truth exists. Both turns are right.
+- **T444, reporting against itself.** "This is real evidence against the
+  concurrent lever, and I'm reporting it straight rather than only running tests
+  I expect to help." Two tests, 51 and 52, both below its own baseline, both
+  published with the mechanism. Then it named the defect in its own choice of
+  vertices (corner vertices are exactly where an eligible pair sits) and proposed
+  the right next test. Model turn.
+- **T449's diagnosis, which is better than its catch.** Catching that T448's
+  slope-1 line was the bridge `C(-A)` is arithmetic. Explaining *why the sweep
+  could not have caught it* — "the interior-crossing test is blind to
+  collinearity by construction... it isn't crossing it, it's equal to it" — and
+  then enumerating the four trap slopes from `C` before the opponent could ask,
+  is the part that generalizes. It also flagged, correctly and without being
+  asked, that the same blind spot could contaminate T446's and T447's sweeps.
+  **Neither agent ever checked that, and it is still open.**
+- **T452, conceding a method rather than an instance.** "I'm conceding the
+  method, not just the instance: hand-picking a slope and checking a partial
+  segment list is how both failures happened." Then it stopped picking slopes and
+  ran the constraint set. That is the correct response to two consecutive
+  bug-catches and it is the first time in this project an agent has conceded a
+  *procedure*.
+- **T407's arithmetic slip, self-caught mid-sentence, and left in.** "`d=20` or
+  `22` is still comfortably inside `d>=6+3c=24`... no, it isn't." Leaving the
+  correction visible is fine. What is not fine is that the turn's headline claim
+  — central lines "in the only position that preserves the triple-point
+  structure" — was refuted at T408 by the antipodal-vertex routing, which is
+  forced for *any* centrally symmetric hexagon and which T407 had not considered
+  before writing "there is no clever slope that dodges it."
+- **T419's "2 of 25 clean", killed at T425 by its own author's opponent.** The two
+  survivors both passed exactly through vertex `P5`; T419's strict interior test
+  `0 < t < 1` silently excludes exact-boundary hits. T425 found it, swept finer
+  in `1/60` steps, and showed the two "clean" points are the single knife-edge
+  where a continuous collision switches which bridge it hits. **T425 also flagged
+  that it had mislabelled the same definitional `B12` hit in its own T419** —
+  correcting its own earlier turn in the middle of refuting it. This is the same
+  class of error as T449's collinearity trap, found six turns apart by two
+  different agents, and neither turn connected them.
+- **Archive of call-outs for T181-T404** is in the git history of this file. The
   standing ones survive as prohibitions in AGENDA.md.
 
 ---
@@ -1896,14 +1846,285 @@ not a consequence of anything in this section.**
 
 ---
 
+## Referee reference data 37: `table.validate` does not validate
+
+**(a) What it checks (T441, referee-verified from source).** `kobon/table.py`'s
+`validate` raises only on: a line listing itself, a label out of range `[1, k]`,
+and a reciprocity failure (`i` lists `j` but `j` does not list `i`). That is the
+whole function. There is **no** rank-3 consistency test, no face-adjacency
+condition, no sweep or walk condition, no stretchability check of any kind.
+
+**(b) The demonstration (T441).** Five random shuffles of row 14, appended to
+Kabanovitch's `B` with 14 tail-appended in every old row, all pass `validate`,
+returning triangle counts `48, 48, 47, 47, 47` — none matching the identity
+order's 53. `validate` has zero discriminating power over that space.
+
+**(c) `triangles` is local (T441, referee-verified).** For each candidate triple
+it asks only whether some other line's rank data places it between two of the
+three crossings. It is the iff test of reference data 2, applied inside whatever
+table it is handed. It certifies a triple inside a table; it never certifies the
+table. This was already a standing rule; T441 is the first turn to check that
+`validate` does not fill the gap.
+
+**(d) The consequence, and T442's correct reading of its direction.** Every
+combinatorial table computation in this project ranges over a **superset** of the
+realizable tables. Therefore:
+
+- An **upper bound** computed by exhaustion over that space is still a valid
+  upper bound over realizable tables. T440's cap of six eligible pairs, and my
+  own two-sided-split cap of 53 (reference data 38d), survive intact.
+- An **existence** claim does not transfer at all. A table that passes
+  `validate` and reports a high count is a candidate, not an object.
+
+T442 stated this in the turn after T441 raised it, conceded exactly the word
+that was unearned ("closed", "period"), and kept exactly the part that survives.
+
+---
+
+## Referee reference data 38: single-line extension, priced exactly
+
+**(a) The face lemma (T437, referee-verified).** Every bounded face of a line
+arrangement is an intersection of half-planes, hence convex, and a straight line
+meets a convex region in at most one segment. Line `k+1` has `k-1` bounded
+pieces between its `k` crossings, and each piece is a maximal segment crossing no
+other line, so it lies inside a single face of the old arrangement — and **no two
+pieces lie in the same face**, since a straight line cannot leave and re-enter a
+convex region. So the pieces visit `k-1` distinct faces.
+
+Per face type, with `D` = old triangles destroyed and `G` = new triangles gained:
+
+- **Triangular face.** The old triangle dies (`D+1`); the cut isolates one corner
+  bounded by two old sides and the new line (`G+1`). Net contribution to `G - D`
+  is **at most 0**, never positive.
+- **Bounded non-triangular face.** `D+0`; `G+1` only if the cut isolates a
+  triangular corner, `G+0` if it splits opposite sides.
+- **Unbounded face.** `D+0`, `G+0` or `+1`.
+
+Hence `G - D <=` the number of non-triangular faces visited. **`D` is not a dial
+that buys slack**, which corrects T436's `(D,G)` framing and subsumes T435's
+"11 of 13 crossings must be ray-crossings" as the `D = 0` corner.
+
+**(b) The face inventory (T438, referee-verified).** For a simple `k`-line
+arrangement, `1 + k + C(k,2)` faces total, `C(k-1,2)` bounded. At `k = 13`: 92
+total, 66 bounded, 26 unbounded, and `66 - 47 = 19` bounded non-triangular. The
+zero-cost pool is `92 - 47 = 45`, not 19 — T438's correction of T437 is right.
+**T438's wedge-apex mechanism, however, needs angular data the corpus does not
+carry**, which T439 established (`table.positions` returns bare per-line ranks;
+`corpus.by_key()` has no coordinate field on any of 27 entries; `kobon/` has no
+straightening module) and T440 conceded after re-running the census itself.
+
+**(c) The eligible-pair operator (T440, referee-verified).** Append label `k+1`
+to the tail of every old row — line `k+1` crosses every old line beyond its
+existing span, so `D = 0` by (a). A pair `{a,b}` is **eligible** if `{a,b,k+1}`
+is a triangle when `a` and `b` are adjacent in row `k+1`. On Kabanovitch's `B`
+all 78 pairs give exactly six: `{1,2},{3,4},{5,6},{7,8},{9,10},{11,12}`, a
+perfect matching on lines 1-12 with line 13 eligible for nothing. Total 53, all
+47 originals intact. I re-ran the full 78-pair scan and reproduce it exactly.
+
+**(d) The concurrency lever, closed — including the case nobody ran.** A cevian
+split at triangle `{a,b,c}` (line 14 through `V(a,b)`, crossing side `c`) loses
+the original, gains `{a,c,14}` and `{b,c,14}`, and loses every eligible pair
+containing `a`, `b` or `c`. Tallies, all verified:
+
+    T444  V(2,3),  no split          51
+    T444  V(1,13), no split          52
+    T445  {1,2,6}  via line 6        52
+    T445  {1,13,9} via line 9        52
+    T446  two disjoint splits        50
+
+Breaking even requires the split triangle to be `{a, P(a), 13}` for one of the
+six pairs; T445 checked all six and I re-ran it — `False` six times.
+
+**The untested shape was the two-sided split**: line 14 through `V(a,b)` entering
+the flanking triangles in **both** opposite sectors, `D = 2, G = 4`, the only
+arithmetic that could have netted positive. **Referee run: all 63 vertices of `B`
+carrying two flanking triangles, 120 randomized row-14 orderings each. Maximum
+53, never 54.** The mechanism is exact: **not one of the 63 has `(a,b)` among the
+six eligible pairs**, so `a` and `b` always spend two distinct pairs, and the
+best case (`(a,b)` with `b = 13`, thirds forming an eligible pair — five such
+vertices exist) gives `47 - 2 + 4 + 4 = 53` and ties.
+
+**(e) Scope.** All of (c) and (d) are computations in the space `validate`
+accepts (reference data 37), so they are upper bounds on the realizable subset,
+which is the direction that matters. **Kabanovitch's `B` cannot be extended by a
+fourteenth line to 54, by any tail insertion, any single concurrency, any cevian
+split, one-sided or two-sided, or any pair of disjoint splits.**
+
+---
+
+## Referee reference data 39: the centrally symmetric ring, bounded and killed at `k = 14`
+
+Setting: `c = 2n` triple points at the vertices of a **convex** centrally
+symmetric `2n`-gon about `O`, consecutive vertices joined by bridges (the
+polygon's `2n` edges), each vertex carrying exactly three lines — its two bridge
+lines and one more. `f` lines pass through `O`.
+
+**(a) Every point caps at `d_P <= 5`.** Six rays; two are bridges. The remaining
+four are candidates for ordinary doubling, and reference data 29c forbids two
+cyclically adjacent ordinary doubled rays. Four vertices of a 6-cycle cannot be
+pairwise non-adjacent, so at most three of the four qualify. `d_P <= 2 + 3 = 5`.
+Reference data 28's `d_P = 6` needs three break rays at the point; a ring vertex
+has two.
+
+**(b) The interior-cone theorem, and the `C`-type cap of 4.** At vertex `C` with
+bridges to `B` and to `-A`, the six rays are cyclically
+`toB, to(-A), away_B, away_{-A}` interleaved with the third line's antipodal pair
+`l+, l-`. There are exactly two insertions:
+
+- `l+` in the arc `(toB, to(-A))` — **the interior cone** — and `l-` in the
+  antipodal arc. Cyclic order `toB, l+, to(-A), away_B, l-, away_{-A}`; the
+  conflict graph on `{away_B, away_{-A}, l+, l-}` is the path
+  `away_B - l- - away_{-A}` plus isolated `l+`. Independent set **3**, so
+  `d_P = 5` is available.
+- `l+` in `(to(-A), away_B)` and `l-` in `(away_{-A}, toB)` — the **supporting**
+  directions, the ones that keep the line out of the polygon. Cyclic order
+  `toB, to(-A), l+, away_B, away_{-A}, l-`; the conflict graph is the path
+  `l+ - away_B - away_{-A} - l-`. Independent set **2**, so `d_P <= 4`.
+
+T453 established this dichotomy and I have re-derived both cases. The step T453
+did not have:
+
+> **A ray from a vertex into the interior of a simple polygon leaves through the
+> boundary** — through the relative interior of a non-incident edge, or through
+> another vertex. The edges are the bridges. So a third line at `C` whose ray
+> enters the interior cone either **cuts a bridge** (destroying it, so `|S_2|`
+> drops and the ring is no longer a ring) or **passes through a second vertex**
+> (making that vertex multiplicity 4, cost `m(m-2) = 8` by reference data 18,
+> and voiding the design's own degree cap).
+
+The unique escape is a **main diagonal** `P_i(-P_i)`, whose interior ray exits
+exactly at the antipodal vertex, which is a design vertex rather than a fresh
+incidence. There are `n` main diagonals; every line through `O` that is not one
+of them cuts two bridges (T423, proved by convexity plus the fact that point
+reflection fixes such a line and swaps `P_i` with `-P_i`); so all `f` central
+lines are main diagonals and `f <= n`. Each serves two antipodal points, so
+`2f` points are diagonal-served and `2n - 2f` are `C`-type at `d_P <= 4`.
+
+**(c) The ring bound.** `Σ_P d_P = |S_1| + 2|S_2|` and `d = |S_1| + |S_2|`, so
+`d = Σ_P d_P - 2n`. With (a) and (b),
+
+    Σ_P d_P <= 5(2f) + 4(2n - 2f) = 8n + 2f
+    d       <= 6n + 2f
+    d / c   <= 3 + f/n,     f even (parity `k = f + 2p`),  f <= n.
+
+**This is above 3 whenever `f > 0`, and it is the only family anyone has proposed
+for which the proven ceiling clears reference data 29e's decision rule.** Maximum
+`d/c = 4`, attained only when `n` is even and every main diagonal is central.
+
+**(d) `k = 14` is dead.** `c = 6`, `n = 3`, so `f` even and `f <= 3` gives
+`f <= 2`, `d <= 6(3) + 2(2) = 22`. Reference data 33 requires `d >= 6 + 3c = 24`
+for central symmetry at `k = 14` with `c = 6`. **`22 < 24`. The centrally
+symmetric hexagonal ring cannot reach `T = 54`.** This is the object agenda item
+2 assigned at T405, and it was never reachable.
+
+**(e) Numerical shadow, referee run.** Five distinct convex centrally symmetric
+hexagons — T446's `A=(3,0), B=(1,2), C=(-2,1)`; T430's `(5,0),(3,4),(-2,5)`; a
+wide-`C` variant `(4,0),(1,3),(-3,1)`; a near-regular `(6,1),(2,5),(-5,2)`; a
+flat `(10,0),(9,1),(-1,2)`. For each, 4836 rational slopes through `C` (numerator
+`-200..200`, denominator `1..19`, coprime, trap slopes excluded), tested for
+strict interior crossings against the four bridges not at `C` and both used
+diagonals, and for a pairwise non-adjacent 3-subset of the four candidate rays:
+
+    hexagon           clean-only   IS3-only   both
+    T446                     79       4757       0
+    T430                    222       4614       0
+    wide-C                   59       4777       0
+    near-regular            307       4529       0
+    flat                     35       4801       0
+
+The two sets are disjoint in every case, and the reason is (b): the clean slopes
+are exactly the supporting directions, the `IS3` slopes are exactly the interior
+cone. **This confirms T453's finding is not an artifact of its hexagon**, which
+is the question T453 correctly flagged as open.
+
+**(f) The other open cases, priced by (c).** `c = 6` at `k = 20` needs
+`d >= 9 + 3c = 27`, `d/c >= 4.5`, ring ceiling `11/3` — dead. `c = 8` at `k = 18`
+needs `d >= 10 + 3c = 34`, ring ceiling `6(4) + 2(4) = 32` — dead. `c = 8` at
+`k = 20` needs 33 against 32 — dead. `c = 10` at `k = 20` needs 39, `n = 5`, `f`
+even so `f <= 4`, ceiling 38 — dead. **The first ring instance not killed by (c)
+is `k = 20, c = 12, n = 6, f = 6`: requirement 45, ceiling 48.**
+
+**(g) Scope, stated because it is the hole.** (a)-(f) assume the ring is
+**convex**. At a reflex vertex the interior angle exceeds 180 and the arc
+classification in (b) changes; the "ray into the interior must leave through an
+edge or a vertex" step survives by Jordan, but the identification of the viable
+arc with the interior cone does not. T406 perturbed one hexagon to non-convexity
+and found four bridge-extension cuts appear immediately at the reflex pair; that
+is one instance, not a theorem. **A non-convex centrally symmetric ring is the
+only surviving form of this family at `k = 14`.**
+
+---
+
+## Referee reference data 40: the tail-append census, corpus-wide
+
+**Method (referee run).** For every corpus table that is concurrence-free and
+parallel-free (no nested entries, every row of length `k-1`), append label `k+1`
+to the tail of all `k` rows, and count eligible pairs by reference data 38c: for
+each of the `C(k,2)` pairs, place it adjacent at the head of row `k+1` and ask
+whether `{a, b, k+1}` is a triangle. This is the first corpus-wide **operator**
+run in this project; every previous census was per-object.
+
+    table                       k     T   eligible  maxdeg   T + pairs   KNOWN k+1
+    triangle_3_rot_symmetry     3     1      1        1          2         2
+    pentagram_5_rot_symmetry    5     5      2        1          7         7  closed
+    kobon_7                     7    11      2        1         13        15  closed
+    kobon_9_3_rot_symmetry      9    21      4        1         25        25  closed
+    kobon_11_32tri             11    32      3        1         35        38  closed
+    kobon_13_m_sym_47tri       13    47      6        1         53        53  OPEN, UB 54
+    kobon_15_5_rot_symmetry    15    65      7        1         72        72  closed, at bound
+    kobon_17_85tri             17    85      8        1         93        93  OPEN, UB 94
+    kobon_19_107tri            19   107      9        1        116       116  OPEN, UB 117
+    kobon_21_133tri_1/2/3      21   133     10        1        143       UB at 22 is 144
+
+**(a) The eligible-pair set is always a perfect matching.** `maxdeg = 1` in every
+one of the twelve runs — no line is eligible with two partners. For
+`k in {3,5,9,13,15,17,19,21}` the count is exactly `(k-1)/2`, a matching leaving
+one line unpaired. `k = 7` (2 instead of 3) and `k = 11` (3 instead of 5) are the
+exceptions; both bases are odd optima but neither yields the known even value.
+
+**(b) All three open cases are `odd optimum + (k-1)/2`, one short of the bound.**
+`47 + 6 = 53` at `k = 14`, `85 + 8 = 93` at 18, `107 + 9 = 116` at 20 — each the
+best-known value, each exactly one below the tightest published upper bound.
+**The missing triangle in each open case is exactly the unmatched line.**
+
+**(c) The counterweight, which cuts against the pattern.** At `k+1 = 6, 10, 16`
+the operator hits the even upper bound on the nose, but at `k+1 = 8` and `12` it
+misses by 2 and 3 and **those cases are closed at their bounds anyway**, by
+constructions that are not extensions of the odd optimum. So (b) is not evidence
+that `N(14) = 53`. It is evidence that the three open cases share one mechanism
+and that closing any of them requires beating this operator, which reference data
+38d now shows a single line cannot do from Kabanovitch's `B`.
+
+**(d) What is not checked.** Whether the `(k-1)/2` matching count is forced, and
+what distinguishes `k = 7` and `k = 11`. Whether `kobon_17_85tri` and
+`kobon_19_107tri` behave under concurrency exactly as `B` does under reference
+data 38d — the two-sided-split argument used `B`'s specific 63 two-flanking
+vertices and has not been run at 17 or 19. Both are cheap and both are on the
+agenda.
+
+---
+
 ## Table
 
 | slug | k | status | evidence | opened | last touched |
 |---|---|---|---|---|---|
-| `k4-bridge-graph-impossible-for-any-four-points` | all | **SETTLED (referee-verified), PROOF** | Reference data 36a. T358 found the cevian mechanism and checked it in reference data 28's coordinates (`c: y=4-3x` meets `y=0` at `x=4/3 ∈ (0,4)`); T359 turned it into a dichotomy with no third case. Four points in general position are convex (diagonals cross, two of six connectors self-cut) or one-interior (each cevian's extension exits through the opposite side strictly between its endpoints, three of six self-cut). All six pairwise connectors can never simultaneously be uncut bridges, on any four points, in any position. I re-derived both cases. | T358 | T405 |
+| `hexagonal-ring-impossible-at-k14` | 14 | **SETTLED (referee), PROOF, one stated gap** | Reference data 39. Every ring vertex caps at `d_P <= 5` (four candidate rays in a 6-cycle cannot be pairwise non-adjacent, reference data 29c). A `C`-type vertex — one whose third line is not a main diagonal — caps at `d_P <= 4`, because the only ray configuration admitting `d_P = 5` puts a ray inside the polygon's interior cone, and **a ray from a vertex into the interior of a simple polygon leaves through the relative interior of a non-incident edge (cutting a bridge) or through another vertex (multiplicity 4)**. T423's theorem forces every central line to be a main diagonal, `f <= n = 3`, and parity forces `f` even, so `f <= 2` and at least two of six points are `C`-type. `Σd_P <= 28`, `d = Σd_P - |S_2| <= 22`, against `d >= 24` from reference data 33. **Dead by two.** T453 had the combinatorial dichotomy and flagged shape-dependence as open; I closed it, and confirmed the numerical shadow on five hexagons (4836 slopes each, clean-set and `IS3`-set disjoint every time). **Gap: non-convex rings, reference data 39g.** | T405 | T454 |
+| `ring-family-ceiling-is-3-plus-f-over-n` | all | **SETTLED (referee), UNATTACKED** | Reference data 39c. For a convex centrally symmetric `2n`-ring of triple points bridged in a `2n`-cycle with `f` main diagonals central, `d/c <= 3 + f/n` with `f` even and `f <= n`. **This is the first proven ceiling anyone has produced that clears reference data 29e's `d > 3c` decision rule**, so the ring is the one family structurally capable of answering agenda item 1 — and it is capped at `d/c <= 4`. Kills by arithmetic: `c=6` at `k=20` (need 4.5, ceiling 11/3), `c=8` at `k=18` (need 4.25, ceiling 4 but integer ceiling 32 < 34), `c=8` and `c=10` at `k=20`. First surviving instance: `k=20, c=12, n=6, f=6`, requirement 45, ceiling 48. | T454 | T454 |
+| `kabanovitch-b-plus-one-line-caps-at-53` | 13/14 | **SETTLED (SILVER), referee-completed** | Reference data 38c-e. T440: tail-append gives 53 with all 47 intact and exactly six eligible pairs, a perfect matching on lines 1-12 (78-pair exhaustion, I re-ran it). T443: 53 is already KNOWN.md's best-known at `k=14`, so the whole route cannot move the number, and a generic cut of a triangular face nets `G-D = 0`. T444/T445/T446: five concurrency instances at 51, 52, 52, 52, 50, plus T445's check that no `{a,P(a),13}` triangle exists (I re-ran it, `False` six times). T446 conceded by building a second, disjoint two-split object that predicted and matched its own `-3`. **The hole: nobody ran the two-sided split** (`D=2, G=4`), the only arithmetic that could have netted positive. **Referee run: all 63 vertices of `B` with two flanking triangles, 120 row-14 orderings each — maximum 53, never 54, and not one of the 63 has `(a,b)` among the six eligible pairs.** Recorded disagreement, evidence-gated, reconstruction-grade concession. **Silver.** | T434 | T454 |
+| `single-line-extension-face-lemma` | all | **SETTLED (referee-verified), general** | Reference data 38a, T437. Bounded faces are convex; a straight line meets a convex region in one segment; so line `k+1`'s `k-1` bounded pieces lie in `k-1` **distinct** faces. A piece in a triangular face gives `D+1, G+1` — net zero, never positive. Hence `G - D <=` the number of non-triangular faces the zone visits, at any `k`, on any base. Subsumes T435's ray-crossing framing and corrects T436's `(D,G)` independence. T438's correction of the zero-cost pool (`92 - 47 = 45` faces at `k=13`, not 19) is also right and also verified. | T437 | T454 |
+| `table-validate-checks-only-reciprocity` | all | **SETTLED (referee-verified from source)** | Reference data 37, T441. `kobon/table.py`'s `validate` raises only on self-reference, out-of-range labels, and reciprocity failure. No rank-3 consistency, no realizability, nothing. Demonstrated, not asserted: five random row-14 shuffles all pass with counts `48,48,47,47,47`. **T442's reading of the direction is the load-bearing part and it is correct**: computations over the space `validate` accepts are upper bounds on the realizable subset, so T440's cap survives and only the word "closed" was unearned. Existence claims do not transfer at all. | T441 | T454 |
+| `tail-append-operator-reproduces-all-three-open-cases` | 14/18/20 | **SETTLED (referee, verifier run)** | Reference data 40. Twelve concurrence-free corpus tables, one operator. The eligible-pair set is a **perfect matching in every case** (`maxdeg = 1`), of size `(k-1)/2` for `k in {3,5,9,13,15,17,19,21}`. Consequently `47+6=53` at `k=14`, `85+8=93` at 18, `107+9=116` at 20 — **each exactly the best-known value, each exactly one below the tightest published bound, and the missing triangle in each is exactly the unmatched line.** At `k+1 = 6, 10, 16` the operator hits the even bound exactly. **Counterweight, stated because it cuts the other way: at `k+1 = 8` and `12` it misses by 2 and 3 and those cases are closed anyway.** So this is a shared mechanism, not evidence for `N(14)=53`. | T454 | T454 |
+| `only-main-diagonals-through-o-spare-the-bridges` | all | **SETTLED (referee-verified), PROOF** | T423. Point reflection fixes a line through `O` and swaps `P_i` with `-P_i`, so the only lines through `O` touching a ring vertex are the `n` main diagonals. Any other line through `O`, an interior point of a convex polygon, meets the boundary at exactly two points, both in edge interiors, hence **cuts exactly two bridges, for every slope**. T424 stress-tested it against its own construction: 139 rational directions on the convex ring and 137 on a deliberately non-convex one, `100%` cut exactly two, zero exceptions, and reported that it could not find the gap by attacking the convexity premise T423 named. **T447 re-derived this at T447 and called it "a real constraint nobody wrote down."** | T423 | T454 |
+| `convex-ring-bridges-survive-the-extension-test` | all | **SETTLED (referee-verified), PROOF, and re-run 40 turns later** | T406. For a strictly convex polygon each edge's line is a **supporting line** — every other vertex lies in one closed half-plane — so no other edge's segment, whose endpoints are among those vertices, can cross it. Reference data 36a's extension mechanism therefore never fires on a convex ring, for any choice of vertices. T406 also perturbed to non-convexity and got four cuts at the reflex pair. **T446 re-ran the instance version of this on a different hexagon (9 non-adjacent pairs, zero hits) without citing T406**, whose result is coordinate-free and strictly stronger. | T406 | T454 |
+| `hexagon-two-point-types-under-f2` | 14 | **SETTLED, and it was settled at T408** | With `f = 2` the two central lines must be main diagonals (row above), each serving an antipodal **pair** of ring points, so exactly two of the three pairs are diagonal-served and the third draws its lines from the paired lines. **T408 stated this in the turn it invented the merge** ("the third antipodal pair keeps an ordinary off-center parallel hub pair"), and **T411 established that pair as the more expensive half**, not the free half. T447 re-derived it as new at T447; T448 conceded it as new at T448. Now subsumed by `hexagonal-ring-impossible-at-k14`: the unpaired pair is exactly the `C`-type, and it is where the family dies. | T408 | T454 |
+| `ring-plus-spokes-family-dominated` | 14 | **SETTLED (T429, T430, T431)** | T428: single and double spoke pairs through `P2/P5`, 480 verifier-checked configurations, total doubling sum never exceeds base8's 8. T429: four spokes give 12 lines, 28 triangles, all six bridges doubled — purchased with **six multiplicity-4 points**, `6 x 8 = 48` by reference data 18's `m(m-2)`. T431: `kobon_12_38tri`, which actually holds the `k=12` record at 38, has exactly two multiplicity-3 points and **zero of multiplicity 4** (nested-entry scan). T430's own greedy extension of the 12-line base reaches 33 at `k=13` and 38 at `k=14`. Cost formula, corpus ground truth and search all agree. **Distinct from the `f=2` ring, which dies on reference data 39 instead.** | T428 | T454 |
+| `optimal-increment-is-not-a-per-arrangement-cap` | all | **SETTLED (T430), corrects T429** | T429 used the `k=12 -> k=14` optimum-to-optimum increment (`38 -> 53`, "+15") as a ceiling on what a 12-line base can gain from two lines. It is not one: an increment between *optima* constrains nothing about an arbitrary base, and the real crude cap is `~2(n-1)` new triangles per added line, far looser. **Second instance in this project of an optimal-sequence quantity used as a bound**; the first was `k14-c0-profile-matching-by-percentage` at T320. T430 named it correctly and then reported its own greedy search as the actual evidence. | T430 | T454 |
+| `c3-k18-conflict-graph-unbuilt` | 18 | **CONTESTED (open, two cycles unbuilt)** | T433 derived the slot count rather than assuming it: `(2,1)`-type gives `C(3,2)x3 = 9` combinations per orbit-pair splitting into 6 triangle-orbits, so `C(6,2)x6 = 90` two-orbit slots at `k=18`, and `C(6,3)x9 = 180` three-orbit — **270, exactly T402's number, now derived**. New lead: on `kobon_21_133tri_1` only 12 of 21 orbit-pairs are used at all, degree sequence `{5,3,3,6,2,4,1}`, and **the orbit carrying the fixed triangle `{2,9,16}` appears in exactly 1 of its 6 possible pairings**. If that starvation transfers, the effective slot pool at `k=18` is below 270 before any geometric conflict is checked. The exclusion relation itself remains unbuilt after two full cycles, and it is still the only thing in this thread that can produce an impossibility result. | T401 | T454 |
+| `central-symmetry-k14-dead-above-c4` | 14 | **CONTESTED (narrowed: rings dead, non-rings untouched)** | Reference data 35 and 36d opened this at T405 after T368's unearned concession. The `c = 6` instance I named — the hexagonal ring at `d = 24`, `d_P = 5` — is now **dead by proof** (`hexagonal-ring-impossible-at-k14`), so my own agenda item 2 is closed against me. What remains open is exactly what remained open at T405 and is untouched: `c >= 8` at `k = 14`, which nobody has mentioned in 98 turns, and any `c = 6` object whose six triple points are **not** a bridged cycle. Reference data 35a still says no finite case analysis in `c` terminates. | T365 | T454 |
+| `interior-crossing-tests-are-blind-to-collinearity` | all | **SETTLED (T449, referee-verified)** | A candidate line through a fixed point is determined by its slope, so a slope equal to the direction from that point to any other design vertex produces **the existing line**, not a new one — and a strict-interior crossing test (`0 < t < 1`) cannot see it, because a line coincident with a segment does not cross it. T448's slope-1 "third line" at `C` was the bridge `C(-A)`; the four trap slopes from `C` in T446's hexagon are `1/3, 1, -3, -1/2`. T450 conceded and excluded them explicitly rather than re-filtering. **The same class of error appeared six turns earlier at T419/T425**, where two "clean" chords both passed exactly through vertex `P5` and the strict test excluded the boundary hit; neither turn connected the two. **T449's flag that T446's and T447's own sweeps may carry the same blind spot has never been checked.** | T449 | T454 |
+| `k4-bridge-graph-impossible-for-any-four-points` | all | **SETTLED (referee-verified), PROOF** | Reference data 36a. T358 found the cevian mechanism and checked it in reference data 28's coordinates (`c: y=4-3x` meets `y=0` at `x=4/3 in (0,4)`); T359 turned it into a dichotomy with no third case. Four points in general position are convex (diagonals cross, two of six connectors self-cut) or one-interior (each cevian's extension exits through the opposite side strictly between its endpoints, three of six self-cut). All six pairwise connectors can never simultaneously be uncut bridges, on any four points, in any position. **Note against the new agenda item 2: the 4-point ring uses only the four cycle edges as bridges, not all six connectors, so this does not touch it.** | T358 | T454 |
 | `bridge-graph-must-have-a-crossing-free-straight-line-drawing` | all | **SETTLED (referee-verified), PROOF** | Reference data 36b. T361. Two bridge segments crossing at a point interior to both disqualifies both, since each lies on an arrangement line through the other's interior. So the bridge graph drawn with literal straight segments on the triple points must be crossing-free, hence planar. **`K_{3,3}` is therefore unrealizable as a bridge graph on any six points, by Kuratowski.** Independent of reference data 36a: `K4` is planar and dies on the extension mechanism instead, which T361 stated itself rather than claiming a double kill. | T361 | T405 |
 | `central-symmetry-c4-dead-at-k14` | 14 | **SETTLED (referee-verified)** | Reference data 36c, T363. `d >= 6 + 3c = 18` and `d <= 4.5c = 18` at `c = 4`, so equality in reference data 29d, so `|S_1| = 3c`, `|S_2| = 1.5c`, `d_P = 6` everywhere, so a 3-regular bridge graph on four vertices, so `K4`, so impossible by the row above. **The first `c` value killed by proof rather than by the observed ceiling.** | T358 | T405 |
-| `central-symmetry-k14-dead-above-c4` | 14 | **CONTESTED (referee reopens; concession at T368 was unearned)** | Reference data 35 and 36d. T365 ("needs a construction that does not currently exist even in outline") and T367 ("central symmetry at `k=14` is still dead") are true only under the observed `d <= 2c`, unqualified in both turns against a standing prohibition, and T368 conceded the front on that basis. **Two gaps.** (i) At `c = 6` the window is `d ∈ [24,27]` with **no forced equality** — T363 said so in the turn that opened the case — so the 3-regular graphs tested at T360, T362, T364 and T365 were never required; `|S_2| >= 6` on six vertices suffices, and the centrally symmetric hexagonal ring at `d_P = 5`, `d = 24` (reference data 35c) is unbuilt and unrefuted. (ii) **`c >= 8` was never mentioned by either agent**, and `4.5c >= 6 + 3c` holds for every even `c >= 4`. | T365 | T405 |
 | `concurrence-ladder-in-c-does-not-terminate` | 14/18/20 | **SETTLED (referee), UNATTACKED** | Reference data 35a. The window `3T - B <= d <= 4.5c` is nonempty for every `c >= 4` (`k=14`), `c >= 8` (`k=18`, using 33e's parity), `c >= 6` (`k=20`), and widens linearly. No finite case analysis in `c` closes any open case. **Only a theorem bounding `d/c` below 3, or one object above it, ever will** — which is why agenda item 4 has been the whole question since T329, and why the T358-T368 arc could not have finished no matter how good its individual turns were. | T405 | T405 |
 | `corpus-rotational-automorphism-census` | all | **SETTLED (referee-verified, verifier run)** | Reference data 34a-b. Full table-automorphism census of every concurrence-free corpus arrangement (fixing one line's image determines the map, so `2k` candidates per table). Six carry a fixed-point-free rotational automorphism: `kobon_9_3_rot_symmetry` (order 3, `s=0`), `pentagram_5_rot_symmetry` (5, `s=0`), `kobon_15_5_rot_symmetry` (5, `s=0`), `kobon_21_133tri_1` and `_2` (3, `s=1`), `kobon_27_225tri_2` (3, `s=0`). **Every action is a label shift by `k/n`** and **every one satisfies `T ≡ s (mod n)`**, confirming reference data 32 on six independent objects, with `s <= 1` throughout. The symmetry of `kobon_21_133tri_1/2` and `kobon_27_225tri_2` is reported here for the first time in this project; nobody has looked at a corpus table's automorphism group in 404 turns. Stretchability caveat in 34e. | T405 | T405 |
 | `c3-k18-per-orbit-saturation-has-a-realized-precedent` | 18 | **SETTLED (referee-verified), corrects T404** | Reference data 34c-d. `kobon_21_133tri_1` is a `C3` table with seven line-orbits, `s = 1` (unique fixed triangle `{2,9,16}`, one whole orbit), `p = 0`, `c = 0`, `B = 399 = 3T`, `f = 0`, and **all twenty-one lines at their individual maximum of 19** — `Σd_i = 0` in T404's own currency, across seven orbits. The `k = 18` target is `Σd_i = 2` across six, which is **slacker**. T404 recomputed a baseline before citing it, exactly as the standing rule demands, and picked `kobon_18_93tri` (correctly rejected, `p = 3`); the corpus census it ran in the same turn contained the object that refutes its conclusion. Orbit-pattern census of the template: 1 fixed + 13 two-orbit slots + 31 three-orbit slots = 45 of 448. | T404 | T405 |
