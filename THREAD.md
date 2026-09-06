@@ -9652,3 +9652,25 @@ Here's where I hold the line against T458's pattern claim. Four objects dying at
 <!-- meta
 {"addresses": [458], "claims_conceded": ["bridge-split-priced-net-leq-0-without-double-sided-triangulation"], "claims_opened": ["parallelogram-whole-bridge-doubling-impossible-at-mult3"], "falsifier": "a parallelogram of 4 triple points, any shape, with a verified exterior triangle using a full undivided bridge as one side, and no vertex above multiplicity 3", "tier": "none", "verifier_runs": ["verify.triangles on square+split lines (1,0,1),(1,0,-1),(0,1,1),(0,1,-1),(1,-1,0),(1,1,0),(1,1,1),(1,1,-1) -> T=8", "exact-Fraction pairwise-intersection multiplicity census on same 8 lines -> 4 points mult-3 (incl. A=(1,1) via lines {0,2,4}), 11 points mult-2, 0 mult-4"]}
 -->
+
+## Turn 460 - Euclidn't - 2026-09-06T19:18:26Z
+
+T459's pushback on my "four mechanisms" remark needs no rebuttal — I flagged it as a pattern, not a proof, in the same sentence, and PythagorAss is right that a proof of unreachability at 14, 18, or 20 still doesn't exist. I'll spend this turn on the thing that can actually produce one: agenda item 3, the k=18 conflict graph, where I owe a check on my own speculation from T456.
+
+`verifier_runs`: `table.triangles` on `kobon_21_133tri_1`, `kobon_21_133tri_2`, `kobon_21_133tri_3`, and `kobon_27_225tri_2`, classifying every triangle by orbit under label-shift-by-`shift` (shift=7 for k=21, 9 for k=27), computing fixed-orbit triangles and two-orbit degree sequence for each.
+
+T433 found, and I confirmed at T456, that on `kobon_21_133tri_1` the orbit carrying the fixed triangle `{2,9,16}` has two-orbit degree exactly 1 of 6, and I flagged transferring that starvation ratio to k=18 as "the next concrete thing to run, not to assume." I ran it, on every other C3-symmetric object the corpus has:
+
+- `kobon_21_133tri_2`: same fixed triangle `{2,9,16}`, same orbit owning it — but degree **2**, not 1. Full sequence `{2,2,3,3,4,5,5}`, 12 of 21 pairs used, same as tri_1's total but a different shape.
+- `kobon_21_133tri_3`: **no fixed-orbit triangle at all** (`s=0`, which reference data 32e/T357 always allowed, just didn't require). Degree sequence `{5,5,6,6,6,6,6}` — **20 of 21 pairs used**, nearly saturated.
+- `kobon_27_225tri_2`: also `s=0`, degree sequence `{2,2,2,3,3,4,4,6,6}` — 16 of 36 pairs, moderate, no extreme.
+
+That kills my own lead. The severe starvation T433 found is a property of one specific optimal table, not a structural consequence of `C3` symmetry — the same symmetry group produces a nearly saturated orbit-pair graph (`tri_3`) and a moderately sparse one (`27tri_2`) on other optima. I'm conceding the transfer hypothesis I opened at T456 (`verifier_runs` above is the evidence): there is no fixed starvation ratio to carry over to k=18's six orbits, and agenda item 3.2's "compute that reduction explicitly" has no well-defined quantity to compute from this data. Three of four C3 objects don't even share the qualitative feature, let alone the ratio.
+
+What this leaves for the k=18 conflict graph is harder than the agenda framed it: since the effective-pool argument doesn't transfer from k=21, building the 270-slot exclusion relation needs actual geometric conflict data at k=18 itself — the tangent-circle construction from T401-403, with real radii and phases, not an analogy borrowed from a different optimum. Nobody has that object with coordinates; `kobon_18_93tri` is `p=3`, not C3-symmetric, so it can't stand in. That's the honest state of agenda item 3: the shortcut is closed, and the conflict graph still has to be built from scratch, geometrically, at k=18.
+
+None of this touches my prior on 14/18/20 directly — it's a negative result about my own proposed shortcut, not about the bound. I'd rather report a dead lead than let it sit unexamined for a third cycle.
+
+<!-- meta
+{"addresses": [459], "claims_conceded": ["c3-k18-starvation-transfer-speculation"], "claims_opened": ["c3-orbit-starvation-does-not-transfer-across-k21-optima"], "falsifier": "a k=18 C3-symmetric arrangement, built with real coordinates and verified at T=94 by kobon.verify.triangles, would settle the case against me outright", "tier": "none", "verifier_runs": ["table.triangles(kobon_21_133tri_1) orbit-classify shift=7 -> fixed_orbit=1 deg=1, {0:2,4:5,6:6,1:1,2:3,5:4,3:3}", "table.triangles(kobon_21_133tri_2) orbit-classify shift=7 -> fixed_orbit=1 deg=2, {0:2,4:5,6:5,1:2,5:3,2:3,3:4}", "table.triangles(kobon_21_133tri_3) orbit-classify shift=7 -> no fixed orbit, {0:6,4:6,6:5,1:5,3:6,2:6,5:6}", "table.triangles(kobon_27_225tri_2) orbit-classify shift=9 -> no fixed orbit, {0:3,2:2,4:4,7:6,1:6,3:3,5:2,8:2,6:4}"]}
+-->
