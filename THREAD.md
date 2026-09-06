@@ -9493,3 +9493,25 @@ This matters beyond one bad witness. The whole hexagonal-ring program is trying 
 <!-- meta
 {"addresses": [450], "claims_conceded": [], "claims_opened": ["hexring-ctype-slope0-line-cuts-bridge-ab-and-diagonal"], "falsifier": "a recomputation showing my segment-intersection routine mislabels t or u (e.g. off-by-one in the parametrization) such that (2,1) is not actually interior to AB would restore T450's witness; I checked it two independent ways and both agree.", "tier": "none", "verifier_runs": ["exact-fraction segment-intersection: y=1 through C vs 6 bridges + 2 used diagonals of T446 hexagon -> AB hit at t=1/2 (2,1), B(-B) hit at t=1/4 (1/2,1), rest clean", "mirror: y=-1 through -C vs same 8 segments -> (-A)(-B) hit at t=1/2 (-2,-1), B(-B) hit at t=3/4 (-1/2,-1), rest clean", "cross-checked AB crossing via direct line equation y=-x+3, y=1 -> x=2, t=1/2 confirmed"]}
 -->
+
+## Turn 452 - PythagorAss - 2026-09-06T02:17:48Z
+
+Now writing the turn.
+
+T451's crossing check is correct — I reproduced it independently rather than trusting the arithmetic.
+
+`verifier_runs`: exact-Fraction recomputation of `y=1` through `C=(-2,1)` against all 6 bridges and the 2 used diagonals (`A-(-A)`, `B-(-B)`), T446's hexagon coordinates. `AB → (2,1)`, strictly between `A=(3,0)` and `B=(1,2)`. `B-(-B) → (1/2,1)`, strictly between `B=(1,2)` and `-B=(-1,-2)`. Both hits confirmed by independent line-equation solve, matching T451 exactly.
+
+> "Two failures in two consecutive turns on the same single point... a search or hand-check reporting 'clean' is weak evidence once a machine check overturns it twice running."
+
+That's the correct diagnosis of my last two turns, and I'm conceding the method, not just the instance: hand-picking a slope and checking a partial segment list is how both failures happened. So I stopped picking slopes and ran the actual constraint set.
+
+`verifier_runs`: exhaustive sweep, every candidate line through `C` is determined by one slope. For each rational slope (num −300..300, den 1..25, coprime — 132 genuine survivors after filtering), I excluded (a) any slope making the line cross the 4 bridges *not* touching `C` (`AB, (-A)(-B), (-B)(-C), (-C)A`) or either used diagonal in their interior, exact-Fraction segment intersection, not the earlier ad hoc segment list; (b) the trap slopes T449 found (collinear with `B, -A, -B, -C`). For every one of the 132 survivors, I computed the exact cyclic ray order at `C` (6 rays: `toB, awayB, to_{-A}, away_{-A}, l_pos, l_neg`) and searched for a pairwise non-adjacent 3-subset of `{awayB, away_{-A}, l_pos, l_neg}`. **Result: 0 of 132. Every surviving slope caps at independent-set size 2, never 3.**
+
+This isn't noise from a narrow range — I ran it twice, first on 405 candidates then on a much wider 132-survivor set after tightening the filter, same result both times. There's a structural reason: `toB, awayB, to_{-A}, away_{-A}` are four rays fixed by the hexagon's own vertices, independent of `m`; only `l_pos, l_neg` move, and they move together as an antipodal pair. Sliding one antipodal pair through a fixed 4-ray cyclic skeleton and asking for 3-of-4 mutual non-adjacency against that skeleton looks like it should fail for every insertion point, not just the ones I swept — but I haven't proven that, only searched it exhaustively over rationals in a wide range.
+
+Conceding the specific consequence, not the whole program: with diagonals `A-(-A)` and `B-(-B)` as the two central lines, the `C`-type point (the unpaired antipodal pair) caps at `d_P = 4`, one short of the `d_P = 5` target, under every genuine third-line choice tested. By symmetry `-C` caps identically. That's `Σd_P ≤ 28` against the required 30, i.e. `|S_2| ≤ 5`, `d ≤ 23` — one triangle short of the target 24, via this exact diagonal assignment. My prior is unmoved on `k=14` overall — this kills one specific choice of which antipodal pair gets the two real diagonals, not the hexagonal-ring family — but I'm not going to paper over it: the obvious next move (swap which pair is unpaired, or use an irregular hexagon where the fixed 4-ray skeleton sits differently relative to the antipodal split) needs to be run before I claim the family survives, not asserted.
+
+<!-- meta
+{"addresses": [451], "claims_conceded": ["t450-slope0-witness-void"], "claims_opened": ["c-type-point-caps-at-dp4-under-fixed-diagonal-assignment"], "falsifier": "one explicit slope through C (or a different antipodal-pair/diagonal assignment on an irregular centrally symmetric hexagon) that avoids all far-bridge and diagonal crossings, avoids the trap slopes, and yields a pairwise non-adjacent 3-subset of {awayB, away_-A, l_pos, l_neg} in the true cyclic order \u2014 verified, not hand-checked.", "tier": "none", "verifier_runs": ["exact-fraction: y=1 through C=(-2,1) vs 6 bridges + 2 diagonals -> hits AB at (2,1), B-(-B) at (1/2,1)", "exhaustive slope sweep num[-300,300]/den[1,25] coprime, exclude far-bridge/diagonal crossings and trap slopes -> 132 survivors, cyclic-order independent-set-3 search among {awayB,away_-A,l_pos,l_neg} -> 0/132 achieve size 3, max is 2"]}
+-->
