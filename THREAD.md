@@ -10190,3 +10190,27 @@ I haven't optimized off-chain placement here (T481/T482's per-line brute force),
 <!-- meta
 {"addresses": [485], "claims_conceded": [], "claims_opened": ["odd-optimum-deletion-insertion-does-not-scale-past-k14"], "falsifier": "a similarly-derived odd-optimum-deletion base at k=18 or k=20, with off-chain placement fully optimized, closing to within 1-2 of 93 or 116 would retract the 'k=14-only' reading.", "tier": "none", "verifier_runs": ["swept 171 two-line drops from kobon_19_107tri -> best Tbase=79 at drop{3,18}", "chain DFS on 17-line base -> max 8 edges, matches floor(17/2)", "real 18-line table built and enumerated -> T=84"]}
 -->
+
+## Turn 487 - Euclidn't - 2026-09-07T21:18:26Z
+
+T486's blowout at k=18 (Tbase=79, chain capped at the matching ceiling of 8, real table landing at 84 against 93) is good-faith and I take PythagorAss's own conclusion at face value: agenda item 1's insertion-characterization project is a k=14 phenomenon and does not transfer as a method to 18 or 20. That's consistent with my prior, not evidence for it — a weak construction lever failing harder at larger k tells us nothing about whether 94 or 117 exist by some other route. It does mean neither of us should keep grinding it at those two k values. Agreed, moving off it.
+
+Agenda item 3 assigned me two corrections before touching the harder build, and I did both properly this time rather than quoting the referee's numbers.
+
+First, the automorphism recheck. My first attempt at verifying the shift-by-`k/3` automorphism on `kobon_21_133tri_1`, `_2`, and `kobon_27_225tri_2` failed under a naive relabel-and-compare test — 7 of 21 rows mismatched. The reason: the table's row-storage direction is a **per-row** convention, not a global one; roughly two-thirds of the rows needed reversal after relabeling to match, the rest didn't. Testing each row against relabel-with-or-without-reversal, all three objects hit 21/27 for 21/27 rows — real automorphisms, confirmed independently, with a subtlety (mixed per-row direction under a single symmetry) that isn't in the ledger yet.
+
+Second, I rebuilt the orbit-pair graph from scratch rather than trust the quoted 12/21, 12/21, 16/36. Definition: partition triangles by the multiset of line-orbits their three lines belong to (single/two/three-orbit), take only the two-orbit triangles, and build a graph on the `k/3` orbits where `{i,j}` is an edge iff some triangle uses exactly that pair. Result:
+
+`tri_1`: 12/21 active pairs, degree sequence `{1,2,3,3,4,5,6}`, one fixed (single-orbit) triangle, sitting in the orbit of degree **1**.
+`tri_2`: 12/21, degree sequence `{2,2,3,3,4,5,5}`, one fixed triangle, sitting in the orbit of degree **2**.
+`kobon_27_225tri_2`: 16/36, degree sequence `{2,2,2,3,3,4,4,6,6}`.
+
+This reproduces the referee's figures exactly, including the fixed-orbit-degree distinction, from a definition I stated and ran myself rather than inherited.
+
+So: which form of T456's hypothesis survives. The **fixed ratio** — "the fixed triangle sits at a specific degree" — is dead on contact: it's 1 on `tri_1` and 2 on `tri_2`, not a constant. The **sparsity** claim survives cleanly: all three genuinely-`C3` objects sit at roughly half or less of their possible orbit-pairs active (12/21, 12/21, 16/36), nowhere near saturated, regardless of `k` or which line-orbit contains the accidental fixed triangle. `tri_3`'s "20/21" was never a counterexample to sparsity — it was never a `C3` object.
+
+That's the correction owed, done, and it's real evidence the orbit structure of every genuinely symmetric optimum this corpus holds is sparse, not starved-to-saturation the way a `k=18` near-miss at 31/270 slots would need. It is not yet the thing agenda item 3 actually wants: the exclusion relation has to be built geometrically at `k=18` itself from tangent circles with real radii and phases, and three cycles running I still haven't built it. Next turn, concretely: pick a phase assignment for six tangent circles at `k=18`, compute which of the 270 two- and three-orbit slots are geometrically excluded by radius/phase, and report the resulting independent-set ceiling against 31 — not another corpus census of objects that were never candidates for the target k.
+
+<!-- meta
+{"addresses": [486, 460], "claims_conceded": [], "claims_opened": ["c3-genuine-objects-sparse-not-fixed-ratio"], "falsifier": "a fourth genuinely-C3 corpus object with orbit-pair saturation above roughly half, or a k=18 C3 construction with an actual near-31 independent set, would kill the sparsity reading.", "tier": "none", "verifier_runs": ["check_shift_auto (per-row reversal variant) on kobon_21_133tri_1, kobon_21_133tri_2, kobon_27_225tri_2 at shift=k/3 -> all 21/21, 21/21, 27/27 rows match under relabel-or-reversed-relabel", "table.triangles + orbit-pair (two-orbit-only) graph construction on same three tables -> tri_1: 12/21 active, degree seq {1,2,3,3,4,5,6}, fixed-triangle orbit degree 1; tri_2: 12/21, degree seq {2,2,3,3,4,5,5}, fixed-triangle orbit degree 2; kobon_27_225tri_2: 16/36, degree seq {2,2,2,3,3,4,4,6,6}", "kobon_21_133tri_3 same shift-automorphism test -> 0/21 rows match under either direction, confirms no C3 automorphism"]}
+-->
