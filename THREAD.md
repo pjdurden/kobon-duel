@@ -10044,3 +10044,29 @@ Next turn: search two-line-drop sources beyond `kobon_15_5_rot_symmetry` — `ko
 <!-- meta
 {"addresses": [479], "claims_conceded": [], "claims_opened": ["internal-chain-ceiling-is-base-dependent-not-universal"], "falsifier": "a systematic search over many non-B 13-line bases (not just C5-drops) showing T_base plus its best real chain/matching gain never exceeds 53 would restore the wall framing and I'd drop this line.", "tier": "none", "verifier_runs": ["dropped lines 15,14 from kobon_15_5_rot_symmetry -> 13-line table, validate OK, Tbase=41", "exhaustive DFS chain search on this table -> max 12 edges, full Hamiltonian path", "built real 14-row table from chain -> validate OK, table.triangles=52, gain=11", "swept 105 two-line-drop pairs from kobon_15_5_rot_symmetry, Tbase only -> max 42"]}
 -->
+
+## Turn 481 - Euclidn't - 2026-09-07T15:19:26Z
+
+T480's chain-off-B result is real; I reproduced it exactly, then decomposed it into pieces that keep it inside the accounting framework rather than outside it.
+
+I rebuilt `kobon_15_5_rot_symmetry` minus lines {14,15}, got `Tbase = 41`, ran T475's exact consecutive-pair DFS, got the same 12-edge Hamiltonian chain `[1,13,7,11,5,12,6,9,3,8,2,10,4]`. I then actually constructed the 14-line table — inserting line 14 at the forced gap for each interior chain vertex, and at each of the two endpoints trying both legal insertion sides (4 combinations) — and validated it. Best: `Tfull = 52`, gain 11, matching T480's number exactly.
+
+But I went one step further than T480 did: I diffed the triangle sets instead of trusting the net number. `gained = 12` (every single chain edge cashes in as `{a,b,14}` — none of T475's earlier slippage here), `lost = 1`, and the lost triangle is `{2,10,4}`, destroyed because the chain splits row-10's consecutive pair `{2,4}` to insert line 14 between them — exactly reference data 38a's mechanism: a segment through a triangular face costs a `D`. `G=12, D=1, net=11`. This isn't a new phenomenon; it's the same `G−D` machine reference data 38a already governs, now confirmed operating identically off Kabanovitch's `B`.
+
+Then I asked whether the destruction was buying anything: I re-ran the DFS with a `D=0` filter — reject any consistent triple `{prev,cur,next}` that is already a base triangle. Result: max chain **11 edges**, net gain 11, identical total. The destructive 12th edge purchased nothing; the clean 11-edge chain reaches the same ceiling without touching triangle `{2,10,4}` at all. On this base, internal-chain insertion caps at net 11 regardless of whether you accept collateral damage or avoid it. `41 + 11 = 52` — one below the 53 record, two below the 54 bound.
+
+I owe a narrow concession before the rest. T479 wrote:
+
+> "Three now-tested corners of the single-line-insertion space... all sit at or below `T + (k-1)/2 = 53`. That's the shape of a real wall, not under-search."
+
+That was premature — all three corners were tested on one base, and T480 showed a different base changes the internal-chain number. Conceding the "not under-search" framing specifically. It does not touch the outcome: the new base still lands at 52, strictly below both 53 and 54, and now with an exact `G−D` decomposition rather than an unexplained number.
+
+The pattern worth flagging, not yet a theorem: B's own pure internal-chain route (T475's 5-edge max) was never checked for destruction, only for chain length. If it also loses at least one triangle to the same mechanism, its net could be below 5, meaning B's pure-chain total is `≤ 52` too — both tested bases converging on the identical ceiling via the identical mechanism. That's worth PythagorAss checking on their own construction rather than me asserting it, since I already have my own bases wrong once this cycle.
+
+The reframe stands: "search over bases" is not a narrower problem than "search over 14-line tables" — every 14-table decomposes that way for any dropped line. Two concrete bases tried, two results at or below 52, both explained by machinery already in the ledger. Find a base where the `D=0`-restricted chain itself clears 53, not one that matches it by luck.
+
+`verifier_runs`: ["dropped lines {14,15} from kobon_15_5_rot_symmetry, table.validate OK, table.triangles -> Tbase=41", "exhaustive DFS over consecutive-pair chains (T475 method) on this base -> max 12 edges, path [1,13,7,11,5,12,6,9,3,8,2,10,4], matches T480", "built actual 14-row table from this chain (4 endpoint-insertion variants tried), table.validate OK, best table.triangles=52, gain=11, matches T480 exactly", "diffed tris_full vs tris_base: gained=12 (all chain edges present), lost=1, destroyed triangle={2,10,4} via row-10 split of consecutive pair {2,4}", "re-ran DFS with D=0 filter (reject triples already in tris_base) -> max chain 11 edges, net would be 11, no improvement over the destructive 12-edge chain"]
+
+<!-- meta
+{"addresses": [480], "claims_conceded": ["single-base-corners-constitute-a-wall-not-under-search"], "claims_opened": ["internal-chain-net-gain-is-g-minus-d-not-raw-chain-length", "rotational-drop-base-internal-chain-caps-at-52-both-with-and-without-destruction"], "falsifier": "any validated 14-line table, from any 13-line base by any insertion, with table.triangles >= 54 (or a D=0 internal chain on some base that nets above 52) changes my mind.", "tier": "none", "verifier_runs": ["see body: 5 runs against kobon_15_5_rot_symmetry-derived 13-line base"]}
+-->
