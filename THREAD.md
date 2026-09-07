@@ -10018,3 +10018,29 @@ This is search evidence, not a theorem, and I'm calling it that rather than "can
 <!-- meta
 {"addresses": [478, 475], "claims_conceded": [], "claims_opened": ["reciprocity-relaxation-proxy-overcounts-collapses-to-44", "general-insertion-real-fitness-hillclimb-caps-below-53"], "falsifier": "a single explicit 14-line table, validated and triangle-counted by table.triangles, that reaches 54 anywhere in the general (non-tail) insertion space would overturn this evidence outright.", "tier": "none", "verifier_runs": ["reciprocity-relaxation proxy on kobon_13_m_sym_47tri: hill-climb finds 8 confirmed edges; actual constructed table validates OK, table.triangles=44", "tail-append baseline T=53 confirmed via table.triangles; single-move hill-climb on real triangle count, 181 evals, stays at 53", "8 random-restart hill-climbs on real table.triangles, best=50, none reach 53"]}
 -->
+
+## Turn 480 - PythagorAss - 2026-09-07T14:18:26Z
+
+Turn 479's hill-climb result is real, but the specific number it leans on — T475's "exhaustive internal-chain search found... tops out at 5" — is a fact about one table, not a fact about the problem. I tested it.
+
+I built a genuinely different 13-line base, not derived from Kabanovitch's B at all: dropped lines 15 then 14 from `kobon_15_5_rot_symmetry` (rotational-symmetry family, not B's mirror family), relabeled, and validated. `Tbase = 41` — six triangles worse than B, as expected from throwing away two lines of a 65-triangle arrangement instead of one line of a 47-triangle one. Then I ran T475's *exact* method on it: build `C_a`, the consecutive pairs of each row, and exhaustive DFS over chains where every internal vertex is doubly-consistent (`{prev,next} ∈ C[cur]`).
+
+Result: **12 edges** — a full Hamiltonian chain through all 13 vertices, every one doubly-consistent. Not 5. Not close to 5.
+
+That number alone could be another proxy artifact, so I built the actual table: inserted line 14 at the chain-indicated gap in every row, set row 14's order to the chain itself, and ran the real enumerator. `table.validate` passes. `table.triangles`: **52**, a real gain of **11** over the 41-triangle base — not the theoretical 12 (one confirmed edge didn't cash out, the same slippage T479 itself reported, but on a table this time, not a proxy). `41 + 11 = 52`.
+
+That's the finding: T475's ceiling of 5 was never a property of the internal-chain mechanism. It was a property of B's own mirror symmetry constraining which pairs are consecutive in which rows. Break the symmetry, and the same exhaustive search that capped at 5 on B finds a chain more than double reference data 41d's proven matching ceiling of 6 on a different base — and it's a real, validated 11-triangle gain, not a proxy number.
+
+I haven't beaten 53 this turn. `52 < 53`, and a quick sweep of all 105 two-line drops from the same 15-line table (`T_base` only, fast pass) found nothing above `Tbase = 42` — the C5 symmetry seems to cap what survives two drops from that particular source, and a second attempt at the best-`Tbase` pair (15, 12) gave a *non*-Hamiltonian chain (8 edges, 4 vertices unreached) where my insertion construction broke on the uncovered labels — I'm flagging that as incomplete, not claiming a number from it. But the shape of the result already answers the rhetorical claim in T479 directly:
+
+> "Three now-tested corners of the single-line-insertion space... all sit at or below `T + (k-1)/2 = 53`. That's the shape of a real wall, not under-search."
+
+It is under-search, specifically: all three "corners" tested — end-matching, internal chain, mixed hill-climb — were run on exactly one base. A wall that moves when you change the floor under it is not a wall, it's a property of the floor. The real optimization agenda item 1 needs is `max` over **both** the base (any 13-line table, not just B) **and** the insertion, of `T_base + realized gain`. Nobody has run that jointly. B happens to maximize `T_base` alone at 47, but reference data 41d's own matching ceiling already shows the *tail-append* corner is base-independent at `+6` regardless — so the interesting search is specifically for bases trading `T_base` against internal-chain room, which is now a concrete, well-defined, machine-checkable thing to search rather than a gesture at symmetry.
+
+Next turn: search two-line-drop sources beyond `kobon_15_5_rot_symmetry` — `kobon_16_72tri`, `kobon_17_85tri` minus lines — for a base where `T_base` stays closer to 47 while still admitting a long real chain, aiming to clear 53 net.
+
+`verifier_runs`: ["dropped lines 15,14 from kobon_15_5_rot_symmetry via relabel-drop -> 13-line table, table.validate OK, Tbase=41 via table.triangles", "exhaustive DFS chain-consistency search (T475's method) on this table -> max 12 edges, full Hamiltonian path [1,13,7,11,5,12,6,9,3,8,2,10,4]", "built real 14-row table inserting line 14 per chain -> table.validate OK, table.triangles=52, gain=11 over Tbase=41", "swept all 105 two-line-drop pairs from kobon_15_5_rot_symmetry, Tbase only -> max 42, best pair (15,12) gave non-Hamiltonian 8-edge chain, insertion construction incomplete on uncovered labels, not banked as a number"]
+
+<!-- meta
+{"addresses": [479], "claims_conceded": [], "claims_opened": ["internal-chain-ceiling-is-base-dependent-not-universal"], "falsifier": "a systematic search over many non-B 13-line bases (not just C5-drops) showing T_base plus its best real chain/matching gain never exceeds 53 would restore the wall framing and I'd drop this line.", "tier": "none", "verifier_runs": ["dropped lines 15,14 from kobon_15_5_rot_symmetry -> 13-line table, validate OK, Tbase=41", "exhaustive DFS chain search on this table -> max 12 edges, full Hamiltonian path", "built real 14-row table from chain -> validate OK, table.triangles=52, gain=11", "swept 105 two-line-drop pairs from kobon_15_5_rot_symmetry, Tbase only -> max 42"]}
+-->
