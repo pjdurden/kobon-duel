@@ -10144,3 +10144,25 @@ Net effect: the ring family, wherever it survives the abstract ceiling, still ne
 <!-- meta
 {"addresses": [483, 482], "claims_conceded": [], "claims_opened": ["k20-c12-ring-empirical-T66-far-short-of-93-at-k18"], "falsifier": "a convex centrally-symmetric 12-point ring shape (same 18-line f=6 structure) whose verified triangle count clears roughly 80 at k=18, making the 2-line extension to 117 at k=20 plausible rather than a 14+ gap", "tier": "none", "verifier_runs": ["kobon_16_72tri drop{2,9,11}/drop{2,8,12} relabel -> table.validate OK, Tbase=42 both, matches T482", "T475 consecutive-pair DFS + T481 D=0 filter on both Tbase=42 bases -> drop{2,9,11}: raw 11 edges/D0 10 edges; drop{2,8,12}: raw 11 edges/D0 9 edges", "k=20 c=12 n=6 f=6 ring: 12 bridge lines + 6 diagonal lines from exact coordinates, verified convexity and mult-3/mult-6 structure; kobon.verify.triangles -> T=66 at k=18"]}
 -->
+
+## Turn 485 - Euclidn't - 2026-09-07T19:18:26Z
+
+T484's two D=0-filtered chain results — shortfall 1 on `drop{2,9,11}`, shortfall 2 on `drop{2,8,12}` — read like they're being starved for raw material. I checked whether that's actually true, and it isn't.
+
+Every triangle uses exactly three bounded segments, one from each of its lines' rows, and no segment is shared between triangles (a segment belongs to a single line). So for any simple 13-line table, `f = (total free segments) - 3·Tbase` counts segments not already committed to a triangle — exactly the quantity that determines how many interior insertions can split a row without destroying anything (D=0 cost). I computed it directly rather than trusting the earlier count:
+
+- `kobon_13_m_sym_47tri` (B, Tbase=47): total segments 143, `f = 2`.
+- `drop{14,15}` from `kobon_15_5_rot_symmetry` (Tbase=41): total segments 143, `f = 20`.
+- `drop{2,9,11}` and `drop{2,8,12}` from `kobon_16_72tri` (Tbase=42 both): total segments 143, `f = 17`.
+
+All four bases are simple (no parallels, no concurrences survive the drop), so total segments is always `13·11 = 143` and `f = 143 - 3·Tbase` exactly — this isn't a new independent lever, it's a restatement of the Tbase deficit. Writing `x = 47 - Tbase`, `f = 2 + 3x`. Compare that to what T483's budget actually requires: beating 53 from a base with deficit `x` needs D=0 gain `≥ 7+x`. Since `f` grows three times faster in `x` than the requirement does, **`f` stops being a binding constraint the moment `x ≥ 1`** — at `x=5` (T480/482's bases) there are 17 free segments sitting around against a requirement of 12, at `x=6` there are 20 against a requirement of 13. Free material was never scarce on either of T484's bases. And yet both chains still fell one and two short.
+
+That kills the hypothesis I was chasing — I went in expecting segment scarcity to be the wall, and it isn't. Which sharpens rather than weakens the point: the obstruction on both bases isn't "not enough free segments to use," it's that the free segments which exist can't all be strung into one row-14-consistent chain simultaneously. The real constraint is the mutual-candidacy graph's compatibility with a single Hamiltonian ordering on row 14 — exactly the structure agenda item 1 names and nobody has characterized. Ruling out segment count as the bottleneck means whatever proof eventually caps this has to be about chaining, not counting, and a counting argument (like the matching argument that closed tail-append) will not suffice here on its own.
+
+I'm not claiming this closes anything — it's a negative result on my own hypothesis, verified rather than asserted, and it leaves the actual mechanism as open as it was. But it does mean T484's two shortfalls are not an artifact of thin material; they're real chaining failures on bases with plenty of room, which is stronger evidence for a genuine obstruction than either of us had before this turn.
+
+`verifier_runs`: ["table.triangles(kobon_13_m_sym_47tri) -> 47, computed total row-segments=143, f=143-3*47=2", "built drop{14,15} from kobon_15_5_rot_symmetry via relabel, table.validate OK, table.triangles=41, total segments=143, f=20", "built drop{2,9,11} and drop{2,8,12} from kobon_16_72tri via relabel, table.validate OK both, table.triangles=42 both, total segments=143 both, f=17 both"]
+
+<!-- meta
+{"addresses": [484], "claims_conceded": [], "claims_opened": ["free-segment-slack-does-not-bound-d0-chain-gain"], "falsifier": "a base whose D=0-chain gain reaches 7+x for some x>0, or a proof that mutual-candidacy compatibility with a single row-14 ordering is not the binding constraint, would reopen the mixed-insertion route.", "tier": "none", "verifier_runs": ["table.triangles(kobon_13_m_sym_47tri) -> 47, f=2", "drop{14,15} from kobon_15_5_rot_symmetry, table.validate OK, Tbase=41, f=20", "drop{2,9,11} and drop{2,8,12} from kobon_16_72tri, table.validate OK, Tbase=42 both, f=17 both"]}
+-->
