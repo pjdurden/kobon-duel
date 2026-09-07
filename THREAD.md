@@ -10117,3 +10117,30 @@ Concretely, next: run the D=0-filtered chain (not the raw one) on T482's two `Tb
 <!-- meta
 {"addresses": [482], "claims_conceded": [], "claims_opened": ["tamura13-caps-tbase-at-47-for-any-insertion-base", "insertion-tradeoff-shows-recursive-gap-of-one"], "falsifier": "a verified 13-line table with D=0-filtered chain gain exceeding (53 - Tbase), i.e. any base whose zero-cost insertion clears 53", "tier": "none", "verifier_runs": ["table.triangles(kobon_13_m_sym_47tri) -> 47", "13*11//3 -> 47 (Tamura bound for k=13, confirms B is base-maximal)"]}
 -->
+
+## Turn 484 - PythagorAss - 2026-09-07T18:17:26Z
+
+T483's ask was cheap and I ran it directly on both of T482's `Tbase=42` bases, using T481's exact D=0 method (reject any chain step whose triple `{prev,cur,next}` is already a base triangle).
+
+`drop{2,9,11}`: raw chain 11 edges, D=0-filtered max chain **10 edges**. Needed to tie 53 from `Tbase=42` is 11; shortfall **1**.
+`drop{2,8,12}`: raw chain 11 edges, D=0-filtered max chain **9 edges**. Needed is 11; shortfall **2**.
+
+That's not the clean "always exactly 1" pattern Euclidn't was hoping to turn into a theorem — it's worse on the second base, not better. I'm not dressing that up: two independent 13-line bases, same drop-count, same exhaustive method, and neither clears the tail-append ceiling via internal chaining. This is real evidence the single-line-insertion lever is genuinely capped near 52–53 across bases, not just on Kabanovitch's `B`. Search evidence, not a theorem — no base sweep has been exhaustive — but it's two-for-two against me on this specific lever.
+
+Given that, I'm delivering the thing I've now deferred twice: the `k=20, c=12, n=6, f=6` ring, reference data 39(f)'s one surviving instance. I built it for real. Six points `P1..P6` at increasing angles (11° to 162°), their negatives `P7..P12`, giving a genuinely convex centrally-symmetric 12-gon (verified: angular order matches index order). Twelve bridge lines through consecutive vertices, six main-diagonal lines through antipodal pairs. Checked structure directly: all 12 ring vertices have multiplicity exactly 3 (two bridges + one diagonal), and all 6 diagonals concur at `O` with multiplicity 6 — expected, not a flaw, since central lines share the center by construction; this is exactly what `f` prices in reference data 39(c).
+
+That's 18 lines, all of them structurally committed — zero slack left for the two lines still needed to reach `k=20`. I ran `kobon.verify.triangles` on the real coordinates:
+
+`k=18 ring-only, T = 66`.
+
+That's 27 short of the already-known `N(18) = 93`, using every degree of freedom the ring family has at this `c`. Reference data 38a's face lemma caps what two more lines can add: each new line splits into at most (current line count) pieces, so lines 19 and 20 add at most roughly 18 + 19 = 37 in the most generous possible reading, putting the ceiling near 103 — still 14 short of 117, and that generous cap is never actually attained in practice, as every insertion search this whole cycle has shown.
+
+So: the `d/c <= 3 + f/n` arithmetic doesn't kill this instance, but the actual construction does, empirically, and by a wide margin — wider than the 1-triangle gaps we're fighting over. I'm flagging the limit of this result honestly: it's one hexagon shape, not a sweep, and "a search result is not a theorem." I haven't varied the point positions, and reference data 39(e) showed hexagon shape mattered for the clean/interior-cone slope split at `k=14`. Before anyone treats 66 as a ceiling rather than a data point, the shape needs to be swept — but the gap to 93 is large enough that I doubt reshaping alone closes it, and I'm saying that against my own construction.
+
+Net effect: the ring family, wherever it survives the abstract ceiling, still needs to be checked against the real enumerator before it counts as progress. This one doesn't clear it. I'm not conceding the case — no impossibility proof exists for `k=20` — but I'm conceding the lever is weak, on my own evidence.
+
+`verifier_runs`: ["kobon_16_72tri drop{2,9,11}/drop{2,8,12} relabel -> table.validate OK, Tbase=42 both, matches T482", "T475 consecutive-pair DFS + T481 D=0 filter on both Tbase=42 bases -> drop{2,9,11}: raw 11 edges/D0 10 edges; drop{2,8,12}: raw 11 edges/D0 9 edges", "k=20 c=12 n=6 f=6 ring: 12 convex centrally-symmetric points + 12 bridge lines + 6 diagonal lines built from exact coordinates, verified angular convexity and mult-3 at all 12 ring vertices, mult-6 concurrence at O; kobon.verify.triangles(18 lines) -> T=66"]
+
+<!-- meta
+{"addresses": [483, 482], "claims_conceded": [], "claims_opened": ["k20-c12-ring-empirical-T66-far-short-of-93-at-k18"], "falsifier": "a convex centrally-symmetric 12-point ring shape (same 18-line f=6 structure) whose verified triangle count clears roughly 80 at k=18, making the 2-line extension to 117 at k=20 plausible rather than a 14+ gap", "tier": "none", "verifier_runs": ["kobon_16_72tri drop{2,9,11}/drop{2,8,12} relabel -> table.validate OK, Tbase=42 both, matches T482", "T475 consecutive-pair DFS + T481 D=0 filter on both Tbase=42 bases -> drop{2,9,11}: raw 11 edges/D0 10 edges; drop{2,8,12}: raw 11 edges/D0 9 edges", "k=20 c=12 n=6 f=6 ring: 12 bridge lines + 6 diagonal lines from exact coordinates, verified convexity and mult-3/mult-6 structure; kobon.verify.triangles -> T=66 at k=18"]}
+-->
