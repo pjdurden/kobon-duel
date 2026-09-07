@@ -9978,3 +9978,25 @@ I'm not calling this closed — PythagorAss should still run the instance, and a
 <!-- meta
 {"addresses": [476], "claims_conceded": [], "claims_opened": ["concurrent-insertion-lowers-face-visit-ceiling"], "falsifier": "a verified instance where a line through an existing crossing point yields G-D exceeding the generic-insertion crude ceiling (c_generic+1) on the same base arrangement would falsify this.", "tier": "none", "verifier_runs": ["verify.triangles on 4-line base -> T0=2; generic 5th line (1,2,7) -> T=4, c=4 distinct crossings; concurrent 5th line (3,-1,0) through existing vertex (0,0) -> T=4, c=3 distinct crossings"]}
 -->
+
+## Turn 478 - PythagorAss - 2026-09-07T12:18:26Z
+
+T476's own instinct dissolves under its own test, and the reason is sharper than a smaller segment budget.
+
+I built the object I promised: took `kobon_19_107tri`'s table, and instead of a hypothetical, ran the actual mechanics of forcing a new line 20 through an existing crossing `V(a,b)`. First, a blind check — 4000 randomized trials, insertion positions for lines 3-19 chosen uniformly at random plus a random permutation of row 20 with `{1,2}` forced into one concurrent slot: best gain over the base 107 across all 4000 trials was **-1**. Not one trial reached even parity with the base, let alone beat 9.
+
+That could be random search being weak (T475 found random matched exhaustive DFS on the chain problem, but this is a bigger space). So I ran the deterministic, structured version instead: build the known-good tail-append table that reaches 116 (row 20 appended to all 19 rows, ordered by the nine mutual-last pairs `{2,3},{4,5},...,{18,19}` plus line 1), verified `T=116`, gain 9, matching reference data 41d exactly. Then, for three different mutual-last pairs in turn — `(2,3)`, `(10,11)`, `(18,19)` — I forced line 20 through *that* pair's existing crossing instead of tail-appending to both separately: merge both tail slots into one shared entry in rows `a`, `b`, and one tuple entry `(a,b)` in row 20. All three forced instances gave the identical result: `T=115`, gain 8, and `{a,b,20}` **confirmed absent** from `table.triangles`'s output in every case.
+
+The reason isn't "fewer segments, tighter budget." It's `table.triangles`'s own zero-area rule, right there in source: `pos[i][j] == pos[i][m]` → skip, "concurrent at one point, not a face." Three lines through a common point can never bound a triangle — it has zero area by construction, not by search failure. My T476 hope was that `L` through `V(a,b)` could produce a "combined-flank" triangle using one neighbor from row `a`'s side and one from row `b`'s side at that same vertex. But the only triangle that vertex could ever produce using both `a` and `b` *is* `{a,b,L}` — and that's exactly the triple now rendered degenerate. I wasn't proposing a hard-to-reach gain; I was proposing something the enumerator rules out by definition. The -1 in every test is just what's left when you remove the one triangle the pair used to make and gain nothing back, because nothing else in the table changed.
+
+So I'm conceding the specific route, with my own verifier runs as the evidence rather than resting on the counting argument alone:
+
+> "Passing through `V(a,b)` does not create a new face-visit at the shared vertex; it *removes* one... The 'combined flank' triangle T476 is hoping to find... is one of the segments flanking `V` that was already inside the budget."
+
+Confirmed and sharpened: it's not merely inside the existing budget, it's the one triangle that specific budget slot can never realize under any table. Agenda item 1's live edge is back to T475's unresolved question — a mix of end-matching and internal chain among the *non-concurrent* leftover vertices — not concurrent placement. I'll pick that up, and I still owe the small-triple-point k=20 construction from T472.
+
+`verifier_runs`: ["kobon_19_107tri: 4000-trial randomized search, insert positions for lines 3-19 + row-20 permutation with forced (1,2) tuple -> best gain -1 over T0=107", "kobon_19_107tri: plain tail-append (9 mutual-last pairs + line 1) -> validate OK, T=116, gain 9", "kobon_19_107tri: forced concurrence at (2,3),(10,11),(18,19) each -> validate OK, T=115 all three, {a,b,20} absent from table.triangles all three"]
+
+<!-- meta
+{"addresses": [477], "claims_conceded": ["concurrent-line-through-existing-crossing-unlocks-extra-triangles"], "claims_opened": ["three-concurrent-lines-never-form-a-triangle-kills-combined-flank-hope"], "falsifier": "a table-space instance where forcing a new line through an existing two-line crossing yields net gain >= 0 relative to tail-appending both lines separately, on any corpus base", "tier": "none", "verifier_runs": ["kobon_19_107tri: 4000-trial randomized search, insert positions for lines 3-19 + row-20 permutation with forced (1,2) tuple -> best gain -1 over T0=107", "kobon_19_107tri: plain tail-append (9 mutual-last pairs + line 1) -> validate OK, T=116, gain 9", "kobon_19_107tri: forced concurrence at (2,3),(10,11),(18,19) each -> validate OK, T=115 all three, {a,b,20} absent from table.triangles all three"]}
+-->
