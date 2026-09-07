@@ -10092,3 +10092,28 @@ But this is a wall on *one lever* — single-line insertion, however mixed — n
 <!-- meta
 {"addresses": [481], "claims_conceded": ["b-chain-net-could-be-below-5"], "claims_opened": ["internal-chain-insertion-converges-to-52-wall-across-bases", "k20-c12-n6-f6-ring-is-next-concrete-build"], "falsifier": "if the k=20 c=12 n=6 f=6 ring, once built with real coordinates, comes in well below d=45, I'll treat single-line insertion's 52-53 wall and the ring ceiling as two independent failures rather than search gaps, and weight the impossibility side more heavily", "tier": "none", "verifier_runs": ["kobon_13_m_sym_47tri optimized chain insertion -> T=49", "kobon_16_72tri 560-combo 3-drop sweep -> max Tbase=42", "drop{2,9,11} optimized insertion -> T=52", "drop{2,8,12} optimized insertion -> T=50"]}
 -->
+
+## Turn 483 - Euclidn't - 2026-09-07T17:19:26Z
+
+T482's convergence claim is exactly right in spirit, but it's missing the ceiling that makes it provable rather than merely observed. `kobon_13_m_sym_47tri` isn't just a good base — it's the *maximum possible* base. k=13 is CLOSED classically at Tamura's bound: `floor(13·11/3) = 47`, achieved with equality. I ran it to be sure rather than quote the table:
+
+`verifier_runs`: `table.triangles(kobon_13_m_sym_47tri) -> 47`, `13*11//3 -> 47`.
+
+That means **no 13-line table of any kind can have `Tbase > 47`.** Not "the best one found so far" — a proven ceiling, full stop, because 47 is Tamura's own upper bound and it's met. So the entire "trade `Tbase` for chain room" program T480/482 opened is bounded above by a fixed budget: to beat 53 from a base with `Tbase = 47 - x`, you need insertion gain `> 6 + x`.
+
+Now line up what's actually been measured against that budget:
+
+- `Tbase = 47` (max possible), tail corner: gain 6 exactly, proven ceiling (reference data 41d) — hits 53, cannot exceed it from this corner.
+- `Tbase = 47`, chain corner: gain 2 (T482's own brute-force optimization) — nowhere close.
+- `Tbase = 41` (`x=6`, needs gain `>12`), zero-D chain: 11 edges, gain 11 — **one short of what's needed**.
+- `Tbase = 42` (`x=5`, needs gain `>11`), chain: gain 10 — **one short again**.
+
+Two structurally unrelated bases, dropped by different counts from different symmetry families, both land exactly one gain short of clearing 53. That's not "the wall might move" (T480) or "the wall doesn't move" (T482's flat convergence claim) — it's a *second* gap-of-one, this time inside the insertion sub-problem itself, and it shows up on both sides of the trade-off (low-x-high-gain-needed and higher-x-lower-gain-needed alike land on the same shortfall). I'm not calling that a proof. I'm flagging it as the same signature the top-level problem has at k=14/18/20, one level down, which is worth taking seriously rather than filing as "another data point."
+
+Here's the mechanism worth chasing, and it's the part T482 didn't build: tail-append is D=0 by construction (line 14 never lands inside an existing row, so it can never split an existing consecutive pair) but its G is capped at `floor(m/2)` by the matching theorem. Chain insertion can raise G past that ceiling, but every internal placement risks D>0, and the D=0-filtered chain (T481's method, which T482 didn't re-run on their own two bases) is the only version that's a fair comparison to tail-append's zero-cost gain. On the one base where it was run, D=0 filtering only cost 1 edge off the raw 12 — meaning the ceiling really is close to "raw chain length minus a small correction," not some looser bound. If that correction is provably always ≥1 whenever raw chain length would clear the budget, that's the mechanism that caps the whole insertion space at 53, not just the two corners tested.
+
+Concretely, next: run the D=0-filtered chain (not the raw one) on T482's two `Tbase=42` candidates and report whether the shortfall is still exactly 1 in both. If it's always exactly 1, that's a pattern worth turning into a proof. If it's sometimes 0, PythagorAss has a construction and I lose this case. Either way, stop reporting raw chain gains — they aren't the fair comparison to tail-append's zero-cost 6.
+
+<!-- meta
+{"addresses": [482], "claims_conceded": [], "claims_opened": ["tamura13-caps-tbase-at-47-for-any-insertion-base", "insertion-tradeoff-shows-recursive-gap-of-one"], "falsifier": "a verified 13-line table with D=0-filtered chain gain exceeding (53 - Tbase), i.e. any base whose zero-cost insertion clears 53", "tier": "none", "verifier_runs": ["table.triangles(kobon_13_m_sym_47tri) -> 47", "13*11//3 -> 47 (Tamura bound for k=13, confirms B is base-maximal)"]}
+-->
