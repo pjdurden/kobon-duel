@@ -10166,3 +10166,27 @@ I'm not claiming this closes anything — it's a negative result on my own hypot
 <!-- meta
 {"addresses": [484], "claims_conceded": [], "claims_opened": ["free-segment-slack-does-not-bound-d0-chain-gain"], "falsifier": "a base whose D=0-chain gain reaches 7+x for some x>0, or a proof that mutual-candidacy compatibility with a single row-14 ordering is not the binding constraint, would reopen the mixed-insertion route.", "tier": "none", "verifier_runs": ["table.triangles(kobon_13_m_sym_47tri) -> 47, f=2", "drop{14,15} from kobon_15_5_rot_symmetry, table.validate OK, Tbase=41, f=20", "drop{2,9,11} and drop{2,8,12} from kobon_16_72tri, table.validate OK, Tbase=42 both, f=17 both"]}
 -->
+
+## Turn 486 - PythagorAss - 2026-09-07T20:19:26Z
+
+The delete-two-then-reinsert lever has been the whole battleground for eight turns, always applied to k=14. Nobody has checked whether it even survives being scaled up to k=18 or k=20, where it's implicitly been treated as evidence of a shared "signature." I ran it.
+
+Same method as T480-T485, same source family (an odd-k optimum), scaled up: drop 2 lines from `kobon_19_107tri` (19 lines, T=107) to build a 17-line insertion base targeting k=18. Swept all `C(19,2)=171` drop pairs for `Tbase`. Best: **79**, dropping `{3,18}` — nowhere near the k=14 case's relative headroom. At k=14, B's deficit from 47 was covered by a 6-7 triangle gain; here, reaching 94 from 79 needs a gain of **15**, and even beating the known 93 needs 14.
+
+Ran T475's exact consecutive-pair chain DFS on this base (60s exhaustive budget, same consistency rule: `{prev,next} ∈ C[cur]` at every internal chain vertex). Best chain: **8 edges**, out of 16 possible. That's not an improvement over pure tail-append at this scale — `floor(17/2) = 8` is the matching ceiling from reference data 41d, generalized to any 17-line base, and the chain search hit that ceiling exactly and no higher. Unlike at k=14, where internal chaining broke past the matching ceiling of 6 up to 11-12 edges, here the destructive splicing mechanism bought nothing at all.
+
+I built the actual table — chain vertices spliced at the forced position, off-chain lines and endpoints appended unoptimized (no per-line brute-force position search, so this is a floor, not a ceiling, on what the base can do) — and ran the real enumerator:
+
+`validate OK, table.triangles = 84, k = 18`
+
+84 against a known 93 and a bound of 94. That's a gap of **9 to 10**, not a gap of 1. Compare that to what a "second gap-of-one" would have looked like, which is what T483 was hunting for inside the k=14 sub-problem itself. This isn't a near-miss wall reappearing one level up — it's a blowout.
+
+That's informative in a specific direction: if the mechanism starving internal-chain insertion at k=14 were a genuine general obstruction that also constrained k=18 and k=20, the natural expectation is a similarly *tight* near-miss when the same construction is scaled — not a construction that undershoots by an order of magnitude more. Instead, the actual 93-triangle and 116-triangle records provably do **not** come from deleting two lines out of a 19- or 21-line optimum and reinserting one; whatever built them is a structurally different construction (the agenda already knows this — it's why item 2 points at the ring family, not at insertion). Agenda item 1's "characterize the insertion cap" project is answering a question that is intrinsically about k=14 and does not transfer to 18 or 20 even as a method, let alone as a wall. Continuing to grind that lever at those k values is off-target; the open cases there still have no impossibility argument touching them at all.
+
+I haven't optimized off-chain placement here (T481/T482's per-line brute force), so 84 is a floor, not this base's true ceiling — that's the honest gap in this result, and it might close some of the 9-point deficit but not plausibly all of it.
+
+`verifier_runs`: ["swept all C(19,2)=171 two-line drops from kobon_19_107tri via relabel, table.validate+table.triangles -> best Tbase=79 at drop{3,18}", "T475 consecutive-pair DFS (60s exhaustive) on the 17-line drop{3,18} base -> max chain 8 edges of 16 possible, matches floor(17/2) matching ceiling exactly, no chain-splicing benefit", "built real 18-line table splicing chain + appending off-chain lines unoptimized, table.validate OK, table.triangles = 84"]
+
+<!-- meta
+{"addresses": [485], "claims_conceded": [], "claims_opened": ["odd-optimum-deletion-insertion-does-not-scale-past-k14"], "falsifier": "a similarly-derived odd-optimum-deletion base at k=18 or k=20, with off-chain placement fully optimized, closing to within 1-2 of 93 or 116 would retract the 'k=14-only' reading.", "tier": "none", "verifier_runs": ["swept 171 two-line drops from kobon_19_107tri -> best Tbase=79 at drop{3,18}", "chain DFS on 17-line base -> max 8 edges, matches floor(17/2)", "real 18-line table built and enumerated -> T=84"]}
+-->
