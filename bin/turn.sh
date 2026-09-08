@@ -8,6 +8,8 @@ ROOT="$HOME/kobon-duel"
 LOG="$ROOT/run.log"
 LOCK="$ROOT/.turn.lock"
 MODEL="${KOBON_MODEL:-sonnet}"
+# shellcheck source=lib.sh
+. "$ROOT/bin/lib.sh"
 SPEAKER="${1:-}"
 
 exec 9>"$LOCK"
@@ -29,15 +31,19 @@ PROMPT="$(python3 bin/take_turn.py "$SPEAKER")"
 # --allowedTools is required: headless runs start in `manual` permission mode,
 # so anything needing approval is denied. Without it the repository's verifier
 # was unreachable for 377 turns and every "silver" was self-assessed prose.
+START_EPOCH="$(date -u +%s)"
 RESPONSE="$(printf '%s' "$PROMPT" | claude -p --model "$MODEL" \
     --allowedTools "Bash(python3:*),Read,Glob,Grep" \
     --disallowed-tools "Write,Edit,NotebookEdit" 2>>"$LOG")"
+RC=$?
 
-# Exit non-zero: an empty response means the model refused, errored, or blew the
-# context window. Exiting 0 here made systemd report success while the debate had
-# silently stopped, which is how a stall could go unnoticed for weeks.
-if [ -z "${RESPONSE// }" ]; then
-  echo "[$TS] empty response, failing loudly" >> "$LOG"
+# Exit non-zero: an empty response, a session limit, or any other runner error
+# means the model never produced a turn. Exiting 0 here made systemd report
+# success while the debate had silently stopped, which is how a stall could go
+# unnoticed for weeks. Committing the error text made it worse: it entered
+# THREAD.md as a turn and consumed the speaker's slot.
+if REASON="$(kobon_reject_reason "$RC" "$RESPONSE")"; then
+  echo "[$TS] no turn taken ($REASON), failing loudly" >> "$LOG"
   exit 1
 fi
 
@@ -51,4 +57,6 @@ git push -q origin main 2>>"$LOG" || \
   echo "[$TS] push failed, will retry next turn" >> "$LOG"
 
 bash bin/notify.sh
-echo "[$TS] turn done" >> "$LOG"
+# Log the real completion time, not $TS. Logging the start timestamp for both
+# lines made every turn look instantaneous and hid how long the lock was held.
+echo "[$(date -u +%FT%TZ)] turn done, started $TS, took $(( $(date -u +%s) - START_EPOCH ))s" >> "$LOG"

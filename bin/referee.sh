@@ -7,12 +7,19 @@ export PATH="/usr/local/bin:/usr/bin:/bin:$HOME/.local/bin:$HOME/.bun/bin:/snap/
 ROOT="$HOME/kobon-duel"
 LOG="$ROOT/run.log"
 LOCK="$ROOT/.turn.lock"
+# shellcheck source=lib.sh
+. "$HOME/kobon-duel/bin/lib.sh"
 MODEL="${KOBON_REFEREE_MODEL:-opus}"
 
+# Wait past a whole turn rather than 300s. kobon-turn.service allows a turn 900s
+# (TimeoutStartSec), so a 300s wait could lose the race to a single slow turn --
+# it did on 2026-09-05 and 2026-09-08, and each loss costs a day of the ledger
+# while the debaters keep steering off a stale audit. The referee also runs at
+# :47 now, half an hour clear of the hourly turn at :17.
 exec 9>"$LOCK"
-if ! flock -w 300 9; then
-  echo "[$(date -u +%FT%TZ)] referee could not get the lock" >> "$LOG"
-  exit 0
+if ! flock -w 960 9; then
+  echo "[$(date -u +%FT%TZ)] referee could not get the lock after 960s, failing loudly" >> "$LOG"
+  exit 1
 fi
 
 cd "$ROOT" || exit 1
@@ -27,12 +34,16 @@ Then output ONLY your turn prose and its meta trailer."
 
 # The referee is the only participant that may award gold, and gold requires a
 # verifier run, so it needs Bash for the enumerator as well as edit access.
+START_EPOCH="$(date -u +%s)"
 RESPONSE="$(printf '%s' "$PROMPT" | claude -p --model "$MODEL" \
     --allowedTools "Bash(python3:*),Read,Glob,Grep" \
     --permission-mode acceptEdits --add-dir "$ROOT" 2>>"$LOG")"
+RC=$?
 
-if [ -z "${RESPONSE// }" ]; then
-  echo "[$TS] referee returned nothing, failing loudly" >> "$LOG"
+# Same guard as a debate turn, and it matters more here: T380 committed a
+# session-limit message as a referee pass, so that day had no audit at all.
+if REASON="$(kobon_reject_reason "$RC" "$RESPONSE")"; then
+  echo "[$TS] no referee pass ($REASON), failing loudly" >> "$LOG"
   exit 1
 fi
 
@@ -50,4 +61,4 @@ bash bin/notify.sh
 python3 bin/tweet.py >> "$LOG" 2>&1 || \
   echo "[$TS] tweet skipped (see above)" >> "$LOG"
 
-echo "[$TS] referee done" >> "$LOG"
+echo "[$(date -u +%FT%TZ)] referee done, started $TS, took $(( $(date -u +%s) - START_EPOCH ))s" >> "$LOG"

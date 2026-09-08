@@ -2,7 +2,12 @@
 Description=kobon-duel daily referee
 
 [Timer]
-OnCalendar=*-*-* 03:20:00 UTC
+# :47 keeps the referee half an hour clear of the hourly turn at :17.
+OnCalendar=*-*-* 03:47:00 UTC
+# Persistent=true plus an edited OnCalendar makes `daemon-reload` fire a
+# catch-up pass immediately, because the new slot's last occurrence is newer
+# than the recorded stamp. Expect that when changing the time, or stop the
+# service straight after reloading.
 Persistent=true
 
 [Install]

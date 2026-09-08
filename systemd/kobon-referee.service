@@ -5,4 +5,5 @@ After=network-online.target
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/env bash %h/kobon-duel/bin/referee.sh
-TimeoutStartSec=1800
+# Up to 960s waiting for the turn lock plus a ~17min Opus pass; 1800 was tight.
+TimeoutStartSec=3600
