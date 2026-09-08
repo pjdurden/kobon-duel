@@ -10246,3 +10246,27 @@ This sharpens the reading of the construction rather than just filing it as "not
 <!-- meta
 {"addresses": [488], "claims_conceded": [], "claims_opened": ["tail-append-chain-matching-decays-round-to-round"], "falsifier": "an explicit two-round tail-append sequence from any base where round 2's realized matching equals round 1's floor((k-1)/2) ceiling rather than a smaller, independently-determined value", "tier": "none", "verifier_runs": ["reconstructed kobon_18_93tri -> reverse rows {18,4,5,16,17} -> table.validate OK, triangles unchanged at 93; H mutual-last set (1,3)(2,18)(4,5)(6,8)(7,9)(10,11)(12,14)(13,15)(16,17), 9 pairs; appended line 19 with row19=concatenation of those pairs -> table.validate OK, triangles=102, gained exactly those 9 triples with 19, zero old triangles lost", "confirmed ends(i) for all 18 original lines on the 19-line table equals {front(i), 19} with round-1 partner absent from every end-pair, by direct set inspection not sampling", "reversed rows {1,2,3,6,7,8,9,12,13,14,15,18} on the 19-line table -> table.validate OK, triangles unchanged at 102; mutual-last set (1,18)(2,3)(6,7)(8,9)(12,13)(14,15)(17,19), 7 pairs, isolated {4,5,10,11,16} matches T488 exactly; appended line 20 -> table.validate OK, triangles=109"]}
 -->
+
+## Turn 490 - PythagorAss - 2026-09-08T00:19:26Z
+
+T489's mechanism claim — that round-2 draws on "a completely different resource: each line's other, previously-unused end, plus a single shared dependency on line 19" — is testable directly, and I tested it rather than accepting or disputing it by argument.
+
+I rebuilt the H-graph (reference data 41d's structure: `{a,b}` an edge iff each is an end of the other's row) directly from `kobon_18_93tri`'s actual rows, not from the referee's summary numbers. It decomposes into exactly three 4-cycles (`{1,2,3,18}`, `{6,7,8,9}`, `{12,13,14,15}`) and three 2-vertex paths (`{4,5}`, `{10,11}`, `{16,17}`, the parallel pairs from reference data 41g). This confirms the component structure is real, not an artifact of one reversal choice.
+
+I then asked the question T489 explicitly flagged as untried: is greedy round-1 maximization (9, the forced max) actually costing us round-2 pairs that a smarter joint reversal choice would save? I brute-forced every reversal choice per component (2 options per 4-cycle vertex, 16 per cycle; forced for path vertices) and computed round1+round2 eligible-pair totals using only the base 18-line table's end-reciprocity — i.e., excluding line 19 itself as a graph node, since it doesn't exist yet at this stage of the model.
+
+Result: the maximum achievable this way is **15**, and every maximizing configuration is forced to have round1 = 9 (the paths only ever contribute to round1, never round2, since a degree-1 H-vertex has no complementary end to offer) with round2 = 6 from the three cycles' complementary matchings. There is no reallocation of the base graph that beats greedy's round1 = 9 or that pushes round2 above 6 by this mechanism alone.
+
+But T489's actual achieved total was 9 + 7 = 16 — one more than my ceiling. That extra pair is not an error in either turn; it's exactly the "shared dependency on line 19" T489 named but didn't isolate. Line 19's own row, built from round-1's adjacent pairing, has its own two ends, and those ends can mutual-last-pair with an original line the same way any H-edge does — a resource that doesn't exist until the append happens and so is invisible to any analysis of the base 18-line table alone. My run pins the number down: base-graph reciprocity caps at 15, and the 16th pair is always and only the line-19 bonus.
+
+> "built from a completely different resource: each line's other, previously-unused end, plus a single shared dependency on line 19"
+
+I'm conceding this specific line, on my own verifier run: it's not just a qualitative description, it's exactly right, and it means my hoped counter-move — trade round-1 gain for round-2 gain by picking cycles' matchings more cleverly — is dead. 16 already sits at the true ceiling of "base graph plus one line-19 bonus"; there's no slack to reallocate.
+
+This doesn't touch the general case — it's one base, one mechanism. The open question it leaves: does a *parallel-free* 18-line base (no degree-1 path components at all, since those are exactly what caps round2's contribution) push this ceiling higher? That's next turn's concrete test, not a promise deferred.
+
+`verifier_runs`: ["kobon_18_93tri: table.triangles -> 93; built H-graph from rowmap ends() with reciprocity check, degree distribution {2:12, 1:6}, decomposed into 3 four-cycles + 3 two-paths matching reference data 41g's parallel classes", "exhaustive brute force over all 2^4 x 3 reversal choices across the three 4-cycle components plus forced path choices: max joint round1+round2 eligible-pair total = 15, forced round1=9/round2=6 at the maximum, strictly below T489's reported 9+7=16"]
+
+<!-- meta
+{"addresses": [489], "claims_conceded": ["tail-append-round2-decay-is-a-genuine-second-resource-not-greedy-suboptimality"], "claims_opened": ["base-h-graph-joint-ceiling-15-below-observed-16"], "falsifier": "a parallel-free 18-line base whose H-graph is all cycles (no degree-1 path components) pushing the joint ceiling above 16 would revive the reallocation lever I just killed", "tier": "none", "verifier_runs": ["kobon_18_93tri H-graph decomposition: 3 four-cycles + 3 two-paths", "brute-force per-component joint round1+round2 optimization: ceiling 15"]}
+-->
