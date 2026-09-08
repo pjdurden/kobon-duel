@@ -10457,3 +10457,25 @@ I'm not banking this as a point in my favor either. My own T497 reading — "mov
 <!-- meta
 {"addresses": [498], "claims_conceded": [], "claims_opened": ["fill-rate-extrapolation-crosses-tamura-reduction-boundary"], "falsifier": "a fill-rate data point from a genuine C3 optimum at k \u2261 0 (mod 6), or the actual n=6 tangent-circle exclusion graph with its max independent set computed directly, either of which would replace extrapolation with real evidence about k=18.", "tier": "none", "verifier_runs": ["corpus.by_key: kobon_21_133tri_1 k=21 T=133, kobon_21_133tri_2 k=21 T=133, kobon_27_225tri_2 k=27 T=225", "arithmetic: 21%6=3, 27%6=3, 18%6=0; Tamura(21)=21*19//3=133, Tamura(27)=27*25//3=225 (both exact, no reduction); improved-even-bound(18)=(18*(3*18-7))//9=94", "133%3=1 and 225%3=0, consistent with realized=(T-s)/3 giving 44 (s=1) and 75 (s=0), matching T497's fill-rate numerators exactly"]}
 -->
+
+## Turn 500 - PythagorAss - 2026-09-08T10:18:26Z
+
+The circularity point lands. Euclidn't's identity is exactly right and I can restate why in one line: for a `C3`-invariant table, every triangle orbit is either fixed (size 1, contributing to `s`) or free (size 3), so `s + 3·(free orbits) = T` by definition, meaning free-orbit count `= (T-s)/3` for *any* `C3` table, with zero geometric content beyond `T` and `s mod 3`. My T498 power-law fit took two instances of that identity, both of which are the same relabeling of `T(21)=133` and `T(27)=225`, and found — unsurprisingly — that it matched the `1/n` shape I'd already derived from the cubic slot count `S(n)`. Two points, two free parameters (`A`, `p`), zero residual: that's not confirmation, that's a tautology restating itself. And the residue-class point compounds it: `21 ≡ 27 ≡ 3 (mod 6)` sit in the exact-Tamura class per the literature packet, `18 ≡ 0 (mod 6)` sits in the class Clement-Bader proved loses a triangle. Extrapolating a fit built entirely inside one residue class across that documented boundary has no license.
+
+> "Fitting a power law to two points that are just `T(k)` in a fill-rate costume, with `S(n)` a known cubic, has no freedom to fail"
+
+That's airtight and I'm conceding `fill-rate-power-law-fit-favorable-at-n6` outright — not to "roughly neutral," to void, same as Euclidn't's own T497 reading.
+
+Separately, I owe a delivery I skipped twice. T494 promised to check whether the actual record holders `kobon_14_53tri`, `kobon_18_93tri`, `kobon_20_116tri` carry any symmetry, as the cheap next step after two symmetric idealizations (parallelogram, ring) both undertriangulated. I let it slide through T496 and T498. Ran it now, both directions — shift automorphism with optional per-row reversal, and full dihedral reflection `i -> c - i (mod k)` with the same reversal allowance, all `2k` candidates each:
+
+    kobon_14_53tri:  shift auts = [],  reflection auts = []
+    kobon_18_93tri:  shift auts = [],  reflection auts = []
+    kobon_20_116tri: shift auts = [],  reflection auts = []
+
+Zero symmetry, all three, both tests. This is a real data point against the whole line I've been running on item 2: not just my hand-built ring (72/82, badly short) and the buried parallelogram and hexagon, but the actual best-known extremal objects at every open `k` are asymmetric. I'm not treating this as an impossibility argument — absence of symmetry in the known optima doesn't prove a symmetric arrangement can't also hit the bound, and the ring family isn't dead by proof, only by three failed idealizations. But it does mean I've been spending turns in a region the evidence keeps pointing away from.
+
+So the redirection: agenda item 1's general single-line-insertion framework — `G <= 13` off the tail corner, intersected with the Hamiltonian path row-14 imposes — was only ever set up at the `k=13 -> 14` base. Nobody has stated the analogous space at `kobon_17_85tri -> 18` or `kobon_19_107tri -> 20`, and given those bases are themselves asymmetric like the targets, that's a better-aligned lever than another symmetric skeleton. Next turn: build the qualifying-pair graph `H` for general-position insertion (not just tail) on `kobon_19_107tri`, the same way reference data 41 built it for the tail corner on `B`, and report the max-degree-2 ceiling before attempting an actual position vector.
+
+<!-- meta
+{"addresses": [499], "claims_conceded": ["fill-rate-power-law-fit-favorable-at-n6"], "claims_opened": ["record-holders-k14-18-20-have-no-dihedral-symmetry"], "falsifier": "a symmetric arrangement (ring, parallelogram, or other) that a verifier run shows exceeds 82/72 toward 117/94 would revive item 2 over item 1", "tier": "none", "verifier_runs": ["shift-automorphism sweep (all k shifts, row-reversal allowed) on kobon_14_53tri/kobon_18_93tri/kobon_20_116tri tables -> [] for all three", "reflection sweep (i -> c-i mod k, all 2k values of c, row-reversal allowed) on same three tables -> [] for all three"]}
+-->
