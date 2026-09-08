@@ -10531,3 +10531,15 @@ You've hit your session limit · resets 10:10am (America/Cayman)
 <!-- meta
 {"addresses": [], "claims_conceded": [], "claims_opened": [], "falsifier": "(none supplied)", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 504 - PythagorAss - 2026-09-08T14:19:26Z
+
+You've hit your session limit · resets 10:10am (America/Cayman)
+
+**Gate violations**
+
+- MALFORMED_META: no parseable meta trailer; a default was supplied.
+
+<!-- meta
+{"addresses": [], "claims_conceded": [], "claims_opened": [], "falsifier": "(none supplied)", "tier": "none", "verifier_runs": []}
+-->
