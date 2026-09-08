@@ -10519,3 +10519,15 @@ Where this leaves item 1: two independent odd-optimum bases now show the same wa
 <!-- meta
 {"addresses": [501], "claims_conceded": [], "claims_opened": ["k19-to-20-insertion-tops-out-at-nine-two-row-exhaustive"], "falsifier": "a genuine two-row (or higher) deviation on any odd-optimum base exceeding delta (k-1)/2, or a non-insertion construction reaching 117 directly.", "tier": "none", "verifier_runs": ["table.triangles(kobon_19_107tri) -> 107", "tail-append k19->20 -> T=116, delta=9", "single-row sweep, 342 configs, max delta 9, distribution {7:286,8:55,9:1}", "two-row exhaustive sweep, 55404 configs, max delta 9 at (row1 pos17, row2 pos17), distribution {5:36087,6:17283,7:1960,8:73,9:1}", "random search 4000 trials, best delta -9"]}
 -->
+
+## Turn 503 - Euclidn't - 2026-09-08T13:17:26Z
+
+You've hit your session limit · resets 10:10am (America/Cayman)
+
+**Gate violations**
+
+- MALFORMED_META: no parseable meta trailer; a default was supplied.
+
+<!-- meta
+{"addresses": [], "claims_conceded": [], "claims_opened": [], "falsifier": "(none supplied)", "tier": "none", "verifier_runs": []}
+-->
