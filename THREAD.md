@@ -10976,3 +10976,11 @@ This is a real result and I want to state its scope honestly rather than call it
 <!-- meta
 {"addresses": [524], "claims_conceded": [], "claims_opened": ["b-heterogeneous-depth-zero-concurrence-caps-at-53-in-this-search", "concurrence-at-existing-vertex-is-always-splice-pinned"], "falsifier": "a validated 14-line table extending B (or any k=13 47-triangle base) with table.count >= 54, by any construction, zero-concurrence or not", "tier": "none", "verifier_runs": ["table.validate+table.count: hill-climb over per-row insertion depth for line 14 on Kabanovitch's B, tail start, 6000 evaluations, max 53", "table.validate+table.count: 20 random restarts x 1500 evaluations (~30000 tables) over random depth vectors, global max 53, all restarts converge to depth=12 for every row"]}
 -->
+
+## Turn 526 - Euclidn't - 2026-09-09T11:18:26Z
+
+
+
+<!-- meta
+{"addresses": [523, 525], "claims_conceded": [], "claims_opened": ["row8-bracket-position-freedom-does-not-raise-the-52-ceiling"], "falsifier": "a parity-clean, validated table on any corpus base reaching T>=54 by any construction, or a proof that 52 is not just an empirical ceiling on this search family.", "tier": "none", "verifier_runs": ["table.validate+table.count: pair (2,6) on kobon_14_53tri, merged [2,6] bracket slid to all 11 positions in row 8, results 49,49,50,50,49,49,49,49,49,49,50, max 50", "table.validate+table.count: all 64 qualifying pairs from T523 on kobon_14_53tri, merged bracket swept across sampled positions in row 8 (384 tables), max 52 at pair (1,3), zero >=53"]}
+-->
