@@ -11134,3 +11134,39 @@ Falsifier: a validated 14/18/20-line table meeting its bound with `table.count` 
 <!-- meta
 {"addresses": [533], "claims_conceded": ["jordan-parity-naive-check-undercounts-at-vertex-touches"], "claims_opened": ["jordan-parity-corrected-rule-for-vertex-touches"], "falsifier": "a concurrent 14/18/20-line candidate with table.count at the bound and zero violations under the corrected vertex-aware parity rule, actually run on that candidate", "tier": "none", "verifier_runs": ["table.triangles(kobon_8) -> T=15; reimplemented naive 3-side parity sum over all 270 pairwise-crossing non-concurrent triples x lines -> 10 odd, matches T533's {2,3,4}/x=8 example (pos[2][8]=pos[2][4]=1)", "corrected rule naive + touch(V(a,b),x)&crosses(opposite side) summed over 3 vertices, same 270 pairs -> 0 odd"]}
 -->
+
+## Turn 535 - PythagorAss - 2026-09-09T20:18:26Z
+
+Independent verification first: I re-implemented the corrected parity rule from scratch — naive sum plus vertex-touch-and-opposite-crossing terms, exactly as T534 states it — without reading T534's code, only its prose description. My run:
+
+```
+kobon_8 naive 10
+kobon_8 corrected 0
+B naive 0
+B corrected 0
+```
+
+Matches T534 exactly, including the corollary that B's correction term is identically zero since B is simple. I'm conceding T534's rule as stated:
+
+> `corrected = naive + Σ [touch(V(a,b),x) AND crosses(opposite side, x)]` over all three vertices
+
+This is airtight — I reproduced the same formula independently from the same primitives and got the same zero on both objects.
+
+Now the question T534 leaves open: does the fix change anything about T533's negative result? T533 searched a 14-line extension of B with line 14 forced concurrent at V(1,2) and V(3,4) — same shape as `kobon_8`'s winning move — using the *naive* check as part of the objective, and got best T=51 at 166 naive violations, never parity-clean. Since that search was explicitly building the exact vertex-touch pattern the naive check mishandles, its violation counts were suspect on their face. I re-ran it properly.
+
+Built the same construction (rows 1–4 carry the two forced concurrences as merged groups, rows 5–13 and row 14's own order free), and ran two searches using the *corrected* check:
+
+- Violation-first (minimize corrected V, then maximize T), 40 restarts + 3000 greedy steps: best found is **T=43, corrected V=170** — worse on both axes than the naive-check run.
+- T-first (maximize T only), 60 restarts + 6000 steps: caps at **T=50**, with corrected V=456 at that point — still nowhere near parity-clean, and still below 53.
+
+So the hypothesis that the parity bug was propping up T533's negative result is refuted by direct test, not just argument: fixing the check makes this construction look *worse*, not better. T533's finding stands and is now on firmer ground — it isn't an artifact of a broken gate, the concurrent-at-mutual-last-pairs move genuinely doesn't reproduce `kobon_8`'s trade on B.
+
+This doesn't touch my prior — it closes off one specific route, the most literal port of `kobon_8`'s pattern onto `B`, which was always a narrow test (T533 said so: "rules out nothing" beyond the exact pair choice). What it does is remove a false hope I was half-relying on: that the parity fix would retroactively validate a construction I'd already tried. It doesn't. The corner-cut mechanism T532 is building is still the sharper tool here, and the blocker is still what I said at T533 — B has no coordinates in this corpus, so the face enumeration needs either reconstructed coordinates or a combinatorial face-tracer, neither of which exists yet.
+
+Given that, I'm shifting my own next turn to the assignment I haven't actually run yet: agenda item 2's richer bases, the drops of `kobon_20_116tri` (gains 9–18 realized, target 117) and `kobon_18_93tri` (gain 16 realized, target 94) — both explicitly flagged as untouched and both offer more slack than B's gain-11 ceiling. Characterizing the realized insertion's `G`/`D` split there, not another pass at B, is next.
+
+Falsifier: a validated 14/18/20-line table meeting its target `table.count` with zero violations under the corrected parity rule, on any base — B, a B-drop, or a `kobon_18`/`kobon_20` drop.
+
+<!-- meta
+{"addresses": [533, 534], "claims_conceded": ["vertex-touch-parity-correction-formula"], "claims_opened": ["corrected-parity-does-not-rescue-b-mutual-last-concurrent-construction"], "falsifier": "a validated 14/18/20-line table meeting its target count with zero violations under the corrected vertex-aware parity rule, on any base", "tier": "none", "verifier_runs": ["custom corrected_violations() reproducing kobon_8 naive=10, corrected=0, B naive=0, corrected=0 -- matches T534 independently", "B+line14 concurrent at V(1,2),V(3,4), corrected-check-first hillclimb (40 restarts, 3000 steps): best T=43, corrected V=170", "same construction, T-first hillclimb (60 restarts, 6000 steps): max T=50, corrected V=456 at that point"]}
+-->
