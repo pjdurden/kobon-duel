@@ -10727,3 +10727,31 @@ This doesn't itself move the win condition — it kills a *proposed fix*, not a 
 <!-- meta
 {"addresses": [510, 511, 512], "claims_conceded": [], "claims_opened": ["centrally-symmetric-polygon-forces-n-parallel-opposite-pairs"], "falsifier": "a centrally-symmetric ring construction, any n, built with a central-diagonal structure through antipodal points, exhibiting fewer than n forced-parallel opposite side-pairs, verified by slope check", "tier": "none", "verifier_runs": ["ad-hoc Fraction geometry: T510's 12-point ring (m in {-9,-4,-2,1,3,6}) -> all 6 opposite side-pairs parallel", "ad-hoc Fraction geometry: 5 random point-reflection-symmetric polygons at n=3,4,5,7,9, no convexity assumed -> all n opposite side-pairs parallel in every case"]}
 -->
+
+## Turn 514 - PythagorAss - 2026-09-09T00:18:26Z
+
+The parallel-forcing proof in T513 is correct, and I can close the loop on it rather than just accept it in the abstract — it turns out to fully kill agenda item 2's named instance, not just the fix I proposed.
+
+I re-derived T513's algebra myself before accepting it: if edge $i$ and edge $i+1$ both have point-reflected partners ($P_{i+n}=-P_i$ and $P_{i+n+1}=-P_{i+1}$), then edge $i+n$'s vector is $P_{i+n+1}-P_{i+n} = -P_{i+1}-(-P_i) = -(P_{i+1}-P_i)$, the negative of edge $i$'s vector. That's forced parallelism from linear algebra alone, no convexity, no spacing assumption. I concede the general claim:
+
+> "any bridged ring construction that uses point-reflection symmetry to generate its central diagonals pays at least `n` forced-parallel side pairs, at every `n`, unconditionally"
+
+This is airtight for `f = n` (every diagonal central). But reference data 39c's ceiling is `d/c <= 3 + f/n` with `f <= n` and `f` even — it doesn't require full symmetry, only that `f` of the `n` diagonals pass through `O`. So before conceding the whole `k=20, c=12, n=6, f=6` instance, I checked whether some `f < n` escapes the parallel tax while still clearing the ceiling.
+
+Two computations settle it. First, the ceiling itself, over every even `f`:
+
+    f=0: d<=36   f=2: d<=40   f=4: d<=44   f=6: d<=48
+
+Required `d >= 45`. **Only `f=6` clears it — `f=4` already fails at 44, independent of any parallelism question.** Second, since T513's mechanism only forces edge-pair `i, i+n` parallel when *both* `i` and `i+1` are central indices, I computed the minimum forced-parallel count over every placement of `f` central indices on the 6-cycle of diagonal slots:
+
+    f=0:0  f=1:0  f=2:0  f=3:0  f=4:2  f=5:4  f=6:6
+
+At `f=4` you could in principle hold parallels to 2 (e.g. central set `{0,1,3,4}`), but that's moot — `f=4` was already dead on the ceiling before parallelism entered the picture. There is no `f` value that is simultaneously ceiling-sufficient and parallel-light: the only ceiling-sufficient value is `f=6`, and `f=6` is exactly the case T513 proves forces all six pairs. **There is no partial-symmetry escape. The `k=20, c=12, n=6, f=6` ring — the one instance agenda item 2 named as untouched by the `3+f/n` arithmetic — is now dead by two independent arguments stacked: T510's direct construction (66 triangles, 27 short) and T513's structural reason why no spacing or point choice on that skeleton could have done better.
+
+That closes agenda item 2 completely: parallelogram, hexagon, and now the dodecagon ring are all dead, by proof in every case. My prior doesn't rest on the ring family surviving — it rests on absence of an impossibility theorem for `k=14/18/20` themselves, and none of this touches that. But I owe honesty about what died: three ring shapes, tail-append (all orientations), and transposition-perturbation are now a closed list, and the next untried lever in my own instinct set is agenda item 1's general insertion space (degree-2, Hamiltonian-path-constrained), which neither agent has actually computed rather than sampled. That's where I'm looking next, not promising a delivery date on it.
+
+verifier_runs: ceiling arithmetic (36,40,44,48 for f=0,2,4,6 against requirement 45) and combinatorial min-forced-parallel-edge search over itertools.combinations for f=0..6 on a 6-cycle (0,0,0,0,2,4,6), both run this turn.
+
+<!-- meta
+{"addresses": [513], "claims_conceded": ["central-diagonal-ring-forces-n-parallel-pairs"], "claims_opened": ["k20-c12-ring-f-must-equal-n-no-partial-escape"], "falsifier": "an f<6 placement clearing d>=45 by a mechanism other than 3+f/n, or any direct 18/20-line construction beating 66/93/116 from a ring skeleton, would reopen this family", "tier": "none", "verifier_runs": ["arith: ceiling(n=6,c=12,f) for f in {0,2,4,6} -> 36,40,44,48 vs required 45, only f=6 sufficient", "itertools.combinations over 6-cycle: min forced-parallel edges for f=0..6 -> 0,0,0,0,2,4,6"]}
+-->
