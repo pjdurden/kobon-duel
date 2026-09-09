@@ -10755,3 +10755,27 @@ verifier_runs: ceiling arithmetic (36,40,44,48 for f=0,2,4,6 against requirement
 <!-- meta
 {"addresses": [513], "claims_conceded": ["central-diagonal-ring-forces-n-parallel-pairs"], "claims_opened": ["k20-c12-ring-f-must-equal-n-no-partial-escape"], "falsifier": "an f<6 placement clearing d>=45 by a mechanism other than 3+f/n, or any direct 18/20-line construction beating 66/93/116 from a ring skeleton, would reopen this family", "tier": "none", "verifier_runs": ["arith: ceiling(n=6,c=12,f) for f in {0,2,4,6} -> 36,40,44,48 vs required 45, only f=6 sufficient", "itertools.combinations over 6-cycle: min forced-parallel edges for f=0..6 -> 0,0,0,0,2,4,6"]}
 -->
+
+## Turn 515 - Euclidn't - 2026-09-09T01:17:26Z
+
+The forced-parallel arithmetic in T514 checks out — I re-ran it independently rather than trusting the reported numbers. `itertools.combinations` over placements of `f` central slots on the 6-cycle gives minimum adjacent-central-pairs `(0,0,0,0,2,4,6)` for `f=0..6`, exactly matching T514's table, and `36+2f` for `f=0,2,4,6` gives `36,40,44,48` against the requirement of 45 — `f=4` fails on the ceiling alone, `f=6` clears the ceiling but forces all six parallels. No gap. Agenda item 2's named instance is dead by two independent, now-verified arguments. I have nothing to add against it.
+
+So: agenda item 1, the general insertion space, which T514 flags as its next target but hasn't computed. I ran a construction nobody has tried yet, on the actual object rather than in the abstract. T511 varied *which* rows got pulled off the tail while keeping one hand-built row-14 order fixed. I varied insertion *depth uniformly across all thirteen rows* — line 14 at the same position index `p` in every row of Kabanovitch's `B` — with the row-14 order optimized separately at each depth by hill-climbing (six random restarts, full pairwise-swap local search) rather than reused from the tail case:
+
+    pos(naive order)  0    1    2    3    4    5    6    7    8    9   10   11   12
+    T                51   42   34   36   40   36   34   34   38   39   35   46   53
+    delta             4   -5  -13  -11   -7  -11  -13  -13   -9   -8  -12   -1    6
+
+    pos(hill-climbed) 0    6    9   11   12
+    T                51   39   40   47   53
+    delta             4   -8   -7    0    6
+
+Every interior depth from 1 through 11 is strictly worse than both endpoints, under both the naive order and after local-search optimization — the degradation isn't a property of one bad ordering choice, it survives real optimization. Position 12 (tail) reproduces reference data 41d's ceiling. Position 0 (head) is not new territory, and I want to be precise about that rather than claim a second family: inserting 14 first in every row is exactly tail-append applied to the row-reversed table, which reference data 41d already covers — reversal preserves every triangle and swaps which entry is "last" for "first," so position-0 inherits the same `(k-1)/2 = 6` ceiling as position-12. My hill-climb only reached delta 4 there, not 6, which is a local-search shortfall, not a new data point; I'm flagging it rather than overclaiming a second ceiling I haven't hit.
+
+What's actually new: a third independent construction axis — after T511's per-row subset selection and T510/512's ring geometry — where every attempt to move line 14 away from the row-ends inside `B` loses ground, and this time by a wide, non-monotone-in-appearance-but-uniformly-negative margin rather than a gentle slope. Agenda item 1 is right that the abstract degree-2 mutual-neighbor graph has a higher edge ceiling than degree-1's matching. But the ceiling on `G` was never the missing piece — reference data 38a's face lemma says `G-D` is bounded by non-triangular faces visited, and every interior insertion I can build empirically pays more in `D` than it gains in `G`, exactly where the theory says it should: an interior crossing point sits inside a face that was already carved up by the row's existing structure, and cutting it destroys more than it creates. Three separate construction families now agree, and none of them was built to agree with each other.
+
+This doesn't prove `max(G-D) <= 6` over the whole abstract space — that still needs the argument agenda item 1 asks for, and I don't have it. It does mean the "genuinely higher ceiling" concern is, so far, ceiling on paper only, unreached by every construction either side has actually built.
+
+<!-- meta
+{"addresses": [514], "claims_conceded": [], "claims_opened": ["uniform-depth-interior-insertion-worse-than-both-endpoints-on-k13-base"], "falsifier": "any interior (non-endpoint) insertion depth into a k=13 optimum, at any row-14 ordering, verified by table.triangles to beat the tail ceiling of T+6=53", "tier": "none", "verifier_runs": ["table.triangles(kobon_13_m_sym_47tri) -> 47 baseline", "uniform position-sweep p=0..12, identity row14 order -> T=51,42,34,36,40,36,34,34,38,39,35,46,53", "hill-climb 6 restarts + pairwise-swap local search at p in {0,6,9,11,12} -> best T=51,39,40,47,53", "itertools.combinations min-forced-parallel search n=6,f=0..6 -> 0,0,0,0,2,4,6 confirming T514"]}
+-->
