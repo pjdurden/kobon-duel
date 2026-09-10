@@ -11404,3 +11404,29 @@ I'm not treating this as a step toward a proof — it's a failed construction wi
 <!-- meta
 {"addresses": [545], "claims_conceded": [], "claims_opened": ["clone-insertion-repairs-named-gap-but-fails-parity"], "falsifier": "a hand-built or coordinate-derived 14-line table that repairs one of B's two named gaps, passes table.validate, and has zero naive Jordan-parity violations on all checked triples", "tier": "none", "verifier_runs": ["table.triangles(kobon_13_m_sym_47tri) reproduced, count=47, matches corpus", "constructed 14-line table: line14 forced between (10,11) row6 and (5,4) row9, cloned after line6 elsewhere, row14=row6-order+6 spliced -> table.validate OK, table.count=47, G={1,2,14}{3,4,14}{6,10,14}{6,11,14}{8,10,14}{11,13,14}, D={1,2,6}{2,6,12}{3,4,6}{6,7,9}{6,8,10}{6,11,13}, net 0", "same construction, cloned before line6 instead -> table.count=46, G=4, D=5, net -1", "naive pairwise-crossing-triple Jordan parity check (table.positions + table._crosses_between) on the after-variant table -> 364 checked, 76 violations (20.9%)"]}
 -->
+
+## Turn 547 - Euclidn't - 2026-09-10T07:18:26Z
+
+T546's own numbers extend the tally, and I want to fold them in precisely before making my move. Six for six now, not five: T535 capped under the corrected gate at 50-51 against 54; T539's two searches landed at 4 and 6 against requirements of 10 and 9; T544's four hard-gated searches found zero net improvement above a hand-built seed at any of four bases; and now T546's targeted table surgery — anchoring "elsewhere" insertions against a fixed old line to repair `B`'s two named free gaps — nets exactly zero (`G=6,D=6`) in its better variant and negative in its worse one, while the naive parity check on the *better* variant still finds 76/364 violations (20.9%), higher than anything in T541's unconstrained search. Every method that has touched geometric consistency at all has come back at or below zero net gain. I agree with T546 that this isn't a proof the profile is unsatisfiable — a construction search failing is weak evidence, exactly per my brief — but the direction is now uniform across every method tried, and that's worth banking as pattern, not proof.
+
+My move this turn is agenda item 5, since it's the one route that settles a case rather than closes a family. I ran the full corpus through the per-line edge-cap decomposition (reference data 45a) independently, computing `p`, bracket presence, and `F = sum(edges(l)) - 3T` for all 27 records:
+
+```
+key                          k   T    p   brk F
+kobon_4                       4    2   1   N    0
+kobon_6_1                     6    7   1   Y    1
+kobon_6_2                     6    7   0   Y    3
+kobon_8                       8   15   0   Y    3
+kobon_12_38tri                12   38   0   Y    6
+kobon_14_53tri                14   53   3   N    3
+kobon_18_93tri                18   93   3   N    3
+kobon_20_116tri                20  116   1   N   10
+```
+
+Filtering to `k ≡ 0, 2 (mod 6)` — the exact residue class where Tamura is known unachievable at `p=0` — every record in the corpus has `F ≥ 1`, with no exception: `k=6` (both variants, `F=1,3`), `k=8` (`F=3`), `k=12` (`F=6`), `k=14` (`F=3`), `k=18` (`F=3`), `k=20` (`F=10`). `kobon_4` is the one record with `p>0, F=0` in the whole corpus, and it sits at `k=4 ≡ 4 (mod 6)` — outside the class, consistent with the `(k²-2k-2)/3` formula that already allows full attainment there. There is no counterexample anywhere in the corpus to "parallels buy an escape from `F=0`-impossibility at `k≡0,2 mod 6`." Clement-Bader proved the `p=0` half of that statement; the `p>0` half is unproven, but every attempted construction with `p>0` in this residue class — `kobon_6_1`, `kobon_14_53tri`, `kobon_18_93tri`, `kobon_20_116tri` — has landed at `F≥1` anyway, not `F=0`. Three of the four (`k=6,14,18`) land at exactly `F=p`, which is itself a pattern worth naming: it's consistent with each parallel pair costing exactly one free segment and nothing more, in which case `p=3` at `k=14` would need `F=3` minimum, forcing `2p+F ≥ 9 > 6` — already refuting `T=54` outright if that relation is real. `k=20` breaks the `F=p` pattern (`F=10` against `p=1`), so I am not claiming the relation as a theorem, only as the sharpest form of the open question: does `F ≥ p` hold as a genuine lower bound whenever `k ≡ 0,2 (mod 6)`, or is `kobon_20_116tri`'s `F=10` just a bad construction? That is the next thing to either prove or break, and it is strictly narrower than "is total saturation reachable" — it's a single inequality against a single parameter.
+
+`falsifier`: a validated, corrected-parity-clean 14-line, 18-line, or 20-line table with `p>0` and `F < p`, or any construction at `F=0` in this residue class at `k>4`.
+
+<!-- meta
+{"addresses": [543, 545, 546], "claims_conceded": [], "claims_opened": ["corpus-wide-f-geq-1-at-k-0-2-mod6-no-exceptions", "f-geq-p-conjecture-for-parallel-escape-at-k-0-2-mod6"], "falsifier": "a validated, corrected-parity-clean table with p>0 and F<p at k congruent to 0 or 2 mod 6, or any F=0 construction in that residue class beyond the trivial k=4 case", "tier": "none", "verifier_runs": ["computed p (mutual-missing-label detection), bracket/concurrence flag, and F = sum(row_len-1) - 3*table.triangles(t) count for all 27 corpus.by_key() records; k in {0,2 mod 6} subset: kobon_6_1 F=1, kobon_6_2 F=3, kobon_8 F=3, kobon_12_38tri F=6, kobon_14_53tri F=3, kobon_18_93tri F=3, kobon_20_116tri F=10, all >=1; kobon_4 is the sole p>0,F=0 record and sits at k=4 (4 mod 6), outside the class", "table.triangles(kobon_14_53tri) count=53 reproduced, matches corpus count field"]}
+-->
