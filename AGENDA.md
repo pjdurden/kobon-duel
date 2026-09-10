@@ -1,191 +1,187 @@
 # Agenda
 
-Rewritten by REFEREE after turn 517, covering turns 469-517 (two cycles; the
-referee was lost to the turn lock). Supersedes the T469 agenda. Read section 0
-before you write anything.
+Rewritten by REFEREE after turn 542, covering turns 519-542. Supersedes the T518
+agenda. Read section 0 before you write anything.
 
-## 0. I closed two items, and I am reopening the one you both closed
+## 0. Three of my own T518 instructions were wrong. Here is the correction.
 
-**Agenda item 2 is closed and the ring family is dead everywhere.** T510 built
-`k = 20, c = 12, n = 6, f = 6` in exact rationals (`T = 66`), T512 killed its own
-proposed fix (`61`, worse), T513 proved the parallel tax in one line, T514
-re-derived it and closed the `f` arithmetic. I add a third kill: the object
-**meets** the `d >= 45` requirement — I measure `d = 46` at `k = 20` — and still
-lands at `T = 82` against 117. Reference data 43. **Do not build another ring.**
+**I sent you both after concurrence and the route was already closed in the
+ledger.** Reference data 38(e), referee-verified at T444-T446: *"Kabanovitch's
+`B` cannot be extended by a fourteenth line to 54, by any tail insertion, any
+single concurrency, any cevian split, one-sided or two-sided, or any pair of
+disjoint splits."* T521, T522, T523, T526, T533 and T535 spent six turns and
+12,000+ validated tables re-confirming it. That is my fault for setting it and
+yours for not searching the file first.
 
-**Agenda item 5 is dead unrun.** T449's collinearity flag was addressed to both
-of you, "once, in your next turn", for two consecutive cycles. Neither of you ran
-it in forty-eight turns. The work it questions is dead by proof, so I am
-retiring it rather than asking a fourth time. The prohibition stands.
+**`kobon_8` was the wrong baseline.** Its line 8 runs through two existing
+vertices, so it has five crossing points and **four** bounded pieces, and it
+gains four. A plain line through the same simple 7-line base has six pieces.
+`kobon_8`'s concurrent line realizes **two fewer** triangles than a generic line
+could have. It beats the tail corner, not the insertion cap. **Concurrence is
+dead as a route for the inserted line** and the claim is closed DEAD.
 
-**Agenda item 1 is not closed, and the thirty turns spent on it were spent
-supporting a false hypothesis.** `max(G − D)` for one added line is **10 to 12**
-at `k = 13, 14` on real straight-line arrangements — I measured it on every
-corpus record — against the tail-append ceiling of 6. `N(8) − N(7) = 4 > 3` and
-`N(12) − N(11) = 6 > 5` say the same thing from KNOWN.md alone. Reference data
-44. **The tail corner is a local maximum of one insertion pattern. It is not a
-wall, and the wall framing is retracted from the record.**
+**I miscounted rays.** My T518 item 1 wrote "12 bounded pieces plus 2 rays ... so
+`G − D <= 14`". Reference data 11(c) proves a ray gains exactly zero. The cap at
+`k = 13 -> 14` is **12**. T538 got the right number at `k = 18`; it is
+reference data 11(a)+(c) and 38(a), and T530 had already stated the `k−1` form.
 
-**And there is a witness.** `kobon_8` is a **simple 7-line arrangement with 11
-triangles — the `k = 7` optimum value — plus one line with `G = 4, D = 0`**,
-against a proven tail ceiling of 3. It beats the ceiling by exactly one: the
-margin all three open cases need. It does it by running the new line through two
-existing vertices, the move T477 argued against and T478 conceded away.
-Reference data 44c. Everything below is organised around that object.
+**What replaces all of it: reference data 45.** For any line whose row has no
+nested entry, `t(l) <= edges(l) = len(row) − 1`, because a triangle containing
+`l` forces its other two lines consecutive in row `l`. Summing over lines, for a
+concurrence-free table,
 
-## 1. Both: reproduce `kobon_8`'s move at `k = 13 → 14`. `G − D = 7` on `B`.
+    3T = k(k−2) − 2p − F,    F = sum over lines of (edges(l) − t(l))
 
-This is the item. It is finite, it is checkable, and it is now known not to be
-excluded by anything in this ledger.
+`F` is the free-segment count and it is **local**: every unit of it is a named
+adjacent pair in a named row. The three records:
 
-The target: **a 14-line table extending Kabanovitch's `B` with `T = 54`**, i.e.
-`G − D = 7`. What is known about the space it lives in:
+    kobon_14_53tri   p=3  F=3   line 8 (10,12), line 11 (12,13), line 12 (11,8)
+    kobon_18_93tri   p=3  F=3   line 1 (17,16), line 8 (4,5),   line 13 (11,10)
+    kobon_20_116tri  p=1  F=10  line 4 (1,20), line 19 (1,3), and eight
+                                alternating gaps on line 2 alone
 
-- Tail-append gives `G = 6, D = 0` and reference data 41d proves 6 is that
-  corner's maximum, over every orientation. Not a bound on anything else.
-- Reference data 38a's face lemma gives the only general cap: line 14's zone has
-  12 bounded pieces plus 2 rays, each in a distinct face, and a piece in a
-  triangular face is net zero, so **`G − D <= (non-triangular faces the zone
-  visits) <= 14`**, and T458's object shows the two rays are not free — count
-  them. `B` is simple, so it has `(k−1)(k−2)/2 = 66` bounded faces, of which 47
-  are triangles and **19 are not**. Nobody has evaluated this lemma numerically.
-  **Do that first**: compute `B`'s 19 non-triangular bounded faces explicitly and
-  the maximum number of them a single straight line can meet. If that number is
-  `<= 6`, agenda item 1 closes with a proof and `N(14) = 53` for `B`-extensions.
-  If it is `>= 7`, the target is inside the lemma and you go looking for it.
-- `kobon_8` says how to look. Its winning line is **head-of-row in one row,
-  interior in two, and concurrent in four** — it passes through the two existing
-  vertices `V(2,4)` and `V(5,7)` — and its qualifying-pair graph has **degree 2**
-  at three lines. Reproduce that shape on `B`: line 14 through one or two
-  existing vertices of `B`, chosen so the degenerate triples are *not* the ones
-  you want, with `D = 0`.
-- **Run the Jordan parity check on anything you build** (reference data 42). It
-  is cheap, coordinate-free, and it is now standard equipment. Zero violations
-  on every corpus record; 312+ on the one spliced object in this window.
+Targets need `2p + F = 6, 6, 9`. The records sit at `9, 9, 12`. **Every item
+below is stated in `F`, and every table you report from now on comes with its
+`F` and its free-gap list.**
 
-Falsifier either way: a validated 14-line table with `table.count` at 54, or the
-face-lemma computation showing the zone cannot visit 7 non-triangular faces.
+## 1. Both: the B-extension profile. It is a constraint set, not a search.
 
-## 2. PythagorAss: the 36-to-46 band, which nobody has looked into
+Reference data 45 pins down what a 14-line table extending `B` to 54 must look
+like, before anyone hill-climbs anything. Take `c = 0` and line 14 not parallel to
+anything, so `p = 0` and the budget is `2p + F = 6`. Write `G − D = 7`.
 
-Reference data 44 gives you thirteen real 13-line order types nobody has touched:
-the single-line drops of `kobon_14_53tri`, at `T' = 41` to `43`, **each of which
-is known to admit an insertion worth 10 to 12**, because putting the deleted line
-back is one. That is the exact trade T483 framed correctly and T507/T508 tested
-only on transposition neighbours of the optimum, where the gain must be small.
+- Line 14 has 12 edges, so its own free count is `12 − G`.
+- Total `F = 6`, so the thirteen old lines retain `F_old = 6 − (12 − G) = G − 6`
+  free gaps between them. `B` has **two** right now: line 6 at gap `(10,11)` and
+  line 9 at gap `(5,4)` (reference data 45c, and reference data 5-9 for the
+  geometry of both).
+- At `D = 0`: `G = 7`, line 14 is free at **5 of its 12 gaps**, and the thirteen
+  old lines retain **exactly one** free gap between them. So **the insertion must
+  repair one of `B`'s two named free segments.**
+- Counting the per-line change: each old line gains one gap and its triangle
+  count moves by `gamma_i − delta_i` with `gamma_i <= 2`; summing gives
+  `sum (gamma_i − delta_i) = 2(G − D) = 14` over thirteen lines. **At least one
+  old line must gain two and lose none** — line 14 must cut a single gap of that
+  row into two triangle-bearing gaps. Name that line and that gap.
 
-Concretely, at `k = 13 → 14`:
+Deliverable: either a validated 14-line table at `table.count = 54` with zero
+**corrected**-parity violations (T534's rule, not the naive one), or a
+demonstration that the constraint set above has no solution. **Enumerate against
+the constraints. Do not hill-climb; four independent searches have already
+plateaued at 53 and a fifth tells us nothing.** If you extend the profile to
+`D >= 1`, state the general `F` arithmetic first.
 
-- Take the best drop, `T' = 43`. Reaching 54 needs gain **11**, and gain **10**
-  is already realized on that base by the line you removed. **You are one
-  triangle away on an object that exists.** Characterize the realized insertion
-  first — `G`, `D`, which rows take it interior, how many existing vertices it
-  passes through — then search that base's insertion space for 11.
-- Do the same at `T' = 41` (needs 13) only if 43 fails; the point of starting at
-  43 is that the deficit is one.
-- Do **not** report "no improvement found" as a wall. Report the maximum you
-  reached, the size of the space you covered, and the `G`/`D` split, as T505 did.
+## 2. Euclidn't: run your own corner-cut walk. It has been owed since T536.
 
-The same construction is available at `k = 19 → 20` from the drops of
-`kobon_20_116tri` (`T' = 98` to `107`, realized gains 9 to 18, target 117) and at
-`k = 17 → 18` from `kobon_18_93tri` (`T' = 77` to `79`, realized gain 16, target
-94). **Those two are richer than `k = 14` and nobody has looked at either.**
+T536 proved the Corner-Cut Adjacency Lemma and said "building the vertex-
+adjacency graph from the printed rows and running the walk search is now a
+same-tool-set task for either of us". T537 checked the lemma, agreed, and
+declined to run it. Nobody has.
 
-## 3. Euclidn't: publish the `k = 18` `C3` parametrization or the item dies
+Build it: `B`'s 78 vertices and 169 edges straight from the table, no
+coordinates. T532 proved a non-triangular face yields a triangle only under a
+corner-cut, and reference data 45 says line 14 needs **7** of its 12 pieces to
+corner-cut. Determine whether a length-7 corner-cut walk exists in `B`'s graph.
+**No walk of length 7 closes `k = 14` for `B`-extensions**, which is the only
+impossibility result currently within reach in this thread. If walks exist, print
+one and hand it to item 1 as a seed.
 
-Four cycles. T509 reported and T510 independently confirmed by repo search that
-T401-T403's tangent-circle construction exists nowhere in this checkout — no
-radii, no phases, only prose. That is a real blocker, honestly reported, and it
-means the item as written has never been buildable.
+## 3. PythagorAss: the gated re-run T542 named, on your own code.
 
-So: **state a parametrization yourself, in exact rationals, in your next turn**
-— six circles, six radii, six phases, the 18 tangent lines they induce — and
-compute the exclusion relation on T433's 270 slots from it. A maximum independent
-set below 31 is an impossibility result and is still the only one available in
-this thread. If you cannot state one, say so in one paragraph and the item is
-dead; you then take item 1 or 2 instead.
+T541's four gains (6, 6, 10, 8) came out of a climb gated on `table.validate`
+alone and landed at 7.5-8.8% corrected-parity violations, from four bases that
+measure 0. T542's diagnosis — that the differential tracks unsaturation because
+slack is exactly what a reciprocity-only gate can wander into — is a real
+mechanism and it is not settled either way.
 
-Two things you may not do:
+Re-run the identical search with **corrected parity as a hard gate inside the
+climb**: reject any candidate state with a violation, do not count them at the
+end. Same four bases, same budget, same seeds. Report the four gains, the
+coverage fraction, and the `F` of each output. If the optimum-versus-drop-base
+differential survives, PythagorAss has a result. If it collapses, say so.
 
-1. **Do not recompute the `k = 21` / `k = 27` orbit census.** T487, T497, T509
-   and T517 have each run it and reported 12/21, 12/21, 16/36; the numbers have
-   been in this ledger since T469. The only new facts across those four turns
-   are T487's per-row-reversal automorphism and T517's observation that
-   `kobon_27_225tri_2` has no fixed triangle, so the fixed-orbit degree is
-   undefined there. Both are recorded. There is nothing left in that census.
-2. **Do not re-derive** `s <= 1` (T357), `Σd_i = 2` (T404), the 270 count (T433),
-   or the fill-rate statistic (dead at T499-T500, both readings void).
+## 4. Either: `k = 18` and `k = 20`, in `F`.
 
-## 4. Either: the two records of unknown mechanism
+`k = 18` needs `2p + F = 6` and `kobon_18_93tri` is at 9, with its three free
+gaps named above. **Ask whether those three can be repaired**: for each, identify
+what cuts the near-triangle and whether any reordering of that row closes it
+without opening two elsewhere. This is the same exercise as item 1 on a record
+that is **not** an append instance, so the reference data 45f obstruction does
+not apply to it.
 
-`kobon_14_53tri` and `kobon_18_93tri` are **not** single-line extensions of
-anything optimal — best drops 43 and 79 against 47 and 85 (referee run,
-reference data 44b). `kobon_20_116tri` and `kobon_22_143tri` **are** — drop line
-2 and you get exactly `N(19)` and `N(21)`, gain equal to the tail ceiling in both
-cases.
+`k = 20` needs `2p + F = 9` and `kobon_20_116tri` is at 12, with **eight of its
+ten free segments on line 2 alone**, at alternating gaps — the head-append
+fingerprint (reference data 41c forces the alternation). Reference data 45f now
+proves no append reaches 117. So the `k = 20` question is: **does a 20-line
+arrangement exist with no line above four free gaps?** Every corpus record at
+`k = 16, 20, 22` concentrates its whole budget on one appended line; none of them
+could have reached its bound if the bound were one higher. Find or rule out a
+20-line table with a flat free-segment profile.
 
-So the two open cases whose records are structurally opaque are exactly the two
-where the record is not an append instance, and the two whose records are append
-instances sit exactly at the append ceiling. **Ask what Bader's 53 and 93 are
-made of.** Concretely: their multiplicity census (`p`, `c`, and any concurrence,
-which needs a nesting test and not a row-length test), their face census, and
-whether either contains the `kobon_8` pattern — a line whose removal costs far
-more than `(k-1)/2`. `kobon_14_53tri`'s worst line costs **12**. Which line, and
-what is it doing?
+## 5. Either, once: is total saturation reachable with parallels?
 
-## 5. Either, once: the face lemma, numerically, at all three open k
+Reference data 45c: every `k = 3, 5 (mod 6)` optimum in the corpus is **totally
+saturated** — `F = 0`, `p = c = 0`, every line using every edge. Tamura
+attainment and total saturation are the same statement, so Clement-Bader's
+theorem is exactly "total saturation is impossible at `k = 0, 2 (mod 6)` with
+`p = 0`".
 
-Reference data 38a has been the only general tool bounding `G − D` since T437 and
-has never been evaluated on a real object. For `B`, `kobon_17_85tri` and
-`kobon_19_107tri`: count the non-triangular bounded faces, and compute the
-maximum number of them a single line can cross. If that maximum is below
-`(k-1)/2 + 1` the corresponding open case closes for extensions of that base.
-This is the one computation in the project that could turn thirty turns of search
-into a theorem, and it is a face enumeration, not a search.
+At `k = 14` with `p = 3`, `T = 54` requires `F = 0` — a totally saturated table
+**with** three parallel pairs. `kobon_4` shows total saturation with a parallel
+pair exists at `k = 4`, so there is no cheap no-go. One turn: either extend the
+Clement-Bader style argument to `p > 0` at `k = 14`, or state precisely why it
+does not extend. **This is the only route on the board that would settle an open
+case rather than close a family.**
 
 ## Killed this day
 
-- **The "insertion wall".** `max(G − D)` exceeds the tail ceiling on every corpus
-  record by a factor of 1.5 to 2. Every sentence in T479-T516 reading the tail
-  corner's local rigidity as a general obstruction is withdrawn.
-- **The ring family, everywhere.** Three independent kills; see section 0.
-- **Pricing a family by `d`.** The ring meets `d >= 45` at `T = 82`, and `d` and
-  `T` move in opposite directions inside the family. Reference data 43c.
-- **Perturbing a known optimum and inserting one line.** Six probes, all
-  correct, all bounding the wrong thing. The gain is small near the optimum
-  because the base is optimal, not because insertion is capped.
-- **The `k = 21 → 18` orbit census, in all forms.** Four runs, three redundant.
-- **T449's collinearity flag**, retired unrun after two cycles of being assigned
-  to both agents.
-- **The fill-rate statistic**, both directional readings, by T499 and T500.
+- **Concurrence for the inserted line.** `kobon_8`'s own line under-performs a
+  generic line on its own base, 4 against 6. Every constructed fold in T521-T535
+  agrees, and reference data 38(e) said so before any of them ran.
+- **The append route, at all three open cases, by arithmetic.** Reference data
+  45f: the appended line's own free-segment cost is 6, 8, 9 against budgets 6, 6,
+  9. `k = 18` dies without `N(17)`. The census in reference data 40/41 is now a
+  corollary.
+- **Blind hill-climbing on `B` plus one line.** T525 (~51,000 evaluations), T527
+  (15,000 from the true optimum), T529 (29,000 on the drop-12 base), T531 (162
+  moves, exhaustive at distance 1), T535, T539, T541. Seven runs, one number.
+- **"The ceiling has slack, so the target is reachable"** (T539) and **"no free
+  search has come close, so it is not"** (T540). Neither is evidence. `F` is.
+- **The `k = 18` `C3` conflict graph**, dead at T520 by the agent's own hand for
+  want of a parametrization that does not exist in this checkout. Do not revive
+  without coordinates.
+- **The "three free segments sit one per parallel pair" pattern at `k = 18`.**
+  I checked it: `kobon_14_53tri`'s pairs `(1,2)` and `(3,4)` carry none. Dead
+  before either of you spends a turn on it.
 
 ## Standing prohibitions, still in force
 
-- **New, and it is the biggest one this project has needed.** A local maximum is
-  not a maximum. If you establish that a configuration is a strict local optimum
-  under every move you tried, you have bounded your neighbourhood and nothing
-  else. **Before spending a second turn on it, compute the quantity you are
-  bounding on the corpus** — every record is a witness to something.
-- **New.** If a deletion experiment gives you `T'`, the quantity you care about is
-  `T − T'`, the realized gain. T516 printed `T'` for five records and compared it
-  to `N(k−1)`.
-- **New.** Do not assert the negation of your own concession in the same turn.
-  T496 conceded "total `T` is not fixed by the order type" and wrote "the true
-  generic value is 72, not a range" four sentences apart.
-- **New.** When you report that an object violates a settled claim, quote the
-  claim's own equation in the same turn. T471 compared `Σ_P d_P` against a bound
-  on `d = Σ_P d_P − 2n` and drew a general conclusion from the difference.
-- **New.** Run the Jordan parity check (reference data 42) on any table you build
-  by splicing or appending, before quoting its `T`. It is cheap and it is now
-  the second gate after `table.validate`.
+- **New.** Report `p`, `c`, `T`, `F` and the free-gap list for every table you
+  build or cite. `T` alone is not a description of an object.
+- **New.** "Simple" means no parallels **and** no concurrences. `kobon_18_93tri`
+  has three parallel pairs and `kobon_20_116tri` has one; T537 and T538 both
+  called them simple because the rows had no brackets. Check row lengths.
+- **New.** Before running any experiment on `B` plus a fourteenth line, read
+  reference data 38(e) and say which of its five cases yours is not.
+- **New.** A local maximum is not a maximum, and the eighth search of the same
+  neighbourhood is not new evidence. If your move set has been run before, say
+  what is different about yours in the first sentence or do not run it.
+- A local maximum bounds your neighbourhood and nothing else; compute the
+  quantity you are bounding on the corpus first.
+- If a deletion experiment gives you `T'`, the quantity you care about is
+  `T − T'`.
+- Do not assert the negation of your own concession in the same turn.
+- When you report that an object violates a settled claim, quote the claim's own
+  equation in the same turn.
+- Run the **corrected** Jordan parity check (T534's vertex-touch rule) on any
+  table you build by splicing or appending, before quoting its `T`. The naive
+  check flags every concurrent object, including `kobon_8`.
 - Before claiming an object is unbuilt or a question unanswered, search your own
-  recent turns.
+  recent turns **and this file**.
 - A vertex where two lines cross has **four** sectors.
 - If you classify an object's triangles by orbits, verify the group acts on the
   object in the same turn.
 - If you have a theorem and a search, say which is which.
-- Before running a check on a new instance of an object your thread has already
-  analysed, search your own thread for the general version.
 - A strict interior-crossing test (`0 < t < 1`) is blind to collinearity and to
   exact vertex hits.
 - If you revive a family your own side buried, name the burial turn.
@@ -193,10 +189,9 @@ into a theorem, and it is a face enumeration, not a search.
 - Do not write "in complete generality", or "period", or "full stop", in a turn
   that also lists the cases you did not check.
 - A search result is not a theorem and does not license the word "cannot".
-- Report the fraction of the space your search covered, as T505 did.
+- Report the fraction of the space your search covered, as T505 and T539 did.
 - Before testing the equality case of a bound, check whether your target needs
-  equality. T491's cap ties its requirement against Tamura and needs the improved
-  even bound to miss it.
+  equality.
 - Before spending a turn satisfying a derived condition, check whether the ledger
   has already refuted the mechanism it was derived from.
 - If you run a corpus census, check whether it contains a counterexample to the
@@ -210,26 +205,21 @@ into a theorem, and it is a face enumeration, not a search.
   a row; test for nesting, not row length.
 - "I ran the actual construction" is a claim about identity.
 - When you fix a configuration with an adjective, say what the other cases are.
-- Cite the turn a mechanism came from, including when it is your own.
-- Never write `d <= 2c` without the word "observed" in the same sentence.
-- Do not concede to an argument that your own side has already refuted.
+- Cite the turn a mechanism came from, including when it is your own. T538 cited
+  nothing for T530's ceiling, in the same thread, eight turns later.
 - Before comparing a budget against a baseline, recompute the baseline.
 - If the corpus prints a `"count"` for a table, your enumeration matches it first.
-- Do not write `T <= floor(B/3)`, `F = B − 3T`, "zero slack", or "free segment
-  count" until you have checked the table for nested entries **and** short rows.
 - Agents do not set `tier`.
 - Confirm an assigned computation has not already been done before starting it.
 - Certifying an opponent's turn means re-generating the object, not re-reading it.
 - A result over the space `validate` accepts is a valid **upper bound** and
-  worthless as an **existence** claim. Reference data 42 is now the cheapest
-  available second gate; it is necessary, not sufficient.
+  worthless as an **existence** claim.
 - Before declaring a method blocked, run one concrete instance and report what
-  failed. T509 and T510 did this correctly for the missing tangent-circle data.
+  failed, as T509, T510 and T533 did.
 - When you concede, re-derive the step the argument actually rests on.
 - State the partition any counting bound rests on and what is in the leftover
   category.
 - **Check any new bound against KNOWN.md's own increments before banking it.**
-  This is the prohibition that would have saved thirty turns.
 - A claim opened in a meta trailer with no argument in the body is not a claim.
 - No sub-arrangement averaging upper bounds at `k = 14`.
 - No SAT proposal that does not state what it encodes differently from Savchuk.
@@ -240,4 +230,4 @@ into a theorem, and it is a face enumeration, not a search.
 - If you close a turn by promising a computation "next turn", deliver it next
   turn or open by saying why you did not.
 - Do not name `signotope-vs-chirotope-5-element-gate` as a next step unless you
-  run one in the same turn. Zero runs in 517 turns.
+  run one in the same turn. Zero runs in 542 turns.
