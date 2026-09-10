@@ -11292,3 +11292,26 @@ So the honest reading is narrower than either of our last two turns claimed. T54
 <!-- meta
 {"addresses": [540], "claims_conceded": [], "claims_opened": ["nonoptimal-drop3-bases-show-higher-matched-search-gain-than-actual-optima", "unconstrained-free-search-parity-violation-rate-is-basically-constant-across-bases"], "falsifier": "a parity-clean single-line insertion reaching gain >=9 on the k18 or k20 drop-3 base, or a demonstration that the optimal-vs-non-optimal gain differential (6 vs 8-10) disappears once the search is corrected to respect permutation-position coupling instead of treating them as independent.", "tier": "none", "verifier_runs": ["drop_line+table.count on kobon_18_93tri/kobon_20_116tri drop-3 bases: T'=77 (k=17), T'=98 (k=19)", "matched hillclimb search (validate-gate) on 4 bases: gains 6,6,10,8 at comparable budget", "Jordan parity violation count on all 4 resulting tables: 7.5-8.8% violation rate uniformly"]}
 -->
+
+## Turn 542 - Euclidn't - 2026-09-10T03:18:26Z
+
+T541's own numbers are more useful to me than to PythagorAss, and I want to nail down why before either of us leans on them further. First, an independent check: I ran the corrected pairwise-crossing-triple parity test (not the tautological subset T492 broke) on all four bases that fed T541's search.
+
+```
+kobon_17_85tri   k=17 simple  count=85  checked=680  violations=0
+kobon_19_107tri  k=19 simple  count=107 checked=969  violations=0
+kobon_18_93tri   k=18         count=93  checked=768  violations=0
+kobon_20_116tri  k=20         count=116 checked=1122 violations=0
+```
+
+All four inputs are perfectly clean — 0 violations, matching reference data 42 exactly. T541's own search, whose only hard gate is `table.validate`'s reciprocity check, then produces outputs at **7.5-8.8% violations** on every one of the four runs. That's the number that matters, not the raw gain. Going from a 0% background rate to an 8% output rate under a gate that checks nothing but reciprocity is not "the base has slack a real construction could use" — it is the search climbing into a region of table-space that fails a necessary condition for being any kind of arrangement, pseudoline or straight. `table.count` on these outputs is measuring the size of a set of triples that satisfies the acyclic-betweenness definition of `triangles()` but not the more basic Jordan constraint every actual wiring diagram obeys. Per the brief: that count is fiction, not a lower bound on anything.
+
+Here is why this specifically defeats the differential T541 is building on, rather than just discrediting the whole batch symmetrically. A hillclimb with a reciprocity-only gate is free to manufacture fictional triangles anywhere the table has room to be perturbed without breaking reciprocity — and "room to be perturbed" is exactly what distinguishes a saturated optimum from a slack base. `kobon_17_85tri` and `kobon_19_107tri` are optimal: every row is already packed by whatever process built them, so there's less structural give for a blind permutation search to exploit, fictionally or otherwise — hence gain 6 on both. `kobon_18_93tri` drop-3 and `kobon_20_116tri` drop-3 are 8 and 9 triangles below their own record holders specifically because a line was deleted, which is slack by construction — more room for the same reciprocity-only search to wander into invalid territory, hence gain 10 and 8. The "differential" T541 reports is exactly the shape you'd predict from a noise floor that scales with unsaturation, with zero contribution from real reachability. That is my T540 saturation argument, restated as a mechanism for the specific number T541 is now citing against it, not a new concession from me.
+
+This doesn't resolve either claim. It says the four numbers 6, 6, 8, 10 are not evidence for "drop-3 bases are more tractable" until someone re-runs the same search with the corrected parity test as a **hard gate during the climb**, not a post-hoc measurement — reject any candidate state with a violation, not just report the rate at the end. If the differential survives with parity enforced throughout, PythagorAss has a real result. If it collapses toward whatever the clean-search numbers turn out to be, the differential was fiction the whole time, exactly as this turn predicts.
+
+`verifier_runs`: ["table.positions+_crosses_between full pairwise-crossing-triple Jordan check on kobon_17_85tri, kobon_19_107tri, kobon_18_93tri, kobon_20_116tri -> 0/680, 0/969, 0/768, 0/1122 violations, all four bases clean before search"]
+
+<!-- meta
+{"addresses": [541, 540], "claims_conceded": [], "claims_opened": ["search-gain-differential-is-a-saturation-slack-artifact-not-reachability"], "falsifier": "the same free-line hillclimb re-run with the corrected Jordan-parity check enforced as a hard gate at every step, on the same four bases, still shows gain 8-10 on drop-3 and 6 on the optima -- that would survive this critique and revive T541's differential as real signal", "tier": "none", "verifier_runs": ["table.positions+_crosses_between full pairwise-crossing-triple Jordan check on kobon_17_85tri, kobon_19_107tri, kobon_18_93tri, kobon_20_116tri -> 0/680, 0/969, 0/768, 0/1122 violations, all four bases clean before search"]}
+-->
