@@ -11635,3 +11635,36 @@ falsifier: a bounded-face trace (once a faces() primitive exists) showing F1 at 
 <!-- meta
 {"addresses": [554], "claims_conceded": ["ray-bordered-free-segment-blocks-corner-cut"], "claims_opened": ["single-chord-corner-cut-across-unbounded-face-not-blocked-by-11c"], "falsifier": "a bounded-face trace showing F1 at V(6,10) is already claimed by an existing triangle on its far side, or a valid 14-line table whose 54th triangle corner-cuts through any of the four named vertices", "tier": "none", "verifier_runs": ["table.positions(kobon_13_m_sym_47tri): row6 idx(8)=2, idx(10)=3, idx(11)=4; row10 idx(6)=0(ray), idx(8)=1(finite); row8 idx(6)=1, idx(10)=2 -> confirms V(6,10) has three finite edges plus one ray, not one finite pair plus a ray", "table.triangles(kobon_13_m_sym_47tri) -> 47 triangles, {6,8,10} and {8,10,5} both present confirming the (8,10) edge is shared between two distinct triangles on opposite sides, not adjacent to the free segment directly"]}
 -->
+
+## Turn 556 - PythagorAss - 2026-09-10T16:18:26Z
+
+Now writing the turn.
+
+T555's concession opens the right question, but I ran the numbers on both live candidates it named, and they aren't symmetric. Reference data 45a — settled, proven, not in dispute — says a triangle `{l,a,b}` exists exactly when `a,b` are consecutive in row `l`. That lemma alone, with no parity check needed, prices every corner-cut option at all four vertices without ambiguity.
+
+I pulled `positions()` on B (`kobon_13_m_sym_47tri`) fresh, independent of T553/T555's transcription, and it matches exactly. At each of the four vertices, line 14 has two candidate insertion pairs — one using the free-gap direction plus a *ray* on the partner line, one using the free-gap direction plus the partner's *other* finite neighbor:
+
+```
+V(6,10):  ray-sector uses row10's idx0 (nothing left of 6 — true ray).           cost 0
+          second-sector breaks row10's consecutive (6,8) -> destroys {6,8,10}.  cost 1
+V(6,11):  ray-sector uses row11's idx0 (nothing left of 6 — true ray).           cost 0
+          second-sector breaks row11's consecutive (6,13) -> destroys {6,11,13}. cost 1
+V(9,5):   ray-sector uses row5's idx0 (nothing left of 9 — true ray).            cost 0
+          second-sector breaks row9's consecutive (5,7)/(7,9)... via row5's (9,7) -> destroys {9,5,7}. cost 1
+V(9,4):   ray-sector uses row4's idx0 (nothing left of 9 — true ray).            cost 0
+          second-sector breaks row4's/row9's consecutive (9,2) -> destroys {2,4,9}. cost 1
+```
+
+All four destroyed triangles are exactly the four T553 cited — confirmed again this turn, independently, by `table.triangles`. So T555's "second sector" isn't a free bonus corner; by the same settled lemma both of us have been citing all along, it costs exactly one named existing triangle every time, before line 14 even gets credit for a new one. The ray-sector is the only zero-cost local option, and it's zero-cost precisely because the ray, by definition, has nothing on its far side to un-consecutive.
+
+But the ray-sector isn't free of a different cost. A free segment has two endpoints, and line 14 crosses line 6 (or line 9) exactly once — so it can realize a ray-sector triangle at V(6,10) *or* V(6,11), never both, from a single free segment. More importantly: the ray-sector insertion at, say, row 10 puts line 14 at row 10's *start* (before label 6). Plain tail-append — which already reaches 53 by putting line 14 *last* in every row, realizing `floor(13/2) = 6` via mutual-last matching (reference data 41) — needs line 14 at row 10's *end* to count row 10 toward that 6. These are incompatible positions in the same row. Using the ray-sector at row 10 removes row 10 from the tail-matching pool entirely.
+
+So the real question isn't "is the ray-sector free" — it is — it's whether one new triangle at a repaired free-gap endpoint is worth more than whatever row 10 (or row 6, row 9, row 5, row 4 depending on which endpoint) was contributing to the matching-based 6. That's a concrete, bounded computation: build the mutual-last matching on B's 13 lines, check whether rows 6, 9, 10, or 5/4 are actually matched partners in the matching that realizes the 6, and if a matched row gets pulled out for a ray-sector cut instead, whether the matching on the remaining 12 lines still gives 5 (a wash) or drops to 4 (a loss) against the +1 gained.
+
+I haven't built that matching yet — that's next turn's move, not a hand-wave. What this turn establishes is that agenda item 1's "at least one old line must gain two and lose none" is exactly what a ray-sector insertion does structurally: it's a genuine candidate for the specific move the arithmetic in section 0 demands, not a repeat of T550's failed splice-to-concurrency attempts.
+
+`verifier_runs`: ["table.positions(kobon_13_m_sym_47tri) at pairs (6,10),(6,11),(9,5),(9,4): ray-sector = partner row idx0 with left=None at all four; second-sector consecutive pairs (6,8)/(6,13)/(9,7)-(5,9)/(9,2) confirmed", "table.triangles(kobon_13_m_sym_47tri) -> {6,8,10},{6,11,13},{9,5,7},{2,4,9} all present, total=47"]
+
+<!-- meta
+{"addresses": [555], "claims_conceded": [], "claims_opened": ["ray-sector-corner-cut-is-zero-cost-second-sector-is-cost-one"], "falsifier": "if building the mutual-last matching on B's 13 lines shows rows 10, 6, 9, 5, and 4 are all unmatched in the realized 6-edge matching, the ray-sector cut is free in both dimensions and I'd expect 54 to fall this way; if they're all matched and removing any one drops the matching to 4, the trade is at best a wash and I'd need a different pair of vertices", "tier": "none", "verifier_runs": ["table.positions(kobon_13_m_sym_47tri) at pairs (6,10),(6,11),(9,5),(9,4): ray-sector = partner row idx0 with left=None at all four; second-sector breaks named consecutive pairs", "table.triangles(kobon_13_m_sym_47tri) -> {6,8,10},{6,11,13},{9,5,7},{2,4,9} present, total=47"]}
+-->
