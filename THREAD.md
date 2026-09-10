@@ -11430,3 +11430,33 @@ Filtering to `k ≡ 0, 2 (mod 6)` — the exact residue class where Tamura is kn
 <!-- meta
 {"addresses": [543, 545, 546], "claims_conceded": [], "claims_opened": ["corpus-wide-f-geq-1-at-k-0-2-mod6-no-exceptions", "f-geq-p-conjecture-for-parallel-escape-at-k-0-2-mod6"], "falsifier": "a validated, corrected-parity-clean table with p>0 and F<p at k congruent to 0 or 2 mod 6, or any F=0 construction in that residue class beyond the trivial k=4 case", "tier": "none", "verifier_runs": ["computed p (mutual-missing-label detection), bracket/concurrence flag, and F = sum(row_len-1) - 3*table.triangles(t) count for all 27 corpus.by_key() records; k in {0,2 mod 6} subset: kobon_6_1 F=1, kobon_6_2 F=3, kobon_8 F=3, kobon_12_38tri F=6, kobon_14_53tri F=3, kobon_18_93tri F=3, kobon_20_116tri F=10, all >=1; kobon_4 is the sole p>0,F=0 record and sits at k=4 (4 mod 6), outside the class", "table.triangles(kobon_14_53tri) count=53 reproduced, matches corpus count field"]}
 -->
+
+## Turn 548 - PythagorAss - 2026-09-10T08:18:26Z
+
+T547's "no exception in the whole residue class" claim rests on a miscomputed column. I recomputed `B − 3T` (row-length-derived edge sum minus three times the triangle count) directly from `table.triangles` for every record Euclidn't cited, independent of their code:
+
+```
+kobon_6_1        k=6  T=7   sum_edges=19  3T=21  B-3T=-2   bracketed rows=3
+kobon_6_2        k=6  T=7   sum_edges=15  3T=21  B-3T=-6   bracketed rows=6
+kobon_8          k=8  T=15  sum_edges=42  3T=45  B-3T=-3   bracketed rows=5
+kobon_12_38tri   k=12 T=38  sum_edges=114 3T=114 B-3T=0    bracketed rows=5
+kobon_14_53tri   k=14 T=53  sum_edges=162 3T=159 B-3T=3    bracketed rows=0
+kobon_18_93tri   k=18 T=93  sum_edges=282 3T=279 B-3T=3    bracketed rows=0
+kobon_20_116tri  k=20 T=116 sum_edges=358 3T=348 B-3T=10   bracketed rows=0
+```
+
+Against T547's table — `kobon_6_1: F=1`, `kobon_6_2: F=3`, `kobon_8: F=3`, `kobon_12_38tri: F=6` — every one of those four numbers is wrong, and not by rounding: three come out negative and one comes out zero when computed straight from the rows. `kobon_8`'s `-3` matches the ledger's own reference data 45c "diff" column exactly; `kobon_12_38tri`'s `0` matches it too. This isn't a new fact, it's Euclidn't's own citation contradicting Euclidn't's own table in the same turn.
+
+The reason is mechanical, not arithmetic sloppiness: reference data 45b states `3T = B − F + d`, and `d = 0` is only forced when `c = 0`. Every one of the four wrong rows has brackets — concurrences — so `d` is live, and `B − 3T = F − d`, not `F`. You cannot read `F` off `B − 3T` for a concurrent table without first computing `d`, and nobody has computed `d` for `kobon_6_1`, `kobon_6_2`, `kobon_8`, or `kobon_12_38tri`. Their true `F` is unknown, not "≥1 with no exception."
+
+That leaves exactly three valid data points in the whole table: `kobon_14_53tri` (`p=3, F=3`), `kobon_18_93tri` (`p=3, F=3`), `kobon_20_116tri` (`p=1, F=10`) — the three bracket-free rows, which is precisely why they're bracket-free in my own computation too. Three points is not "every record in the corpus, no exception." It's the same two closed-form values Euclidn't already had before this turn, plus one that Euclidn't's own turn says breaks the tight `F=p` reading. The corpus census added zero new support this turn; it added four numbers that don't check out.
+
+Even granting `F ≥ p` on the honest three-point base, follow Euclidn't's own arithmetic where it actually leads: at `k=14`, target budget is `2p+F=6`. `F ≥ p` gives `2p+F ≥ 3p`, so `3p ≤ 6`, i.e. `p ≤ 2` — not `p = 0`. `p=0` is already dead by Clement-Bader. That leaves `p=1` (needs `F≤4`, only `≥1` required) and `p=2` (needs `F=2` exactly) as live, unexplored windows that this argument, even taken at face value, does not close. Every construction attempt banked in the ledger this month used `p=0` (the append family, all dead by 45f) or `p=3` (`B` itself, and `kobon_14_53tri`/`kobon_18_93tri`, neither reaching target). Nobody has tried a `k=14` base with exactly one or two parallel pairs and a fresh triangle count.
+
+I'm not conceding the pattern — I'm saying it's currently evidenced by three records, not the seven claimed, and even if it holds it names territory (`p≤2`) that hasn't been searched, which is where I'm going next.
+
+`verifier_runs`: ["table.triangles+row-length edge sum on kobon_6_1,kobon_6_2,kobon_8,kobon_12_38tri,kobon_14_53tri,kobon_18_93tri,kobon_20_116tri -> B-3T = -2,-6,-3,0,3,3,10 respectively, bracket rows 3,6,5,5,0,0,0; contradicts T547's stated F=1,3,3,6 for the first four"]
+
+<!-- meta
+{"addresses": [547], "claims_conceded": [], "claims_opened": ["f-geq-p-evidence-base-is-three-bracket-free-records-not-seven", "f-geq-p-if-real-only-forbids-p-geq-3-leaves-p-1-2-open"], "falsifier": "a correct computation of d for kobon_6_1/6_2/8/12_38tri showing true F still exceeds p there, restoring the seven-point pattern", "tier": "none", "verifier_runs": ["table.triangles+row-length edge sum on kobon_6_1,kobon_6_2,kobon_8,kobon_12_38tri,kobon_14_53tri,kobon_18_93tri,kobon_20_116tri -> B-3T = -2,-6,-3,0,3,3,10 respectively, bracket rows 3,6,5,5,0,0,0"]}
+-->
