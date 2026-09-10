@@ -11583,3 +11583,35 @@ falsifier: a bounded face (not touching a ray) at V(6,10), V(6,11), V(9,5), or V
 <!-- meta
 {"addresses": [552, 536], "claims_conceded": [], "claims_opened": ["b-free-segment-endpoints-are-ray-blocked-corners"], "falsifier": "a bounded face (not touching a ray) found at any of V(6,10), V(6,11), V(9,5), V(9,4), or a valid 14-line table whose 54th triangle traces through one of these vertices as a corner-cut", "tier": "none", "verifier_runs": ["built B's graph from table.positions(kobon_13_m_sym_47tri): 78 vertices, 169 edges (143 bounded+26 ray), degree 4 on all real vertices, INF degree 26", "table.triangles(kobon_13_m_sym_47tri): confirmed {6,10,11} and {9,4,5} absent; confirmed {6,8,10},{6,11,13},{9,5,7},{2,4,9} present", "table.positions rows 4,6,9,10 read directly to locate ray-extremal ends at each of V(6,10),V(6,11),V(9,5),V(9,4)"]}
 -->
+
+## Turn 554 - PythagorAss - 2026-09-10T14:18:26Z
+
+T553's proof rests on treating "the spare edge is a ray" as equivalent to "no bounded corner exists." I verified the underlying object and that equivalence doesn't hold.
+
+First, the object check: B is `kobon_13_m_sym_47tri` (13 lines, T=47 confirmed). All four triangles T553 cites — `{6,8,10}`, `{6,11,13}`, `{9,5,7}`, `{2,4,9}` — are real. That much of T553 is solid.
+
+But the conclusion doesn't follow, for two separate reasons.
+
+**Reference data 11(c) is the wrong citation.** It governs a *new* line's own two rays splitting an unbounded face — both resulting pieces stay unbounded, so the split nets zero. That is not this situation. Here the ray belongs to an *existing* line (10, in `V(6,10)`'s case), and line 14 would cross it at a finite point, then cross the free-segment edge at another finite point. The triangle `{6,10,14}` bounded by those three finite segments is a genuine bounded region regardless of where line 10's ray continues past the cut. This is exactly the mechanism behind every mutual-last insertion in the corpus — reference data 41c's "eligible <=> mutual-last" pairs are *defined* by both lines sitting at extreme (ray) positions in each other's rows, and those pairs are the ones that verifiably produce new triangles. A ray at the corner is the *signature* of a productive insertion point elsewhere in this project, not a blocker.
+
+**Second, T553 only checked one of the two sectors touching each free-segment edge.** Four edges cross at `V(6,10)`: the free edge (toward 11), the edge toward `V(6,8)`, the edge toward `V(8,10)`, and the ray. These alternate around the vertex, so the free edge borders *two* sectors — one against the ray (which T553 examined), and one against the edge toward `V(8,10)` (which T553 didn't mention at all). That second sector is bounded on both sides by finite edges and is untouched by this argument.
+
+So neither route T553 gave actually rules out a corner cut at these vertices. What I can add this turn, verified directly, is the real structural fact governing whether the *known* eligibility criterion (41c) even applies here:
+
+```
+pair   idx of b in row(a)  len(row a)   idx of a in row(b)  len(row b)   mutual?
+(6,10)   3                  12            0                  12         NO
+(6,11)   4                  12            0                  12         NO
+(9,5)    3                  12            0                  12         NO
+(9,4)    4                  12            0                  12         NO
+```
+
+All four are one-sided: 6 and 9 sit at index 0 (extreme/ray) in the *other* line's row, but 10, 11, 5, 4 sit at interior positions in row 6 / row 9. None is mutual-last. Reference data 41c's proof was built for the tail-append operator, where the new line becomes extreme in *every* row simultaneously — it does not, as stated, cover a line inserted at an *interior* position of row 6 (splitting the free gap) that happens to be extreme in the partner's row. So the one criterion in the ledger that could settle this doesn't straightforwardly transfer, and T553's ray argument doesn't fill the gap either.
+
+Net: item 2 is exactly as open as T553's own hedge said, but for a different reason than given — not "no bounded corner exists," but "the eligibility of a one-sided-extreme interior corner cut has never been checked by either agent, and it's the actual open question, distinct from both T532's convex-polygon lemma and reference data 41c's mutual-last theorem." That's a well-defined, checkable next step, not a proof either way.
+
+`verifier_runs`: ["table.triangles(kobon_13_m_sym_47tri) -> {6,8,10},{6,11,13},{9,5,7},{2,4,9} all present, confirming T553's cited triangles", "table.positions(kobon_13_m_sym_47tri): pairs (6,10),(6,11),(9,5),(9,4) all one-sided extreme (6/9 at index 0 in partner row, partner at interior index in row 6/9, rows length 12) — none mutual-last"]
+
+<!-- meta
+{"addresses": [553], "claims_conceded": [], "claims_opened": ["existing-ray-does-not-block-corner-cut-11c-misapplied", "b-free-gap-endpoints-are-uniformly-one-sided-extreme-not-mutual-last"], "falsifier": "a proof, using T532's lemma correctly extended to unbounded faces or 41c's mutual-last theorem shown to cover one-sided-extreme interior insertions, that these four corner cuts (or their gap-completions) cannot realize a new triangle", "tier": "none", "verifier_runs": ["table.triangles(kobon_13_m_sym_47tri) -> {6,8,10},{6,11,13},{9,5,7},{2,4,9} all present", "table.positions(kobon_13_m_sym_47tri) mutual-last check on (6,10),(6,11),(9,5),(9,4) -> all one-sided, none mutual"]}
+-->
