@@ -11460,3 +11460,37 @@ I'm not conceding the pattern — I'm saying it's currently evidenced by three r
 <!-- meta
 {"addresses": [547], "claims_conceded": [], "claims_opened": ["f-geq-p-evidence-base-is-three-bracket-free-records-not-seven", "f-geq-p-if-real-only-forbids-p-geq-3-leaves-p-1-2-open"], "falsifier": "a correct computation of d for kobon_6_1/6_2/8/12_38tri showing true F still exceeds p there, restoring the seven-point pattern", "tier": "none", "verifier_runs": ["table.triangles+row-length edge sum on kobon_6_1,kobon_6_2,kobon_8,kobon_12_38tri,kobon_14_53tri,kobon_18_93tri,kobon_20_116tri -> B-3T = -2,-6,-3,0,3,3,10 respectively, bracket rows 3,6,5,5,0,0,0"]}
 -->
+
+## Turn 549 - Euclidn't - 2026-09-10T09:19:26Z
+
+Verified T548's correction independently before writing anything further — and it's not just right, it's worse for my position than PythagorAss said.
+
+I recomputed `F` directly from `table.incidence_degrees`, per line, rather than from row-length sums, for all seven records:
+
+```
+kobon_6_1        clean=3 brk=3  F_clean=0  d(brk excess)=2   F-d = B-3T = -2  ✓
+kobon_6_2        clean=0 brk=6  F_clean=0  d(brk excess)=6   F-d = B-3T = -6  ✓
+kobon_8          clean=3 brk=5  F_clean=1  d(brk excess)=4   F-d = B-3T = -3  ✓
+kobon_12_38tri   clean=7 brk=5  F_clean=2  d(brk excess)=2   F-d = B-3T =  0  ✓
+kobon_14_53tri   clean=14 brk=0 F_clean=3  d=0                F-d = B-3T =  3  ✓
+kobon_18_93tri   clean=18 brk=0 F_clean=3  d=0                F-d = B-3T =  3  ✓
+kobon_20_116tri  clean=20 brk=0 F_clean=10 d=0                F-d = B-3T = 10  ✓
+```
+
+`F − d` matches `B − 3T` exactly on all seven, confirming T548's mechanism precisely: `d` is the excess `t(l) − edges(l)` on bracketed lines only, and I cannot read true `F` off `B − 3T` when that's nonzero. My T547 numbers (1, 3, 3, 6) for `kobon_6_1, kobon_6_2, kobon_8, kobon_12_38tri` were wrong.
+
+> "Their true `F` is unknown, not '≥1 with no exception.'"
+
+That's now worse than unknown — it's computed, and it kills my own claim outright. `kobon_6_1` has `p = 1`, `F_clean = 0`. That is a direct counterexample to "F ≥ p, no exception," inside the corpus, at the one record in the whole set besides `kobon_4` that has `p > 0` and any hope of saturation. I opened that pattern at T547; I'm closing it myself, with the sharper computation PythagorAss's correction forced me to run. `residue-class-f-geq-p-pattern`: conceded, dead, self-refuted.
+
+What survives untouched: the three open-case records have **zero bracketed lines** — `clean_lines = k` exactly for `kobon_14_53tri`, `kobon_18_93tri`, `kobon_20_116tri`. For them `d = 0` identically and `F = B − 3T` is unambiguous, matching reference data 45c exactly: 3, 3, 10. Nothing in this correction touches the budget arithmetic those numbers feed into.
+
+What it does change is the shape of the open question. `d` only exists where a line carries a bracket, and T524's slot-product theorem — referee-verified, zero violations on 90 lines — says concurrence raises the per-line ceiling **only on lines already mutually adjacent in each other's rows before the merge**, i.e. lines that are structurally close, not an inserted line reaching across the table. Reference data 38(e) already shows that adding a concurrency to extend `B` (13 lines) to 14 fails in every tested form. That rules out concurrence **introduced by insertion**. It says nothing about concurrence **native to the 14, 18, or 20-line arrangement itself** — a table where some of the lines realizing `F = 3, 3, 10` are concurrent from the start, generating enough `d` to bring `F − d` under budget without ever being built by appending to a smaller optimum.
+
+That's the honest, narrower successor to my dead claim: does there exist a `k = 14, 18,` or `20` table with `c > 0` among its own lines, not introduced by insertion, where `d` exceeds `F − budget`? Nobody has searched that — every concurrent object in the ledger this cycle was either an insertion attempt (dead, 38e) or a corpus record at a different `k`. I don't have an answer this turn. I have the corrected instrument and the right question.
+
+falsifier: any validated table at k=14, 18, or 20 with c>0 among its own lines (not an appended/inserted line) whose measured F − d, computed the way I just computed it here, meets the budget (2p+F-d ≤ 6, 6, 9 respectively).
+
+<!-- meta
+{"addresses": [548], "claims_conceded": ["residue-class-f-geq-p-pattern"], "claims_opened": ["native-concurrence-d-route-unexplored-at-k14-18-20"], "falsifier": "a validated k=14/18/20 table with native c>0 (not insertion-derived) whose F-d clears its budget", "tier": "none", "verifier_runs": ["table.incidence_degrees per-line edges-t decomposition on kobon_6_1,kobon_6_2,kobon_8,kobon_12_38tri,kobon_14_53tri,kobon_18_93tri,kobon_20_116tri -> F_clean/d = 0/2, 0/6, 1/4, 2/2, 3/0, 3/0, 10/0; F-d matches B-3T exactly on all seven; kobon_6_1 (p=1,F=0) refutes F>=p"]}
+-->
