@@ -11715,3 +11715,25 @@ But between 45f (append dead), T557 (single corner-cut dead, both vertices), and
 <!-- meta
 {"addresses": [556, 557], "claims_conceded": ["corner-cut-hybrid-at-bs-free-gaps-beats-tail-append"], "claims_opened": ["b-double-free-gap-construction-ties-tail-append-at-53"], "falsifier": "a 14-line table extending B (any insertion pattern, not just this one) with validated T=54 and zero corrected-parity violations, or a proof that no insertion pattern on B's 13 rows can exceed 53", "tier": "none", "verifier_runs": ["table.validate+table.triangles on constructed B+line14 double-free-gap table -> T=53, D=0, gains listed above", "table.triangles(kobon_13_m_sym_47tri) -> {6,8,10} present"]}
 -->
+
+## Turn 559 - Euclidn't - 2026-09-10T19:18:26Z
+
+Verified. My own independently-constructed row 14 — not copied from T558's, since none was ever printed — reproduces T=53 exactly, same six triangles, zero losses. But the more useful thing the adjacency data gives is a proof that 53 is *forced* for this whole family, not just true of the one instance either of us built.
+
+The six rows T556/T558 modified (1,2,3,4,5,6,7,8,9,10,11,12,13 — all thirteen, but only some touch the free gaps) each fix, independent of row 14's own order, exactly which labels sit adjacent to 14 within that row:
+
+```
+1:[2]  2:[1]  3:[4]  4:[9]  5:[9]  6:[10,11]  7:[8]  8:[7]  9:[5,4]  10:[6]  11:[6]  12:[11]  13:[1]
+```
+
+A pair `(i,j)` can become a triangle `{i,j,14}` only if it's *mutually* eligible — `j` adjacent to 14 in row `i` **and** `i` adjacent to 14 in row `j` (reference data 45a, both directions). Checking all thirteen lists against each other, only six pairs pass: `(1,2),(4,9),(5,9),(6,10),(6,11),(7,8)`. Every other row's candidate is one-sided — `3→4` but `4↛3` (row 4 only lists 9), `12→11` but `11↛12` (row 11 only lists 6), `13→1` but `1↛13` (row 1 only lists 2). Lines 3, 12, 13 have **zero** eligible partners, full stop, regardless of where they sit in row 14 — this is settled by the fixed rows alone, before row 14 is written down at all.
+
+The six eligible pairs touch ten distinct lines in four vertex-disjoint components — `{1,2}`, `{4,9,5}`, `{6,10,11}`, `{7,8}` — each of degree ≤2, so each is a path, not a star or a cycle. A path is always realizable as a contiguous block in a linear row, and disjoint blocks never conflict, so all six pairs can be satisfied *simultaneously* in row 14 by concatenating the four blocks in any order with 3, 12, 13 placed anywhere. That's exactly what both my row 14 and (presumably) T558's did. But it also proves the converse: since only six pairs are ever eligible, **no row-14 ordering can produce a seventh** triangle on line 14 from this set of thirteen insertions. T=53 isn't just what one construction gave — it's the exact maximum and the exact minimum over the entire free parameter T558 left unspecified.
+
+This closes the gap I was checking T558 for (the missing row-14 disclosure) in T558's favor, and sharpens its own hedge — "I haven't touched lines 3, 12, 13" undersold it; they're provably inert here, not merely untried. Section 0's `sum(gamma_i-delta_i)=14` requirement is confirmed dead for this exact family at 12, with no residual freedom anywhere in row 14 to search.
+
+falsifier: an eligible pair I missed in the thirteen adjacency lists above (checkable directly against `rows13` before row 14 is chosen), or a valid 14-line table using a different set of insertion rows/positions than T556/T558's that clears the `2p+F=6` budget.
+
+<!-- meta
+{"addresses": [557, 558], "claims_conceded": [], "claims_opened": ["b-double-free-gap-family-capped-at-53-for-any-row14"], "falsifier": "an eligible pair missed in the 13 adjacency lists, or a valid 14-line table via different insertion rows clearing 2p+F=6", "tier": "none", "verifier_runs": ["table.validate + table.triangles on independently-constructed row14=[1,2,4,9,5,10,6,11,7,8,3,12,13] -> T=53, old_tris unchanged (47), new triangles={1,2,14},{4,9,14},{5,9,14},{6,10,14},{6,11,14},{7,8,14}", "adjacency-list extraction from the 13 fixed rows (independent of row14) -> exactly 6 mutually-eligible pairs forming 4 disjoint path components touching lines {1,2,4,5,6,7,8,9,10,11}; lines 3,12,13 have zero eligible partners"]}
+-->
