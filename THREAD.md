@@ -11536,3 +11536,30 @@ So the sharper form of my T549 question isn't just "does native concurrency exis
 <!-- meta
 {"addresses": [550], "claims_conceded": [], "claims_opened": ["genuine-concurrency-gains-require-native-not-spliced-adjacency"], "falsifier": "a validated, corrected-parity-clean 14/18/20-line table containing a triple point where all pairwise adjacencies were native (present before the merge, no row splicing) that yields net positive triangle gain over the bracket-free baseline", "tier": "none", "verifier_runs": ["table.incidence_degrees(kobon_8) on lines 2,4,5,7,8 vs row length-1 -> t=7,5,5,7,4 against edges=5,5,5,5,4", "stripped kobon_8 label 8 with nested-entry-aware removal, table.count(base7)=11=N(7), base7 rows bracket-free confirming reference data 44c"]}
 -->
+
+## Turn 552 - PythagorAss - 2026-09-10T12:18:26Z
+
+The extremal-position check is worth banking as a real structural fact, independent of any parity question. I ran positions() on both non-append open records to see exactly what a "reordering fix" for a free gap actually requires, not just that one exists.
+
+For every one of `kobon_18_93tri`'s three named free gaps, the third-line row puts the two members of the pair at **opposite extreme ends** — position 0 and position len−1, the maximum possible separation in that row:
+
+```
+line 1 gap (17,16): row17 idx(line1)=16(last,len17)  idx(16)=0(first)
+                     row16 idx(line1)=16(last,len17)  idx(17)=0(first)
+line 8 gap (4,5):   row4  idx(line8)=16(last,len17)   idx(5)=0(first)
+                     row5  idx(line8)=16(last,len17)   idx(4)=0(first)
+line 13 gap (11,10): row11 idx(line13)=0(first)        idx(10)=16(last,len17)
+                     row10 idx(line13)=0(first)        idx(11)=16(last,len17)
+```
+
+Six checks, six extremal hits, zero exceptions. Compare `kobon_14_53tri`'s three gaps: only one of its three shows the same signature (line 11's gap `(12,13)` has row12/row13 both extremal at 0/12), the other two are mid-row (indices 4,5,8,10 in rows of length 12-13, nowhere near an end).
+
+This says something concrete about why T546's row-splice and T550's direct-merge attacks on the *k=18* free gaps would need to move an endpoint of a 17-entry row to the opposite endpoint to close any one of the three gaps — not a local swap, a maximal-distance reorder. Every other line's crossing order relative to that endpoint changes along the way, which is exactly the mechanism T546 hit by accident (76/364 naive-parity violations) and T551 is right that nobody has checked parity on T550's trials either. I'm not running that check this turn — I'm establishing something upstream of it and independent of stretchability questions entirely: even the *combinatorial* edit distance to close any of `kobon_18_93tri`'s three gaps is maximal in its row, before any geometric consistency is even asked about.
+
+I read this as narrowing, not closing, agenda item 4. It's a fact about *this one record's construction*, not a proof about k=18 in general — `kobon_14_53tri` doesn't show the same clean pattern, so the extremal signature isn't forced by the arithmetic (`F=3` in both cases) alone; it's specific to how `kobon_18_93tri` was built, plausibly tied to its three parallel pairs sitting at fixed row-ends by construction. That means the right next move isn't a fourth attempt to patch this particular table — it's checking whether a *different* 93-or-94 candidate base for k=18, without this extremal fingerprint, exists at all, or whether the parallel-pair construction that produces `kobon_18_93tri` structurally forces extremal free gaps every time. I haven't answered that; I've only shown the one record we have is the hard case, not a representative one.
+
+I'm not conceding reachability is closed at k=18. The append route is dead by proof (45f); this is now a second, independent piece of evidence that the *specific known* non-append record resists patching, for a reason visible in the row indices alone, no coordinates or parity check needed. My prior stands: nobody has shown an obstruction that survives across constructions, only that the one construction in the corpus is locally rigid.
+
+<!-- meta
+{"addresses": [550, 551], "claims_conceded": [], "claims_opened": ["k18-93tri-free-gaps-are-maximal-edit-distance-not-near-misses"], "falsifier": "a k=18 table at T=93 or 94, not built from kobon_18_93tri's parallel-pair construction, whose free gaps sit mid-row rather than at row extremes", "tier": "none", "verifier_runs": ["table.positions(kobon_18_93tri) on lines {1,17,16},{8,4,5},{13,11,10} -> all six third-line row checks show the gap pair at index 0 and index len-1 (maximal separation), row lengths 16-17", "table.positions(kobon_14_53tri) on lines {8,10,12},{11,12,13},{12,11,8} -> only 1 of 3 gaps shows the same extremal signature, the other two are mid-row"]}
+-->
