@@ -11844,3 +11844,29 @@ So I'm not disputing T563's core point — the fifty-four table is unverified as
 <!-- meta
 {"addresses": [563], "claims_conceded": [], "claims_opened": ["b-needs-numeric-straightening-not-symbolic-order-type-solve"], "falsifier": "a real-numbered straightening descent on B's table constraints (mirror-symmetric or general) that fails to converge after a substantial run would weigh toward non-stretchability; a converged rational witness verified by kobon.verify.triangles would settle 54 outright.", "tier": "none", "verifier_runs": ["grep -rl 'straighten' --include=*.py . -> only kobon/records.py, docstring only, no implementation", "corpus.by_key()['kobon_13_m_sym_47tri'] keys -> {key,k,count,title,table}, title='13-Line Solution (47 Triangles) by Kabanovitch', no provenance or coordinates field"]}
 -->
+
+## Turn 565 - Euclidn't - 2026-09-11T01:17:26Z
+
+T564's correction of my own T563 framing is right, and I'm conceding it:
+
+> "Solve a 23-parameter symbolic system for the order type" overstates the task... The narrower, correct task is: run a straightening heuristic — numeric descent against B's table constraints, symmetric ansatz optional, rational snap, exact re-verification.
+
+That's airtight: realizability of one specific, small, simple order type is a bounded search question in the literature (Bartholdi-Blanc-Loisel), not an existential-theory-of-reals elimination. I overstated the machinery needed. Conceded.
+
+But I can do better than hand this off as an unrun heuristic. Agenda item 2 has been sitting since T536 asking someone to build the corner-cut walk for exactly this situation, and it applies to T560/561's table directly — not to test stretchability yet, but to test the *prior* question of whether the table is even a valid extension by a continuous curve.
+
+I extracted, from each existing row's own printed data (no coordinates), where line 14 sits relative to its neighbors — the flanking label(s) at 14's insertion point in each of the 13 rows. Then I walked row 14 itself, `[2,3,7,8,12,13,10,6,11,4,9,5,1]`, and checked each of its 12 consecutive transitions for a shared vertex: does the flank of 14's crossing on line *a* include *b*, and vice versa? A simple vertex has exactly two lines through it and exactly four wedges, one per ray-pair, so a mutual flank match is a *guaranteed* local face — no coordinates needed, no face lattice needed, this is T532/T536's lemma at its base case.
+
+Result: **exactly 7 of the 12 transitions are mutual-flank matches** — `(2,3),(7,8),(12,13),(10,6),(6,11),(4,9),(9,5)` — and these are *precisely* the seven pairs that produce the new triangles. That's not a coincidence, it's forced: a triangle `{a,b,14}` requires 14 to cut the corner at `V(a,b)`, so every triangle-producing step must be a shared-vertex step, and here all seven are, confirmed by elementary vertex geometry alone.
+
+**The other 5 are not vertex-adjacent: `3→7`, `8→12`, `13→10`, `11→4`, `5→1`.** These don't need to produce triangles — they're the connective tissue between corner-cuts — but for the curve to be topologically consistent at all, each pair still has to sit on the boundary of some *single* common face of B, which for a non-adjacent pair could be any bounded or unbounded face, not just a wedge at one vertex. That's a strictly harder question than the shared-vertex case, and it requires the actual face lattice (78 vertices, ~169 edges, per item 2's own count) — which nobody has built.
+
+I'm not claiming any of the five fails. Inventing a failure I haven't checked would be worse than admitting the gap, and my brief holds me to that. What this does is replace T562-564's framing — "reconstruct ~23 real coordinates" or "run a heuristic descent" — with a finite, named checklist: five specific pairs of edges, each needing one specific face-membership fact from B's own combinatorics. If even one of the five provably shares no common face, the table isn't a pseudoline extension at all and no numerical descent could ever converge on it — which would make the heuristic search T564 proposes a wasted turn before it starts. If all five check out, *then* the heuristic search is the right next move, and only then.
+
+This is where item 2 was always pointing and where the debate should go next, not toward coordinates.
+
+verifier_runs: ["table.validate + table.triangles on independently-rebuilt kobon_13_m_sym_47tri+line14 (insertions per T560/561's description) -> T=54, 0 old triangles lost, new triangles {2,3,14},{4,9,14},{5,9,14},{6,10,14},{6,11,14},{7,8,14},{12,13,14}, all 14 rows length 13 (p=0)", "flank(row_a,14) computed for all 13 rows from the rebuilt table, checked mutual-match against each of the 12 consecutive pairs in row 14 -> 7 matches (2,3)(7,8)(12,13)(10,6)(6,11)(4,9)(9,5) exactly equal to the new-triangle set, 5 non-matches (3,7)(8,12)(13,10)(11,4)(5,1)"]
+
+<!-- meta
+{"addresses": [563, 564], "claims_conceded": ["stretchability-of-b-plus-14-needs-23-parameter-symbolic-elimination"], "claims_opened": ["b-plus-line14-walk-has-five-unverified-non-corner-transitions"], "falsifier": "a face-adjacency proof (or explicit coordinates) confirming all 5 flagged transitions share a common face of B would move me toward treating the 54-table as a genuine pseudoline extension; a proof that even one cannot share a common face kills the table outright regardless of any coordinate search", "tier": "none", "verifier_runs": ["table.validate + table.triangles on independently-rebuilt kobon_13_m_sym_47tri+line14 -> T=54, 0 lost, 7 new triangles match T560/561 exactly, p=0", "mutual-flank check on all 12 consecutive row-14 transitions -> 7 corner-cut matches equal to the new-triangle set, 5 non-adjacent transitions (3,7)(8,12)(13,10)(11,4)(5,1) unresolved"]}
+-->
