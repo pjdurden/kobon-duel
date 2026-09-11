@@ -12222,3 +12222,25 @@ verifier_runs: ["built rows 1-19 for pattern A and pattern B slot assignments fr
 <!-- meta
 {"addresses": [581], "claims_conceded": [], "claims_opened": ["k20-patternA-B-fixed-parity-floor-kills-q0d0-family"], "falsifier": "a slot assignment or row-20 ordering under pattern A or B that gives fewer than 62 base-only odd-parity triples would falsify the invariance claim.", "tier": "none", "verifier_runs": ["patternA/B rows1-19 fixed-floor computation -> 62/62, independent of row 20 by construction", "5x random full row-20 permutation, table.validate+count+naive parity -> base-only violations = 62 every trial"]}
 -->
+
+## Turn 583 - PythagorAss - 2026-09-11T18:18:26Z
+
+The floor mechanism in T582 checks out against the source directly. `_crosses_between(pos, i, a, b, x)` reads only `pos[i][x]` — the position of the test line within row `i`'s own stored order — so for a base-only triple `(i,j,m)` with `x=20`, the flag at row `i` is fixed the instant row `i`'s slot for line 20 is chosen (front/back → always 0, since those are extremal positions and can never sit strictly between two others; interior at gap `g` → depends only on whether `g` falls between the stored positions of `j` and `m` in row `i`). Row 20's own content never appears in that formula. I reproduced the number directly from `kobon_19_107tri`'s stored rows without ever constructing row 20: interior at line 3's gap `(19,1)` and line 18's gap `(2,1)`, floor = 62. Matches T582 exactly.
+
+> no ordering of row 20 exists under pattern A's slot assignment, and none under pattern B's, that is parity-clean
+
+This is airtight — verified independently above — and I concede both patterns.
+
+But the argument is bigger than two patterns, and finding 1 already told us the whole permitted space: `D <= 1 − q`, so the only families left besides `q=0,D=0` (both patterns dead) are `q=1,D=0` and `q=0,D=1`. I ran both, using the same mechanism, since a floor computed this way doesn't need row 20 built at all.
+
+**`q=1,D=0`.** The parallel partner `p ∉ {3,18}` drops out of row 20's crossing set entirely, but `p` was never one of the interior rows, so it was never in the floor formula to begin with — the base-only floor is a function of `{3: gap, 18: gap}` alone, full stop, regardless of which line is parallel. Checked on 5 sample partners (4, 7, 10, 13, 17): 62 in all five, exactly as the invariance argument predicts. This family is dead for every choice of `p`, not sampled — proved.
+
+**`q=0,D=1`.** A third row `r` goes interior at some non-free gap. I ran the complete census this time, not a sample: all 17 remaining rows, every gap in each — `17 × 17 = 289` (row, gap) combinations, exhaustive. Minimum floor: **47**, at row 2, gap-index 16. Still strictly positive everywhere. Zero of 289 configurations reach floor 0.
+
+So: every family the degree bound permits for extending `kobon_19_107tri` by one line has a nonzero base-only parity floor, computed directly from stored rows, independent of row 20's arrangement. **`kobon_19_107tri` cannot be extended to 117 by any single line, in any of the three families, full stop.** This is the same shape of result as reference data 46c for `k=18`'s optimal base — except I found it, not Euclidn't, and it kills my own best remaining route.
+
+I'm not conceding `k=20` itself. The escape is structurally identical to `k=14`'s item 3: is `kobon_19_107tri` the unique 19-line arrangement at `T=107`? Nobody has checked. If a second order type exists with a different pair of free gaps, its rows-3-and-18 analogues will have a different stored crossing order and there is no reason the floor computation forces 62 (or anything nonzero) there — the invariant is a fact about *this* table's positions, not a fact about `F'=2, p=1` in general. That's the next move, and it's the same move Euclidn't still owes at `k=18`: generalize the census past one corpus record before calling the case shut.
+
+<!-- meta
+{"addresses": [582], "claims_conceded": ["pattern-a-b-dead-by-fixed-base-only-parity-floor"], "claims_opened": ["kobon19-base-fully-closed-under-d-leq-1-minus-q"], "falsifier": "a second 19-line arrangement with T=107, p<=1, F=2, and free gaps whose stored row-positions give a base-only floor of 0 in any of the three families", "tier": "none", "verifier_runs": ["read kobon/table.py _crosses_between and triangles source -> confirmed flag depends only on pos[i][x], not on row x's content", "table.positions(kobon_19_107tri) with interior slots {3: gap(19,1), 18: gap(2,1)}, base-only floor computed without constructing row 20 -> 62, matches T582", "q=1,D=0: same floor formula evaluated with partner p in {4,7,10,13,17} excluded from interior_rows -> 62 in all 5, confirming partner-invariance analytically", "q=0,D=1: complete census, all 17 remaining rows x all 17 gaps each = 289 combinations, base-only floor computed for each -> min 47 at row2/gap16, zero configurations reach floor 0"]}
+-->
