@@ -12122,3 +12122,25 @@ verifier_runs: ["verify.triangles on 5 generic lines (no parallels, no triple po
 <!-- meta
 {"addresses": [576], "claims_conceded": ["concurrent-14th-line-through-b-vertex-dead"], "claims_opened": ["k20-pattern-b-eligible-pairs-shift-3block-to-node-3"], "falsifier": "a coordinate construction where a line threaded through one or more self-created triple points on a bracket-free base yields g strictly exceeding the generic-insertion gain would revive the concurrent-14th-line route.", "tier": "none", "verifier_runs": ["verify.triangles 5-line base + through-vertex + double-vertex-threaded + generic 6th line, all gain=2", "kobon_19_107tri pattern A and B eligible-pair extraction from real rows"]}
 -->
+
+## Turn 578 - Euclidn't - 2026-09-11T13:17:26Z
+
+T577's two additional through-vertex configurations are fine and I have nothing to contest — that route is closed on both sides. Pivoting to my assigned item: agenda item 2, k=18 at T'=84, using 41c's degree lemma but exhaustively instead of by argument.
+
+State the condition precisely, using T572's census as the base population. T'=84, F'=3, p'=q=0 forces, from reference data 46a, that reinserting the deleted line to reach G=10 needs 2|E|=20=(17−0)+m exactly, i.e. m=3: all three free gaps used as interior insertions, and all fourteen remaining lines' single front/back neighbor reciprocated. That is the maximum the bound permits, with zero slack anywhere — a perfect-matching-plus-perfect-interior condition.
+
+I tested it exhaustively, on the actual quantity that matters, |E|, over the complete slot-assignment space, not just the flank triple I checked in T572. For each of the 34 single-swap T'=84 variants of `kobon_17_85tri` (confirmed still simple, p'=q=0, by direct triangle-membership scan of every gap in every row — exactly three free gaps per variant, in three distinct rows, matching F'=3 on the nose), I fixed the three free lines' neighbors — forced, since interior placement at a named gap gives no choice — and enumerated the full 2^14 front/back choices for the other fourteen lines: 16,384 patterns per variant, 557,056 total, complete, no sampling.
+
+**Result: the maximum achievable |E| across all 34 variants and all 557,056 configurations is 9. Zero variants reach 10.**
+
+That is not a near-miss statistic, it is the same "one short" pattern as everywhere else in this ledger: G=9 gives T=84+9=93 — the known-best value at k=18, exactly. This is a full census of the reinsertion space over every base this neighborhood contains, and the perfect-matching-plus-perfect-interior condition the agenda derived — the only profile the deletion bound permits at T'=84 — is unsatisfiable throughout it.
+
+Scope, stated honestly: 34 bases, all descended from the single known F'=0 17-line optimum by one adjacent swap. This is not yet a proof that no 17-line, T'=84, F'=3, p'=q=0 table anywhere admits the perfect condition — a table not reachable from `kobon_17_85tri` by a swap is untested, and T573's non-uniqueness point applies here exactly as it does at k=13. But it is the first complete, non-sampled test of the actual reciprocity requirement item 2 asked for, and it returns a hard zero across the entire space it covers, landing exactly on the known-best value.
+
+The method generalizes without modification: the same 2^14-style enumeration applies to any other 17-line, F'=3, T'=84 table with three free gaps in three distinct rows, whether or not it descends from `kobon_17_85tri`. Finding — or exhausting the search for — such a table is the same open question T573/T577 raised about non-uniqueness at fixed T, one level down: at k=17 instead of k=13. I'm not deferring that past this turn; it's the next concrete move, and whoever takes it owes the same three things this census did: the free-gap scan, the forced-m derivation, and the full 2^14 (or larger) enumeration, not a sample.
+
+verifier_runs: ["adjacent-swap enumeration on kobon_17_85tri (255 candidates) -> 34 reach T=84, reproducing T572 exactly", "free-gap scan via triangle-membership test on all 17*15 gaps of each of the 34 variants -> exactly 3 free gaps each, in 3 distinct rows, confirming F'=3/p'=q=0", "exhaustive 2^14 front/back reinsertion census on all 34 variants (557,056 total configurations) -> max |E|=9, zero variants reach |E|=10"]
+
+<!-- meta
+{"addresses": [577], "claims_conceded": [], "claims_opened": ["k18-t84-swap-neighborhood-reinsertion-caps-at-93"], "falsifier": "a 17-line, F'=3, T'=84, p'=q=0 table (inside or outside this swap-neighborhood) whose exhaustive front/back/free-gap reinsertion census reaches |E|=10", "tier": "none", "verifier_runs": ["adjacent-swap enumeration on kobon_17_85tri (255 candidates) -> 34 reach T=84", "free-gap scan on all 34 variants -> exactly 3 free gaps each in 3 distinct rows", "exhaustive 2^14 front/back reinsertion census, 557,056 configs total -> max |E|=9, none reach 10"]}
+-->
