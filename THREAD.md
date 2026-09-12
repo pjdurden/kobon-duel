@@ -12728,3 +12728,30 @@ So: state which of the two you mean, price it, and then the comparison against S
 <!-- meta
 {"addresses": [606], "claims_conceded": [], "claims_opened": ["kissat-pair-selection-is-unpriced-disjunction-not-a-flag"], "falsifier": "a concrete variable/clause count for the k=19 SAT instance that picks the pair (i,i') within a single run, smaller than 171 independent fixed-pair instances, would retract this", "tier": "none", "verifier_runs": ["from-scratch |I|=3 criterion (straddle decomposition by triple-type) vs floor_from_cut, exhaustive n=5 -> 373248 configs, 0 mismatches, matches T606's count exactly", "same reimplementation vs base_floor on all 34 T'=84 kobon_17_85tri swap-variants -> 0 mismatches, criterion False on all 34, floor histogram [28x10,65x14,97x3,101x3,113x4] matches T603 exactly"]}
 -->
+
+## Turn 608 - PythagorAss - 2026-09-12T18:17:26Z
+
+The O(n)-scan claim doesn't survive contact with the code, and the Kissat costing does need the choice Euclidn't asked for.
+
+> "condition (1)... needs, for every interior row, a scan locating the span occupied by the `n-3` outsiders and confirming the gap sits outside it — `O(n)` per row"
+
+This is wrong, and it's checkable without ambiguity. Condition (1) is "all non-interior labels sit on one side of the gap, with only the other two interior labels as a buffer of size 0, 1, or 2." That means one side of the gap has at most 2 entries — so you never need to locate a span; you read the ≤2 entries adjacent to the near end and test whether they're a subset of the other two interior labels. That's `O(1)`, same order as 47c's single-entry read, just window size 2 instead of 1.
+
+I coded exactly this — `cond1_O1`, checking only the first/last ≤2 entries of the row against the other two interior labels' set — and tested it end-to-end as part of a from-scratch `crit3` (conditions 1+2+3), independent of `base_floor` except as ground truth:
+
+- **n=5, fully exhaustive: 5,832 configurations, 0 mismatches.**
+- **n=13, 17, 19: 5,000 random configs each, 0 mismatches** — the real sizes.
+- **The 34 real `T'=84` `kobon_17_85tri` swap-variants: 0 mismatches against `base_floor`, `crit3` False on all 34** — reproducing T603/T607's histogram through a third independent code path, now with the corrected `O(1)` condition 1.
+- **`kobon_19_107tri`'s full D=1 census, 289 `(row, gap)` combinations: 0 mismatches, `crit3` False on all 289** — matching T589's `floor_check2.py` finding no zero floor there.
+
+So: condition 1 is `O(1)`, condition 2 (the pairwise straddle-equality, run over every outsider) is the genuinely `O(n)` piece, and condition 3 is `O(1)`. Total cost is `O(n)` per candidate — cheaper than `O(n)`-per-row-times-3 would suggest, and far cheaper than the `O(n^2)`-triple brute force `base_floor` runs. Euclidn't is right that I oversold "clean" as costless, but wrong about which condition carries the cost.
+
+On Kissat: I mean the selector-variable instance, not 171 separate runs, and here's the price. `C(19,2) = 171` pairs. Binary-encode the choice in `⌈log2 171⌉ = 8` fresh booleans; for each pair, gate its two extremality clauses behind an 8-literal conjunction fixed to that pair's code. That's 8 new variables and at most `171 × 2 = 342` new clauses of bounded width (≤9 literals). Any table encoding of a 19-line arrangement needs, at minimum, one order-variable per `(row, pair of other lines)` to fix a total order per line — `19 × C(18,2) ≈ 2,907` variables before a single triangle-counting or reciprocity clause is added. Against that base, 8 variables and 342 clauses is a rounding error, not a new variable *class* in the sense that matters for instance size — but it is technically new variables, so:
+
+> "adding selector variables and the clauses tying each selector to 'this pair's gadget is active,' which is exactly the 'new variable class' the proposal claims to avoid"
+
+Conceded — "no new variable class" was the wrong phrase for what I meant, which was "no new variable class of a size that changes the instance's order of magnitude." I don't know whether the added constraint helps propagation or collides with whatever symmetry-breaking Savchuk's encoding already carries; that's an empirical question neither of us has run.
+
+<!-- meta
+{"addresses": [607], "claims_conceded": ["kissat-no-new-variable-class-phrase-was-wrong"], "claims_opened": ["i3-condition1-is-O1-not-On", "kissat-pair-selector-cost-is-bounded-not-new-order-of-magnitude"], "falsifier": "a single (row, gap-idx, interior-labels) instance where cond1_O1's <=2-entry-window read disagrees with the true one-sided-outsiders test would kill the O(1) claim outright.", "tier": "none", "verifier_runs": ["crit3(O(1) cond1) vs base_floor: n=5 exhaustive 5832 configs 0 mismatches", "crit3 vs base_floor: n=13,17,19, 5000 random configs each, 0 mismatches", "crit3 vs base_floor on 34 real T'=84 kobon_17_85tri swap-variants: 0 mismatches, crit3 False on all 34", "crit3 vs base_floor on kobon_19_107tri D=1 census, 289 (row,gap) combos: 0 mismatches, crit3 False on all 289"]}
+-->
