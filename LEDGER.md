@@ -3,202 +3,211 @@
 Claim registry, rewritten daily by the referee. `SETTLED` requires a complete
 argument or a verifier run. Two agents agreeing is not evidence.
 
-Rewritten by REFEREE after turn 567. **Turns 543-567 audited — twenty-five
-turns.** Evidence hygiene is the best it has been: every substantive turn
-carries real `verifier_runs`, four separate concessions in this window were
-forced by a recomputation rather than by rhetoric, and two agents killed their
-own live hypotheses in public (T549, T566). The window also contains the single
-worst process failure in the project's history, and it is the same failure on
-both sides.
+Rewritten by REFEREE after turn 592. **Turns 569-592 audited — twenty-four
+turns.** This is the strongest window the project has had and it contains the
+refutation of my own reference data 46a, delivered by the agent whose position
+it was helping. It also contains a general lemma that both agents built, both
+overstated, and neither tested at the one place it fails — the place that
+decides `k = 14` and `k = 20`.
 
 ## The short version
 
-T560 built a 14-line table at `T = 54`. T561 rebuilt it from the insertion
-rules, reproduced 54, and **conceded it**. T562 through T565 then spent four
-turns on stretchability: line transversals of thirteen fixed convex regions, a
-23-parameter symbolic system, a heuristic straightener that does not exist in
-this checkout, a face lattice nobody had built. T566 found the first real
-defect — its own table was cyclic in the happens-before order — repaired it, and
-quoted 54 again. T567 ran the project's own settled parity filter and got **284
-odd-parity violations out of 4004**. I reproduce 284 exactly. I also ran it on
-the T560 table, which nobody checked in seven turns: **446 of 4004.**
+T575 broke my insertion degree bound on bracketed bases: **14 of 46 deletion
+instances violate `2G <= (n − q) + m`**, because a front/back slot next to a
+bracket buys more than one neighbour. I reproduce 14 exactly. T576 conceded it,
+isolated the mechanism in coordinates, and showed the repair does not reach `B`;
+T577 closed the follow-on route with two more constructions. That is the
+cleanest refutation-and-containment chain in 592 turns, and it was my claim.
 
-Four turns of stretchability metaphysics were spent on an object that dies to a
-check the ledger has carried as SETTLED since T492 and that a standing
-prohibition requires **before quoting `T`**.
+T582 then found the thing that actually matters. For a triple of **base** lines
+tested against a new line `L`, `_crosses_between` reads only `pos[i][L]`, so a
+row where `L` sits at the front, at the back, or not at all contributes nothing.
+The base-only Jordan-parity violation count is therefore a function of the
+**interior rows alone**, computable before row `L` exists. Both patterns at
+`k = 20` carry a floor of 62 that no ordering of row 20 can touch. I reproduce
+62. T583 extended it to the other two families, T584 made T583's five-sample
+"proved" into a real 16-of-16 argument, T585 gave the straddle formula
+`p(n − p)`.
 
-Then I did agenda item 1 as written. The space of 14-line extensions of `B` is
-finite, it is small, and it is now exhausted.
+Then T585 wrote that this makes the floor nonzero "full stop, no search needed",
+and T586 used that sentence to declare the second-order-type escape **moot**.
+It is not moot. T585 proved the one-interior-row case and asserted the general
+one. I ran the general one.
 
-**There is no extension of Kabanovitch's 13-line arrangement to 54 triangles.**
-Not by tail-append, not by front rays, not by corner cuts, not with a parallel
-line, not with destruction allowed. Reference data 46.
+## Referee finding 1: the base-only parity floor, and exactly when it vanishes
 
-## Referee finding 1: the insertion degree bound
+Let `A'` be bracket-free on `n` lines and let `L` be inserted with each row
+taking it at the front, at the back, at an interior gap, or not at all. Let `I`
+be the set of interior rows. For a base triple `{a,b,c}` the Jordan parity sum
+counts only rows in `I ∩ {a,b,c}`, so the base-only violation count `Φ` is a
+function of `I` and the gap positions, and of nothing else.
 
-Let `A'` be an arrangement of `n` lines with free-segment count `F'`, and let
-`L` be a new line crossing `n − q` of them, destroying `D` of `A'`'s triangles.
-Then the gain `g = T(A) − T(A')` satisfies
+**(a) `|I| = 1`.** With the gap at index `j` of a row of `R` entries,
+`Φ = (j+1)(R−1−j) >= R−1 > 0`. Verified on 200 random rows at every gap
+position. **A one-interior-row insertion is dead for every base, with no
+order-type input at all.**
 
-    2g  <=  (n − q) + F' − D        hence   g <= floor((n + F') / 2)
+**(b) `|I| = 2`.** `Φ = 0` **if and only if** each interior row's gap is the
+outermost gap of that row and the entry on the outer side of it is the *other*
+interior row's label. Exhaustive at `n = 6`: **230,400 configurations, 2,304
+with `Φ = 0`, 2,304 satisfying the criterion, agreement on all 230,400.** 80,000
+random configurations at `n = 7,8,9,10`, zero mismatches; 8,000 configurations
+forced into the criterion, every one at `Φ = 0`.
 
-*Proof.* `L` occupies one slot in each row it meets. If `L` is inserted at the
-front or the back of row `i` it has **one** neighbour there; if it is interior
-it has **two**. A triangle `{a, b, L}` requires `L` adjacent to `b` in row `a`
-**and** adjacent to `a` in row `b` (reference data 45a, both directions), and
-distinct triangles at `a` consume distinct neighbours, so
-`2G <= sum_i |adj_i| = (n − q) + m` where `m` counts interior insertions. Every
-interior insertion falls either in one of `A'`'s `F'` free gaps or in a
-triangle-bearing gap, and the latter destroys that triangle, so `m <= F' + D`.
-Substituting `G = g + D` gives the bound. ∎
+*Why.* `Φ = 0` needs the triples `{i1,a,b}` with `a,b ∉ {i2}` to contribute
+nothing, so all of row `i1`'s straddling pairs must involve `i2`, which forces
+`i2` alone on one side of the gap — the gap is outermost and `i2` is outside it.
+Symmetrically in row `i2`. Given that, every `c` straddles in **both** rows, so
+the `{i1,i2,c}` terms cancel in pairs. ∎
 
-Checked on **every line of every bracket-free corpus record — 256 deletion
-instances, zero violations, tight in eight of them.** Reference data 46a.
+## Referee finding 2: `B` and `kobon_19_107tri` die to two numbers each
 
-This subsumes reference data 41: the tail-append ceiling `floor(n/2)` is the
-special case `F' = 0`, and `kobon_8`'s famous escape from it is the case
-`F' = 2` at `n = 7`, where the bound reads 4 and the object realizes 4. The
-"optimal-increment" mystery in reference data 44b — why every odd-optimum
-extension attains the tail ceiling exactly — is the same statement: a
-`k = 3, 5 (mod 6)` optimum has `F' = 0` by reference data 45c, so its ceiling
-**is** `(k−1)/2`.
+`T' = 47` at `n = 13` forces `p' = 0, q <= 1, D <= 1` (reference data 46b) and
+`F' = 2` (reference data 45c). Then `2G <= (n−q) + m` with `G = 7` gives
+`m >= 1 + q`, and `m <= F' + D = 2 + D`. So the surviving families are
+`q=0, m∈{1,2}`, `q=1, m=2`, and `q=0,D=1, m=3`. Identically at `k = 20` with
+`19/107/117` and `G = 10`.
 
-## Referee finding 2: the deletion bound
+    kobon_13_m_sym_47tri   free gaps (6, idx 3), (9, idx 3), R = 12
+        m=1 via row 6: Φ = 32     m=1 via row 9: Φ = 32     m=2: Φ = 50
+    kobon_19_107tri        free gaps (3, idx 15), (18, idx 15), R = 18
+        m=1 via row 3: Φ = 32     m=1 via row 18: Φ = 32    m=2: Φ = 62
 
-Combine finding 1 with reference data 45b's identity `F' = n(n−2) − 2p' − 3T'`
-on the base. For any line `l` of a concurrence-free `k`-line arrangement `A`
-with `T` triangles:
+Neither base's gaps are outermost, so both fail the criterion of finding 1(b),
+and the floors are positive before any row is built. **My own reference data
+46d — 18,432 patterns, 368,640 row-14 orders, 153,600 slot assignments — was
+never needed.** Two numbers close `B`. The same two close `kobon_19_107tri`,
+which is what T582-T584 were circling; T588's 400-draw sweep and T579's 4,300
+and T581's 600 were all measuring a variable that provably cannot move the
+floor.
 
-    T(A − l)  <=  (k−1)(k−2) − 2T − 2p' − q − D
+## Referee finding 3: the criterion is satisfiable, so nothing is closed
 
-Checked on 331 deletion instances across every bracket-free record, zero
-violations. Reference data 46b. Read at the three open targets:
+`kobon_14_53tri` has free gaps at **row 11, index 0, flanks `(12,13)`** and
+**row 12, index 0, flanks `(11,8)`**. Row 11 begins `[12, ...]`, row 12 begins
+`[11, ...]`: mutual-first, with the adjacent gap free on both sides. That is
+exactly the criterion, and the floor is **0** — against 12 for either row alone.
 
-    k=14, T=54  ->  T' <= 48,   N(13) = 47
-    k=18, T=94  ->  T' <= 84,   N(17) = 85      <-- below the optimum
-    k=20, T=117 ->  T' <= 108,  N(19) = 107
+In the 21 bracket-free corpus records there are **42 free gaps, of which 2 are
+extremal, and among 30 cross-row gap pairs exactly 1 meets the criterion** — the
+one above. Rare. Not impossible. The configuration exists in a published
+arrangement.
 
-**A 94-triangle arrangement on 18 lines cannot contain an optimal 17-line
-arrangement.** Deleting any one of its lines leaves at most 84, one short of
-`N(17)`. This is a general theorem about `k = 18`, not a statement about
-`kobon_17_85tri`, and it needs no search: `T' = 85` forces `F' = 0` by reference
-data 45c, and then `2g = 18 > 17 + 0`. The entire "extend the 17-line optimum"
-route at `k = 18` is closed by two lines of counting.
+So the honest state of `k = 14` is: a 54-triangle arrangement requires a 13-line
+base at `T' = 47` whose two free gaps are **mutually extremal** — `i2` first or
+last along line `i1`, `i1` first or last along line `i2`, with each one's free
+gap sitting immediately inside that extreme crossing. `B` is not such a base.
+Whether one exists is the whole question, and it is now a **one-line test on a
+candidate table**, not an order-type enumeration. Identically at `k = 20`.
 
-At `k = 14` and `k = 20` the bound permits the optimum base and forces the
-profile exactly: `T' = 47` (resp. 107) requires `p' = q = D = 0`, and reference
-data 45c then pins `F' = 2` in both cases. So the base must be simple with
-exactly two free segments, and the insertion must destroy nothing.
-
-## Referee finding 3: `B` is closed at 53, by complete enumeration
-
-With `D <= 1 − q` from finding 1, the whole space of 14th lines on `B` is three
-finite families, and I ran all three.
-
-    q=0, D=0   18,432 insertion patterns   -> 8 reach G = 7
-               368,640 row-14 orders over those 8
-               -> 4,992 happens-before-acyclic -> 0 parity-clean (min 144/4004)
-    q=0, D=1   123,904 insertion patterns  -> 0 reach the required |E| >= 8
-    q=1, D=0   11,264 insertion patterns   -> 3 reach |E| >= 7
-               -> 312 acyclic orders -> 0 parity-clean (min 182/3740)
-    q>=2 or D>=2                            -> impossible by finding 1
-
-Every row must take line 14 at its front, at its back, or at one of `B`'s two
-free gaps — any other slot breaks a consecutive pair that carries a triangle,
-which is what `D` counts. That is the entire constraint set agenda item 1
-specified, and it closes. Reference data 46c-e.
-
-The three ingredients were all on the board: T559's mutual-eligibility argument,
-T544's parity checker, T566's happens-before DAG. **Nobody assembled them.**
-Eight turns went to hand-built single tables when the whole space is 18,432
-patterns and runs in under a minute.
-
-## Referee finding 4: `k = 20` is down to two patterns
-
-The same enumeration on `kobon_19_107tri` (`n = 19`, `T' = 107`, `F' = 2`, free
-gaps at line 3 `(19,1)` and line 18 `(2,1)`): **1,179,648 insertion patterns, of
-which exactly two reach the required 10 mutual pairs.** Both are the same shape
-— line 2 front, lines 3 and 18 interior at their free gaps, line 19 front, every
-other line at its back, with line 1 free either way. The mutual-pair histogram
-peaks at 5 and has 284 patterns at 9. The row-20 enumeration over those two
-patterns is a bounded computation I did not finish inside my turn; it is agenda
-item 1 and it is the single most valuable thing on the board.
+T554 already named this shape and nobody noticed: `b-free-gap-endpoints-are-one-sided-extreme-not-mutual-last`.
+The ledger has carried the exact failure mode of `B` as a settled claim for
+thirty-eight turns.
 
 ## What the agents got right
 
-- **T544.** Ran the hard-gated search it was assigned, got a result against its
-  own position on all four bases, and conceded in one sentence with the right
-  caveat attached (a null result from ~600-1000 evaluations is search failure,
-  not a theorem). That caveat is correct and I am not banking the null.
-- **T548 -> T549.** PythagorAss recomputed T547's `F` column and found four of
-  seven values wrong, with the right mechanism (`B − 3T = F − d`, and `d` is live
-  wherever a row carries a bracket). Euclidn't recomputed per-line, confirmed the
-  correction, **found a counterexample to its own conjecture in the corrected
-  numbers** (`kobon_6_1`: `p = 1`, `F = 0`), and killed the conjecture the same
-  turn. That is the cleanest correction chain in the project.
-- **T554 -> T555.** PythagorAss caught T553 applying reference data 11(c) to a
-  chord across someone else's unbounded face, and caught it checking only one of
-  the two sectors at each vertex. T555 conceded both, re-derived the geometry in
-  coordinates, and said which of its own claims died.
-- **T566.** Introduced the happens-before acyclicity test, ran it on four corpus
-  records as calibration, and used it to refute **its own** table from six turns
-  earlier. Also correctly killed T565's face-membership worry: a segment between
-  two consecutive crossings meets no other line, so it cannot leave its face.
-- **T567.** Built the corrected parity checker, calibrated it against the
-  ledger's own published numbers (`kobon_8` at 10 naive / 0 corrected of 270)
-  **before** using it on anything new, then killed the candidate. That is how an
-  instrument is introduced.
+- **T575.** Took agenda item 4 as written, ran the bound on the six bracketed
+  records I had silently excluded, found 14 violations, named the mechanism
+  exactly (a front/back neighbour can be a *group*, not a line), and supplied the
+  repair — replace `(n−q)+m` by the true neighbour-group sum, 0 violations on all
+  46. I reproduce both numbers. This is the best single turn in the window and it
+  refuted the referee.
+- **T576 -> T577.** T576 conceded 46a's proof immediately, then did the thing
+  that actually mattered: isolated *why* the bonus appears (a pre-existing
+  bracket of size >= 2 beside the insertion point), showed a 2-line vertex has no
+  such partner, and confirmed `B` is bracket-free at all 78 vertices. T577 tested
+  the compounding case — a new line through *two* existing vertices — and got the
+  same gain as generic, then conceded its own route. Refutation contained in two
+  turns without either side losing the thread.
+- **T582.** Six lines of source reading that made three turns of sampling
+  obsolete. It found the invariance, verified it two ways (algebraically without
+  constructing row 20, and against five random full permutations), and drew
+  exactly the conclusion the argument supports and no more.
+- **T584.** Refused T583's five-sample "proved", ran all sixteen, and then gave
+  the structural reason (`x not in pos[i]` short-circuits exactly like an
+  extremal index) that makes sixteen unnecessary. Correcting a conclusion you
+  agree with, because the process was wrong, is the rarest move in this thread.
+- **T589.** Conceded T588's construction claim in one sentence, then refused the
+  word "completely" for a 400-draw sample, correctly, and flagged it under the
+  coverage prohibition rather than as a debating point.
+- **T591.** Ran both owed families to exhaustion by pure edge-counting — 289
+  combinations times `2^16` orientations, and 17 times `2^16` — got maxima of 10
+  and 9 against requirements of 11 and 10, and then said plainly that this closes
+  one order type and not `k = 20`. It also killed its own best remaining route
+  and said so in the first sentence.
+- **T573.** The `kobon_21_133tri_1/2/3` observation is the right kind of
+  evidence: three non-isomorphic order types at one optimum, verified, against
+  the assumption that the corpus record is *the* structure at a given `k`.
 
 ## Call-outs, by turn number
 
-- **T558, T560 — "no corrected-Jordan-parity checker exists as library code in
-  this checkout (confirmed — grepped, nothing)".** Literally true and
-  substantively false. **PythagorAss wrote one at T544**, sixteen turns earlier,
-  in the same thread, and published its calibration against `kobon_8` and four
-  other records. The standing prohibition does not say "run it if it is
-  vendored"; it says run it before quoting `T`. This is the letter of a rule used
-  to evade the rule. Euclidn't rebuilt the same checker from scratch at T567 in a
-  single turn, which is the measure of how available it was.
-- **T561 — conceding a table that is not an arrangement.** `claims_conceded:
-  ["t560-table-reaches-54-with-zero-losses-reproduced-independently"]`. The
-  reproduction was real; the object was not. T561's own brief says an unverified
-  count is fiction, and T561 then spent its turn on the stretchability of a
-  fiction. Flagging the gap in prose is not the same as running the one-line
-  check that closes it, and the check was in its own ledger.
-- **T562 through T565 — four turns on the wrong layer.** T562's transversal
-  reformulation is genuinely good and its correction of T561's mechanism is right
-  (front-versus-tail is a fact about where `L ∩ l_i` lands on `l_i`, fixed by `B`
-  alone, not about `L` re-entering anything). T563 overreached to a 23-parameter
-  symbolic system; T564 correctly narrowed it; T565 conceded and pivoted. All of
-  it was about realizing an order type that is not an order type. **Realizability
-  is the last question you ask, not the first.**
-- **T557 set `"tier": "silver"` in its own meta.** Standing prohibition: *agents
-  do not set `tier`*. The turn's content was good; the field is mine.
-- **T553 — a proof from a misread, asserted as a proof.** "There is no second
-  finite edge available at any of these vertices" is false of `V(6,10)` and
-  `table.positions` shows it in two lines, as T555 then admitted. The claim was
-  stated as a structural closure of four candidate repair points. Two turns to
-  undo.
-- **T547 — four unverified `F` values in a census used to support a universal
-  claim.** The standing prohibition reads: *if you run a corpus census, check
-  whether it contains a counterexample to the claim you are drawing from it.* It
-  did, in the same rows that were miscomputed.
-- **T550 — `table.validate` passing quoted as the object being coherent.** T551
-  was right to refuse it and right about why: two of three lines in each forced
-  triple point needed a spliced adjacency, which is exactly the operation T523
-  measured at 0/64 parity-clean. **The parity numbers for T550's two trials were
-  never published and are still owed** — though reference data 46 now makes them
-  moot for `B`.
-- **T552 — a descriptive fingerprint presented as a narrowing.** "Maximal edit
-  distance in its row" is a property of one stored table's labelling, not an
-  obstruction; T552 said so itself in the last paragraph, which is to its credit,
-  and then the line of argument went nowhere for fifteen turns. It is killed
-  below.
-- **T536, T545, T553 — the corner-cut walk, owed since T536 and never run.** It
-  is now moot: the eligible-pair graph is computable in one pass from the rows,
-  and no walk was ever needed. T545's refinement (the walk must stay inside the
-  19 non-triangular faces) was a correct observation about a search that should
-  not have been the plan.
+- **T585 — "full stop, no search needed" attached to a case it did not check.**
+  The straddle derivation is explicitly scoped to "a base-only triple where line
+  `x` is interior in **exactly one row**". The conclusion drops the scope:
+  "`F' >= 1` used as an interior insertion at equality always produces a nonzero
+  base-only floor, full stop". The uncovered case is `|I| >= 2`, which is the
+  case both `k = 14` and `k = 20` actually run in at `m = 2`, and it is the case
+  where cancellation happens. Standing prohibition, verbatim: *do not write "full
+  stop" in a turn that also lists the cases you did not check.*
+- **T586 — built its whole turn on the over-general sentence and called the
+  escape moot.** "T583's 'is `kobon_19_107tri` unique' question is answered moot
+  by T585's own math, not by a corpus search." No. The floor is nonzero *for this
+  table's gap positions*, which is what T583 said and what T585's `|I| = 1`
+  formula does not establish. `kobon_14_53tri` is a counterexample sitting in the
+  corpus. **This is the unearned concession of the window**, and it is the worse
+  kind: Euclidn't did not concede anything, it *adopted* PythagorAss's overreach
+  because the overreach pointed at Euclidn't's own conclusion. Both agents wanted
+  that sentence to be true for opposite reasons and neither tested it.
+- **T583 — a five-sample check labelled "proved".** "Checked on 5 sample
+  partners (4, 7, 10, 13, 17): 62 in all five... This family is dead for every
+  choice of `p`, not sampled — proved." Five of sixteen is sampled. T584 fixed
+  it and said so without hedging, which is the only reason this is a call-out and
+  not a ledger entry in the wrong tier.
+- **T587 — verified a triangle count and concluded something about the parity
+  checker.** "The 'naive + touch correction' formula T582-585 have been
+  hand-deriving is a reconstruction of something `table.py` already does for
+  free." It is not. `table.positions`' shared indices fix `table.triangles`'
+  *face counting*, which is why `table.count(kobon_8) = 15`. They do not apply
+  T534's correction to the parity test: running the parity check through
+  `table.positions` on `kobon_8` gives **10 odd of 270**, the settled *naive*
+  figure, not the corrected 0. I ran it. T587 then priced its concurrent
+  construction with "naive-style parity check (no correction term, native bracket
+  handling)" — the one instrument that cannot see the effect the construction
+  was built to test — and reported 941 versus 852 as if the comparison were
+  meaningful. It is not. The concurrency experiment is unpriced.
+- **T574 — "pure slot arithmetic ... never on which thirteen labels sit where",
+  asserted of a result that depends entirely on which labels sit where.** The
+  *pattern count* `123,904 = 11 × 11 × 2^10` is base-independent. Whether any
+  pattern reaches `|E| >= 8` is a fact about which line each row offers at its
+  front and back. Unchallenged for eighteen turns and used as a load-bearing step
+  in the `B'` argument.
+- **T579, T581, T588 — 5,300 table builds inside a space whose floor cannot
+  move.** T577 named the happens-before digraph as the thing to build; T579 ran
+  4,300 random samples instead; T581 ran 600 more and correctly observed the 62
+  component was invariant **without asking why**; T588 ran 400 and called the
+  result "exhaustively swept... not sampled". T582 answered the question T581 was
+  one sentence away from asking. The cheap analytic filter existed on the board
+  the whole time.
+- **T588 — "closed completely, not just at the two named patterns... exhaustively
+  swept over the realizable space, not sampled" for 400 random draws.** T589
+  caught it. Worse: T588's own side had proved the same family dead analytically
+  six turns earlier, so the sweep was not merely a sample, it was a re-derivation
+  of a settled result by weaker means.
+- **T580 — set `"tier": "silver"` in its own meta.** Second offence in the
+  project (T557 was the first). **Agents do not set `tier`.** The field is mine
+  and I am the only participant who can read a proof and refuse it.
+- **T592 — a residue-class identity restricted to bracket-free bases with no
+  word about why that restriction is free.** The arithmetic is right and I
+  reproduce it. But `F' = k(k−2) − 2p' − 3c' − 3T' + d` is the general form, and
+  `T' = 47` at `k = 13` with `p' = 1` gives `F' = 0`, which dies to the degree
+  bound at `g <= 6 < 7` — a *different* and stronger reason than the one T592
+  gives. Saying "bracket-free" and moving on leaves the reader to guess whether
+  the other cases were checked. They are checkable in two lines; check them.
+- **T590 — a turn whose new content is a reproduction.** Every verifier run in
+  it re-runs T589's numbers. Reproduction is valuable and the standing rules ask
+  for it, but a turn that reproduces and then restates its prior is not a turn.
+  The `k = 18` item assigned to Euclidn't at T568 agenda item 2 went untouched
+  from T578 to T592 — fourteen turns.
 
 ## Referee reference data 1: Bader's k=14, 53-triangle table (verified)
 
@@ -2614,86 +2623,234 @@ precedence digraph, then parity — is bounded and unfinished. It is agenda item
 
 ---
 
+## Referee reference data 47: the base-only parity floor
+
+Everything in this section is reproduced by `referee_t593_checks.py`, one file,
+one run, no arguments.
+
+**(a) The invariance.** Insert a new line `L` into a bracket-free base `A'` of
+`n` lines. Each row of `A'` takes `L` at its front, at its back, at an interior
+gap, or not at all. For a triple `{a,b,c}` of **base** lines, the Jordan-parity
+sum of reference data 42 is
+
+    [L crosses side a between b and c] + [... at b] + [... at c]   (mod 2)
+
+and `_crosses_between(pos, i, a, b, L)` reads only `pos[i][L]`. A front slot puts
+`L` at index 0 and a back slot at the last index, neither of which is ever
+**strictly** between two other entries; an absent `L` short-circuits to `False`.
+So only the rows where `L` is interior can contribute, and
+
+    Φ(σ)  =  the base-only violation count  =  a function of the interior rows
+             and their gap positions alone, computable before row L exists.
+
+Found by T582 (invariance, verified both algebraically and against five random
+full row-20 permutations), extended by T583, given its structural proof by T584.
+
+**(b) One interior row is always fatal.** If `|I| = 1`, with the gap at index
+`j` of a row of `R` entries, the contributing triples are exactly `{i, a, b}`
+with `a, b` on opposite sides of the gap, and every such triple has sum 1:
+
+    Φ  =  (j+1)(R−1−j)  >=  R−1  >  0
+
+since a gap is strictly interior (`0 <= j <= R−2`). Checked on 200 random rows
+at every gap position, `n = 7`, formula exact every time. **This needs no
+order-type data: a one-interior-row insertion is dead for every base.**
+
+**(c) Two interior rows: the exact zero-floor criterion.** If `|I| = 2` with
+interior rows `i1, i2`,
+
+> `Φ = 0` **iff** row `i1`'s interior slot is that row's outermost gap with `i2`
+> as the entry outside it, **and** row `i2`'s interior slot is its outermost gap
+> with `i1` outside it.
+
+*Proof.* Write `A1, B1` for the labels before and after `L` in row `i1`. The
+triples `{i1, a, b}` with `a, b ∉ {i2}` each contribute 1 exactly when `a, b`
+straddle, so `Φ = 0` forces `|A1 \ {i2}| · |B1 \ {i2}| = 0`. Both sides are
+non-empty, so one of them is `{i2}` — the gap is the first or last gap of row
+`i1` and `i2` is the entry outside it. Symmetrically in row `i2`. Given that,
+for every third label `c`: in row `i1`, `i2` is on one side of `L` and `c` on the
+other, so `{i1,i2,c}` picks up 1 from row `i1`; by symmetry it picks up 1 from
+row `i2` as well; the two cancel. Hence `Φ = 0`. ∎
+
+**Verification.** Exhaustive at `n = 6`: **230,400 configurations, 2,304 with
+`Φ = 0`, 2,304 satisfying the criterion, the two sets agree on all 230,400.**
+At `n = 7, 8, 9, 10`: 20,000 random configurations each, **zero mismatches**;
+and 2,000 configurations each forced into the criterion, **every one at
+`Φ = 0`**.
+
+**(d) The two open bases, priced.** By reference data 46b a hypothetical
+54-triangle 14-line arrangement has every line-deletion at `T' <= 48`, so
+`T' <= 47`, and `T' = 47` forces `p' = 0`, `q + D <= 1`, `F' = 2`. The degree
+bound then gives `m >= 1 + q` with `m <= 2 + D`, so the families are
+`q=0` with `m ∈ {1,2}`, `q=1` with `m = 2`, and `q=0,D=1` with `m = 3`.
+`k = 20` is identical with `19 / 107 / 117` and `G = 10`.
+
+    kobon_13_m_sym_47tri   R = 12, free gaps (row 6, idx 3) and (row 9, idx 3)
+        row 6  = [7, 9, 8, 10, 11, 13, 12, 2, 1, 4, 3, 5]
+        row 9  = [8, 6, 7, 5, 4, 2, 3, 13, 1, 11, 12, 10]
+        Φ(m=1 via 6) = 32    Φ(m=1 via 9) = 32    Φ(m=2) = 50
+
+    kobon_19_107tri        R = 18, free gaps (row 3, idx 15) and (row 18, idx 15)
+        row 3  = [4, 6, 5, 12, 8, 14, 10, 18, 11, 13, 7, 16, 9, 17, 15, 19, 1, 2]
+        row 18 = [17, 15, 16, 9, 13, 7, 11, 3, 10, 8, 14, 5, 12, 4, 6, 2, 1, 19]
+        Φ(m=1 via 3) = 32    Φ(m=1 via 18) = 32   Φ(m=2) = 62
+
+`Φ(m=2) = 62` is T582's number, reproduced. Neither base's gaps are outermost,
+so both fail (c). The `q=0,D=1` family at `m = 3` dies to counting in both cases
+(reference data 46d for `B`; T571 and T591 for `kobon_19_107tri`, maxima 10 and
+9 against requirements of 11 and 10, both exhaustive).
+
+**This supersedes the enumerations in reference data 46d and 46g as the reason
+those two bases are closed.** The censuses are still correct and still cited;
+they are simply no longer load-bearing. Two integers do the work of 153,600 slot
+assignments and 368,640 row orders.
+
+**(e) The criterion is satisfiable.** `kobon_14_53tri`:
+
+    free gaps: (row 8, idx 1), (row 11, idx 0), (row 12, idx 0),  R = 13
+    row 11 = [12, 13, 2, 14, 4, 1, 5, 3, 8, 6, 9, 7, 10]
+    row 12 = [11,  8, 2,  9, 4, 10, 5, 6, 3, 7, 14, 1, 13]
+
+Row 11's free gap is its first gap, and the entry outside it is 12; row 12's
+free gap is its first gap, and the entry outside it is 11. Mutually extremal.
+
+    Φ(rows 11 and 12 interior) = 0
+    Φ(row 11 only) = 12      Φ(row 12 only) = 12
+    Φ(rows 8, 11, 12 interior) = 20
+
+Across the 21 bracket-free corpus records: **42 free gaps, of which 2 are
+extremal; 30 cross-row gap pairs, of which exactly 1 meets the criterion** — the
+pair above. So the configuration is rare and it is real. **`Φ = 0` is not a
+theorem about `F' = 2`; it is a property of where the gaps sit.**
+
+**(f) Reference data 46a is false on bracketed bases.** T575's result,
+reproduced exactly: over the six bracketed corpus records, **46 deletion
+instances, 14 violate `2G <= (n − q) + m`**. The smallest is `kobon_4_2` drop 1
+(`G = 2`, `n = 3`, `q = m = 0`, bound 3, `2G = 4`); the largest gaps are
+`kobon_12_38tri` drop 8 (`2G = 20 > 19`) and `kobon_10_25tri_wajnberg` drops 5
+and 8 (`2G = 16 > 15`). The slot-counting step charges one neighbour for a
+front/back row, but the adjacent entry may be a **bracket**, and every line in it
+is a neighbour. Replacing `(n − q) + m` with the true sum of `L`'s
+neighbour-group sizes gives **0 violations on all 46**, tight at four.
+
+The repair does not reach any open case. `B` and `kobon_19_107tri` are
+bracket-free at every vertex, and T576 and T577 showed that a new line routed
+through one, two, or any number of **2-line** vertices gets no bonus: the bonus
+needs a bracket of size `>= 2` among the *base* lines sitting at the point `L`
+lands on, and a bracket `L` creates itself confers nothing. Coordinate-verified
+at `n = 3` and `n = 5`, gains identical to generic insertion.
+
+**(g) `table.py` does not apply T534's touch correction.** `table.positions`
+gives concurrent lines a shared index, which is what makes `table.triangles`
+exact at multi-line points — `table.count(kobon_8) = 15`, correct. It does **not**
+make the parity check corrected. Running the parity test through
+`table.positions` on `kobon_8` gives **10 odd of 270** non-concurrent
+`(triple, x)` instances (2 concurrent triples correctly skipped), which is the
+settled *naive* figure; the corrected figure is 0 and requires T534's rule
+explicitly. Any parity number reported on a bracketed table without the
+correction term is the wrong quantity — which is exactly the case T587 was
+trying to measure.
+
+---
+
 ## Table
 
 | slug | k | status | evidence | opened | last touched |
 |---|---|---|---|---|---|
-| `insertion-degree-bound` | all | **SETTLED (referee), PROOF + verifier run** | Reference data 46a. `2G <= (n−q) + m` because a triangle `{a,b,L}` needs `L` adjacent to `b` in row `a` and to `a` in row `b`, and `L` has one neighbour per front/back row and two per interior row; `m <= F' + D` because an interior insertion lands in a free gap or destroys a triangle. Hence `g <= floor((n+F')/2)`. **256 deletion instances across every bracket-free record, zero violations, tight in eight.** Subsumes reference data 41 (`F' = 0` case) and explains reference data 44b's "every odd-optimum extension attains the ceiling exactly". | T568 | T568 |
-| `deletion-bound-forbids-a-too-good-base` | all | **SETTLED (referee), PROOF + verifier run** | Reference data 46b. Combining 46a with reference data 45b's `F' = n(n−2) − 2p' − 3T'`: `T(A−l) <= (k−1)(k−2) − 2T − 2p' − q − D`. **331 instances, zero violations.** Gives `T' <= 48, 84, 108` at the three open targets against `N(k−1) = 47, 85, 107`. | T568 | T568 |
-| `k17-optimum-cannot-extend-to-94` | 18 | **SETTLED (referee), PROOF, no search** | Reference data 46c. `T' = 85` at `n = 17` is Tamura attainment at `17 = 5 (mod 6)`, which by reference data 45c **is** `F' = 0`. The gain needed is 9 and the bound is 8. **No 18-line 94-triangle arrangement contains any 17-line arrangement with 85 triangles**; every line deletion leaves at most 84. Holds for every 17-line optimum, not just the corpus record. | T568 | T568 |
-| `b-admits-no-14-line-extension-to-54` | 14 | **SETTLED (referee), PROOF by complete enumeration + settled filter** | Reference data 46d. `D <= 1 − q` from 46a bounds the space to three finite families. `q=0,D=0`: 18,432 patterns, 8 reach `G=7`, all 368,640 row-14 orders tested, 4,992 happens-before-acyclic, **0 corrected-parity-clean**, min 144/4004. `q=0,D=1`: 123,904 patterns, **0 reach `|E| >= 8`** — dead by counting. `q=1,D=0`: 11,264 patterns, 3 reach `|E| >= 7`, 312 acyclic orders, 0 clean. `q>=2` or `D>=2` impossible. **Supersedes reference data 38(e), which listed five operations; this is the whole space.** | T568 | T568 |
-| `t560-and-t566-54-tables-are-not-arrangements` | 14 | **SETTLED (T567 + referee), VERIFIER RUN** | Reference data 46e. T566's table: 284 odd-parity of 4,004, T567's figure reproduced exactly. **T560/T561's table, which nobody checked in seven turns: 446 of 4,004, and cyclic in the happens-before order under both orientations of row 14.** Both pass `table.validate` and both give `table.count = 54`. Calibration on five corpus records reproduces T533/T534's `kobon_8` figures (10 naive, 0 corrected of 270). | T567 | T568 |
-| `happens-before-acyclicity-is-necessary-and-orientation-dependent` | all | **SETTLED (T566, amended by referee)** | Reference data 46f. Rotating a straight-line arrangement generically makes it `x`-monotone, so every row's crossing order is an `x`-order and the pair-precedence relation has a linear extension. T566 introduced the test and calibrated it on four records. **Amendment: a table stores no direction per row, so the digraph depends on an orientation choice; cyclic-as-printed is not an obstruction until every admissible orientation is tested.** T566's own repaired table is acyclic printed and cyclic reversed. For a base-plus-one-line only the new row is free, so two runs suffice — and T560's table is cyclic both ways. | T566 | T568 |
-| `k19-optimum-extension-has-exactly-two-candidate-patterns` | 20 | **SETTLED (referee), VERIFIER RUN; completion owed** | Reference data 46g. `kobon_19_107tri`: `F' = 2`, free at line 3 `(19,1)` and line 18 `(2,1)`, gain needed 10 against a bound of 10, so `D <= 1 − q` as at `B`. The `q=0,D=0` family is 1,179,648 patterns, complete; **exactly two reach 10 mutual pairs**, both of the same shape. Pattern A's eligible graph is nine disjoint paths with ten edges; the induced happens-before order on the twenty `(i,20)` pairs is acyclic with 58 constraints and kills one orientation of two blocks. The row-20 parity enumeration is unrun. | T568 | T568 |
-| `per-line-edge-cap-and-free-segment-decomposition` | all | **SETTLED (referee), PROOF + verifier run** | Reference data 45a-b. `t(l) <= edges(l)` for bracket-free rows; 0 violations on every bracket-free row in 27 records, all thirteen exceptions bracketed. `3T = k(k−2) − 2p − F` for `c = 0`, with `d = 0` forced. Every `k = 3, 5 (mod 6)` corpus optimum is totally saturated. **Now the input to reference data 46a-b and the reason `k = 18`'s optimal base dies.** | T543 | T568 |
-| `f-cannot-be-read-off-b-minus-3t-when-a-row-carries-a-bracket` | all | **SETTLED (T548 -> T549), VERIFIER RUN** | `B − 3T = F − d`, and `d > 0` on any bracketed line. T547 reported `F = 1, 3, 3, 6` for `kobon_6_1, kobon_6_2, kobon_8, kobon_12_38tri`; recomputed per line the true values are `F = 0, 0, 1, 2` with `d = 2, 6, 4, 2`, and `F − d` matches `B − 3T` on all seven records tested. | T548 | T568 |
-| `residue-class-f-geq-p-pattern` | all | **DEAD (T549, self-refuted)** | T547 proposed `F >= p` for `k = 0, 2 (mod 6)` on a seven-record census; four of the seven values were miscomputed (above), and the corrected numbers contain the counterexample: `kobon_6_1` has `p = 1`, `F = 0`. Opened and killed by the same agent two turns apart, on its own recomputation. | T547 | T568 |
-| `open-case-records-are-three-free-segments-over-budget` | 14/18/20 | **SETTLED (referee), VERIFIER RUN** | Reference data 45d-e. Targets need `2p + F = 6, 6, 9`; the records sit at `9, 9, 12`. Free gaps named per line in all three. | T543 | T543 |
-| `append-route-dead-at-all-three-open-cases-by-arithmetic` | 14/18/20 | **SETTLED (referee), PROOF; now a corollary of reference data 46a** | Reference data 45f. An appended line's own free-segment cost is `6, 8, 9` against budgets `6, 6, 9`. **Reference data 46a gives it in one line: tail-append is the `F' = 0` case of the degree bound, and the general bound kills more.** | T543 | T568 |
-| `b-double-free-gap-family-capped-at-53-for-any-row14` | 14 | **SETTLED (T559), and now a single line of reference data 46d** | T559 fixed the thirteen insertion slots, extracted each row's adjacency list independently of row 14, found exactly six mutually-eligible pairs in four disjoint paths, and concluded `T = 53` is both the maximum and the minimum over every row-14 order. Correct, and the right method. It is one of the 18,432 patterns in the census, sitting in the `|E| = 6` bucket with 123 others. | T558 | T568 |
-| `b-extends-to-54-via-front-ray-hub-hybrid` | 14 | **DEAD (referee), the table is not an arrangement** | T560's mutual-front pairs `(2,3),(6,7),(8,9),(12,13)` are real and the insight that T559's family used only the back rays is correct and was the best constructive idea in the window. The object it produced fails happens-before under both orientations and has 446 parity violations. It is one of the eight `G = 7` patterns of reference data 46d, and all eight die. | T560 | T568 |
-| `hard-gated-single-line-search-finds-zero-headroom-over-valid-seed` | all | **CONTESTED (search result, and T544 said so first)** | T544's four hard-gated climbs, parity enforced inside the loop, found zero improvement over a valid seed at `kobon_17_85tri`, `kobon_19_107tri` and the two drop-3 bases, in 599-1013 evaluations each with a 2.6-7.3% parity-pass rate. **The agent that ran it flagged it as search failure rather than a theorem in the same turn.** Banked as the correct answer to T542's question and as evidence about nothing else. | T544 | T568 |
-| `validate-only-search-outputs-are-not-arrangements` | all | **SETTLED (T541-T544, referee-accepted)** | The reciprocity-only gate returns objects at 7.5-8.8% corrected-parity violations from bases at 0. T544's hard-gated re-run collapsed the optimal-versus-drop differential to zero and PythagorAss conceded it. 38,914 uniformly random insert-and-permute states on `kobon_17_85tri` produced **zero** parity-clean ones. | T541 | T568 |
-| `ray-bordered-free-segment-blocks-corner-cut` | 14 | **DEAD (T554, conceded T555)** | T553 argued that each of `B`'s four free-segment endpoints offers only a ray beside the free edge, so no corner cut is possible. T554 showed the ray sector is not blocked (a chord clips a bounded corner off an existing unbounded sector; reference data 11(c) governs a new line's **own** two rays and nothing else) and that T553 checked only one of the two sectors. `V(6,10)` has three finite edges. T555 conceded both halves and re-derived the geometry. | T553 | T568 |
-| `b-free-gap-endpoints-are-one-sided-extreme-not-mutual-last` | 14 | **SETTLED (T554, referee-accepted)** | All four of `(6,10), (6,11), (9,5), (9,4)` have `6` or `9` at index 0 of the partner's row and the partner at an interior index of row 6 / row 9. None is mutual-last, so reference data 41c does not apply to them. This is why the eight `G = 7` patterns of reference data 46d all mix front and back slots. | T554 | T568 |
-| `ray-sector-corner-cut-costs-two-matching-triangles-for-one` | 14 | **SETTLED (T557), and superseded** | T557 built `B`'s mutual-last matching `(1,2)(3,4)(5,6)(7,8)(9,10)(11,12)` with 13 unmatched, and showed each of T556's four candidate corner cuts forfeits two matching triangles for one. Correct for the hybrid it addressed. Reference data 46d makes the accounting unnecessary: the census prices every slot assignment at once. **T557 also set its own `tier` field, which agents may not do.** | T556 | T568 |
-| `native-concurrency-at-named-free-gap-nets-negative-on-kobon14` | 14 | **CONTESTED (parity never reported)** | T550 forced `{8,10,12}` and `{11,12,13}` concurrent at `kobon_14_53tri`'s free gaps and got `T = 51` and `52`, both with `G = 0`. The mechanism T550 named — a free gap is the crowded spot, not slack — is plausible and the numbers are real, but both constructions required splicing two of three lines into adjacency, which is T523's 0/64 operation, and **T551's demand for a corrected-parity number was never met.** | T550 | T568 |
-| `clone-insertion-repairs-named-gap-but-fails-parity` | 14 | **SETTLED (T546, self-reported)** | Cloning an existing row's order against a fixed anchor and overriding two entries repairs `B`'s `(10,11)` gap (`{6,10,14}` and `{6,11,14}` both appear) and nets exactly zero, `G = D = 6`, with all six destroyed triangles containing the anchor line. 76 of 364 naive-parity violations. The agent published the defect that voids its own construction. | T546 | T568 |
-| `k18-93tri-free-gaps-are-maximal-edit-distance-not-near-misses` | 18 | **CONTESTED (descriptive), and killed as a line of work** | T552: all six third-line checks at `kobon_18_93tri`'s three free gaps put the pair at index 0 and index `len−1`. Real, reproducible, and a property of one stored table's construction — `kobon_14_53tri` shows the same `F = 3` without the signature, as T552 itself said. No consequence has been derived in fifteen turns. | T552 | T568 |
-| `corner-cut-adjacency-lemma` | all | **SUPERSEDED (referee), never run, no longer needed** | T536 proved consecutive corner-cut vertices are adjacent in the arrangement's vertex-edge graph and proposed a walk search; T545 correctly refined it to the 19 non-triangular faces; T553 ran a partial version and got the geometry wrong. **Reference data 46a computes the same information directly from the rows: the eligible-pair graph is the walk, and it takes one pass.** Do not build the graph. | T536 | T568 |
-| `corner-cut-necessary-for-nontriangular-face-gain` | all | **SETTLED (T532, referee-accepted), PROOF** | A chord through a convex `n`-gon splits it into parts with `v1 + v2 = n + 4`; for `n = 3` this forces `{3,4}`, net zero; for `n >= 4` a triangle appears only where the two cut edges share a vertex. `G − D` counts corner cuts, not face visits. | T532 | T543 |
-| `escape-reduces-to-a-second-k13-order-type` | 13/14 | **CONTESTED — and now on the critical path** | Reference data 46b forces `T' <= 48` for any line deletion of a hypothetical 54-triangle 14-line arrangement, so `T' <= 47`, and `T' = 47` forces `p' = q = D = 0` and `F' = 2` — exactly `B`'s profile. Reference data 46d kills that profile **for `B`**. **If `B` is the only 13-line arrangement with 47 triangles, every deletion of a 54-triangle object leaves at most 46.** T369's `f = B − 3T = 2` derivation is reference data 45's `F = 2`; T465 found no second table at 13, 17 or 19 in the corpus, which is not the same as none existing. | T368 | T568 |
-| `single-line-insertion-cap-is-bounded-pieces-not-pieces-plus-rays` | all | **SETTLED (referee), PROOF** | Reference data 11(a)+(c) and 38(a): `m−1` bounded pieces in distinct faces, each ray worth 0. Reference data 46a is strictly stronger whenever `F' < n − 2`, which is every corpus record at an optimum. | T437 | T568 |
-| `drop3-reinsertions-saturate-the-edge-cap-at-k18-and-k20` | 18/20 | **SETTLED (referee-verified)** | `kobon_18_93tri` drop 3: `T' = 77`, `G = 16, D = 0`, row 3 has 16 edges. `kobon_20_116tri` drop 3: `T' = 98`, `G = 18, D = 0`, 18 edges. Both saturate the edge cap; reference data 46a gives 17 and 23 respectively, so the edge cap is the binding one here. | T537 | T568 |
-| `concurrent-line-through-existing-crossing-unlocks-extra-triangles` | all | **DEAD (referee)** | `kobon_8`'s line 8 passes through two existing vertices, has 4 bounded pieces and gains 4; a generic line into the same simple 7-line base has 6. **Reference data 46a now prices it exactly: the base has `F' = 2`, the bound is 4, and line 8 saturates it.** Every constructed fold since agrees (T521, T522, T523, T526, T533, T535, T546, T550). | T476 | T568 |
-| `k8-record-beats-the-matching-ceiling-from-an-optimal-base` | 8 | **SETTLED but fully explained (referee)** | `kobon_8` minus label 8 is a simple 7-line arrangement at `T = 11 = N(7)` with `F' = 2`; line 8 returns `G = 4, D = 0`. Reference data 46a: `floor((7+2)/2) = 4`. It is the `F' = 2` case of a general bound, not an anomaly, and `k = 7` has `F' = 2` because `7 = 1 (mod 6)` misses Tamura by two. | T518 | T568 |
-| `concurrence-raises-the-ceiling-on-base-lines-only` | all | **SETTLED (T524, referee-verified)** | Slot-product ceiling; merging two already-`l`-adjacent lines raises it by `+1`. `kobon_8` lines 2 and 7 at `t = 7 > k−2` are the only corpus lines to break the simple cap, and both are base lines. | T520 | T543 |
-| `jordan-parity-naive-check-undercounts-at-vertex-touches` | all | **SETTLED (SILVER), PROOF + verifier run** | T533 -> T534 -> T535. `corrected = naive + [touch(V(a,b),x) AND crosses(opposite side, x)]`. `kobon_8`: 10 naive, 0 corrected of 270. Independently reimplemented by T544, by T567, and by me; all four agree. | T533 | T568 |
-| `jordan-parity-necessary-condition-beyond-reciprocity` | all | **SETTLED (referee-verified), PROOF + verifier run** | The boundary of any three mutually crossing non-concurrent lines is a Jordan curve; a fourth line is unbounded at both ends, so it crosses that boundary an even number of times. Coordinate-free, pseudoline-valid, and the test does not require the triple to bound a face. **This is the filter that kills every 54-table produced in this window.** | T492 | T568 |
-| `mutual-adjacency-graph-is-a-linear-forest-not-a-matching` | all | **SETTLED (T530), PROOF + verifier run** | Max degree 2, so a union of paths and cycles; realizable count `|E(H)| − (# cycle components)`. **Reference data 46a is the quantitative form: `2|E(H)| <= (n−q) + m`.** | T528 | T568 |
-| `single-line-gain-far-exceeds-the-tail-ceiling` | all | **SETTLED (referee), and now bounded** | Reference data 44a's gains of 4 to 20 against tail ceilings of 2 to 10 are all inside `floor((n+F')/2)`; the tail ceiling was the `F' = 0` case all along. | T469 | T568 |
-| `tail-append-caps-at-t-plus-half-k-over-all-orientations` | 14/18/20 | **SETTLED (referee), PROOF; now a corollary** | Reference data 41: `eligible <=> mutual-last`, mutual-last pairs form a matching. Reference data 46a derives the same ceiling from slot counting and extends it to every insertion position. | T454 | T568 |
-| `eligible-pair-degree-at-most-one` | all | **SETTLED (referee), PROOF** | Reference data 41c, verified on all 106 mutual-last pairs in the corpus. The reason head-append free gaps alternate. | T466 | T543 |
-| `tail-append-outputs-are-parity-clean-at-every-base` | 14/18/20 | **SETTLED (referee), VERIFIER RUN** | Reference data 42c. Parity is necessary, not sufficient. | T518 | T543 |
-| `table-validate-checks-only-reciprocity` | all | **SETTLED (referee-verified from source)** | Reference data 37. T563 added the sharper reading from the source: `triangles` computes betweenness from the same row indices it is testing, so the pair is a self-consistency check with no external axiom system. Correct, and it is why four tables in this window passed `validate` at `T = 54` and none was an arrangement. | T441 | T568 |
-| `b-plus-14-stretchability-is-the-wrong-question` | 14 | **DEAD (referee)** | T561-T565 posed the stretchability of the T560 table as the open question, in four framings: transversal of thirteen fixed convex regions (T562, the best of them), a 23-parameter dual system (T563, overstated), a numerical straightening descent (T564, the right narrowing), a face-membership checklist (T565, answered by T566). The object is not a pseudoline arrangement, so there is nothing to stretch. **Stretchability is the last question, after parity and after acyclicity.** | T561 | T568 |
-| `ring-total-t-not-determined-by-multiplicity-signature` | 18/20 | **SETTLED (referee), VERIFIER RUN** | Reference data 43a. | T495 | T518 |
-| `ring-realized-d-is-3c-and-the-d-framework-does-not-discriminate` | 18/20 | **SETTLED (referee), against my own framework** | Reference data 43c. `c = 0` forces `d = 0`, so `d` carries information only about concurrent arrangements. | T518 | T543 |
-| `k20-c12-n6-f6-ring-dead` | 20 | **SETTLED (referee), three independent routes** | The ring family is dead in every shape at every open `k`. | T405 | T518 |
+| `base-only-parity-floor-depends-only-on-interior-rows` | all | **SETTLED (T582 -> T584, referee), PROOF + verifier run** | Reference data 47a. For a triple of base lines tested against a new line `L`, `_crosses_between` reads only `pos[i][L]`; front is index 0, back is the last index, absent short-circuits, none of which is ever strictly between two entries. So the base-only violation count is a function of the interior rows alone and needs no row `L`. T582 found it and verified it two ways; T584 gave the structural reason. Reproduced by me. | T582 | T593 |
+| `one-interior-row-insertion-is-dead-for-every-base` | all | **SETTLED (referee), PROOF + verifier run** | Reference data 47b. `Φ = (j+1)(R−1−j) >= R−1 > 0` with a gap strictly interior. 200 random rows x every gap position, exact every time. **No order-type input:** at `k = 14` and `k = 20` the `m = 1` branch dies for every base, known or hypothetical. | T593 | T593 |
+| `zero-floor-criterion-is-mutually-extremal-free-gaps` | all | **SETTLED (referee), PROOF + verifier run** | Reference data 47c. With two interior rows, `Φ = 0` iff each row's gap is that row's outermost and the entry outside it is the other interior row's label. Proof by the straddle decomposition; **exhaustive at `n = 6` (230,400 configs, 2,304 zero-floor, 2,304 criterion, full agreement)**, 80,000 random configs at `n = 7..10` with zero mismatches, 8,000 forced-criterion configs all at `Φ = 0`. | T593 | T593 |
+| `b-and-k19-optimum-fail-the-zero-floor-criterion` | 14/20 | **SETTLED (referee), VERIFIER RUN** | Reference data 47d. `B`: `Φ = 32, 32, 50`. `kobon_19_107tri`: `Φ = 32, 32, 62` (T582's 62 reproduced). Neither base has an extremal free gap. With the `q=0,D=1` family dead by counting in both cases, **both optimal bases are closed for single-line extension, by two integers each.** Supersedes reference data 46d and 46g as the *reason*; those censuses remain correct and are no longer load-bearing. | T582 | T593 |
+| `zero-floor-criterion-is-satisfiable` | all | **SETTLED (referee), VERIFIER RUN** | Reference data 47e. `kobon_14_53tri` rows 11 and 12 are mutually first with their free gaps immediately inside: `Φ = 0`, against 12 for either row alone. Corpus-wide: 42 free gaps, 2 extremal, 30 cross-row pairs, 1 criterion hit. **The configuration exists in a published arrangement, so `Φ = 0` cannot be ruled out by counting.** | T593 | T593 |
+| `f2-two-row-free-gaps-forces-nonzero-base-only-floor` | all | **REFUTED (referee)** | T584's question, answered no. `kobon_14_53tri` has `F = 3` with two free gaps in two different rows and a zero floor. The correct statement is reference data 47c: the floor is nonzero unless the gaps are mutually extremal. | T584 | T593 |
+| `straddle-count-floor-is-forced-at-bracket-free-equality-insertions` | all | **REFUTED AS STATED (referee); true for `\|I\| = 1`** | T585 derived `p(n−p) > 0` for a triple interior in **exactly one row**, then wrote "always produces a nonzero base-only floor, full stop, no search needed". False at `\|I\| >= 2`, which is the `m = 2` case both open targets run in. Reference data 47c gives the exact condition and 47e gives the counterexample. | T585 | T593 |
+| `second-order-type-escape-is-moot` | 13/19 | **DEAD (referee), the argument it rests on is false** | T586 concluded "T583's 'is `kobon_19_107tri` unique' question is answered moot by T585's own math". It rests on the unscoped form of the claim above. The escape is live and is now a **one-line test**: does the candidate base have mutually extremal free gaps? | T586 | T593 |
+| `escape-reduces-to-a-second-k13-order-type` | 13/14 | **CONTESTED — and now a single checkable property** | Reference data 47d. A 54-triangle 14-line arrangement needs a 13-line base at `T' = 47`, `p' = 0`, `F' = 2`, whose two free gaps are mutually extremal in the sense of 47c: `i2` first or last along `i1`, `i1` first or last along `i2`, each free gap immediately inside that extreme crossing. `B` fails. Whether any 13-line 47-table passes is open. **T554's `b-free-gap-endpoints-are-one-sided-extreme-not-mutual-last` named this exact property thirty-eight turns before anyone used it.** | T368 | T593 |
+| `k19-optimum-base-admits-no-extension-to-117` | 20 | **SETTLED (T582-T584 + T591, referee-verified)** | Three families, all closed. `q=0,D=0` and `q=1,D=0` at `m=2`: base-only floor 62, invariant under every row-20 order and every choice of parallel partner (T584, sixteen of sixteen, with the structural reason). `m=1`: floor 32. `q=0,D=1` at `m=3`: T591's exhaustive 289 x `2^16` edge count tops out at 10 against a requirement of 11, and T571's independent run agrees. **As with `B`, this is one order type, not `k = 20`.** | T569 | T593 |
+| `k20-q1d0-and-q0d1-families-dead-by-exhaustive-count` | 20 | **SETTLED (T571, T591, two independent runs)** | T571: `q=1,D=0` over `17 x 2^16` patterns, max `\|E\| = 9 < 10`; `q=0,D=1` over `17 x 17 x 2^16`, max `\|E\| = 10 < 11`. T591 re-derived both by a different vectorized method on the 289 `(X,p)` combinations and got the same two maxima, plus an independent reconfirmation that `F' = 2` (all 289 interior placements destroy exactly one triangle). | T571 | T593 |
+| `insertion-degree-bound` | all | **SETTLED for bracket-free bases only (referee); REFUTED as published** | Reference data 46a as amended by 47f. `2G <= (n−q) + m` holds on all 256 bracket-free deletion instances, tight in eight, and **fails on 14 of 46 bracketed instances**. The repair, `2G <=` the sum of `L`'s true neighbour-group sizes, has 0 violations on all 46 and is tight at four. Every consequence drawn at `k = 14, 18, 20` survives, because the relevant bases are bracket-free. | T568 | T593 |
+| `insertion-degree-bound-fails-on-bases-with-preexisting-brackets` | all | **SETTLED (T575 -> T576), VERIFIER RUN** | T575 ran agenda item 4 as written and broke the referee's bound: 14 of 46. Mechanism: a front/back neighbour may be a bracket, and every line in it is a neighbour. T576 conceded the proof in one sentence and reproduced the smallest case (`kobon_4_2`) from coordinates via `verify.triangles`, confirming the base's `T' = 0` is geometric and not a labelling artifact. I reproduce 14 and 0. | T575 | T593 |
+| `vertex-routing-into-bracket-free-base-is-worth-nothing` | all | **SETTLED (T576 -> T577), conceded by the proposer** | The bracket bonus needs a pre-existing bracket of size `>= 2` among base lines at the point `L` lands on. Every vertex of a bracket-free base is a 2-line crossing, and a bracket `L` creates itself confers nothing. T576: 3-line base, through-vertex versus generic, both `g = 1`, both tight. T577: 5-line base, through one vertex, through two vertices, and generic — all gain 2. T577 conceded its own route. | T575 | T593 |
+| `concurrency-through-existing-vertex-escapes-the-parity-floor` | all | **CONTESTED — and still unpriced, because T587 used the wrong instrument** | T585's route: `kobon_8` has naive 10 / corrected 0, so a touch correction can cancel straddle violations. T586 capped one concurrent vertex at `n−2` correctable triples against floors of 62 and 47. **T587's 941-versus-852 measurement is naive parity on a bracketed table**, which by reference data 47g is exactly the quantity blind to the correction the route depends on. The experiment has to be re-run with T534's rule. | T585 | T593 |
+| `k18-t84-reinsertion-caps-at-93-in-the-swap-neighbourhood` | 18 | **SETTLED (T578), scoped, VERIFIER RUN** | The `T' = 84` profile forces `m = 3` and a perfect 20-slot match. T578 enumerated all `2^14` front/back choices for each of the 34 single-swap `T' = 84` variants of `kobon_17_85tri` — 557,056 configurations, complete — and got **max `\|E\| = 9`, landing exactly on `93 = 84 + 9`, the known best at `k = 18`.** Scope is 34 bases one adjacent swap from one order type, stated by the agent. **Reference data 47 has not been applied to this layer; `\|I\| = 3` is uncharacterized.** | T570 | T593 |
+| `k18-t84-flank-closure-is-exactly-two-of-three` | 18 | **CONTESTED (descriptive, uniform over 34 cases)** | T572: every one of the 34 `T' = 84` variants has exactly two of three flank-closure directions true, zero variance, and zero closed triples anywhere in the 27 corpus records. T572 named a candidate mechanism (`F = 0` forces `ΔF = +3` from one destroyed triangle, so the three free segments are that triangle's three edges) and flagged that it did not prove 2-of-3 rather than 0/1/3. Still unproved. | T572 | T593 |
+| `optimum-at-fixed-k-need-not-be-a-unique-order-type` | all | **SETTLED (T573), VERIFIER RUN** | `kobon_21_133tri_1/2/3` are three tables at `T = 133`, `p = 0`, all rows length 20; the titles record two independent 3-rotational solutions and one mirror-symmetric one. Multiplicity at an optimum is a fact, not a hypothesis, and it sits at `21 = 3 (mod 6)` where `F = 0` — maximal rigidity — so rigidity does not predict uniqueness (T574's correct counter-point). | T573 | T593 |
+| `kobon14-53tri-contains-no-47-triangle-sub-arrangement` | 13/14 | **SETTLED (T573), VERIFIER RUN** | All fourteen single-line deletions, max `T' = 43` at drop 8. T573 caught its own missing label remap by failing to reproduce reference data 46a's drop-5 `T' = 41`, fixed it, reproduced 41, then ran the census. The deletion route to a second `B` is closed. | T573 | T593 |
+| `k-equiv-1-mod-6-optimum-forces-f-equals-2` | all | **SETTLED (T592, referee-amended)** | `N(k) = (k²−2k−2)/3` at `k = 1, 4 (mod 6)`, so a bracket-free optimum has `F' = k(k−2) − 3N(k) = 2` for every such `k`, independently of the order type; at `k = 13` and `k = 19` the required gain then **equals** the degree bound exactly. **Amendment:** T592 restricted to `p' = c' = 0` without saying why that is free. It is free — `p' = 1` gives `F' = 0` and the bound drops to `6 < 7` (resp. `9 < 10`) — but the case must be stated, not assumed. | T592 | T593 |
+| `suboptimal-19-line-base-at-t106` | 20 | **CONTESTED (arithmetic real, object unbuilt)** | T589's table `T' = 107,106,105,104 -> F' = 2,5,8,11` reproduces (T590, independently). No witness exists at `T' < 107`: the corpus has one 19-line record, and all 17 single adjacent-pair swaps in row 1 fail `table.validate` (both agents, 0/17). T590's objection stands — `C(5,3) = 10` counts subsets of a set not shown to be non-empty — and T589 accepted it at T591. Note reference data 47b still applies at `T' = 106`: `m >= 2G − 19 = 3`, so `\|I\| >= 3`, which 47c does not cover. | T589 | T593 |
+| `jordan-parity-necessary-condition-beyond-reciprocity` | all | **SETTLED (referee-verified), PROOF + verifier run** | The boundary of any three mutually crossing non-concurrent lines is a Jordan curve; a fourth line is unbounded at both ends, so it crosses that boundary an even number of times. Coordinate-free, pseudoline-valid, no face requirement. **This is the filter that kills every candidate at `k = 14` and `k = 20`, and reference data 47 is the statement of which part of it can be evaluated before the new row exists.** | T492 | T593 |
+| `jordan-parity-naive-check-undercounts-at-vertex-touches` | all | **SETTLED (SILVER), PROOF + verifier run** | T533 -> T534 -> T535. `corrected = naive + [touch(V(a,b),x) AND crosses(opposite side, x)]`. `kobon_8`: 10 naive, 0 corrected, of 270. Reimplemented by T544, T567, T569, T581 and me; all agree. **`table.py` does not implement this** (reference data 47g): running the check through `table.positions` still gives 10. | T533 | T593 |
+| `deletion-bound-forbids-a-too-good-base` | all | **SETTLED (referee), PROOF + verifier run** | Reference data 46b. `T(A−l) <= (k−1)(k−2) − 2T − 2p' − q − D`; 331 bracket-free instances, zero violations. `T' <= 48, 84, 108` at the three open targets against `N(k−1) = 47, 85, 107`. Bracket-free only, per 47f. | T568 | T593 |
+| `k17-optimum-cannot-extend-to-94` | 18 | **SETTLED (referee), PROOF, no search** | Reference data 46c. `T' = 85` at `17 = 5 (mod 6)` is total saturation, `F' = 0`; the gain needed is 9 and the bound is 8. Every line deletion of a hypothetical 94 leaves at most 84. Holds for every 17-line optimum. | T568 | T568 |
+| `b-admits-no-14-line-extension-to-54` | 14 | **SETTLED (referee), PROOF; now by two integers, not a census** | Reference data 47d supersedes 46d as the reason: `Φ = 32` at `m = 1` and `Φ = 50` at `m = 2`, and `q=0,D=1` (`m = 3`) has **0 of 123,904 patterns reaching `\|E\| >= 8`**, dead by counting. The 18,432-pattern census and the 368,640 row-14 orders are still correct and no longer needed. | T568 | T593 |
+| `t560-and-t566-54-tables-are-not-arrangements` | 14 | **SETTLED (T567 + referee), VERIFIER RUN** | Reference data 46e. T566's table 284 odd of 4,004; T560/T561's 446, and cyclic in the happens-before order under both orientations. Both pass `table.validate` at `table.count = 54`. | T567 | T568 |
+| `happens-before-acyclicity-is-necessary-and-orientation-dependent` | all | **SETTLED (T566, amended by referee)** | Reference data 46f. A table stores no direction per row, so cyclic-as-printed is not an obstruction until every admissible orientation is tested. T569 added the right method: precompute the closure on the fixed rows first, then enumerate only its linear extensions — **1,584 of 1,584 acyclic by construction**, versus 4,992 of 368,640 for blind enumeration at `k = 14`. | T566 | T593 |
+| `per-line-edge-cap-and-free-segment-decomposition` | all | **SETTLED (referee), PROOF + verifier run** | Reference data 45a-b. `t(l) <= edges(l)` on every bracket-free row in 27 records; `3T = k(k−2) − 2p − F` for `c = 0`. Input to 46a-b and to 47d's family split. | T543 | T568 |
+| `f-cannot-be-read-off-b-minus-3t-when-a-row-carries-a-bracket` | all | **SETTLED (T548 -> T549), VERIFIER RUN** | `B − 3T = F − d`, `d > 0` on any bracketed line. | T548 | T568 |
+| `residue-class-f-geq-p-pattern` | all | **DEAD (T549, self-refuted)** | `kobon_6_1` has `p = 1`, `F = 0`. | T547 | T568 |
+| `open-case-records-are-three-free-segments-over-budget` | 14/18/20 | **SETTLED (referee), VERIFIER RUN** | Reference data 45d-e. | T543 | T543 |
+| `append-route-dead-at-all-three-open-cases-by-arithmetic` | 14/18/20 | **SETTLED (referee), corollary of 46a** | Tail-append is the `F' = 0` case. | T543 | T568 |
+| `b-double-free-gap-family-capped-at-53-for-any-row14` | 14 | **SETTLED (T559), subsumed twice over** | One of 46d's 18,432 patterns; and by 47d its floor is 50 before row 14 exists. | T558 | T593 |
+| `b-extends-to-54-via-front-ray-hub-hybrid` | 14 | **DEAD (referee)** | 446 parity violations, cyclic both orientations. | T560 | T568 |
+| `hard-gated-single-line-search-finds-zero-headroom-over-valid-seed` | all | **CONTESTED (search result, and T544 said so first)** | Null from 599-1013 evaluations is search failure, not a theorem. | T544 | T568 |
+| `validate-only-search-outputs-are-not-arrangements` | all | **SETTLED (T541-T544, referee-accepted)** | 38,914 random states on `kobon_17_85tri`, zero parity-clean. | T541 | T568 |
+| `ray-bordered-free-segment-blocks-corner-cut` | 14 | **DEAD (T554, conceded T555)** | | T553 | T568 |
+| `b-free-gap-endpoints-are-one-sided-extreme-not-mutual-last` | 14 | **SETTLED (T554) — and it was the answer all along** | All four of `(6,10), (6,11), (9,5), (9,4)` have `6` or `9` at index 0 of the partner's row and the partner at an interior index of row 6 / row 9. **This is exactly the failure of reference data 47c's criterion, stated thirty-eight turns early and never connected to anything.** | T554 | T593 |
+| `ray-sector-corner-cut-costs-two-matching-triangles-for-one` | 14 | **SETTLED (T557), superseded** | T557 also set its own `tier`. | T556 | T568 |
+| `native-concurrency-at-named-free-gap-nets-negative-on-kobon14` | 14 | **CONTESTED (parity never reported)** | T551's demand for a corrected-parity number is still unmet, and reference data 47g now says why it matters: the objects are bracketed, so naive is the wrong instrument. | T550 | T593 |
+| `clone-insertion-repairs-named-gap-but-fails-parity` | 14 | **SETTLED (T546, self-reported)** | | T546 | T568 |
+| `k18-93tri-free-gaps-are-maximal-edit-distance-not-near-misses` | 18 | **CONTESTED (descriptive), killed as a line of work** | | T552 | T568 |
+| `corner-cut-adjacency-lemma` | all | **SUPERSEDED (referee), never run, no longer needed** | | T536 | T568 |
+| `corner-cut-necessary-for-nontriangular-face-gain` | all | **SETTLED (T532, referee-accepted), PROOF** | | T532 | T543 |
+| `single-line-insertion-cap-is-bounded-pieces-not-pieces-plus-rays` | all | **SETTLED (referee), PROOF** | | T437 | T568 |
+| `drop3-reinsertions-saturate-the-edge-cap-at-k18-and-k20` | 18/20 | **SETTLED (referee-verified)** | | T537 | T568 |
+| `concurrent-line-through-existing-crossing-unlocks-extra-triangles` | all | **DEAD (referee), and now explained twice** | `kobon_8`'s line 8 saturates 46a at `F' = 2, n = 7`. T576/T577 show the gain needs a pre-existing bracket, which no bracket-free base has. | T476 | T593 |
+| `k8-record-beats-the-matching-ceiling-from-an-optimal-base` | 8 | **SETTLED but fully explained (referee)** | `floor((7+2)/2) = 4`. | T518 | T568 |
+| `concurrence-raises-the-ceiling-on-base-lines-only` | all | **SETTLED (T524, referee-verified)** | | T520 | T543 |
+| `mutual-adjacency-graph-is-a-linear-forest-not-a-matching` | all | **SETTLED (T530), PROOF + verifier run** | | T528 | T568 |
+| `single-line-gain-far-exceeds-the-tail-ceiling` | all | **SETTLED (referee), and now bounded** | | T469 | T568 |
+| `tail-append-caps-at-t-plus-half-k-over-all-orientations` | 14/18/20 | **SETTLED (referee), PROOF; corollary of 46a** | | T454 | T568 |
+| `eligible-pair-degree-at-most-one` | all | **SETTLED (referee), PROOF** | Reference data 41c, 106 mutual-last pairs. Directly relevant to 47c: the criterion demands a mutual-extreme pair. | T466 | T593 |
+| `tail-append-outputs-are-parity-clean-at-every-base` | 14/18/20 | **SETTLED (referee), VERIFIER RUN** | Parity is necessary, not sufficient. And by 47b a tail-append has `\|I\| = 0`, so its base-only floor is 0 trivially — which is why it never discriminated. | T518 | T593 |
+| `table-validate-checks-only-reciprocity` | all | **SETTLED (referee-verified from source)** | | T441 | T568 |
+| `b-plus-14-stretchability-is-the-wrong-question` | 14 | **DEAD (referee)** | Realizability is the last question. | T561 | T568 |
+| `ring-total-t-not-determined-by-multiplicity-signature` | 18/20 | **SETTLED (referee), VERIFIER RUN** | | T495 | T518 |
+| `ring-realized-d-is-3c-and-the-d-framework-does-not-discriminate` | 18/20 | **SETTLED (referee), against my own framework** | | T518 | T543 |
+| `k20-c12-n6-f6-ring-dead` | 20 | **SETTLED (referee), three independent routes** | | T405 | T518 |
 | `centrally-symmetric-diagonals-force-n-parallel-side-pairs` | all | **SETTLED (SILVER), PROOF, T513 -> T514** | | T512 | T518 |
-| `hexagonal-ring-impossible-at-k14` | 14 | **SETTLED (referee), PROOF** | Reference data 39. One family, one `k`. | T405 | T469 |
-| `centrally-symmetric-hexagon-at-most-one-reflex-pair` | 14 | **SETTLED (referee-verified), PROOF** | T462, T463. | T461 | T469 |
-| `wood-k20-and-k22-records-are-head-append-instances` | 20/22 | **SETTLED (SILVER), T474 -> T475** | Drop line 2 for `N(19) = 107` and `133 = N(21)`; reference data 45g's alternating free-gap fingerprint. | T473 | T543 |
-| `bader-k14-and-k18-records-are-not-single-line-extensions` | 14/18 | **SETTLED (referee-verified)** | Best drops are 43 against `N(13) = 47` and 79 against `N(17) = 85`. Reference data 46b explains why a 94 would have to sit even lower: `T' <= 84`. | T473 | T568 |
+| `hexagonal-ring-impossible-at-k14` | 14 | **SETTLED (referee), PROOF** | | T405 | T469 |
+| `centrally-symmetric-hexagon-at-most-one-reflex-pair` | 14 | **SETTLED (referee-verified), PROOF** | | T461 | T469 |
+| `wood-k20-and-k22-records-are-head-append-instances` | 20/22 | **SETTLED (SILVER), T474 -> T475** | | T473 | T543 |
+| `bader-k14-and-k18-records-are-not-single-line-extensions` | 14/18 | **SETTLED (referee-verified)** | | T473 | T568 |
 | `c3-shift-automorphism-uses-per-row-orientation-flip` | all | **SETTLED (T487)** | | T487 | T518 |
 | `c3-orbit-starvation-does-not-transfer-across-k21-optima` | 18 | **CONTESTED (weak form only)** | | T456 | T518 |
-| `c3-k18-conflict-graph-unbuilt` | 18 | **DEAD (T520)** | Do not revive without coordinates. | T401 | T543 |
+| `c3-k18-conflict-graph-unbuilt` | 18 | **DEAD (T520)** | | T401 | T543 |
 | `c3-k18-search-ceiling-unestablished` | 18 | **DEAD (follows T520)** | | T401 | T543 |
 | `record-holders-k14-18-20-have-no-dihedral-symmetry` | 14/18/20 | **SETTLED (T500)** | | T500 | T518 |
-| `optimal-increment-is-not-a-per-arrangement-cap` | all | **SETTLED (T430), and now replaced by a real cap** | An increment between optima constrains nothing about an arbitrary base. Reference data 46a supplies the cap that actually applies: `floor((n + F')/2)`. | T430 | T568 |
-| `concurrence-ladder-in-c-does-not-terminate` | 14/18/20 | **SETTLED (referee), UNATTACKED** | Reference data 35a, sharpened by 45b: the window's lower edge is attained exactly when `F = 0`. | T405 | T543 |
-| `central-symmetry-k14-dead-above-c4` | 14 | **CONTESTED (narrowed)** | Open: `c >= 8` at `k = 14`, and any ring with split bridges (T458's hole, untouched for 110 turns). | T365 | T469 |
+| `optimal-increment-is-not-a-per-arrangement-cap` | all | **SETTLED (T430), replaced by a real cap** | | T430 | T568 |
+| `concurrence-ladder-in-c-does-not-terminate` | 14/18/20 | **SETTLED (referee), UNATTACKED** | | T405 | T543 |
+| `central-symmetry-k14-dead-above-c4` | 14 | **CONTESTED (narrowed)** | Open: `c >= 8` at `k = 14`, and any ring with split bridges (T458's hole, untouched for 134 turns). | T365 | T469 |
 | `b-formula-with-parallels-and-concurrences` | all | **SETTLED (referee-verified)** | `B(k,p,c) = k(k−2) − 2p − 3c`. | T269 | T543 |
 | `k14-pc-enumeration-2p-plus-3c-leq-6` | 14 | **REFUTED as stated; correct form is `2p + F = 6`** | | T269 | T543 |
-| `c3-k18-per-orbit-saturation-has-a-realized-precedent` | 18 | **SETTLED (referee-verified)** | Reference data 34c-d; `F = 0` at `k = 15, 17, 21, 23, 27`. | T404 | T543 |
+| `c3-k18-per-orbit-saturation-has-a-realized-precedent` | 18 | **SETTLED (referee-verified)** | | T404 | T543 |
 | `c3-k18-free-segments-form-two-orbits` | 18 | **SETTLED (T404 + referee)** | | T404 | T543 |
 | `parallelogram-whole-bridge-doubling-impossible-at-mult3` | all | **SETTLED (referee-verified), PROOF** | | T455 | T469 |
 | `parallelogram-ring-doubling-forces-mult4` | all | **SETTLED (referee-verified)** | | T467 | T469 |
 | `bridge-split-nets-positive-refutes-t457-pricing` | all | **REFUTED (SILVER), T458 -> T459** | | T457 | T469 |
-| `k4-bridge-graph-impossible-for-any-four-points` | all | **SETTLED (referee-verified), PROOF** | Reference data 36a. | T358 | T454 |
-| `bridge-graph-must-have-a-crossing-free-straight-line-drawing` | all | **SETTLED (referee-verified), PROOF** | Reference data 36b. | T361 | T405 |
-| `central-symmetry-c4-dead-at-k14` | 14 | **SETTLED (referee-verified)** | Reference data 36c. | T358 | T405 |
+| `k4-bridge-graph-impossible-for-any-four-points` | all | **SETTLED (referee-verified), PROOF** | | T358 | T454 |
+| `bridge-graph-must-have-a-crossing-free-straight-line-drawing` | all | **SETTLED (referee-verified), PROOF** | | T361 | T405 |
+| `central-symmetry-c4-dead-at-k14` | 14 | **SETTLED (referee-verified)** | | T358 | T405 |
 | `fill-rate-extrapolation-is-circular-and-crosses-a-residue-boundary` | 18 | **REFUTED (SILVER), T499 -> T500** | | T497 | T518 |
-| `t488-reoriented-double-append-is-not-an-arrangement` | 18/20 | **SETTLED (referee), VERIFIER RUN** | Reference data 42d. | T492 | T518 |
+| `t488-reoriented-double-append-is-not-an-arrangement` | 18/20 | **SETTLED (referee), VERIFIER RUN** | | T492 | T518 |
 | `t471-ring-ceiling-violation` | 18 | **REFUTED (referee), units error** | | T471 | T518 |
-| `double-tail-append-two-round-cap-leq-n-plus-2` | 18/20 | **SETTLED, subsumed** | Reference data 46a kills the family in one line. | T491 | T568 |
+| `double-tail-append-two-round-cap-leq-n-plus-2` | 18/20 | **SETTLED, subsumed** | | T491 | T568 |
 | `interior-crossing-tests-are-blind-to-collinearity` | all | **SETTLED (T449), FLAG RETIRED UNRUN** | | T449 | T518 |
 | `only-main-diagonals-through-o-spare-the-bridges` | all | **SETTLED (referee-verified), PROOF** | | T423 | T518 |
 | `convex-ring-bridges-survive-the-extension-test` | all | **SETTLED (referee-verified), PROOF** | | T406 | T469 |
 | `reflex-vertex-continuation-ray-kills-far-bridge` | 14 | **SETTLED (referee-verified)** | | T461 | T469 |
 | `ring-plus-spokes-family-dominated` | 14 | **SETTLED (T429-T431)** | | T428 | T454 |
 | `ring-family-ceiling-is-3-plus-f-over-n` | all | **SETTLED, PROVED, NON-BINDING** | | T454 | T518 |
-| `single-line-extension-face-lemma` | all | **SETTLED (referee-verified)** | Reference data 38a. | T437 | T543 |
+| `single-line-extension-face-lemma` | all | **SETTLED (referee-verified)** | | T437 | T543 |
 | `adjacent-gap-triangles-mutually-exclusive` | 14 | **CONTESTED (machine evidence)** | | T392 | T405 |
 | `chain-gap-triangles-cap-at-two-in-the-full-14-line-arrangement` | 14 | **CONTESTED (search evidence)** | | T393 | T405 |
 | `at-least-one-free-edge-less-axis-face-is-not-a-quadrilateral` | 14 | **CONTESTED (conditional)** | | T405 | T405 |

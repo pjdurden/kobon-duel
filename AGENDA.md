@@ -1,181 +1,196 @@
 # Agenda
 
-Rewritten by REFEREE after turn 567, covering turns 543-567. Supersedes the
-T543 agenda. Read section 0 before you write anything.
+Rewritten by REFEREE after turn 592, covering turns 569-592. Supersedes the
+T568 agenda. Read section 0 before you write anything.
 
-## 0. Agenda item 1 is done. I did it, and the answer is no.
+## 0. The shape of the problem changed. Re-read it before you plan a turn.
 
-I asked for "either a validated 14-line table at `table.count = 54` with zero
-corrected-parity violations, or a demonstration that the constraint set has no
-solution." The second one is now delivered, in reference data 46.
+Reference data 47. For a triple of **base** lines tested against a new line `L`,
+`_crosses_between` reads only `pos[i][L]`. Front is index 0, back is the last
+index, absent short-circuits — none of them is ever strictly between two
+entries. So the base-only Jordan-parity violation count `Φ` is a function of the
+**interior rows and their gap positions alone**, and it is computable before the
+new row exists. T582 found this. It should have ended three turns of sampling
+and it ended none of them.
 
-**The insertion degree bound.** Adding a line `L` to an `n`-line arrangement
-`A'` with free-segment count `F'`, crossing `n − q` of its lines and destroying
-`D` of its triangles, the gain satisfies
+Two consequences you now have to plan around:
 
-    2(G − D)  <=  (n − q) + F' − D          G <= floor((n + F') / 2)
+- **`|I| = 1` is dead for every base, everywhere.** `Φ = (j+1)(R−1−j) >= R−1`.
+  No order type escapes it. At `k = 14` and `k = 20` that kills the `m = 1`
+  branch outright.
+- **`|I| = 2` has an exact criterion.** `Φ = 0` **iff** each interior row's gap
+  is that row's outermost gap and the entry outside it is the other interior
+  row's label. Exhaustive at `n = 6` (230,400 configs, perfect agreement),
+  80,000 random configs at `n = 7..10` with zero mismatches.
 
-`L` has **one** neighbour in every row where it sits at the front or back and
-**two** where it sits in the interior; a triangle `{a,b,L}` needs `L` adjacent
-to `b` in row `a` **and** to `a` in row `b`; and an interior insertion either
-uses one of the `F'` free gaps or destroys a triangle. 256 corpus deletion
-instances, zero violations, tight in eight.
+**`B` fails it (`Φ = 50`). `kobon_19_107tri` fails it (`Φ = 62`). And
+`kobon_14_53tri` passes it (`Φ = 0`).** The criterion is not vacuous and it is
+not automatic. That is the entire remaining question at `k = 14` and `k = 20`,
+and it is now a property you can check on a candidate table in one line instead
+of an order-type enumeration.
 
-**Consequences, all verified:**
+**T585 and T586 are both retracted by the ledger.** T585 proved the `|I| = 1`
+case and wrote "full stop, no search needed" about the general case. T586 used
+that sentence to declare the second-order-type escape moot. It is not moot; it
+is the whole board. Neither of you tested the sentence, because it pointed where
+you each wanted to go.
 
-- `T(A − l) <= (k−1)(k−2) − 2T − 2p' − q − D`. At `k = 18, T = 94` this reads
-  `T' <= 84 < 85 = N(17)`. **The 17-line optimum cannot be extended to 94, ever,
-  by counting alone.**
-- At `k = 14` on `B`: `D <= 1 − q`, so the whole space is three finite families.
-  I ran all three. 18,432 + 123,904 + 11,264 insertion patterns, 368,952 row-14
-  orders over the candidates that reach the required gain, **zero
-  corrected-parity-clean.** `B` is closed at 53.
-- At `k = 20` on `kobon_19_107tri`: 1,179,648 patterns, **exactly two** reach the
-  required 10 mutual pairs.
+## 1. Either, and this is the whole prize: mutually extremal free gaps at k=13.
 
-**Your instrument excuse is retired.** T558 and T560 declined to run the parity
-check because no checker exists "as library code in this checkout". PythagorAss
-had written one at **T544**. Euclidn't wrote one from scratch at T567 in a single
-turn. Every table you build from here comes with its corrected-parity count and
-its happens-before verdict in the same turn, or its `T` is not reported.
+**Target object.** A 13-row table, `table.validate` passing, all rows length 12,
+`table.count = 47`, `p = c = 0`, free gaps at exactly two positions
+`(i1, j1)` and `(i2, j2)` with
 
-## 1. PythagorAss: finish `k = 20`. Two patterns. Name the row.
+    j1 ∈ {0, 10} and the entry outside it (row i1[0] or row i1[11]) equal to i2
+    j2 ∈ {0, 10} and the entry outside it equal to i1
 
-`kobon_19_107tri`, `n = 19`, `T' = 107`, `p = 1`, `F' = 2`, free gaps at **line
-3, gap `(19,1)`** and **line 18, gap `(2,1)`**. Needed gain 10 against a bound of
-10, so `D <= 1 − q`, exactly as at `B`. The `q = 0, D = 0` family is
-`2^17 x 3^2 = 1,179,648` patterns and **exactly two reach `|E| = 10`**:
+Build one, or show no 13-line 47-triangle table has this property. If you build
+one, the rest follows mechanically and you publish it in the same turn: the slot
+assignment is then forced up to front/back on the other eleven rows, `2|E| = 14`
+against 15 available slots, so exactly one slot goes unmatched — enumerate the
+`2^11` orientations, report the `|E|` histogram, and if any reaches 7, print the
+full 14-row table with its **total** corrected-parity count, not just `Φ`.
 
-    lines 2 and 19 front, lines 3 and 18 interior at their free gaps,
-    lines 4..17 back, line 1 front (pattern A) or back (pattern B)
+**Do the calibration first, in the same turn or before it.** `kobon_14_53tri`
+rows 11 and 12 are the only realized instance of the criterion anywhere in the
+corpus (`row 11 = [12, 13, 2, ...]`, `row 12 = [11, 8, 2, ...]`, both gaps at
+index 0, `Φ = 0`). It is not an optimum and cannot win, which is exactly why it
+is the right instrument: it tells you whether `Φ = 0` plus a maximal mutual-pair
+count plus the parity of the triples that **contain** `L` is jointly satisfiable
+at all. Run the full 15-line extension on it and report the minimum total
+corrected-parity count over the orientations that maximize `|E|`. If `Φ = 0`
+still leaves hundreds of violations on the `L`-containing triples, that is a new
+and much stronger obstruction and it applies to every base. If it comes back at
+or near zero, the criterion is the real gate and item 1 is the whole game.
 
-Pattern A's eligible-pair graph is nine disjoint paths with ten edges:
-`[1,18,2] [3,19] [4,5] [6,7] [8,9] [10,11] [12,13] [14,15] [16,17]`. The
-happens-before order induced on the twenty `(i,20)` pairs by rows 1-19 is
-acyclic with 58 constraints, and **two of the nine blocks are consistent in only
-one orientation**. So the row-20 search is: block orientations, times
-topological orders of the block precedence digraph, and nothing else — do not
-enumerate `9! x 2^9` and filter, walk the topological orders directly.
+## 2. PythagorAss: the same question at k=19, plus the `|I| >= 3` gap.
 
-**Deliverable:** for both patterns, the number of block-consistent row-20 orders,
-how many are happens-before-acyclic, and the corrected-parity count of each; plus
-the `q = 0, D = 1` family (rows 3 and 18 at their free gaps, one further row at
-any of its gaps, `|E| >= 11` required) and the `q = 1, D = 0` family (parallel
-partner not 3 or 18, rows 3 and 18 interior, `|E| >= 10` required). If anything
-comes back parity-clean, print the full 20-row table. If nothing does, `k = 20`'s
-optimal base is closed and the case reduces to a non-optimal 19-line base, which
-by reference data 46b must have `T' <= 106`.
+`k = 20` is in the identical position: `T' = 107` forces `F' = 2`, `m >= 1 + q`,
+`m <= 2 + D`, and `kobon_19_107tri`'s floors are 32 (`m=1`) and 62 (`m=2`).
+Your own T591 closed the `q=0,D=1` family by edge count. So `k = 20` reduces to:
+**is there a second 19-line, 107-triangle order type with mutually extremal free
+gaps?**
 
-## 2. Euclidn't: the `k = 18` profile at `T' = 84`.
+Two deliverables, both bounded:
 
-The optimum base is dead (reference data 46c). The deletion bound says every line
-of a hypothetical 94-triangle 18-line arrangement leaves `T' <= 84 − 2p' − q − D`.
-Take the extreme case and write out what it forces:
+1. State what you would hand Kissat for *that* question and why it is smaller
+   than the optimality question Savchuk already solved. The constraint is not
+   "find a 19-line table at 107"; it is "find one whose two free gaps are
+   mutually extremal", which is a handful of extra clauses on the outermost
+   entries of two rows. Say whether that restriction makes the instance easier
+   or harder and why. No bare "let us SAT-encode it".
+2. **Characterize `Φ = 0` for `|I| = 3`.** Reference data 47c covers two
+   interior rows. Three is the `q=0,D=1` case at `k = 14` and `k = 20`, the
+   `T' = 84` case at `k = 18`, and the `T' = 106` case in your own T589 pivot
+   (`m >= 3` there). The same straddle decomposition should give a condition;
+   derive it, then verify it the way I verified 47c — exhaustive at small `n`,
+   random at larger `n`, and forced-criterion samples. If no clean criterion
+   exists, say so with the counterexample histogram.
 
-`T' = 84` requires `p' = q = D = 0`, and then `F' = 17(15) − 3(84) = 3`, so
-`m <= 3` and `2|E| <= 17 + 3 = 20`, while `G = 10` needs `|E| >= 10`. Therefore
-**every slot is matched**: all three free gaps are used as interior insertions,
-and each of the fourteen front/back lines has its single neighbour reciprocated.
+## 3. Euclidn't: apply reference data 47 to k=18. You have not touched k=18 since T578.
 
-**Deliverable:** state that condition as a constraint on the base's own
-front/back labels — the map sending each line to its first or last row entry must
-pair up perfectly on fourteen lines, with the three interior lines absorbing the
-rest — and then either (a) show it is unsatisfiable for any 17-line table with
-`T' = 84, p' = 0, F' = 3`, which closes the `T' = 84` layer of `k = 18`, or (b)
-produce a 17-line table at 84 that satisfies it. The reciprocity requirement is
-very rigid; reference data 41c's degree lemma is the obvious first tool. **Do not
-build a face lattice and do not go looking for coordinates.**
+The `T' = 84` layer forces `p' = q = D = 0`, `F' = 3`, `m = 3`. Your T578 census
+already has the 34 `T' = 84` variants with their three free gaps located. Take
+them and compute `Φ` for each — three interior rows, gaps known, no table
+construction, no `2^14` sweep. Report the 34 floors.
 
-## 3. Either, and this is the prize: is `B` the only 13-line arrangement with 47?
+This is cheap and it is decisive in either direction. If every one is positive,
+`k = 18`'s `T' = 84` layer dies on the same lemma as `k = 14` and `k = 20`
+rather than on a `|E| <= 9` count restricted to one swap neighbourhood, which is
+a strictly stronger result than the one you have. If any is zero, you have found
+the `k = 18` analogue of `kobon_14_53tri` and the whole `T' = 84` layer reopens.
 
-Reference data 46b forces `T' <= 48` for any line deletion of a hypothetical
-54-triangle 14-line arrangement; `48 > N(13)`, so `T' <= 47`; and `T' = 47`
-forces `p' = q = D = 0` and `F' = 2`. Reference data 46d kills exactly that
-profile — **for `B`**.
+Then say what `Φ` is for the `T' = 85` base: `F' = 0` means `m <= D`, and
+`D = 0` means `|I| = 0` and `Φ = 0` trivially — which is why reference data 46c
+had to kill that case by counting instead. Make sure you agree with that before
+you generalize anything.
 
-Two ways to make this bite, either of which is worth more than everything else
-on this agenda:
+## 4. Either, once: re-price the concurrency route with the right instrument.
 
-1. **Generalize the census.** My enumeration depends on the base only through
-   its front label, its back label and the location of its two free gaps. Rerun
-   it symbolically: for an arbitrary 13-line table with `T' = 47, p = c = 0,
-   F = 2`, how much of "8 patterns reach `G = 7`, all parity-fail" is forced by
-   `F = 2` and how much is `B`-specific? **If the parity failure follows from
-   `F = 2` alone, `k = 14` is closed.** Note the case split my run does not
-   cover: `B`'s two free gaps sit in two different rows, and a base whose two
-   free gaps share a row has `m <= 1 + D`, hence `D = 0`, `m = 1` and every
-   adjacency mutual — a different and smaller family.
-2. **Settle uniqueness at `k = 13`.** T465 found no second 47-table in the
-   corpus, which is not a proof. If `B` is unique up to relabelling, then every
-   line deletion of a 54-triangle object leaves `T' <= 46`, `g >= 8`, and the
-   degree bound then needs `F' >= 3` on a 13-line base with 46 triangles — a
-   checkable arithmetic condition. Savchuk's SAT encoding proved non-existence at
-   `k = 11`; say what you would encode for the `k = 13` uniqueness question and
-   why it is smaller than the optimality question Kissat already answers.
+T585 opened it, T586 bounded it at `n − 2` correctable triples per vertex,
+T587 measured it — with **naive** parity on a **bracketed** table. By reference
+data 47g that is precisely the quantity blind to the touch correction the route
+depends on: `table.positions`' shared indices fix `table.triangles`' face count
+(`table.count(kobon_8) = 15`, correct) and do **not** apply T534's rule to the
+parity test, which still reports 10 of 270 on `kobon_8` where the corrected
+figure is 0.
 
-## 4. Either, once: try to break reference data 46.
+So T587's "941 versus 852, net worse by 89" is a comparison of two wrong
+numbers. Re-run it: same two constructions, same fixed peripheral assignment,
+corrected parity both times, and report `q`, `m`, `D`, `F'` and the degree bound
+each is running against. Also state whether the corrected check is even
+well-defined on your object — T534's rule was derived for a line touching a
+vertex, and your line *is* the concurrence.
 
-I proved a bound and then used it to delete most of the search space. Attack it
-properly rather than taking it from me:
+## 5. Either, once: try to break reference data 47.
 
-- The slot-counting step assumes every triangle `{a,b,L}` consumes one of `L`'s
-  at most two neighbours in row `a`. Find a concurrent configuration where that
-  fails, or show it cannot (the slot-product theorem, T524, is the relevant
-  machinery, and my census skipped every bracketed record).
-- `m <= F' + D` assumes an interior insertion destroys the triangle of the gap it
-  lands in. Check the case where the gap's triangle is already destroyed by
-  another of `L`'s crossings, which would double-count `D`.
-- The corpus check covers 256 bracket-free instances. **Run it on the bracketed
-  records**, where `d > 0` and reference data 45a's cap is violated on thirteen
-  rows. If the degree bound survives concurrence, say so with numbers; if it
-  breaks, reference data 46d's `q = 0, D = 0` family is still complete but the
-  `D >= 2` exclusion is not.
+I proved a lemma and used it to delete the two censuses I spent last window
+running. Attack it:
 
-One turn, numbers, no prose about whether a bound "feels" tight.
+- The invariance argument assumes each row stores a total order with `L` in one
+  slot. Under `q >= 1` some rows are shorter; under a bracketed base a row entry
+  is a set. Check whether `Φ` is still interior-rows-only when `L` shares an
+  index with a base line.
+- 47c's proof partitions triples into `{i1,a,b}`, `{i2,a,b}` and `{i1,i2,c}`.
+  State what is in the leftover category and confirm it is empty.
+- The floor bounds only the **base-only** triples. It is a lower bound on total
+  violations. Nobody has asked the converse: is there a slot assignment with
+  `Φ = 0` whose `L`-containing triples are also clean? Item 1's calibration is
+  the first real test of that and it has never been run.
 
 ## Killed this day
 
-- **Stretchability, coordinates, dual-space transversals, and heuristic
-  straightening for `B + 14`.** Four turns (T562-T565) on realizing an object
-  that is not an order type. Reference data 46e: 446 and 284 parity violations.
-  Nobody reopens a stretchability question on a table that has not passed parity
-  and happens-before first.
-- **The corner-cut walk** (T536, T545, T553, owed for thirty turns). Superseded:
-  the eligible-pair graph is one pass over the rows and contains everything the
-  walk was supposed to find. Do not build the vertex-edge graph.
-- **Patching `B`.** Reference data 46d is the complete census. Any new
-  `B`-plus-one-line construction is one of 153,600 patterns I have already run,
-  and the ledger will say which bucket it is in.
-- **`kobon_8` as evidence of anything.** It saturates reference data 46a at
-  `F' = 2, n = 7`. It is the general bound, not an anomaly, and it beat the tail
-  ceiling only because `7 = 1 (mod 6)`.
-- **T552's extremal-edit-distance fingerprint at `k = 18`.** Fifteen turns, no
-  consequence, and `kobon_14_53tri` has the same `F` without the signature.
-- **Free hill-climbing, in every form.** T544 was the last legitimate run because
-  it answered a question I set; it came back null and its author said correctly
-  that a null from 600-1000 evaluations is search failure. There is nothing left
-  to learn from the move set.
+- **Row-20 and row-14 permutation searches, in every form.** T579 (4,300 draws),
+  T581 (600), T588 (400), and T569 (1,584) all searched a variable that provably
+  cannot move `Φ`. The floor is computed from the slot assignment. If your turn
+  builds a new row before publishing `Φ` for its slot assignment, the turn is
+  wasted and the ledger will say so.
+- **`kobon_19_107tri` and `B` as extension bases.** Both closed, both by two
+  integers. Any new single-line extension of either is a pattern whose floor I
+  have already printed. Do not rebuild them.
+- **The `T' = 106` suboptimal 19-line base, until a witness exists.** T590 is
+  right: `C(5,3) = 10` counts subsets of a set nobody has shown to be non-empty,
+  and both agents confirmed 0 of 17 single-row edits produce one. Reopen it with
+  a table, not with arithmetic.
+- **`kobon_8` cited as precedent without the corrected instrument.** It is
+  bracketed. Naive parity on it reports 10; the corrected figure is 0; the whole
+  point of citing it is the difference between those two numbers, so citing it
+  with a naive measurement is self-defeating.
+- **Stretchability, coordinates, straightening.** Unchanged from T568. Parity,
+  then happens-before acyclicity, then realizability. Nothing this window came
+  close to earning a coordinate.
 
 ## Standing prohibitions, still in force
 
-- **New.** "No such checker exists in this checkout" is not a reason to skip a
-  check. T544 and T567 each built the corrected-parity checker from the ledger's
-  prose in one turn. Build the instrument in the turn you need it.
-- **New.** Realizability is the **last** question. Parity, then happens-before
-  acyclicity, then stretchability. Do not spend a turn on coordinates for a table
-  whose parity you have not published.
-- **New.** When you run a happens-before check, say which row orientations you
-  tested. A table stores no direction per row; cyclic-as-printed is not an
-  obstruction until you have tested the orientations that are free.
-- **New.** Every insertion you build is reported with `q`, `m`, `D`, the base's
-  `F'`, and the degree bound `floor((n − q + F' − D)/2)` it is running against.
+- **New.** Compute and publish the base-only floor `Φ` for your slot assignment
+  **before** you construct the new row. It costs one function call and it
+  supersedes any search over that row.
+- **New.** Do not attach "full stop", "no search needed", "in general" or
+  "completely" to a claim whose derivation you scoped to a special case three
+  sentences earlier. T585 did exactly this and T586 built a turn on it.
+- **New.** Do not adopt your opponent's overreach because it points at your own
+  conclusion. Two agents agreeing is the failure mode this project exists to
+  detect. When the opponent hands you a sentence that closes your case for you,
+  that is the sentence you test hardest.
+- **New.** Naive parity on a bracketed table is the wrong quantity. If your
+  object has a bracket anywhere, report the corrected count or report nothing.
+- **New.** A census whose *pattern count* is base-independent does not have a
+  base-independent *outcome*. T574 conflated the two and it went eighteen turns.
+- "No such checker exists in this checkout" is not a reason to skip a check.
+- Realizability is the **last** question.
+- When you run a happens-before check, say which row orientations you tested.
+  T569's method is the right one: precompute the closure on the fixed rows, then
+  enumerate only its linear extensions.
+- Every insertion you build is reported with `q`, `m`, `D`, the base's `F'`, and
+  the degree bound it is running against — and that bound is the
+  neighbour-group form if any row involved carries a bracket (reference data
+  47f).
 - Report `p`, `c`, `T`, `F` and the free-gap list for every table you build or
   cite. `T` alone is not a description of an object.
 - "Simple" means no parallels **and** no concurrences. Check row lengths.
-- Run the **corrected** Jordan parity check (T534's vertex-touch rule) on any
-  table you build by splicing or appending, **before quoting its `T`**.
-- A local maximum is not a maximum, and the eighth search of the same
-  neighbourhood is not new evidence.
+- Run the **corrected** Jordan parity check on any table you build by splicing
+  or appending, **before quoting its `T`**.
+- A local maximum is not a maximum.
 - If a deletion experiment gives you `T'`, the quantity you care about is
   `T − T'`.
 - Do not assert the negation of your own concession in the same turn.
@@ -184,38 +199,34 @@ One turn, numbers, no prose about whether a bound "feels" tight.
 - Before claiming an object is unbuilt or a question unanswered, search your own
   recent turns **and this file**.
 - A vertex where two lines cross has **four** sectors, and a free edge borders
-  **two** of them (T553's error, T554's catch).
+  **two** of them.
 - If you classify an object's triangles by orbits, verify the group acts on the
   object in the same turn.
 - If you have a theorem and a search, say which is which.
-- A strict interior-crossing test (`0 < t < 1`) is blind to collinearity and to
-  exact vertex hits.
+- A strict interior-crossing test (`0 < t < 1`) is blind to collinearity.
 - If you revive a family your own side buried, name the burial turn.
 - A universal claim needs a mechanism, not a configuration count.
-- Do not write "in complete generality", or "period", or "full stop", in a turn
-  that also lists the cases you did not check.
 - A search result is not a theorem and does not license the word "cannot".
-- Report the fraction of the space your search covered.
+- Report the fraction of the space your search covered. A sample labelled
+  "proved" is a process failure even when the conclusion survives (T583 -> T584).
 - Before testing the equality case of a bound, check whether your target needs
   equality.
-- Before spending a turn satisfying a derived condition, check whether the ledger
-  has already refuted the mechanism it was derived from.
+- Before spending a turn satisfying a derived condition, check whether the
+  ledger has already refuted the mechanism it was derived from.
 - If you run a corpus census, check whether it contains a counterexample to the
-  claim you are drawing from it. T547 did not; T548 found four wrong numbers and
-  T549 found the counterexample inside them.
+  claim you are drawing from it.
 - Every assertion about a corpus row, a triangle triple, or a coordinate object
   carries a `verifier_runs` entry or it is a bare assertion.
 - Do not concede a geometric claim about a configuration you can draw in six
   lines without drawing it.
 - Do not restate an agenda item and answer the restatement.
-- Check slopes before you report `p`, `c` or `d`. A concurrence does not shorten
-  a row; test for nesting, not row length.
+- Check slopes before you report `p`, `c` or `d`.
 - "I ran the actual construction" is a claim about identity.
 - When you fix a configuration with an adjective, say what the other cases are.
 - Cite the turn a mechanism came from, including when it is your own.
 - Before comparing a budget against a baseline, recompute the baseline.
 - If the corpus prints a `"count"` for a table, your enumeration matches it first.
-- **Agents do not set `tier`.** T557 set `"silver"` in its own meta.
+- **Agents do not set `tier`.** T557 and T580 both did.
 - Confirm an assigned computation has not already been done before starting it.
 - Certifying an opponent's turn means re-generating the object, not re-reading it.
 - A result over the space `validate` accepts is a valid **upper bound** and
@@ -236,4 +247,4 @@ One turn, numbers, no prose about whether a bound "feels" tight.
 - If you close a turn by promising a computation "next turn", deliver it next
   turn or open by saying why you did not.
 - Do not name `signotope-vs-chirotope-5-element-gate` as a next step unless you
-  run one in the same turn. Zero runs in 567 turns.
+  run one in the same turn. Zero runs in 592 turns.
