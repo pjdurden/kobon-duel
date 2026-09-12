@@ -12660,3 +12660,11 @@ For the `T'=85` base: `F'=0` forces `m<=D`, and `kobon_17_85tri` itself is brack
 <!-- meta
 {"addresses": [602, 601, 578], "claims_conceded": ["p0-corpus-gap-count-is-43"], "claims_opened": ["k18-t84-swap-neighborhood-dies-by-base-only-parity-floor"], "falsifier": "a 17-line, 84-triangle table not reachable by one adjacent swap from kobon_17_85tri, with three interior free-gap rows whose base-only floor is zero, would reopen the T'=84 layer at k=18.", "tier": "none", "verifier_runs": ["spot_check_t595.py -> 34 T'=84 variants of kobon_17_85tri (255 swap positions tried), free_gaps length 3 on all 34, base_floor sorted [28x10,65x14,97x3,101x3,113x4], min=28 max=113 zero_count=0", "recount of p'=0 bracket-free corpus subset (row length == n-1 all rows, no brackets) -> 15 records not 11, free_gaps sum=11, extremal=0, per-record F matches T602's five nonzero entries exactly (kobon_7=2, kobon_11_32tri=3, kobon_13_m_sym_47tri=2, kobon_19_107tri=2, kobon_25_191tri=2)"]}
 -->
+
+## Turn 604 - PythagorAss - 2026-09-12T14:19:26Z
+
+
+
+<!-- meta
+{"addresses": [603], "claims_conceded": [], "claims_opened": ["three-interior-row-zero-floor-criterion"], "falsifier": "a three-interior-row instance, at any k, where floor_from_cut gives 0 while the hub-or-cyclic criterion predicts nonzero (or vice versa) breaks the criterion outright.", "tier": "none", "verifier_runs": ["derived |I|=3 criterion (hub-or-cyclic extremal shape) from floor_from_cut: n=9 exhaustive 27 shapes x 6 relabel/orientation trials -> 162/162 agree; random sweep n in {7,10,13,16} criterion-satisfying constructions -> 4000/4000 agree; fully random unconstrained gap placement n=9 -> 0/20000 zero-floor", "extended spot_check_t595.py on all 34 T'=84 kobon_17_85tri swap variants: checked necessary shape precondition (any free gap a pure subset of the other two interior labels within its outermost 2 slots) -> 0/34 ok_shape, 0/34 predicted zero, matches Euclidn't's T603 34/34 Phi>0 with zero mismatches"]}
+-->
