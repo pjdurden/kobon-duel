@@ -12369,3 +12369,34 @@ verifier_runs: ["table.triangles(kobon_19_107tri) -> 107, confirming base T' bef
 <!-- meta
 {"addresses": [588], "claims_conceded": ["kobon19-107tri-patterns-ab-exact-floor-62-confirmed"], "claims_opened": ["suboptimal-t19-base-multiplies-gap-selection-freedom"], "falsifier": "if a valid T'=106,F'=5 base is built and every one of its C(5,3)=10 gap-subsets still hits nonzero corrected-parity floor, the freedom argument dies and k=20 single-line extension is dead regardless of which 19-line base is chosen", "tier": "none", "verifier_runs": ["table.triangles(kobon_19_107tri) -> 107", "corpus k=19 census -> only kobon_19_107tri", "17 adjacent-swap attempts on row 1 -> validate() False every time", "F' and m_min and C(F',m_min) arithmetic for T'=107..103"]}
 -->
+
+## Turn 590 - Euclidn't - 2026-09-12T01:17:26Z
+
+Confirmed independently: 0/17 adjacent swaps in row 1 pass `table.validate`, matching PythagorAss's own finding on all 17 positions. Now writing the turn.
+
+---
+
+The concession on the exact-construction claim is correctly scoped and I'll add nothing to it. The pivot that follows — suboptimal 19-line bases at `T'=106, 105, 104` with `F'=5, 8, 11` — is arithmetic run against a table that does not exist, and I re-ran the arithmetic independently before saying so:
+
+```
+k19 records ['kobon_19_107tri']
+T 107
+[(107, 2), (106, 5), (105, 8), (104, 11)]
+bracket-free p=c=0 True
+```
+
+The identity reproduces exactly: `F' = 19·17 − 3T'` gives 2, 5, 8, 11 for `T' = 107..104`, matching T589's numbers, and `kobon_19_107tri` itself is confirmed bracket-free (`p'=c'=0`), so the identity applies cleanly to the one object that actually exists. It says nothing about whether an object exists at `T'=106`. That's a separate, unaddressed existence question, and T589 says so itself — "I don't have one," "the concrete next task" — which under my brief's own rule makes `F'=5` fiction until a table produces it, not a lead.
+
+The `C(5,3)=10` count is not evidence of freedom to dodge parity; it is a count of subsets of a set that has not been shown to exist. And the one experiment T589 actually ran against this route came back negative: every one of the 17 adjacent-pair swaps in row 1 of `kobon_19_107tri` fails `table.validate`, which I reproduced independently (0/17 pass, identical to T589's report). That is not a neutral non-result — a table's rows encode a *shared* pairwise order, so a local edit to one row breaks reciprocity everywhere else simultaneously. It means the suboptimal object, if it exists at all, is not adjacent in table-space to the known optimum; it has to be built from an independent order type, which is exactly as hard as any other order-type existence question this ledger has never closed (agenda item 3, `k=13` uniqueness, is the same shape).
+
+There's a second problem with the pivot even granting existence. T585's forcing lemma — "`F' >= 1` used as interior insertion at equality always produces a nonzero floor" — was proved *because* equality (`2g = n − q + F' − D`) pins every non-free row to front/back/absent, which is what makes those rows structurally silent and lets the straddle term at the interior gap dominate. At `T'=106`, needed `G=11` against a bound of `floor((19+5)/2)=12`: there is slack of one. T585's lemma does not fire here, but its *absence* is not a construction either — nobody has shown a non-equality insertion is parity-clean; they've only shown the one theorem that would have forced it doesn't apply. That's an open gap, not progress toward 117, and it sits on top of an unbuilt base.
+
+So the actual state: zero valid constructions at `T'<107` for `k=19`, one confirmed failure to reach one by the cheapest possible edit, and an arithmetic table computed from a formula whose left-hand side has no witness. `kobon_19_107tri`'s own family is closed (T588, conceded). The `k=20` case stands exactly where reference data 46g left it, pending an object nobody has built.
+
+My prior on `k=14,18,20` is unmoved by any of this. Nothing here challenges the k=14 closure or the k=18 profile; both stand.
+
+verifier_runs: ["table.count(kobon_19_107tri)=107 and corpus.by_key() filtered len==19 -> only kobon_19_107tri, reproducing T589 independently", "F'=k(k-2)-3T' at k=19 for T'=107,106,105,104 -> 2,5,8,11, matching T589's arithmetic exactly", "kobon_19_107tri rows: all 18 entries, no bracket lists -> p'=c'=0 confirmed bracket-free", "independent re-run of adjacent-pair swap in row 1 (17 positions) via table.validate -> 0 pass, 17 fail, reproducing T589's negative result"]
+
+<!-- meta
+{"addresses": [589], "claims_conceded": [], "claims_opened": ["suboptimal-19-line-base-is-unwitnessed-and-not-table-adjacent"], "falsifier": "a table.validate-passing 19-line arrangement with p'=c'=0, T'<107, and its single-line extension to k=20 achieving the required G with a full C(20,3) corrected-parity sweep at zero violations", "tier": "none", "verifier_runs": ["table.count(kobon_19_107tri)=107 and corpus.by_key() filtered len==19 -> only kobon_19_107tri", "F'=k(k-2)-3T' at k=19 for T'=107,106,105,104 -> 2,5,8,11", "kobon_19_107tri bracket-free rows confirmed, p'=c'=0", "independent adjacent-swap validate check row1 -> 0/17 pass"]}
+-->
