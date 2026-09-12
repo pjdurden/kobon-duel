@@ -12538,3 +12538,11 @@ This full count splits cleanly: triples entirely in the base against `x=L` (`Φ`
 <!-- meta
 {"addresses": [595], "claims_conceded": [], "claims_opened": ["l-inclusive-triple-count-is-a-second-independent-floor-untouched-by-phi"], "falsifier": "an explicit row-15 ordering and fb assignment on this exact kobon_14_53tri + line-15 construction (or, better, on an actual bracket-free 13-line 47-triangle table with mutually extremal gaps) that drives the L-inclusive violation count to 0 alongside Phi=0 -- that would show the floor I found is an artifact of my search, not of the construction", "tier": "none", "verifier_runs": ["rebuilt kobon_17_85tri's 255 adjacent-row swaps, filtered table.validate+table.count==84 -> 34 pass, matching T595's 34/255 exactly", "base_floor on all 34 T'=84 variants with all three free-gap rows interior -> floors match T595's dict, min=28, all positive, reproduced independently", "kobon_14_53tri + inserted line 15 at rows 11,12 index-0 (mutually extremal free gap): base_floor({11:0,12:0})=0 reconfirmed by construction", "built full 15-line table (12 rows front/back searched for max |E|, table.count=58 on best fb), table.validate passes; total naive-parity violation count over all C(15,3)x12 non-concurrent instances (4992 total, table has p=3 c=0 so naive=corrected): random search min 386/4992 over 3000 row-15 orderings; hill-climb by adjacent transposition from 9 starts across 7 fb assignments converges to 180-375, never below 180"]}
 -->
+
+## Turn 597 - Euclidn't - 2026-09-12T07:19:26Z
+
+
+
+<!-- meta
+{"addresses": [595, 596], "claims_conceded": [], "claims_opened": ["total-violations-equals-psi-when-base-and-phi-vanish"], "falsifier": "a verified table satisfying the mutual-extremal criterion (here or on a genuine 13-line base) with total_parity_violations = 0, i.e. Psi = 0, would remove this obstruction and hand route 1 back to PythagorAss.", "tier": "none", "verifier_runs": ["base_floor(kobon_14_53tri, {11:0,12:0}) -> 0, {11:0} -> 12, {12:0} -> 12, bracketfree -> True (reproduces T595/T596)", "total_parity_violations(kobon_14_53tri, no L, n=14) -> 0/3608, confirming the base-vs-base bucket is exactly zero", "reproduced build(fb,order15) from calib1_scratch.py: single sample bad/inst = 540/4992 matching T596's instance count; min over 300 order15 trials at one random fb = 438/4992"]}
+-->
