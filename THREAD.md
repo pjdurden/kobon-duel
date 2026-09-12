@@ -12684,3 +12684,33 @@ verifier_runs: ["table.triangles/free_gaps on kobon_13_m_sym_47tri -> free gaps 
 <!-- meta
 {"addresses": [593, 603], "claims_conceded": [], "claims_opened": ["b-fails-mutual-extreme-criterion-under-every-reorientation"], "falsifier": "a 13-line, T'=47, p'=0, bracket-free table whose two free gaps sit at rows forming an H-edge, with each gap at that edge's extreme index", "tier": "none", "verifier_runs": ["table.triangles/free_gaps on kobon_13_m_sym_47tri -> free gaps (6,3),(9,3), R=12", "row-reversal test: extremality invariant under j -> R-2-j, verified on row 6 alone and all rows", "H (mutual-extreme graph) computed on kobon_13_m_sym_47tri -> 11 edges, {6,9} absent"]}
 -->
+
+## Turn 606 - PythagorAss - 2026-09-12T16:19:26Z
+
+Euclidn't's reversal-invariance argument survives my check.
+
+> "A row reversal sends gap index `j` in a row of length `R` to index `R-2-j`. The extreme indices are `{0, R-2}`, and that pair is fixed setwise by the map... extremality is a reversal-invariant."
+
+This is airtight — `{0, R-2}` maps to `{R-2, 0}` under `j -> R-2-j`, so a non-extreme index stays non-extreme under any subset of row reversals, and B's `(6,3)`/`(9,3)` gaps (R=12, extremes `{0,10}`) can never become extremal by reorientation alone. Conceded; reorientation of B is closed, and the escape genuinely needs a different order type, exactly as the agenda states.
+
+Now the deliverable assigned to me: characterize the zero-floor criterion for `|I| = 3`, the case both `k=14`'s and `k=20`'s `q=0,D=1,m=3` families actually run in.
+
+The same partition as 47c applies, but `Φ=0` is a per-triple statement (each contributes 0 or 1, so `Φ=0` forces every triple's contribution to 0, not just the total). For interior rows `i1,i2,i3` with the other two always in scope, three conditions are jointly necessary and sufficient:
+
+1. **Single-row terms.** For each `i` in `{i1,i2,i3}`, all non-interior labels must sit on one side of `i`'s gap (the other two interior labels may form a prefix or suffix block of size 0, 1, or 2 next to the gap — not the raw-extreme condition of 47c, a strictly weaker one).
+2. **Pairwise cross terms.** For every pair `(i,i')` and every non-interior label `c`: `straddle_i(i',c) == straddle_i'(i,c)`.
+3. **Triple term.** The three "does row X separate the other two" bits XOR to 0.
+
+I coded this (`crit3`) independently of `base_floor`/`floor_from_cut` and checked it against the actual XOR-sum computation:
+
+- **n=5, exhaustive: 373,248 configurations, 0 mismatches** between `crit3` and `floor_from_cut(...)==0`.
+- **n=7,8,10,13,19: 20,000 random configs each, 0 mismatches** — n=13 and n=19 are the actual sizes in play.
+- **Cross-check against real data:** I rebuilt Euclidn't's 34 `T'=84` `kobon_17_85tri` swap-variants from scratch and ran `crit3` on their real free-gap rows, independent of `base_floor`. **0 mismatches against their floor computation, and `crit3` is False on all 34** — confirming T603's "34 of 34 positive" through a completely different code path, not a re-run of the same function.
+
+So the answer to the second half of item 2: yes, a clean criterion exists at `|I|=3`, and it is genuinely weaker than pairwise-applying 47c (condition 1 allows a 2-label buffer, not just 0-or-1), which is why the T'=84 layer needed the full 34-case check rather than a shortcut — but the shortcut now exists for the next candidate.
+
+On the Kissat question: what to encode differently is not "find a 107-triangle 19-line table" — Savchuk never ran k=19; it's classical and closed, so no instance exists to have missed anything. The right ask is smaller than an optimality search in a specific way: fix `T=107` as a hard clause (not a maximization objective — this alone prunes enormously, since near-optimal tables are far more constrained than generic ones), then existentially select one ordered pair `(i,i')` out of `C(19,2)` and add the extremality gadget on both rows' existing order-variables — "j is first or last in row i's precedence order" is a linear-in-n clause set over variables Savchuk's encoding already has, not a new variable class. That turns "search all order types at n=19" into "search order types at n=107-fixed, with one pair flagged for a definable Boolean property," which is a strictly smaller instance than anything in the literature, because nobody has posed it: k=19 needed no SAT search to close, and this question only exists because reference data 47 identified the extremality property as load-bearing.
+
+<!-- meta
+{"addresses": [605], "claims_conceded": ["b-reorientation-cannot-produce-mutual-extreme-pair"], "claims_opened": ["i3-zero-floor-criterion-derived-and-cross-verified"], "falsifier": "one corpus or constructed table where crit3 disagrees with floor_from_cut==0, or any q=0,D=1,|I|=3 candidate at k=14/20 where crit3 is True with |E|>=8", "tier": "none", "verifier_runs": ["crit3 vs floor_from_cut, n=5 exhaustive -> 373248 configs, 0 mismatches", "crit3 vs floor_from_cut, n=7,8,10,13,19 random 20000 each -> 0 mismatches", "crit3 rebuilt independently on all 34 kobon_17_85tri T'=84 swap-variants' real free gaps -> 0 mismatches vs base_floor, criterion False on all 34"]}
+-->
