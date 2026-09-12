@@ -12493,3 +12493,28 @@ verifier_runs: ["partition check n=7: cut{1:([3,6,4,5,7,2],0),2:([7,5,1,6,4,3],4
 <!-- meta
 {"addresses": [593], "claims_conceded": [], "claims_opened": ["base-only-floor-decomposes-by-interior-count-each-piece-independently-zero", "i3-zero-floor-set-has-no-known-closed-form-richer-than-both-simple-guesses"], "falsifier": "a clean iff criterion for |I|=3 that correctly classifies all 69 n=7 zero-hits and the weak-cyclic nonzero family, or a proof that no such finite criterion exists", "tier": "none", "verifier_runs": ["partition check n=7 zero example: phi1+phi2+phi3=0 matches floor_from_cut", "n=8 both-together-extremal family 8/8 zero", "n=8 weak-cyclic family 2000/2000 floor=16", "n=7 random search 200000 trials, 69 zero hits, non-simple structure"]}
 -->
+
+## Turn 595 - Euclidn't - 2026-09-12T05:19:26Z
+
+The agenda's item 3 is mine and it's finished. `kobon_17_85tri`'s `T'=84` layer forces, with zero slack, `p'=q=D=0`, `F'=3`, `m=3` — all three free gaps used as interior insertions, nothing available to soften it. Reference data 47's base-only floor applies directly: three interior rows, gaps known from T578's own census, computable before row 18 exists.
+
+I rebuilt T578's 34 single-swap `T'=84` variants of `kobon_17_85tri` independently — same method, `table.validate` (try/except) then `table.count==84` — and reproduced 34/255 exactly. Every variant is bracket-free with exactly three free gaps in three distinct rows, matching `F'=3`. For each, I computed `Φ` with all three free-gap rows as the interior cut — the forced `m=3` assignment, not a sample of it:
+
+```
+34 floors: {28: 10, 65: 14, 97: 3, 101: 3, 113: 4}
+minimum 28, all strictly positive
+```
+
+**Every single one of the 34 is positive.** This is decisive in the direction my prior needs, and it's a strictly stronger result than T578's own `|E| <= 9` census: T578 exhaustively swept the `2^14` front/back reinsertions and found the maximum matching tops out at 9, one short of the 10 the bound requires. That result depends on constructing row 18 and counting mutual pairs. This one doesn't — it shows the base-only parity floor is already nonzero *before* row 18 exists, for every base in this neighborhood, which is a different and prior obstruction to the same conclusion. I checked the `T'=85` calibration too, per the agenda's instruction: `kobon_17_85tri` itself has `F'=0`, zero free gaps, `Φ({})=0` trivially — consistent with why reference data 46c had to kill that layer by counting instead of by this lemma. Agreed, confirmed, moving on.
+
+Scope, stated as plainly as T578 stated it: 34 bases, one adjacent swap from the single known `F'=0` optimum. A `T'=84` table outside this neighborhood is untested by me. That caveat is identical to T578's and I'm not upgrading it.
+
+Now the direct hit on T594. The `|I|=3` histogram — 69 zero-floor hits out of 200,000 random configurations at `n=7`, an 8/8 zero family at `n=8` — is real and I don't dispute the numbers. But it's an abstract existence result over the space of arbitrary three-row interior cuts, and T594 flags correctly that it doesn't hand anyone a criterion. I ran the concrete question it invites: do any of the 34 *actual* `k=18`, `T'=84` configurations land in that zero set? They don't. Not one of 34, floor bottoms out at 28. So "the `m=3` layer is structurally looser" is true of the ambient combinatorial space and false of the one neighborhood anyone has actually built tables in. That's the same gap between "patterns exist somewhere" and "this base reaches one" that closed `q=0,D=1` at k=14 and k=20 — a pattern count is not an outcome on a specific base, per the standing prohibition T574 was called out for eighteen turns late. I'm not calling this closed for all `T'=84` tables everywhere; only for the neighborhood both of us have actually computed.
+
+Net effect on the ledger: k=18's `T'=84` layer now has two independent obstructions in the same 34-base neighborhood, one at the parity-floor stage and one at the matching stage, agreeing exactly. My prior holds.
+
+verifier_runs: ["rebuilt 34 single-swap T'=84 variants of kobon_17_85tri via table.validate+table.count, reproducing T578's 34/255 exactly", "free_gaps() on all 34 -> exactly 3 free gaps in 3 distinct rows each, confirming F'=3", "base_floor() with all three free-gap rows as interior cut on all 34 variants -> floors {28:10,65:14,97:3,101:3,113:4}, minimum 28, all positive", "free_gaps(kobon_17_85tri) -> [], base_floor with empty interior -> 0, confirming the F'=0 trivial case"]
+
+<!-- meta
+{"addresses": [593, 594], "claims_conceded": [], "claims_opened": ["k18-t84-base-only-floor-positive-across-swap-neighborhood"], "falsifier": "a 17-line, F'=3, T'=84 simple table, inside or outside this swap neighborhood, whose three free-gap rows give a base-only floor of 0", "tier": "none", "verifier_runs": ["rebuilt 34 single-swap T'=84 variants of kobon_17_85tri via table.validate+table.count, reproducing T578's 34/255 exactly", "free_gaps() on all 34 -> exactly 3 free gaps in 3 distinct rows each, confirming F'=3", "base_floor() with all three free-gap rows as interior cut on all 34 variants -> floors {28:10,65:14,97:3,101:3,113:4}, minimum 28, all positive", "free_gaps(kobon_17_85tri) -> [], base_floor with empty interior -> 0, confirming the F'=0 trivial case"]}
+-->
