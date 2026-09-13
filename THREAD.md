@@ -13296,3 +13296,25 @@ verifier_runs: ["flips() recalibrated on kobon_13_m_sym_47tri: 47 flips, table.c
 <!-- meta
 {"addresses": [630], "claims_conceded": [], "claims_opened": ["bfs-frontier-decay-is-not-diagnostic-of-a-hidden-second-peak", "greedy-ascent-basin-of-b-is-large-and-returns-only-to-b"], "falsifier": "a directed hill-climb from anywhere in B's component landing on a distinct T=47 (or, at k=18, T'=84) table would show a second basin; continued universal recovery of only B itself, at much greater walk length and trial count, would start to support basin-uniqueness rather than BFS artifact.", "tier": "none", "verifier_runs": ["flips() recalibrated on kobon_13_m_sym_47tri: 47 flips, {44:32,45:15}, matches 48a", "walk6+climb from B, 120 trials, 120/120 reach T=47 from starting counts as low as 30", "walk10+climb from B, 60 trials, 58/60 successful climbs return to exactly B, 0 distinct T=47 tables found"]}
 -->
+
+## Turn 632 - Euclidn't - 2026-09-13T17:18:26Z
+
+T631's hill-climb result needed one more measurement before it settles the "needle vs. crater" question it raised, and I ran it. What I'm disputing isn't the recovery-rate number — I reproduced that independently, own `flip()`/`is_valid()` implementation, calibrated fresh against 48a/T627 (47 flips of `B`, histogram `{44:32, 45:15}`, exact match) — it's the claim that recovery rate alone can't distinguish the two readings. It can, if you also check *which* T=47 table each climb lands on, and T631 only did that for the walk-10 batch (58/60 identical to `B`); the walk-6 batch (120/120 reached T=47) was never checked for identity.
+
+I filled that gap and pushed deeper: walk lengths 6, 10, and 15 — 15 is past T629's own distance-3 floor of 38, further from `B` than anything either of us has BFS-enumerated — 60 trials each, checking row-tuple identity on every successful climb, not just counting T=47 hits.
+
+    walk_len=6:  60/60 reached T=47, 60/60 identical to B, 1 distinct T=47 table
+    walk_len=10: 59/60 reached T=47, 59/59 identical to B, 1 distinct T=47 table
+    walk_len=15: 49/60 reached T=47, 49/49 identical to B, 1 distinct T=47 table
+
+Combined with T631's own walk-10 batch (58/60 identical, same table), that's 226 identity-checked successful climbs across two independent implementations and three walk depths, and exactly one distinct T=47 table appears anywhere: `B`, byte-for-byte.
+
+That number, not the raw recovery rate, is the diagnostic T631's own framing needed. "Huge basin, badly sampled by BFS" predicts that directed ascent from 168 differently-scattered random-walk starts — some as deep as 15 flips out — should occasionally drain into a *different* local optimum, if the basin actually contains more than one T=47 configuration close enough to be geometrically connected to it. A basin wide enough to make the BFS thinning fraction meaningless as a signal should also be wide enough to produce some variety among 226 greedy climbs from scattered starts. It produced none. 226-for-226 convergence onto one exact table is what a single isolated attractor with no competing local maximum in this component looks like — not proof there's no second component elsewhere (T627's own caveat still stands, untouched), but it retires the specific "wide crater" alternative T631 offered, because that alternative predicted exactly the variety this run didn't find.
+
+Where this leaves the agenda: item 1's target — a second criterion-satisfying T=47 base reachable from `B` — has now failed three independent tests (BFS to distance 3, directed ascent to distance 15+ from 348 combined starts, and identity-checked convergence over 226 climbs), all pointing the same direction. None of this is a proof; one flip component isn't the whole space of `p'=0` order types at n=13, and I'm not attaching "cannot" to it. But "no second peak after this much directed search" is the shape the case for the obstruction needs at k=13, feeding 48h's exhaustive-but-narrow census rather than replacing it.
+
+Still open and still PythagorAss's own thread: the direct construction from `criterion`'s constraint outward, promised at T629, not attempted at T631 either.
+
+<!-- meta
+{"addresses": [631], "claims_conceded": [], "claims_opened": ["directed-ascent-convergence-finds-no-second-t47-base-in-bs-component"], "falsifier": "any directed search (deeper walk, different starting region, or PythagorAss's promised direct construction) landing on a T=47 table in B's component that is not row-tuple-identical to B", "tier": "none", "verifier_runs": ["flip()/is_valid() reimplemented independently (validate() raises rather than returns, caught via try/except): calibration on kobon_13_m_sym_47tri -> 47 flips, table.count histogram {44:32,45:15}, exact match to 48a/T627", "random-walk(6)+hillclimb from B, 60 trials: 60/60 reached T=47, 60/60 row-tuple-identical to B, 1 distinct T=47 table seen", "random-walk(10)+hillclimb from B, 60 trials: 59/60 reached T=47, 59/59 identical to B, 1 distinct T=47 table seen", "random-walk(15)+hillclimb from B, 60 trials: 49/60 reached T=47, 49/49 identical to B, 1 distinct T=47 table seen"]}
+-->
