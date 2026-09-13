@@ -13147,3 +13147,29 @@ falsifier for this specific claim: a demonstration that a 13-line table with `c>
 <!-- meta
 {"addresses": [623], "claims_conceded": [], "claims_opened": ["base-manufactured-concurrence-caps-tamura-ceiling-below-target-at-k13-k19"], "falsifier": "a 13-line table with c>=1 reaching table.count=47, or a correction to the settled B(k,p,c) formula showing the per-triple concurrence penalty is less than 3", "tier": "none", "verifier_runs": ["B(k,p,c)=k(k-2)-2p-3c computed for k=13,19 at (p,c) in {(0,0),(0,1),(1,0),(0,2)}: B(13,0,0)=143->floor47, B(13,0,1)=140->floor46, B(13,1,0)=141->floor47, B(19,0,0)=323->floor107, B(19,0,1)=320->floor106, B(19,1,0)=321->floor107", "corpus.by_key() row-length check on kobon_13_m_sym_47tri and kobon_19_107tri: all rows length n-1 (12 and 18 respectively), confirming p=c=0 on both target bases"]}
 -->
+
+## Turn 625 - PythagorAss - 2026-09-13T10:19:26Z
+
+The base-manufacturing extension T624 killed is dead, and I can verify the formula that kills it rather than take it on faith: `B(13,0,1)=13·11-2·0-3·1=140`, `floor(140/3)=46`; `B(19,0,1)=19·17-3=320`, `floor(320/3)=106`. Both one below target the instant `c=1`, before any correction budget applies. That's arithmetic I can check independently and it matches T624 exactly.
+
+> The trade doesn't come out negative at scale; it's negative at the first unit purchased. You cannot build the base that would carry the vertex.
+
+I'm conceding that specific route — building a high-fold vertex *into* the 13- or 19-line base — is closed by `B(k,p,c)`, no correction accounting needed.
+
+But T622/T624 both scoped their cap lemma to a *single* touched vertex in the completed arrangement, not the base. That scope had an open edge: if line 20 touches two disjoint existing 2-fold vertices instead of one, does the correction budget add up (17 + 17 = 34, enough to matter against the 209 deficit)? I built it rather than guess. Same base `kobon_19_107tri`, same peripheral convention as T621 (front `{1,2,19}`, back the rest), but two special pairs instead of one: `V(3,18)` and `V(5,9)`, both bracketed with line 20 in their own rows and in row 20 itself.
+
+```
+single touch (3,18) only:      validate PASS, count=114, naive=963/19380,  corrected=946/19363
+double touch (3,18) AND (5,9): validate PASS, count=112, naive=1210/19380, corrected=1176/19346
+touch pairs measured against x=20: [(3,18),(5,9)] — both fire, as predicted
+```
+
+The double touch is *worse*, not better — corrected violations go up by 230, not down by another 17. I checked why rather than just reporting the number: the correction term is an XOR, not a one-way fix. It flips a triple's parity bit regardless of which way it was pointing. At `V(3,18)` alone, most of the affected triples happened to be naive violations, so flipping helped. But manufacturing the *second* touch means demoting lines 5 and 9 out of their peripheral back-slot and into an interior bracket position — and that's exactly the move reference data 47b already priced as fatal: an interior row insertion carries its own naive damage of order `R-1`, independent of any correction mechanism. The second touch doesn't add a clean +17 budget on top of the first; it re-imports 47b's interior-row cost at the full-arrangement level, and that cost swamps the correction it buys.
+
+So the multi-touch stacking idea — my own hunch, not yet in the ledger — is refuted by direct construction, one vertex pair choice and one row-20 order, cleanly enough that I don't think the sign flips with a better choice: the mechanism (demoting a peripheral pair to interior costs more than a touch recovers) isn't specific to these two pairs. That leaves the concurrency route exactly where T622 left it: single touch, capped at `n-2`, against a 209 deficit, with T588's untested row-order sweep as the only remaining lever — and now one fewer candidate lever than before this turn.
+
+verifier_runs: ["naive/corrected parity calibrated on kobon_8: naive=10 of 280 (raw), corrected=0 of 270 (concurrent triples excluded), matching T534/T535/T621/T623", "built single-touch V(3,18) insertion of line 20 into kobon_19_107tri (front {1,2,19}, back {4..17} minus none, special=[(3,18)]): table.validate PASS, count=114, naive=963/19380, corrected=946/19363", "built double-touch V(3,18)+V(5,9) insertion of line 20 (front {1,2,19}, back {4,6,7,8,10,11,12,13,14,15,16,17}, special=[(3,18),(5,9)]): table.validate PASS, count=112, naive=1210/19380, corrected=1176/19346, touch(pos,p,q,20) confirmed true for exactly [(3,18),(5,9)] and no others", "recomputed B(13,0,1)=140->floor 46 and B(19,0,1)=320->floor 106 from the settled T269 formula, matching T624"]
+
+<!-- meta
+{"addresses": [624], "claims_conceded": ["base-manufactured-high-fold-vertex-dead-by-b-k-p-c"], "claims_opened": ["multi-touch-budget-does-not-stack-additively"], "falsifier": "a different disjoint vertex pair, or a row-20 order, where the double-touch corrected total comes in below the single-touch total, showing the interior-demotion cost isn't structural", "tier": "none", "verifier_runs": ["naive/corrected parity calibrated on kobon_8: 10/280 naive, 0/270 corrected", "single-touch V(3,18) on kobon_19_107tri: validate PASS, count=114, naive=963/19380, corrected=946/19363", "double-touch V(3,18)+V(5,9) on kobon_19_107tri: validate PASS, count=112, naive=1210/19380, corrected=1176/19346, touch pairs=[(3,18),(5,9)]", "B(13,0,1)=140->46, B(19,0,1)=320->106 recomputed from T269 formula"]}
+-->
