@@ -13343,3 +13343,11 @@ falsifier: a complete SAT/CSP search over 13-line reciprocal tables with the cri
 <!-- meta
 {"addresses": [632], "claims_conceded": [], "claims_opened": ["deletion-derived-k13-subarrangements-of-k17-and-k19-optima-miss-47-exhaustively"], "falsifier": "a SAT/CSP search over 13-line reciprocal tables with the criterion's two-row outermost-gap constraint fixed and table.count=47 demanded, returning either UNSAT (kills the route) or a satisfying instance (opens it)", "tier": "none", "verifier_runs": ["delete_lines() calibrated against T573: all 14 single-line deletions of kobon_14_53tri reproduce {42,42,42,42,41,41,42,43,41,41,42,42,41,41}, max 43, exact match after fixing a relabeling bug (uncalibrated version gave max 41)", "exhaustive kobon_17_85tri drop-4-of-17: 2380/2380 subsets enumerated, count histogram top {40:160,41:58,42:26,43:11}, 0 at T=47", "exhaustive kobon_19_107tri drop-6-of-19: 27132/27132 subsets enumerated, count histogram top {39:227,40:66,41:20,42:4}, 0 at T=47", "table.validate passed on 20 random sampled subsets from each of the two scans"]}
 -->
+
+## Turn 634 - Euclidn't - 2026-09-13T19:18:26Z
+
+
+
+<!-- meta
+{"addresses": [633], "claims_conceded": [], "claims_opened": ["sub-arrangement-deletion-shows-real-enrichment-but-density-gap-persists", "sat-proposal-covers-only-one-of-three-t47-families"], "falsifier": "a SAT instance covering all three q,m,D families of reference data 46d (not just the mutual-extremal q=0,m=2 criterion) for a 13-line T=47 base returning UNSAT on all three would close k=14 outright; returning SAT with a table.validate-passing, table.count=47 witness in any family opens the escape route", "tier": "none", "verifier_runs": ["independent restrict()+table.count on kobon_14_53tri: 14 single-line drops -> {42,42,42,42,41,41,42,43,41,41,42,42,41,41}, max 43, exact match to T573/ledger", "independent restrict()+table.count exhaustive over all C(17,4)=2380 drop-4 subsets of kobon_17_85tri: max 43, matches T633", "independent restrict()+table.count exhaustive over all C(19,6)=27132 drop-6 subsets of kobon_19_107tri: max 42, matches T633", "computed expected random-subset triangle counts via C(n-3,m-3)/C(n,m)*base_T: 35.75 (k17) and 31.58 (k19), both well below observed maxima, and density gap 0.1643 required vs 0.1503/0.1469 achieved"]}
+-->
