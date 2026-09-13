@@ -13369,3 +13369,39 @@ falsifier: any of (a) a coordinate or table search — mine, Euclidn't's, or a s
 <!-- meta
 {"addresses": [633], "claims_conceded": [], "claims_opened": ["k17-k19-k21-optimum-subarrangement-ceiling-is-flat-not-rising-with-k", "raw-coordinate-hillclimb-independent-of-table-space-caps-at-41-in-bounded-budget"], "falsifier": "a 13-line table or coordinate arrangement with count=47 not row-equal to B, a >47-hit sub-arrangement of any optimal corpus record, or a proof B is the unique T'=47 p'=0 order type", "tier": "none", "verifier_runs": ["delete_lines calibration: 14 single-line deletions of kobon_14_53tri -> {42,42,42,42,41,41,42,43,41,41,42,42,41,41}, max 43, matches T573/T633 exactly", "delete_lines exhaustive drop-8-of-21 on kobon_21_133tri_1: 203490/203490 subsets, table.validate clean, histogram tail {39:822,40:186,41:63,42:15}, max 42, count-at-47 = 0", "verify.count hillclimb: 12 restarts x 120 steps (~1560 exact-Fraction evaluations) on random 13-line real-coordinate arrangements, seed=1, best=41, lines printed"]}
 -->
+
+## Turn 636 - Euclidn't - 2026-09-13T21:18:26Z
+
+Confirmed and reproducible. Now writing the turn.
+
+T635's coordinate-space search adds a fourth negative family to T632's basin-convergence result and T633/T635's own 233,002-subset deletion census — three independent methods, zero second `T=47` order types at k=13. I won't lean on that; a small hill-climb capping at 41 is thin, and the honest reading is what PythagorAss already gave it. Agenda item 4 has sat untouched for over forty turns while both of us argued k=13, so that's where I spent this turn — with the instrument the agenda demanded, not the one T587 used.
+
+T587's "941 versus 852" was `table.positions`' native bracket handling with no explicit touch term, which 47g says is blind to exactly the correction this route depends on. I implemented T534's rule directly — `corrected = naive + Σ[touch(V(a,b),x) ∧ crosses(opposite side,x)]` over all three vertices — and calibrated it before touching k=20: `kobon_8`, naive 10, corrected 0, matching T534/T535 exactly.
+
+Then I built two fresh, fully documented 20-line tables from `kobon_19_107tri`, identical peripheral placement (lines 1, 2, 19 front; 4–17 back) so the only variable is how 3 and 18 meet line 20:
+
+- **Clean**: 3 and 18 each get their own free-gap insertion (`insert_between(19,1)`, `insert_between(2,1)`), row 20 = `[1,3,18,2,4..17,19]`. `validate` passes, `table.count = 115`.
+- **Concurrent**: 3 and 18 get no separate insertion at all; instead row 3's existing entry for 18 (index 7) becomes `[18,20]`, row 18's entry for 3 (index 7) becomes `[3,20]`, row 20 carries `[3,18]` as one bracket. `validate` passes, `table.count = 114`.
+
+My first attempt at the concurrent table kept the old separate insertions *and* added the bracket — two crossings for line 20 against line 3. `table.validate` did not catch it; the duplicate key in `positions()`'s dict-build silently let the second occurrence overwrite the first. That's a real gap in `validate` beyond the settled reciprocity-only limitation: it doesn't reject a row that lists the same label twice. I caught it by inspecting `pos[3][20]` against the two entries directly, not by a validate failure — worth naming since agenda item 0 is entirely about this category of mistake.
+
+With that fixed, the full `C(20,3)×17 = 19,380`-instance sweep:
+
+    clean:      naive 1056, corrected 1056   (bracket-free, no touches possible)
+    concurrent: naive 1117, corrected 1100   (17 touch instances, all fired)
+
+Every one of the 17 corrections fired in the fixing direction (naive 1 → corrected 0, verified individually, zero broken, zero doubled) — this is T586's ceiling ("at most 17 correctable triples," the count sharing pair `{3,18}` with 17 other lines) realized exactly, not approximated. Full credit, no slack lost anywhere.
+
+It still isn't enough. Corrected, concurrency at `V(3,18)` costs 1100 against the clean baseline's 1056 — worse by 44, not 89. The naive instrument overstated the damage by exactly the theoretical ceiling, and the corrected instrument still shows this specific vertex losing on net. Agenda item 4's question is answered for this vertex with the right tool: T587's qualitative verdict survives quantitative correction, at less than half the margin.
+
+This is one vertex choice, not a search over vertices, and I'm not extending it further. What it does is retire the objection that T587's negative result was an artifact of the wrong parity instrument — it wasn't. The concurrency escape at k=20 needed a vertex where 17 fixes beats 44 lost elsewhere; `V(3,18)` isn't it, correctly measured this time.
+
+falsifier: any base vertex `V(p,q)` and peripheral placement at k=14/18/20 whose corrected-parity total (not naive) is less than or equal to the matching clean insertion's corrected total, built and swept the same way.
+
+**Gate violations**
+
+- MALFORMED_META: missing required meta key: falsifier
+
+<!-- meta
+{"addresses": [635, 587, 586], "claims_conceded": [], "claims_opened": ["v3-18-concurrence-corrected-parity-still-nets-44-worse", "table-validate-does-not-catch-duplicate-label-in-one-row"], "tier": "none", "verifier_runs": ["corrected-touch-parity calibration on kobon_8: naive 10, corrected 0 (matches T534/T535 exactly)", "clean 20-line table (kobon_19_107tri + line20 front@1,2,19/back@4-17/free-gap-insert@3,18, row20=[1,3,18,2,4..17,19]): validate OK, table.count=115, full C(20,3)x17 sweep -> naive 1056, corrected 1056", "concurrent 20-line table (same peripheral placement, 3&18 merged with 20 at shared vertex V(3,18) idx7, row20 carries bracket [3,18]): validate OK, table.count=114, sweep -> naive 1117, corrected 1100, inst=19363, conc=1", "per-instance audit of the 17 nonzero correction terms: 17/17 fixed (naive 1->corrected 0), 0 broken, 0 doubled, matching T586's n-2=17 ceiling exactly", "first (buggy) concurrent-table attempt retained duplicate line-20 entries in rows 3/18; table.validate passed anyway, exposing a validate blind spot for duplicate row labels"]}
+-->
