@@ -13405,3 +13405,29 @@ falsifier: any base vertex `V(p,q)` and peripheral placement at k=14/18/20 whose
 <!-- meta
 {"addresses": [635, 587, 586], "claims_conceded": [], "claims_opened": ["v3-18-concurrence-corrected-parity-still-nets-44-worse", "table-validate-does-not-catch-duplicate-label-in-one-row"], "tier": "none", "verifier_runs": ["corrected-touch-parity calibration on kobon_8: naive 10, corrected 0 (matches T534/T535 exactly)", "clean 20-line table (kobon_19_107tri + line20 front@1,2,19/back@4-17/free-gap-insert@3,18, row20=[1,3,18,2,4..17,19]): validate OK, table.count=115, full C(20,3)x17 sweep -> naive 1056, corrected 1056", "concurrent 20-line table (same peripheral placement, 3&18 merged with 20 at shared vertex V(3,18) idx7, row20 carries bracket [3,18]): validate OK, table.count=114, sweep -> naive 1117, corrected 1100, inst=19363, conc=1", "per-instance audit of the 17 nonzero correction terms: 17/17 fixed (naive 1->corrected 0), 0 broken, 0 doubled, matching T586's n-2=17 ceiling exactly", "first (buggy) concurrent-table attempt retained duplicate line-20 entries in rows 3/18; table.validate passed anyway, exposing a validate blind spot for duplicate row labels"]}
 -->
+
+## Turn 637 - PythagorAss - 2026-09-13T22:18:26Z
+
+T636's corrected-parity result at V(3,18) is real and I'm not going to relitigate it — Euclidn't ran T534's touch rule properly, calibrated it against the settled `kobon_8` figure first, and found the concurrent construction nets 1100 against the clean baseline's 1056, worse by 44. I'll concede that specific point:
+
+> Corrected, concurrency at `V(3,18)` costs 1100 against the clean baseline's 1056 — worse by 44, not 89.
+
+That's one vertex, correctly measured, and it closes that vertex — nothing more, and Euclidn't said as much.
+
+On the thread that actually matters for my prior: T632's 226-for-226 convergence is a real number, but I want to recalibrate what depth-15 search can possibly tell us, using ground truth this project already has and hasn't used for this purpose. `kobon_21_133tri_1`, `_2`, and `_3` are three *known, corpus-attested, coexisting* T=133 order types at the same k — settled since T573. I measured how far apart they actually sit as triangle sets:
+
+    table.triangles counts: 133, 133, 133 (all confirmed)
+    |tris(_1) Δ tris(_2)| = 66
+    |tris(_1) Δ tris(_3)| = 194
+    |tris(_2) Δ tris(_3)| = 188
+    t1 == t2 (rows): False;  t1 == t3: False
+
+These are not near-duplicates. The *closest* pair of known-coexisting optima in the whole corpus differs in 66 triangles' membership. Reference data 48c measured, exhaustively, the largest single-flip effect at an optimum: at most 3 triangles change membership per flip (2 in 15/47 flips, 3 in 32/47, 0 gained). Taking 3 as a generous per-flip ceiling, the minimum flip-distance between `_1` and `_2` is at least `66/3 ≈ 22` — already past the depth-15 walks T632 ran, and the other two pairs (`~190` symmetric difference) need on the order of 60+.
+
+I'm flagging the caveat myself before Euclidn't has to: this is a heuristic floor, not a proven one — 48c's per-flip ceiling was measured near `B`'s optimum specifically, and effect size elsewhere in the graph is unmeasured and could differ. But the direction of the point survives any reasonable slack: the *one place in this entire corpus where we know the ground truth* — three attested optima at fixed k — shows real distinct peaks separated by tens to low hundreds of triangle-memberships, translating to flip distances well beyond anything either of us has searched at k=13. A search that stops at depth 15-18 would, with high plausibility, look exactly like T632's result — 100% single-basin convergence — whether or not a second, criterion-satisfying T=47 base exists three times further out. The 226-for-226 number measures the radius of the search, not the size of the space.
+
+This doesn't manufacture a second base — I still owe that, openly, a fourth time. It does mean "no second peak found by depth 15" needs recalibrating against real distances in this problem before it counts as evidence either way, and by that calibration it currently doesn't move the needle much.
+
+<!-- meta
+{"addresses": [636], "claims_conceded": ["v3-18-concurrency-nets-worse-under-corrected-parity"], "claims_opened": ["flip-distance-between-known-coexisting-optima-exceeds-tested-search-depth"], "falsifier": "a directed search reaching depth >=25 flips from B in any direction that still converges only to B (or a corrected, larger per-flip effect-size ceiling from 48c that shrinks the 22-flip floor below 15) would remove this objection and hand the single-peak reading real force.", "tier": "none", "verifier_runs": ["table.triangles(kobon_21_133tri_1/_2/_3) -> 133/133/133; symmetric differences 66 (1 vs 2), 194 (1 vs 3), 188 (2 vs 3); row-tuples pairwise unequal"]}
+-->
