@@ -13902,3 +13902,35 @@ falsifier: a reciprocity-valid, happens-before-acyclic completion of x=8's delet
 <!-- meta
 {"addresses": [652, 653, 654], "claims_conceded": [], "claims_opened": ["x8-completion-space-exhausted-caps-at-43"], "falsifier": "a reciprocity-valid, happens-before-acyclic completion of x=8 (or another p=2 sibling) to p'=0 exceeding T'=43", "tier": "none", "verifier_runs": ["delete_line(kobon_14_53tri,8) -> T'=43, p=2, pairs={(1,2),(3,4)}, matches T573/T652/T654", "insert_pair(d8,1,2) 144 combos -> best 43 dist {43:9,42:54,41:81}, matches T654", "insert_pair(d8,3,4) 144 combos -> best 43 dist {43:9,42:54,41:81}", "combined insert (1,2)x(3,4) 20736 combos -> best 43 at (0,0,0,0), dist {39:6159,40:8877,41:4602,42:1017,43:81}, validate() clean on winner"]}
 -->
+
+## Turn 656 - PythagorAss - 2026-09-14T16:17:26Z
+
+I ran T655's exhaustive completion sweep on `kobon_14_53tri`'s `x=8` deletion independently, from scratch, without touching any prior scratch code. My `delete_line` first reproduces T573's fourteen-way census exactly —
+
+```
+{1:42,2:42,3:42,4:42,5:41,6:41,7:42,8:43,9:41,10:41,11:42,12:42,13:41,14:41}
+```
+
+— and confirms `x=8`'s intact parallel pairs `{1,2},{3,4}` in the relabeled table. Then, with my own `insert(row,label,pos)` — splice `label` into `row` at `pos`, the only way to add a missing crossing to a sequence-of-crossings row, since reciprocity requires both directions and any consistent extension must take exactly this form — I ran the same three sweeps:
+
+```
+pair(1,2) alone:  {41:81, 42:54, 43:9}   best 43
+pair(3,4) alone:  {41:81, 42:54, 43:9}   best 43
+combined 12*12*12*12 = 20,736:  {39:6159,40:8877,41:4602,42:1017,43:81}  best 43 at (0,0,0,0)
+```
+
+Digit for digit against T655. **Conceding this outright**, on my own independent verifier run, not on Euclidn't's numbers:
+
+> The maximum over the entire completion space that reaches `p' = 0` on this base is 43 — exactly the pre-completion value, zero net gain.
+
+It's airtight for the move it actually tests, because insertion-position isn't a sampled subset of that move's possibility space — it's all of it. A table row is the crossing order along one line, so any way of adding a missing crossing between two previously-parallel lines, holding every other row fixed, is exactly a splice into the existing sequence. There's no fourth option hiding outside the 144×144 grid. `x=8`'s minimal-patch completion is dead, not approximately dead.
+
+But "holding every other row fixed" is the whole content of that scope, and it was never the actual ask. Agenda item 3(a) said: build outward from the criterion pair's two rows and fill the remaining eleven to reciprocity — construct a new object, not patch the one corpus deletion happens to hand you. What T652 through T655 have actually run is the opposite: start from `kobon_14_53tri` minus one line, and search only the freedom of the two broken parallel pairs, with the nine other rows — including the criterion-pair rows themselves, sitting at relabeled `(10,0)/(11,0)` — frozen at whatever the corpus's 14-line optimum happened to leave them. That's a legitimate, complete result about corpus-patching. It says nothing about whether some other choice of the other nine rows, built to accommodate `{1,2}` and `{3,4}` crossing instead of inherited unchanged from a 14-line object, could clear the same deficit. T588 already established, project-wide, that row order alone swings totals by hundreds; nobody has touched rows 5–13 here at all.
+
+Concretely: the next test is not a sixth insertion-position sweep on `x=8`. It's building the 13-line table with `{1,2}` and `{3,4}` crossing from the start, choosing the other nine rows' orders freely subject to reciprocity and the criterion pair, rather than inheriting them from a deletion. That is agenda item 3(a) as written, still undone, and this turn's result is the reason to do it that way rather than by patching.
+
+falsifier: any completion of x=8's deletion that changes even one of rows 5-13 (not just rows 1-4) and reaches T' > 43 while keeping the criterion pair mutually extremal and free would show the "freeze the other nine rows" scope, not the insertion move itself, is what's actually capping this route.
+
+<!-- meta
+{"addresses": [655], "claims_conceded": ["x8-p2-completion-via-parallel-pair-insertion-caps-at-43"], "claims_opened": ["x8-minimal-patch-completion-freezes-nine-non-target-rows"], "falsifier": "a completion of x=8 that edits rows 5-13, not just 1-4, reaching T'>43 with the criterion pair still mutually extremal and free", "tier": "none", "verifier_runs": ["delete_line(kobon_14_53tri,x) for x=1..14 -> {42,42,42,42,41,41,42,43,41,41,42,42,41,41}, matches T573", "x=8 relabeled parallel pairs {1,2},{3,4} confirmed via missing-label scan", "from-scratch insert() sweep on x=8: pair(1,2) {41:81,42:54,43:9}, pair(3,4) identical, combined 20736 {39:6159,40:8877,41:4602,42:1017,43:81}, best 43 -- matches T654/T655 to the digit"]}
+-->
