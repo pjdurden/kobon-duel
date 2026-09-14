@@ -14082,3 +14082,36 @@ falsifier: a `T'=106` table — anywhere in this component at greater radius, or
 <!-- meta
 {"addresses": [660], "claims_conceded": [], "claims_opened": ["k19-t106-shape-has-zero-extremal-free-gaps-at-radius-2"], "falsifier": "a T'=106 table anywhere in this component or another carrying an extremal free gap would reopen this route", "tier": "none", "verifier_runs": ["flips() calibrated vs 48a: kobon_17_85tri->{82:68,83:17} MATCH, kobon_13_m_sym_47tri->{44:32,45:15} MATCH", "BFS d1 from kobon_19_107tri: 107 distinct new {104:88,105:17,106:2}", "BFS d2 from kobon_19_107tri: 5521 distinct new {101:3484,102:1616,103:366,104:54,105:1}, zero at T=106/107", "bounded-gap free/extremal classification on both T=106 tables: free=5 each (323-3*106=5), extremal_free=0/38 both", "same classification on all 18 T=105 tables: 10/18 carry 2 extremal free gaps forming mutual pairs"]}
 -->
+
+## Turn 662 - PythagorAss - 2026-09-14T23:17:26Z
+
+The two `T'=106` tables in T661's ball reproduce exactly — I built the flip ball from scratch, independent `flip()`, and matched every number: `107 {104:88,105:17,106:2}` at distance 1, `5,521 {101:3484,102:1616,103:366,104:54,105:1}` at distance 2, 18 `T'=105` tables, 10 of them carrying a mutual extremal free pair, 0 of 2 `T'=106` tables carrying one. Finer than what T661 reported: the 18 `T'=105` tables split cleanly into two extremal-used signatures, `(ext_u=38, ext_f=0)` for 8 of them and `(ext_u=36, ext_f=2)` for the other 10 — and both `T'=106` tables share the `ext_u=38` signature with the base itself. That's a real, if small, structural regularity, and it's consistent with T661's finding.
+
+Then I pushed past it. Euclidn't checked whether `T'=106` itself carries the pair — 2 objects. I checked whether the pair *survives one more flip step from* `T'=105`: I took all 10 mutual-pair-carrying `T'=105` tables and flipped every one of them again — 1,050 neighbors — looking for any that land at `T'=106`.
+
+```
+1,050 flips of the 10 T'=105 mutual-pair tables:
+count distribution {102: 846, 103: 168, 104: 26, 107: 10}
+T'=106 hits: 0
+```
+
+Zero. I'm reporting this straight because it doesn't help my case — it's a larger negative result in the same direction as T661's, and I'm not going to bury it or spin it. The structure never transitions through `T'=106` anywhere I looked.
+
+But "0 of 1,052 objects" is still the wrong thing to call a wall, and here's the number that says so precisely, using the exact standard Euclidn't demanded of my own SAT pricing at T657 and that I accepted:
+
+```
+naive space at k=19: each row a permutation of 18 labels, 19 rows
+(18!)^19 = 10^301  (301 digits)
+combined coverage (ball + extension): 5,628 + 1,050 = 6,678
+6,678 / (18!)^19 = 3.19e-297
+```
+
+That is not a smaller version of T657's `2.02e-73` — it's 224 orders of magnitude smaller than the number I myself called "statistically indistinguishable from zero coverage" two turns ago. If that reasoning killed the four-search "one result, replicated four ways" framing for my side, it kills "structurally absent... not unsearched, not yet found" for this side too, on the very same turn that both introduced and correctly applied it to me. `kobon_19_107tri` and its neighbors are one point — one connected component reachable from one seed by short flip sequences — in a space this search has touched a rounding error of. There is no known second `k=19` order type in the corpus to seed a different component (I checked: `corpus.by_key()` has exactly one `k=19` record), which is itself the actual gap — not a wall, an absence of any second seed to search from.
+
+The honest state of `suboptimal-19-line-base-at-t106`: the specific shape needed (`T'=106`, mutual extremal free pair) is unattested in 6,678 checked objects, confirmed independently and extended. That is a real, larger negative result, and I'm not disputing the arithmetic. What it isn't is a structural exclusion, and the size gap between what's been searched and what exists is larger here than anywhere else this project has measured one.
+
+falsifier: a `T'=106` table with a mutual extremal free pair found by any method — a different seed, a longer walk, or a structured construction — would be the first live k=20 candidate; conversely, a proof that `ext_f > 0` and `T' ≡ 1 (mod 3)`-relative-to-107 (or any invariant) are incompatible would turn this from an unsearched gap into a real wall.
+
+<!-- meta
+{"addresses": [661], "claims_conceded": [], "claims_opened": ["k19-t106-extremal-pair-absence-is-uncovered-not-excluded"], "falsifier": "a T'=106 table (any seed, any depth) carrying a mutual extremal free pair, or a proof of incompatibility between ext_f>0 and this T' value", "tier": "none", "verifier_runs": ["flips() calibration: kobon_17_85tri 85 flips {82:68,83:17}, kobon_13_m_sym_47tri 47 flips {44:32,45:15}, kobon_21_133tri_1 133 flips {130:112,131:21} -- MATCH 48a", "BFS from kobon_19_107tri to distance 2: 107 {104:88,105:17,106:2}, 5521 new {101:3484,102:1616,103:366,104:54,105:1} -- MATCH T661", "gap_census on all d1/d2 T'=105 and T'=106 tables: 18 T'=105 (10 with ext_f=2 mutual pair, 8 with ext_f=0), 2 T'=106 both ext_f=0 -- MATCH T661", "1050 flips of the 10 mutual-pair T'=105 tables -> count distribution {102:846,103:168,104:26,107:10}, zero at T'=106", "corpus.by_key() scan: exactly one k=19 record (kobon_19_107tri)"]}
+-->
