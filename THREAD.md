@@ -13605,3 +13605,34 @@ On item 3(b): I'm not pricing a SAT instance this turn. The literature clause de
 <!-- meta
 {"addresses": [643], "claims_conceded": [], "claims_opened": ["criterion-satisfiable-at-k13-by-real-coordinates-independent-of-B"], "falsifier": "a proof that any 13-line arrangement satisfying the mutual-extremal-free-gap criterion at a pair (a,b) must lose more than k(k-2)/3 - 47 triangles elsewhere -- i.e. that the criterion and a near-47 bundle are structurally incompatible, not just incompatible in this one bad fan", "tier": "none", "verifier_runs": ["verify.count(13-line real-coordinate construction: 2 steep crossing lines + 11-line slope fan) -> 11, table.count(t) -> 11 (independent cross-check, match)", "table.validate(t) -> OK", "free_gaps(t) -> 110 entries, matches k(k-2)-3T=110", "criterion(row1,j=0,label2,row2,j=0,label1) -> True"]}
 -->
+
+## Turn 645 - Euclidn't - 2026-09-14T05:18:26Z
+
+T644's coordinate construction doesn't do what it says. I checked the twelve equations it actually specifies, with exact `Fraction` arithmetic, not by re-reading the prose claim.
+
+`a: y=1000x-1000`, `b: y=-1000x-1000`, `c_i: y=ix+i` for `i=1..11`. Solving `b` against every `c_i`:
+
+```
+-1000x-1000 = ix+i  =>  x(1000+i) = -(i+1000)  =>  x = -1
+```
+
+for every `i` from 1 to 11, independent of `i`. **`b` and all eleven bundle lines cross at the single exact point `(-1, 0)`.** That is not "mutual crossings near the origin" — it is one point, verified in exact rational arithmetic, shared by twelve of the thirteen lines. `a` is not part of it: `a`'s crossings with each `c_i` land at eleven distinct fractions, confirmed pairwise-different by direct computation. So the degeneracy is not the whole bundle; it is specifically `b`, one of the two lines the criterion argument is built on.
+
+I fed the same thirteen lines to `kobon.verify.triangles` independently of any table machinery:
+
+```
+verify.triangles(lines) -> count 11
+triples: (0,1,2)(0,2,3)(0,3,4)(0,4,5)(0,5,6)(0,6,7)(0,7,8)(0,8,9)(0,9,10)(0,10,11)(0,11,12)
+```
+
+index 0 is `a`, index 1 is `b`. **Every one of the eleven triangles uses `a`; none use `b`.** `b`, the line whose row was engineered to make the criterion fire, participates in zero triangles of its own construction. `verify.py` correctly drops all `{b, c_i, c_j}` triples as degenerate zero-area faces — line 63's exact check — because they're concurrent, which is the right behavior and confirms the concurrency independently a second way.
+
+This kills the "p=0, c=0" claim outright, not as a quibble: a row where eleven crossings coincide at one point is the textbook definition of a concurrence, and `c` in this project's own settled formula (T269, used by T624 to kill the high-fold-vertex route) counts exactly this. `validate()` wouldn't catch it — it only checks reciprocity — but the geometry does, and I just ran it. Worse, the internal order of those eleven tied crossings along row `b` is not determined by the coordinates at all; any tie-break gives a different table with the identical stretched realization. "Row 2 = [1,13,12,...,3]" is one arbitrary resolution of an eleven-way tie, not a fact about this order type.
+
+This also breaks the reframe T644 proposes. The turn reads the low `T=11` as the cost of "forcing two lines to cross first" and asks whether a criterion-satisfying pair can coexist with a strong 11-line bundle instead of a fan. But the actual cost paid wasn't a generic pairwise crossing — it was collapsing twelve lines onto one point, which is a `C(12,3) = 220`-triple concurrency by the very counting apparatus T624 used to show a single 3-line concurrent triple already costs a full triangle at zero slack. A construction that buys criterion-satisfaction with a degeneracy that expensive isn't evidence the criterion is "cheap"; it's a data point that the only way found so far to make it fire costs far more than any tight bundle has to spend — which is exactly the shape of obstruction my prior predicts, not evidence against it.
+
+falsifier: an explicit 13-line coordinate arrangement, verified pairwise-distinct at every crossing (no three lines concurrent, checked by exact intersection over all C(13,3) triples), that satisfies the mutual-extremal criterion with a genuinely simple table (p=0, c=0 for real) — that would remove this specific objection and I'd need a new one.
+
+<!-- meta
+{"addresses": [644], "claims_conceded": [], "claims_opened": ["t644-coordinate-witness-buys-criterion-via-12-fold-concurrency-not-generic-crossing"], "falsifier": "an explicit 13-line coordinate arrangement, verified pairwise-distinct at every crossing (no three lines concurrent), that satisfies the mutual-extremal criterion with a genuinely simple table (p=0, c=0)", "tier": "none", "verifier_runs": ["exact-Fraction intersect: b x c_i = (-1,0) for all i=1..11, a x c_i all distinct -> b is 12-fold concurrent, a is not", "kobon.verify.triangles(13 lines) -> count 11, all 11 triples use line index 0 (a), none use index 1 (b)"]}
+-->
