@@ -13934,3 +13934,31 @@ falsifier: any completion of x=8's deletion that changes even one of rows 5-13 (
 <!-- meta
 {"addresses": [655], "claims_conceded": ["x8-p2-completion-via-parallel-pair-insertion-caps-at-43"], "claims_opened": ["x8-minimal-patch-completion-freezes-nine-non-target-rows"], "falsifier": "a completion of x=8 that edits rows 5-13, not just 1-4, reaching T'>43 with the criterion pair still mutually extremal and free", "tier": "none", "verifier_runs": ["delete_line(kobon_14_53tri,x) for x=1..14 -> {42,42,42,42,41,41,42,43,41,41,42,42,41,41}, matches T573", "x=8 relabeled parallel pairs {1,2},{3,4} confirmed via missing-label scan", "from-scratch insert() sweep on x=8: pair(1,2) {41:81,42:54,43:9}, pair(3,4) identical, combined 20736 {39:6159,40:8877,41:4602,42:1017,43:81}, best 43 -- matches T654/T655 to the digit"]}
 -->
+
+## Turn 657 - Euclidn't - 2026-09-14T17:17:26Z
+
+T656's concession and its independent reproduction are both solid — I'm not touching either. What I'm contesting is the "next test."
+
+The four searches this project has actually run — flip ball radius 3 from `B` (49i), the 233,002-subset deletion census (T633/T635), the 226-run directed-ascent basin check (T632), and now the 20,736-combination x=8 insertion sweep — cover, between them, 268,545 distinct objects:
+
+```
+flip ball radius 3 from B:          14,581
+deletion census (17/19/21):        233,002
+directed-ascent basin checks:          226
+x=8 two-pair insertion sweep:       20,736
+total:                             268,545
+```
+
+Every one of them was a search for *any* second 13-line arrangement at or near `T = 47`. None found one. Not the flip ball, not the deletions, not the ascent, not this turn's exhaustive completion. That's not four separate near-misses — it's one result, replicated four ways with four different mutation rules, all landing on the same answer.
+
+T656's proposed next step — free rows 5–13 too, build the object around the criterion pair from scratch instead of inheriting the other nine rows from the deletion — is not a new lever on that result. It's the identical unconstrained target (a 13-line arrangement, `T' = 47`, `p' = 0`) that all four searches already missed, with one extra constraint bolted on: the criterion pair has to survive intact. A harder target inside the same haystack four searches already came up empty on is not a promising next move; it's asking the fifth search to succeed where the first four, searching a strictly easier version of the same question, did not.
+
+And the scale gap is not small. One free row's crossing order over the other twelve lines has `12! ≈ 4.79×10^8` orderings; nine coupled free rows — even granting that reciprocity and happens-before cut this down by many orders of magnitude — start from a space whose naive upper bound is `(12!)^9`, a number with 79 digits. Nothing searched to date, including the largest run in the project (233,002 deletions), is within twenty orders of magnitude of that. "Build it" is not a search method at that scale, and T656 has not proposed one. Agenda item 3 asked for exactly this fork six turns ago: construct the object directly, **or** price the SAT instance that would search the space no manual construction can cover. T656's turn does neither — it restates the construction half of 3(a) with the scope widened past anything the "insert two pairs, hold nine rows fixed" method it just ran could ever reach, and defers the SAT pricing again, for the sixth time.
+
+The x=8 result stands as what it is: the strongest object this project has produced toward `escape-reduces-to-a-second-k13-order-type`, and it caps at a deficit of exactly 4 under every mutation method tried so far, on a route where the general form of the target — some second `T=47` 13-line order type, anywhere — has been searched four separate ways and found nowhere. That is the shape my prior predicts: not a wall found by inspection, but every avenue converging on the same absence.
+
+falsifier: a stated search method — not a hand-built instance — over the nine-free-row space, with its coverage fraction reported, that reaches `T' > 43` while keeping the criterion pair mutually extremal and free; or a priced SAT instance per 3(b) that a solver actually runs. Either would be the first real evidence this route is tractable rather than merely unexhausted.
+
+<!-- meta
+{"addresses": [656], "claims_conceded": [], "claims_opened": ["k14-nine-free-row-completion-is-the-same-unsearched-space-as-escape-route-not-a-new-lever"], "falsifier": "a stated, coverage-quantified search method (not a hand-built instance) over the nine-free-row space reaching T'>43 with the criterion pair intact, or a priced SAT instance per 3(b) actually run", "tier": "none", "verifier_runs": ["arithmetic: sum of 49i(14581)+T633/T635(233002)+T632(226)+T655/T656 x8 sweep(20736) = 268545 objects searched, zero second T=47; 12!=479001600, (12!)^9 ~ 1.33e78"]}
+-->
