@@ -13659,3 +13659,26 @@ Not overselling this. `T=11` against a target region near 32-47 means this is st
 <!-- meta
 {"addresses": [645], "claims_conceded": ["t644-bundle-construction-is-p0-c0"], "claims_opened": ["k13-simple-arrangement-realizes-mutual-extremal-free-gap-pair"], "falsifier": "a re-run of the C(13,3) concurrency check, the slope-distinctness check, or criterion/free_gaps on this exact table that finds a concurrent triple, a parallel pair, or shows (1,10)/(13,10) are not both free kills this witness.", "tier": "none", "verifier_runs": ["Fraction intersect: T644's b vs each c_i -> all (-1,0); a vs c_i -> 11 distinct pts; a vs b -> (0,-1000), confirms 12-line concurrency", "kobon.verify.triangles(T644 lines) -> 11 triangles, 1 uses b ({a,b,c1}), corrects T645's 'none use b'", "corrected lines (c_i intercept +i^2/1000): exhaustive C(13,3)=286 triple-concurrency check -> 0 concurrent, distinct slopes -> p=0", "table.validate(corrected t) -> OK; table.count=11; kobon.verify.triangles independently -> 11", "referee_t593_checks.criterion(row1,j=10,i2=13,row13,j=10,i1=1) -> True; free_gaps(t) -> (1,10) and (13,10) both free"]}
 -->
+
+## Turn 647 - Euclidn't - 2026-09-14T07:18:26Z
+
+T646's corrected construction reproduces exactly. I rebuilt it independently with exact `Fraction` arithmetic: zero concurrent triples among all `C(13,3) = 286`, zero parallel pairs, `kobon.verify.triangles` gives 11, `kobon.table.triangles` gives 11, `table.validate` passes, and `criterion(row1, j=10, 13, row13, j=10, 1)` fires with both `(1,10)` and `(13,10)` confirmed present in `free_gaps`. That part is solid and I'm not disputing it.
+
+But I ran one census PythagorAss didn't: per-line triangle incidence across all thirteen lines, counted directly from `verify.triangles`.
+
+```
+label:      1  2  3  4  5  6  7  8  9 10 11 12 13
+triangles:  1  2  3  3  3  3  3  3  3  3  3  2  1
+```
+
+That is not "two weak lines at the edges of a generic fan." It is a symmetric, monotone decay radiating outward from exactly the two lines the criterion forces into mutual extremality, bottoming out at the arrangement's global minimum — 1 triangle — at both ends, with each one's immediate neighbor sitting at the second-lowest value, 2, in strict rank order. Nine of the other eleven lines sit at the ceiling, 3, uniformly.
+
+This is the mechanism I proposed at T640 and censused at T642/49g acting directly on real geometry rather than as a corpus statistic. Extremality in a row (`j == 0` or `j == len-2`) means the gap sits next to the unbounded ray — there is no crossing beyond it on that side. A triangle side needs a bounded face on both flanks of the segment; the terminal gap structurally has one flank foreclosed by the ray. That's not fan-specific — it's a property of what "extremal" means in any row, on any arrangement, which is exactly why 49g's pooled corpus census finds extremal segments freed at roughly a third the rate interior ones are used (2/330 vs 40/2307, `P = 0.088`, still short of significance but consistently one-directional across ten records). Here, for the first time, the same asymmetry shows up as a triangle-count cost rather than a free-gap frequency, on an object built by my opponent to argue the pairing is cheap.
+
+T646's own reframe is the right question — can a criterion pair coexist with a tight ~32-triangle 11-line bundle instead of a fan? This turn's data sharpens what that bundle has to overcome: the tax isn't paid by two isolated lines, it's paid by four (the pair plus both immediate neighbors), and it's paid specifically at the gap structure the criterion *requires* those two lines to have — a structural feature of extremality, not of this particular fan's angles. Swapping the fan for a tight bundle changes what the other eleven lines do; it cannot remove the geometric fact that a terminal gap forecloses one flank. The open question is now sharper: does *any* tight 11-line arrangement admit a pair with the required extremal gap structure without eating this decay, and if the decay is unavoidable, does the resulting deficit ever recover across a bigger `k`.
+
+falsifier: a verified criterion-satisfying pair (p=0, c=0) in which either designated line achieves the arrangement's *maximum* per-line triangle count, rather than sitting at or adjacent to the minimum — that would refute this specific decay claim and I'd need a new one.
+
+<!-- meta
+{"addresses": [646], "claims_conceded": [], "claims_opened": ["mutual-extremal-pair-forces-a-monotone-triangle-count-decay"], "falsifier": "a verified criterion-satisfying pair where a designated line hits the arrangement's max per-line triangle count instead of its min", "tier": "none", "verifier_runs": ["verify.intersect/verify.triangles on T646's corrected 13-line coordinates -> 0 concurrent triples of 286, 0 parallel pairs, 11 triangles (scratch_t647_check.py)", "table built from same coordinates: table.validate OK, table.count=11 matches verify.count=11, criterion(row1,j=10,13,row13,j=10,1)=True, (1,10) and (13,10) in free_gaps (scratch_t647_check2.py)", "per-line triangle incidence on same coordinates: labels 1..13 -> [1,2,3,3,3,3,3,3,3,3,3,2,1], sums to 33=3*11 (scratch_t647_check3.py)"]}
+-->
