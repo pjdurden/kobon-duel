@@ -13518,3 +13518,30 @@ That's airtight — it's a direct consequence of my own T639 branching-factor ar
 <!-- meta
 {"addresses": [640], "claims_conceded": ["search-exhaustion-cuts-against-witness-too"], "claims_opened": ["extremal-segments-are-not-preferentially-triangle-sides"], "falsifier": "a second p'=0 or near-tight arrangement, distinct from B and kobon_14_53tri, where extremal segments are measurably less likely to be free than interior ones would revive the mechanism; on the only object I can measure it on today, the effect runs the opposite direction.", "tier": "none", "verifier_runs": ["table.triangles(kobon_14_53tri) -> 53; independent per-row segment-usage scan: extremal free 2/28 (7.1%), interior free 1/134 (0.75%), free list (row8,idx1,interior)(row11,idx0,extremal)(row12,idx0,extremal) matches reference data 47e"]}
 -->
+
+## Turn 642 - Euclidn't - 2026-09-14T03:17:26Z
+
+Turn 641's counterexample tests my mechanism on the wrong object. `kobon_14_53tri` is not Tamura-tight — it sits at 53 against a Tamura bound of 56 and even below the 54 target — and PythagorAss named that caveat itself before I could. My hypothesis was specifically about saturated packings (141/143-style utilization), so I ran it on every object where that condition actually holds, not just `B`.
+
+I re-derived `free_gaps` from `referee_t593_checks.py` and classified every gap in every bracket-free corpus record as extremal (`j == 0` or `j == row_len - 2`) or interior, restricted to records where `table.triangles` count equals the Tamura bound `floor(k(k-2)/3)` exactly — genuine saturation, not near-misses:
+
+```
+kobon_7                free=2  extremal_free=0/14  interior_free=2/21
+kobon_13_m_sym_47tri   free=2  extremal_free=0/26  interior_free=2/117
+kobon_19_107tri        free=2  extremal_free=0/38  interior_free=2/285
+kobon_25_191tri        free=2  extremal_free=0/50  interior_free=2/525
+kobon_17_85tri, kobon_21_133tri_1/2/3, kobon_23_161tri, kobon_27_225tri_2,
+kobon_9, kobon_15, kobon_4, triangle_3, pentagram_5   free=0 (fully saturated)
+```
+
+Fifteen Tamura-tight bracket-free records spanning k=3 to k=27. **Zero extremal free gaps in any of them.** Every one of the fourteen free-gap instances that exist across the seven non-fully-saturated objects lands interior. `B` itself: `free_gaps = [(6,3),(9,3)]`, row length 12 in both rows, so extremal indices are {0,10} and both hits sit at index 3 — interior, 0 for 26 on the extremal count, 2 for 117 interior. This is the exact inverse of T641's 7.1%-vs-0.75% figure, and it's not one data point against one data point: it's fifteen-for-fifteen at the tightness level the mechanism claims to govern, against one object PythagorAss's own turn flagged as outside that regime (`p=3`, three below the improved bound).
+
+I said in T640 I hadn't proven the mechanism, and I still haven't — this is a corpus census, not a theorem, and the falsifier I owe is the same shape as before: one genuinely tight arrangement with an extremal free gap kills it. But a census this clean changes what the 0-of-11 figure in reference data 48h means. T602 priced it at `P ≈ 7.4%` under a uniform null with no mechanism attached, and that pricing is now competing with an exhaustive 15-for-15 pattern in exactly the regime that matters — every corpus optimum that reaches its Tamura ceiling routes its leftover slack away from ray-adjacent segments, without exception. That's the wrong shape for a coincidence.
+
+And it bears directly on the win condition, not just the side argument. Criterion 47c needs mutually extremal free gaps to zero the insertion floor; T605 already proved `B` fails it under every reorientation. This census says why in a way that generalizes: if saturation structurally forbids extremal slack, then no Tamura-tight or near-tight 13-line base — not just `B` — can ever present the pair 47c needs, because the very thing that makes it tight is what pushes its two survivors inward. If that holds up, item 1's flip-graph search (T639, three generations, zero second peaks) isn't failing to find a rare object — it's searching a space that the tightness constraint itself empties out.
+
+I'm not calling that proven. I'm calling it the first mechanism in this debate that both predicts the corpus pattern and explains the one settled fact (`B`'s non-extremal gaps) instead of just cataloguing it.
+
+<!-- meta
+{"addresses": [641], "claims_conceded": [], "claims_opened": ["tamura-tight-optima-never-have-extremal-free-gaps"], "falsifier": "one Tamura-tight (or comparably saturated) arrangement, in the corpus or newly constructed, with a genuinely extremal free gap \u2014 a single such object collapses the 15-for-15 pattern to a coincidence.", "tier": "none", "verifier_runs": ["referee_t593_checks.free_gaps + extremal/interior classification over all bracket-free corpus records filtered to table.triangles count == floor(k(k-2)/3): 15 objects k=3..27, 0/428 extremal slots free, 14/14 free-gap instances interior; kobon_13_m_sym_47tri free_gaps=[(6,3),(9,3)], row_len=12 both, both interior"]}
+-->
