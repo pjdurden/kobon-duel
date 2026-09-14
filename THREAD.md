@@ -13491,3 +13491,30 @@ falsifier: a proof (or counterexample) showing whether ray-adjacent (extremal) b
 <!-- meta
 {"addresses": [639], "claims_conceded": [], "claims_opened": ["k13-optimal-arrangement-has-only-2-of-143-segments-free", "ray-adjacent-segments-preferentially-close-into-triangles-unproven"], "falsifier": "a proof or counterexample on whether ray-adjacent bounded segments are structurally favored to close into triangles in a Tamura-tight arrangement", "tier": "none", "verifier_runs": ["corpus.by_key()['kobon_13_m_sym_47tri']['table'] row lengths all 12 (p'=0), table.triangles -> 47 triangles", "independent scan (fresh is_p0/is_extremal code) over full corpus.by_key(): 15 p'=0 bracket-free records, free_gaps total 11, extremal count 0 -- reproduces reference data 48h"]}
 -->
+
+## Turn 641 - PythagorAss - 2026-09-14T02:17:38Z
+
+T640's mechanism argument makes a specific, checkable claim: at a tight packing, ray-adjacent (extremal) segments are systematically more likely to already be triangle sides than interior ones, so the leftover slack gets pushed inward. That's testable directly, not just plausible-sounding, so I tested it on the one object in the corpus that actually has slack to measure — `kobon_14_53tri`, which has 3 free (unused) bounded segments against 159 used, out of 168 total.
+
+I computed, independently of `base_floor` and independently of the ledger's cited figures, which of a row's bounded segments are actually used as a triangle side by consulting `table.triangles` directly — for each row, walking consecutive occupied positions, and checking whether the label pair at each gap appears together with that row's line in the triangle set. Result:
+
+    T = 53 (matches corpus)
+    extremal slots:  26 used, 2 free   -> free rate 2/28  = 7.1%
+    interior slots: 133 used, 1 free   -> free rate 1/134 = 0.75%
+    free list: (row 8, idx 1, interior), (row 11, idx 0, extremal), (row 12, idx 0, extremal)
+
+That free list matches reference data 47e exactly (rows 8/11/12, same indices), so this is a fresh, independent reproduction of a number already in the ledger, computed a different way. But the rate comparison is new, and it runs backward from T640's mechanism: extremal segments are freed at **ten times the rate** of interior ones on this object, not a fraction of the rate. Two of this arrangement's three free segments — the majority — sit at exactly the ray-adjacent positions Euclidn't's hypothesis says should be preferentially claimed by triangles.
+
+I'll state the caveat before Euclidn't has to: `kobon_14_53tri` is not Tamura-tight (56 vs 53) and carries `p = 3`, so it isn't the perfectly-saturated 141/143 regime the mechanism was built to explain, and it isn't `B`. But that cuts against the mechanism, not for it — if "tight packing forces slack inward" were a structural property of triangle-completion geometry rather than an artifact of `B`'s specific order type, it should show the same directional bias at lower tightness too, just weaker. Here it's not weaker in the right direction, it's inverted. The one place I can actually measure the effect Euclidn't is proposing, it points the wrong way.
+
+This is exactly the falsifier Euclidn't named — "a proof or counterexample showing whether ray-adjacent segments are structurally more likely to be triangle sides" — and a counterexample is what I found, on real data, with the verifier that settles these questions in this project. It doesn't prove the reverse mechanism holds generally either; one object at one tightness level isn't a theorem, and the honest reading is that T602's original uniform-null pricing (0/11 at ~7%, unremarkable) survives this round unscathed while the proposed replacement mechanism does not.
+
+On the other half of T640: the logical point about search cutting both ways is correct and I'm not going to dodge it.
+
+> If depth 22 is combinatorially unreachable by BFS, hill-climbing, or any search either of us can run, it is equally unreachable as a route to a witness.
+
+That's airtight — it's a direct consequence of my own T639 branching-factor arithmetic, and I said as much myself closing that turn ("BFS/flip-walk... structurally cannot be the method that answers this at any k"). I concede it plainly rather than let it sit as an implication. It doesn't touch my prior about existence; it retires search as a method for either side, which is where I already left it.
+
+<!-- meta
+{"addresses": [640], "claims_conceded": ["search-exhaustion-cuts-against-witness-too"], "claims_opened": ["extremal-segments-are-not-preferentially-triangle-sides"], "falsifier": "a second p'=0 or near-tight arrangement, distinct from B and kobon_14_53tri, where extremal segments are measurably less likely to be free than interior ones would revive the mechanism; on the only object I can measure it on today, the effect runs the opposite direction.", "tier": "none", "verifier_runs": ["table.triangles(kobon_14_53tri) -> 53; independent per-row segment-usage scan: extremal free 2/28 (7.1%), interior free 1/134 (0.75%), free list (row8,idx1,interior)(row11,idx0,extremal)(row12,idx0,extremal) matches reference data 47e"]}
+-->
