@@ -14014,3 +14014,34 @@ falsifier: an actual Kissat run of the stated encoding, SAT or UNSAT, with varia
 <!-- meta
 {"addresses": [658], "claims_conceded": [], "claims_opened": ["constrained-k13-sat-instance-priced-not-run"], "falsifier": "an actual Kissat run of the stated encoding, SAT or UNSAT, with variable/clause counts reported, would move this from priced to run; a SAT result would still leave the (12!)^9-scale free-row completion from T657 unsolved before it touches k=14.", "tier": "none", "verifier_runs": []}
 -->
+
+## Turn 660 - PythagorAss - 2026-09-14T20:18:26Z
+
+T659's correction is right, and I verified it independently rather than taking the number on faith: a label pinned at position 0 of a 12-entry row is compared to the other 11 entries and never to itself, so two pinned rows fix `2 × 11 = 22` of `858`, not 24.
+
+```
+per_row_fixed = 12 - 1 = 11; two rows = 22; 22/858 = 2.564%
+```
+
+**Conceding the 24 -> 22 correction outright**, on my own arithmetic, reproducing T659's number exactly. It doesn't move the conclusion either of us drew from it, which is exactly why it's worth logging and moving past rather than re-arguing.
+
+The bigger problem with my T658 turn is one T659 didn't even need to raise: I checked, and this environment has no SAT solver at all. `which kissat cryptominisat5 picosat minisat glucose` returns nothing, and `import pysat` fails with `ModuleNotFoundError`. There is no SAT tooling anywhere in this checkout. "Running it is the next turn's deliverable" was a promise I cannot keep in this sandbox regardless of how well the instance is priced. That's on me for not checking before promising — the standing prohibition about promised computations exists for exactly this. I'm dropping 3(b) as a route in this environment, not deferring it a seventh time.
+
+So I ran 3(a)'s actual next step instead — T656's "free rows 5-13, don't just patch the parallel pair" — for real, this turn, not as a promise. Starting from `x=8`'s deletion, fixed at the extremal insertion `(0,0,0,0)` (T'=43) with the criterion pair frozen at rows 10/11 (each holding the other at position 0, confirmed by `positions`), I randomly shuffled the seven remaining free rows `{5,6,7,8,9,12,13}` — reciprocity-preserving by construction, since permuting a row's order never changes which labels it contains — for 20,000 trials:
+
+```
+baseline (no shuffle): table.count = 43
+20,000 shuffles of rows {5,6,7,8,9,12,13}, criterion pair + insertion fixed:
+best result: 13.  zero trials >= 43.  zero trials even close.
+top of distribution: {13:2, 12:1, 11:8, 10:58, 9:199, 8:609, 7:1289, 6:2732, 5:4124, 4:4700, ...}
+```
+
+Not one of 20,000 random completions of the "free the other rows" space comes within thirty triangles of the baseline, let alone above it. This is a real result about the shape of the space, and it cuts against the naive version of my own proposal: the current row order isn't an arbitrary point that happened to inherit from the 14-line optimum — it's doing enormous structural work, and generic reorderings destroy almost everything. T588's "row order swings totals by hundreds" cuts down here, not up.
+
+That kills blind randomization as a method, which is different from killing the route. It says the object, if it exists, has to be found by directed construction — symmetry group orbits, or a near-pencil perturbation carried through all thirteen rows at once — not by sampling. That's the actual next turn: attempt one such structured construction (a 3-fold or 2-fold symmetric 13-line family built to hold the criterion pair invariant under the group action) and report its `table.count` directly, win or lose. I'm not promising it's fast; I'm naming the method I'll actually run.
+
+falsifier: any structured (non-random) construction over the free-row space — symmetric family, orbit-based, or otherwise — that beats 43 on this base, or a random search at 10x this trial count that finds one instance above 43, would show the collapse I measured is a sampling artifact rather than a property of the space.
+
+<!-- meta
+{"addresses": [659], "claims_conceded": ["sat-encoding-two-row-pin-fixes-22-not-24-of-858-order-variables"], "claims_opened": ["free-row-random-shuffle-collapses-far-below-baseline-on-x8-deletion", "sat-tooling-absent-from-this-environment"], "falsifier": "a structured (non-random) construction over the free-row space beating 43, or a 10x-larger random search finding any instance above 43", "tier": "none", "verifier_runs": ["table.count(delete_line(kobon_14_53tri,8)) -> 43, rows 1-4 confirmed missing partner labels (verified fresh)", "positions(delete_line(kobon_14_53tri,8)): row10[0]=11, row11[0]=10 (criterion pair extremal, confirmed)", "20000-trial random shuffle of rows {5,6,7,8,9,12,13} on the (0,0,0,0)-inserted x=8 base -> max 13 of 20000, dist {13:2,...,4:4700}, zero >= 43", "shutil.which() on kissat/cryptominisat5/picosat/minisat/glucose -> all None; import pysat -> ModuleNotFoundError"]}
+-->
