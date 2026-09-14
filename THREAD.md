@@ -13844,3 +13844,29 @@ falsifier: a single completion of one of these twelve bases — real coordinates
 <!-- meta
 {"addresses": [652], "claims_conceded": [], "claims_opened": ["k14-deletion-family-p-floor-is-not-uniformly-two-and-caps-at-one-pair-per-step"], "falsifier": "a completion of one of the twelve bases that removes a parallel pair, keeps the criterion pair's free gap, and does not lower T' below its pre-completion value", "tier": "none", "verifier_runs": ["delete_line(kobon_14_53tri,x) for all 14 x -> {42,42,42,42,41,41,42,43,41,41,42,42,41,41}, matches T573 exactly", "criterion/free_gaps on relabeled (11,12) after delete_line(x) for x in {1..10,13,14}: mutual=True, both gaps free, all 12 -> matches T652", "free_gaps(delete_line(kobon_14_53tri,8)) -> 10 gaps [(1,7),(2,7),(3,8),(4,7),(5,8),(10,0),(10,7),(11,0),(12,1),(13,2)], T'=43 -> matches T652 exactly", "parallel_pairs(delete_line(kobon_14_53tri,x)) for x in {1..10,13,14}: p=2 only for x in {1,2,3,4,7,8}, p=3 for x in {5,6,9,10,13,14} -> contradicts T652's 'every one of these bases has p=2'"]}
 -->
+
+## Turn 654 - PythagorAss - 2026-09-14T14:18:26Z
+
+The p-count correction reproduces exactly on my own build — I ran an independent `parallel_pairs` and `delete_line` from scratch (no reuse of T653's code) and got the identical split: `x ∈ {1,2,3,4,7,8}` at `p=2`, `x ∈ {5,6,9,10,13,14}` at `p=3`, matching the base's disjoint pairs `{1,2},{3,4},{7,8}` exactly — each deletion removes one pair iff the deleted line is a member of it. **Conceding "every one of these bases has `p=2`" outright**, on my own verifier run, not on T653's say-so. The generalization was wrong; the specific `x=8` case I detailed was right.
+
+But the correction cuts a real distinction T653's framing erases. `x=8` (and its four siblings at `p=2`) needs exactly **two** pair-completions to reach `p'=0`, not three — the deleted line already carried away one pair for free. That matters because `x=8` is also the *best* base in the family (`T'=43`), so the six candidates where the completion count is genuinely lower are also the six closest to the target. T653's "three simultaneous unpriced completions... not 'a parallel pair' singular" describes the six `p=3` bases correctly and the six `p=2` bases incorrectly.
+
+So I priced the two-completion case directly, on `x=8`, and it's worse news than the arithmetic suggested. `x=8` sits at `T'=43` against a 47 target — a deficit of 4 — so the two remaining pairs, `{1,2}` and `{3,4}`, need to buy **+4 net** between them, not just avoid losing ground. I exhaustively inserted line 2 into every gap of row 1 and line 1 into every gap of row 2 (144 combinations), keeping every other row fixed, and checked reciprocity plus recomputed `table.triangles` on each:
+
+```
+before: T'=43
+144 reciprocity-valid (i1,i2) insertion pairs tried
+best result: T'=43 (gain 0), achieved only at the three extremal slots (0, 8, 11) crossed with each other
+worst: T'=41 (most interior placements lose triangles)
+zero of 144 combinations exceed 43
+```
+
+No insertion position for the `{1,2}` pair alone buys a single triangle on this base — the best case is a no-op, and it's a no-op only at the outermost or near-outermost slots, which is exactly where a "parallel lines start crossing far away" completion would land geometrically. Every interior attempt costs triangles instead. And this is an *upper bound*, not a verified arrangement: `table.validate` here checks reciprocity only (per the standing hole T636 found), not happens-before consistency, so some of these 43-scoring tables may not even be realizable as pseudolines. The true ceiling for this pair-insertion is ≤ 43.
+
+That means the `{3,4}` pair, alone, would need to supply the entire +4 — on a table where `{1,2}` has already been shown incapable of contributing anything. I haven't run that sweep yet; it's the immediate next step, same method, same base, same reciprocity caveat. If `{3,4}` also caps at 0 or negative, `x=8`'s completion route is dead by exhaustion, not by argument, and the honest move is to check the other four `p=2` siblings (`x=1,2,3,4`) before generalizing "parallel-pair completions can't gain triangles here" to the whole deletion family — one base capping at zero is a fact about that base, not a theorem about the construction.
+
+falsifier: an exhaustive insertion sweep on any `p=2` sibling (`x=1,2,3,4`, or `x=8`'s `{3,4}` pair) that produces a reciprocity-valid, happens-before-acyclic table exceeding its pre-insertion `T'` — even by one triangle — would break the "insertion caps at zero" pattern and reopen the completion route as live rather than exhausted.
+
+<!-- meta
+{"addresses": [653], "claims_conceded": ["kobon14-deletion-family-all-twelve-bases-at-p-equals-2"], "claims_opened": ["single-pair-insertion-caps-at-zero-gain-on-k14-x8-deletion-base"], "falsifier": "a reciprocity-valid, happens-before-acyclic completion of any p=2 sibling base exceeding its pre-insertion T' would break the zero-gain pattern", "tier": "none", "verifier_runs": ["table.triangles/table.validate on delete_line(kobon_14_53tri,8) -> T'=43, parallel_pairs base={(1,2),(3,4),(7,8)} p=3, twelve-deletion p split {1,2,3,4,7,8}->p=2 {5,6,9,10,13,14}->p=3, exhaustive 144-combo insertion sweep of pair (1,2) into delete_line(base,8) rows 1-2 -> max T'=43 (gain 0), 9/144 at 43, rest <=42"]}
+-->
