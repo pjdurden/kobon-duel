@@ -13447,3 +13447,27 @@ Scope, stated precisely: this is distance 2 from one order type — kobon_17_85t
 <!-- meta
 {"addresses": [637], "claims_conceded": [], "claims_opened": ["k18-t84-absent-at-flip-distance-2-from-k17-optimum", "per-flip-symmetric-difference-ceiling-confirmed-at-k21"], "falsifier": "a criterion-satisfying T=47 k=13 base found at any flip distance by any method, or any flip of any k=17 optimum reaching T'=84 at any distance, reopens the corresponding route", "tier": "none", "verifier_runs": ["flip() calibrated: kobon_17_85tri 85 flips -> {82:68,83:17}, kobon_13_m_sym_47tri 47 flips -> {44:32,45:15}, exact match to 48a", "kobon_21_133tri_1: all 133 flips, symmetric difference of triangles(t) vs base: max 3, distribution {2:21,3:112}", "kobon_17_85tri distance-2 flip census: 85 gen1 tables, 6987 gen2 flips, 3452 distinct tables, count histogram {85:85,82:38,81:418,80:2410,79:4036}, zero at T=84"]}
 -->
+
+## Turn 639 - PythagorAss - 2026-09-14T00:19:26Z
+
+Agenda item 1 asked for exactly this, and I owed it plainly: the exhaustive flip-distance-1-and-2 census from `B` itself, not another hill-climb or a deletion sweep from unrelated arrangements. I built `flip()` — for triangular face `{a,b,c}`, swap the adjacent pair in each of rows `a`, `b`, `c` — and calibrated it against 48a before touching `B`: `kobon_17_85tri`, all 85 flips, gives `{82:68, 83:17}`; `kobon_13_m_sym_47tri`, all 47 flips, gives `{44:32, 45:15}`. Both exact matches.
+
+Then the real search, three full generations, exhaustive at each, deduped by row-tuple, excluding already-visited tables:
+
+- Distance 1: 47 distinct tables, `{44: 32, 45: 15}`. Zero at 47 (this is 48a, reproduced).
+- Distance 2: 1,018 distinct tables, `{41: 385, 42: 486, 43: 131, 44: 16}`. Zero at 47. Max fell from 45 to 44.
+- Distance 3: 13,516 distinct tables, `{38: 2224, 39: 5626, 40: 4046, 41: 1309, 42: 266, 43: 33, 44: 12}`. Zero at 47. Max still 44; the mode dropped to 39.
+
+This is agenda item 1's steps 1 and 2, extended one generation further, exhaustively, with dedup — not a sample.
+
+I'm not going to spin this. It's a negative result and I'll say so without qualification: three complete generations out from the only known optimal k=13 order type, zero second peaks, and the ceiling trends down, not up. On this number alone I'd have no business holding my prior.
+
+But I do have T637's calibration, and this data extends it rather than contradicting it. Growth: 47 → 1,018 → 13,516, roughly ×20 per generation. Granting Euclidn't's T638 corroboration that the per-flip effect ceiling (≤3 triangles) is structural, not a k=13 artifact — I accept that; it's an independent `flip()` implementation landing on 48a's exact numbers plus a fresh exact match on `kobon_21_133tri_1`'s own 133 flips — the branching factor guarantees that depth ≥22, the floor T637 derived from the closest pair of known coexisting k=21 optima, isn't a "deep search" away, it's an intractable one. 47 × 20^19 is not a number BFS reaches, dedup or no dedup. Three generations covers ~14,600 tables; depth 10 alone would need billions to stay exhaustive, and depth 22 is nowhere close to visible from here.
+
+That's the actual content of this turn: I ran the specific exhaustive computation the agenda assigned, it came back at zero, and the reason it came back at zero is consistent with, not contrary to, T637's argument that neither of us has run a search deep enough to be evidence either way. Euclidn't said it plainly in T638: branches get "combinatorially wider, not thinner." My numbers are the first quantification of that in this project — factor ~20 per hop, three hops in, nowhere near a hundredth of a percent of what depth 22 would require.
+
+The direct construction is still owed — a fifth time now, and I'm not hiding from that count. What's changed is I now have hard evidence that BFS/flip-walk, mine or Euclidn't's, structurally cannot be the method that answers this at any k. The remaining effort belongs on a targeted construction or constraint search that fixes the criterion directly, not another generation of flips.
+
+<!-- meta
+{"addresses": [637, 638], "claims_conceded": [], "claims_opened": ["k13-flip-graph-exhaustive-bfs-zero-t47-through-distance-3"], "falsifier": "a fourth-generation exhaustive flip census from B landing on even one T=47 table at any distance produces the direct witness and ends this", "tier": "none", "verifier_runs": ["flip() calibrated against 48a: kobon_17_85tri 85 flips -> {82:68,83:17}; kobon_13_m_sym_47tri 47 flips -> {44:32,45:15}, both exact matches", "exhaustive triangle-flip BFS from kobon_13_m_sym_47tri, deduped, depth 1/2/3: 47/{44:32,45:15}, 1018 distinct/{41:385,42:486,43:131,44:16}, 13516 distinct/{38:2224,39:5626,40:4046,41:1309,42:266,43:33,44:12}; T=47 count 0 at every depth"]}
+-->
