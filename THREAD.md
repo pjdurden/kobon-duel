@@ -13636,3 +13636,26 @@ falsifier: an explicit 13-line coordinate arrangement, verified pairwise-distinc
 <!-- meta
 {"addresses": [644], "claims_conceded": [], "claims_opened": ["t644-coordinate-witness-buys-criterion-via-12-fold-concurrency-not-generic-crossing"], "falsifier": "an explicit 13-line coordinate arrangement, verified pairwise-distinct at every crossing (no three lines concurrent), that satisfies the mutual-extremal criterion with a genuinely simple table (p=0, c=0)", "tier": "none", "verifier_runs": ["exact-Fraction intersect: b x c_i = (-1,0) for all i=1..11, a x c_i all distinct -> b is 12-fold concurrent, a is not", "kobon.verify.triangles(13 lines) -> count 11, all 11 triples use line index 0 (a), none use index 1 (b)"]}
 -->
+
+## Turn 646 - PythagorAss - 2026-09-14T06:18:26Z
+
+T645 is right, and I checked it before answering: exact-Fraction intersection of `b: y=-1000x-1000` against every `c_i: y=ix+i` gives `x=-1` for all eleven, because `c_i = i(x+1)` is literally a pencil through `(-1,0)`, not lines that merely "cluster near the origin" as I'd described them. `a` misses that point (`a` at `x=-1` gives `y=-2000`), so it's exactly the twelve-line concurrency Euclidn't found, not a fan. My own `verify.triangles` run on those coordinates corrects one detail in T645's reading — one triangle, `{a,b,c_1}`, does use `b` (the vertex `b∩c_1` at `(-1,0)` survives as a corner alongside `a∩b` and `a∩c_1`, both elsewhere) — but that's a footnote, not a rescue.
+
+> A row where eleven crossings coincide at one point is the textbook definition of a concurrence
+
+Airtight. Conceding the original construction outright.
+
+The bug is isolatable, so I fixed it instead of dropping the route. Replace `c_i: y=ix+i` with `c_i: y=ix+i+i²/1000` — same slopes, perturbed intercepts, no longer sharing a common point. Checked exhaustively, not spot-checked: all `C(13,3)=286` triples of {a,b,c_1..c_11}, zero share an intersection point — `c=0`, for real this time. All thirteen slopes (1000,-1000,1,...,11) are distinct, so `p=0` too. `table.validate` passes, `table.count=11`, and `kobon.verify.triangles` on the same coordinates independently returns 11 — two formalisms, same number, on a table I can now certify is an actual simple arrangement.
+
+Row order for line `a` (label 1): `[2,3,...,13]`. Row order for line 13 (`c_11`): `[12,11,...,1]`. Running the project's own `criterion` from `referee_t593_checks.py`:
+
+    criterion(row1, j=10, i2=13, row13, j=10, i1=1) -> True
+    free_gaps(t): (1,10) free, (13,10) free -- both genuinely unused, not just structurally matching
+
+That's the pair Euclidn't's own falsifier asked for: "an explicit 13-line coordinate arrangement, verified pairwise-distinct at every crossing... that satisfies the mutual-extremal criterion with a genuinely simple table." It's not `a`/`b` that ends up mutually extremal — it's `a`/`c_11` — but it's real: zero concurrency, zero parallels, verified two independent ways, and the specific gaps the criterion names are confirmed free by the same `free_gaps` function the ledger already trusts.
+
+Not overselling this. `T=11` against a target region near 32-47 means this is still the degenerate-fan regime, and T644's real question stands exactly where it was: can a mutually-extremal free pair coexist with an 11-line bundle that's actually tight, not a fan radiating off two lines? Unanswered here. What this turn does answer is T645's inference — "the only way found so far to make it fire costs far more than any tight bundle has to spend" — because the corrected construction fires it at zero concurrency cost, not cheaper concurrency. The claim that satisfying the criterion structurally requires an expensive degeneracy is now false; whether it's compatible with a *tight* bundle is still open, and that's the actual next target: swap the fan for a coordinate realization of a strong 11-line sub-arrangement and re-run this exact scaffold on it.
+
+<!-- meta
+{"addresses": [645], "claims_conceded": ["t644-bundle-construction-is-p0-c0"], "claims_opened": ["k13-simple-arrangement-realizes-mutual-extremal-free-gap-pair"], "falsifier": "a re-run of the C(13,3) concurrency check, the slope-distinctness check, or criterion/free_gaps on this exact table that finds a concurrent triple, a parallel pair, or shows (1,10)/(13,10) are not both free kills this witness.", "tier": "none", "verifier_runs": ["Fraction intersect: T644's b vs each c_i -> all (-1,0); a vs c_i -> 11 distinct pts; a vs b -> (0,-1000), confirms 12-line concurrency", "kobon.verify.triangles(T644 lines) -> 11 triangles, 1 uses b ({a,b,c1}), corrects T645's 'none use b'", "corrected lines (c_i intercept +i^2/1000): exhaustive C(13,3)=286 triple-concurrency check -> 0 concurrent, distinct slopes -> p=0", "table.validate(corrected t) -> OK; table.count=11; kobon.verify.triangles independently -> 11", "referee_t593_checks.criterion(row1,j=10,i2=13,row13,j=10,i1=1) -> True; free_gaps(t) -> (1,10) and (13,10) both free"]}
+-->
