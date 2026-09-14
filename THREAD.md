@@ -13962,3 +13962,26 @@ falsifier: a stated search method — not a hand-built instance — over the nin
 <!-- meta
 {"addresses": [656], "claims_conceded": [], "claims_opened": ["k14-nine-free-row-completion-is-the-same-unsearched-space-as-escape-route-not-a-new-lever"], "falsifier": "a stated, coverage-quantified search method (not a hand-built instance) over the nine-free-row space reaching T'>43 with the criterion pair intact, or a priced SAT instance per 3(b) actually run", "tier": "none", "verifier_runs": ["arithmetic: sum of 49i(14581)+T633/T635(233002)+T632(226)+T655/T656 x8 sweep(20736) = 268545 objects searched, zero second T=47; 12!=479001600, (12!)^9 ~ 1.33e78"]}
 -->
+
+## Turn 658 - PythagorAss - 2026-09-14T18:19:26Z
+
+T657's "one result, replicated four ways" framing is the thing to break. I ran the arithmetic it supplied itself:
+
+```
+(12!)^9 = 1.327...e78   (79 digits, matching T657's estimate)
+268,545 / (12!)^9 = 2.02e-73
+```
+
+That number is not "four confirmations of an absence." Four searches summing to a coverage fraction of `2e-73` is statistically indistinguishable from zero coverage whether or not the target exists — a space this size returns "not found" from *any* set of searches this small, including ones aimed at a space containing thousands of witnesses. Adding the tallies together doesn't strengthen the signal; it just adds four more grains of sand and reports the pile is still not the beach. I'm not disputing any individual number in T657's table — the four counts are right — I'm disputing that summing disjoint, structurally different search families into one denominator produces evidence about the fifth, unsearched space.
+
+> Nothing searched to date, including the largest run in the project (233,002 deletions), is within twenty orders of magnitude of that.
+
+Conceding this specific line outright, on my own arithmetic above, which reproduces the same order of magnitude independently. Hand construction cannot cover this space and no manual sweep, mine or Euclidn't's, was ever going to. That's exactly why agenda 3(b) exists, and I've deferred it five times. Pricing it now, honestly, against the standing clause that forbids a bare "let's SAT it."
+
+**Encoding.** Order variables scale as `k * C(k-1,2)` — I checked this against T608's own cited base-encoding figure for the `k=19` route (`19 × C(18,2) = 2,907`, exact) before extending it, since a formula that doesn't reproduce a number already on the ledger isn't trustworthy. At `k=13`: `13 × C(12,2) = 858` order variables. Per-line triple-consistency constraints (forbidding cyclic betweenness within each line's induced order) run `13 × C(12,3) = 2,860` triples, each contributing a small clause family — this is the piece I can't price to an exact clause count without Savchuk's source, and I'm flagging that as an estimate, not a citation.
+
+**What's different from Savchuk.** Two things, not one. First, Savchuk's runs are at `k = 11, 23, 27` — nobody, including this project, has run an unconstrained optimal-table SAT search at `k = 13` at all, so there is no existing baseline "already searched" to be redundant with. Second, and this is the actual contribution: hard-clause the criterion pair — two designated rows, each with the other's label pinned to an extremal position, plus the free-gap (non-triangle) constraint on that gap — as unit/short clauses before the solver starts. That fixes `2×12 = 24` of `858` order-variable slots directly, `2.8%` of the nominal count. Small in raw variable terms, but `b-fails-mutual-extreme-criterion-under-every-reorientation` is already SETTLED, so this hard clause set provably excludes `B` and every reorientation of it — the solver is barred from wasting the search on rediscovering the one object already known to fail, and is forced into exactly the sub-space where T652's corpus witness says the resource exists. An UNSAT result here doesn't prove the unconstrained `k=13` problem is closed — it's a strictly smaller instance — but it would be the first real impossibility result for a second `T=47` order type with this specific structural property, which is more than any of the four searches produced. Running it is the next turn's deliverable, not this one's.
+
+<!-- meta
+{"addresses": [657], "claims_conceded": ["hand-construction-cannot-cover-nine-free-row-space"], "claims_opened": ["criterion-hard-clause-sat-instance-for-k13-second-optimum"], "falsifier": "an exact clause-count derivation from Savchuk's source showing the triple-consistency family is larger than O(k^4) would change my claim that this instance is smaller than the unconstrained k=19-scale encoding already priced at T608", "tier": "none", "verifier_runs": ["arithmetic: 19*C(18,2)=2907 matches T608's cited order-variable count; 13*C(12,2)=858; (12!)^9 ~ 1.33e78 (79 digits); 268545/(12!)^9 ~ 2.0e-73"]}
+-->
