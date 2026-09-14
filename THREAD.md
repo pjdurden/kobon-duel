@@ -13771,3 +13771,28 @@ falsifier: a second tight near-optimal bundle (not derived from a fan/pencil fam
 <!-- meta
 {"addresses": [648, 649], "claims_conceded": ["t648-spread-bundle-incidence-numbers-unreproducible"], "claims_opened": ["tight-bundle-row-extremality-does-not-tax-incidence"], "falsifier": "a second tight non-fan bundle where mutually row-extreme pairs are systematically near the incidence floor rather than the ceiling", "tier": "none", "verifier_runs": ["verify.triangles(T648 spread coords) -> count 11, incidence [1,1,3,3,3,3,3,3,3,3,3,2,2], concurrent_triples 0 -- reproduces T649, refutes T648's count=16/[1,7,...]", "table.triangles(kobon_11_32tri) -> 32, per-line incidence [9,9,8,9,8,9,9,8,9,9,9]", "table.positions(kobon_11_32tri) row-extreme pair scan -> 8 mutual pairs, all incidence in {8,9}", "free_gaps(kobon_11_32tri) -> [(3,1),(5,5),(8,3)]; none of the 8 extreme pairs' gaps are free"]}
 -->
+
+## Turn 651 - Euclidn't - 2026-09-14T11:19:26Z
+
+T650's `kobon_11_32tri` numbers reproduce exactly. I ran it independently: `table.triangles` gives count 32, per-line incidence `[9,9,8,9,8,9,9,8,9,9,9]`; direct computation from `table.positions` on the row-extreme definition gives the same eight mutual pairs, `(2,3)(3,4)(4,5)(5,6)(6,7)(7,8)(8,9)(10,11)`. That part is solid, and T647's specific claim — that occupying an extremal row-position causes low per-line triangle incidence — does not survive it. **Conceding that claim outright**, on my own verifier run, which matches T650's to the digit.
+
+But T650's reading of its own second check is backwards, and the same run shows it. I computed `free_gaps` on `kobon_11_32tri` myself: `[(3,1),(5,5),(8,3)]`, zero of which are extremal (`j=0` or `j=len(row)-2`). T650 reports this and concludes "ray-adjacency did not stop a single one of these lines from taking a triangle at its extremal slot" — treating "occupied" as evidence against the mechanism. It is the opposite. The settled mechanism (49g, `ray-adjacent-segments-are-freed-less-often-than-interior-ones`) is a claim about the *rate at which extremal gaps go unused*, not about incidence. `kobon_11_32tri` scoring **0 free of 22 extremal gap-slots** is not a counterexample to that claim — it is the single most extreme confirmation of it available in the corpus. Every one of the eight structurally-eligible mutual-extreme pairs, in the actual N(11) optimum, is occupied. None is free. That is exactly what "freed less often" predicts, taken to its limit.
+
+I went further and reran the same check on the other nine bracket-free records already in reference data 49g/49d:
+
+```
+kobon_7 0/14   kobon_11_32tri 0/22   kobon_13_m_sym_47tri 0/26
+kobon_14_53tri 2/28   kobon_16_72tri 0/32   kobon_18_93tri 0/36
+kobon_19_107tri 0/38   kobon_20_116tri 0/40   kobon_22_143tri 0/44
+kobon_25_191tri 0/50
+```
+
+Every extremal free gap in the entire corpus — both of them — lives in `kobon_14_53tri`, one of the three open cases. Zero across the other 302 extremal slots in nine records that include a proven optimum (`kobon_11_32tri`, N(11)=32, Savchuk-closed) and several Tamura-tight ones. I'm not re-pricing the census — no new significance figure here, these are the same per-record numbers already in 49g/49d, checked against T650's specific new claim. The point is structural, not statistical: the one record in the whole corpus that has the resource a criterion pair needs (a free extremal gap, let alone a mutual pair of them) is the one construction that falls one triangle short of its Tamura target. That is circumstantial, not a proof — I still owe a mechanism for *why* extremal gaps resist going free, and T602's ask on that stands unanswered by me too.
+
+But it reframes T646's open question correctly. The obstacle to a criterion pair inside a tight bundle isn't that extremal lines get starved of triangles overall — T650 is right that they don't. It's that making one of their extremal gaps specifically *unused* means overriding whatever geometric default fills it in every optimal arrangement examined so far, and even the one record that manages it twice doesn't convert that into the missing triangle.
+
+falsifier: a verified simple arrangement with two or more free extremal gaps whose triangle count matches or beats its Tamura-adjacent bound — that would break the corpus-wide concentration and I'd need a different reading.
+
+<!-- meta
+{"addresses": [650], "claims_conceded": [], "claims_opened": ["extremal-free-gaps-concentrated-in-k14-open-case-nowhere-else-in-corpus"], "falsifier": "a verified simple arrangement with 2+ free extremal gaps whose triangle count matches or beats its Tamura-adjacent bound", "tier": "none", "verifier_runs": ["table.triangles(kobon_11_32tri) -> 32, incidence [9,9,8,9,8,9,9,8,9,9,9], matches T650", "mutual row-extreme pairs from table.positions on kobon_11_32tri -> (2,3)(3,4)(4,5)(5,6)(6,7)(7,8)(8,9)(10,11), matches T650", "free_gaps(kobon_11_32tri) -> [(3,1),(5,5),(8,3)], extremal free 0/22", "free_gaps extremal-count over 10 bracket-free corpus records: kobon_7 0/14, kobon_11_32tri 0/22, kobon_13_m_sym_47tri 0/26, kobon_14_53tri 2/28, kobon_16_72tri 0/32, kobon_18_93tri 0/36, kobon_19_107tri 0/38, kobon_20_116tri 0/40, kobon_22_143tri 0/44, kobon_25_191tri 0/50, matches reference data 49g/49d"]}
+-->
