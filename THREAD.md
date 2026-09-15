@@ -14203,3 +14203,31 @@ falsifier: a mod-3 computation showing 117 is achievable under 3-fold symmetry f
 <!-- meta
 {"addresses": [664], "claims_conceded": [], "claims_opened": ["point-symmetric-arrangement-triangle-count-is-always-even"], "falsifier": "a mod-3 identity showing 117 achievable under 3-fold symmetry at k=20 for some center-fixed-line count, plus a coordinate construction realizing it", "tier": "none", "verifier_runs": ["verify.triangles on L1 (7 lines, 1 fixed + 3 point-reflected pairs) -> T=4, even", "verify.triangles on L2 (7 lines, 3 concurrent fixed + 2 point-reflected pairs) -> T=8, even", "verify.triangles on L3 (8 lines, 0 fixed, 4 point-reflected pairs) -> T=8, even"]}
 -->
+
+## Turn 666 - PythagorAss - 2026-09-15T03:18:26Z
+
+The order-3 rotation from T664/T665 doesn't need irrational coordinates at all, and building the actual thing changes what's on the table.
+
+A Euclidean 120° rotation has irrational entries, but any real 2×2 matrix with eigenvalues satisfying `x^2+x+1=0` (the primitive cube roots of unity) has order exactly 3 and can be written with **rational** entries — the companion matrix `M = [[0,1],[-1,-1]]`. I checked `M^3 = I` exactly over `Fraction`, and confirmed the induced line-transform is consistent (a point on a line maps to a point on the transformed line). `M` isn't a rotation — it doesn't preserve angles — but it's a linear, orientation-preserving (`det = 1`) bijection of the plane, so it's a genuine combinatorial automorphism of any line arrangement built from its orbits. That means an order-3-symmetric family is **directly stretchable with exact rational coordinates** — no pseudoline-to-line gap, no coordinate search needed on top of a table. That's new: every construction route either of us has tried this window has gone through tables first.
+
+I built 6 orbits of 3 lines (`k=18`, `f=0`) from generic integer seeds and ran `verify.triangles`: first attempt gave `T=101`, which is impossible — it's above the Tamura ceiling of 96 for `k=18`. I found the bug myself before reporting it: my distinctness check compared raw `(a,b,c)` tuples, but two lines that are scalar multiples of each other represent the *same line* and were slipping through as "18 distinct" when only 12 were. The hillclimb had wandered into a degenerate 12-line configuration disguised as 18 lines, which inflates the triangle count. Fixed with a scale-normalized dedup key, reran the same 600-step hillclimb honestly:
+
+```
+M^3 == I: True
+start (18-distinct-checked, generic seeds): T = 51
+600-step hillclimb over 6 integer seed lines, k=18, scalar-dedup enforced: T = 73
+independent verify.triangles recheck: 73, matches
+Tamura UB(18) = 96, target = 94
+```
+
+73 against 94 — real but well short, and a small, cheap search (600 steps, one seed nudge at a time, 6 free lines' worth of freedom). Not a construction I'm claiming wins anything. But it's the first actual coordinate object either of us has produced from the order-3 family this window, it's genuinely stretchable by construction, and it came with a self-caught bug rather than a false positive shipped and later found by the other side.
+
+I also ran the mod-3 check Euclidn't proposed for `k=20`, properly: `(20-f) % 3 == 0` only at `f=2`, giving 6 orbits, `b` ranges 0..6, and `117 mod 3 = 0` is hit at `b=0,3,6` — achievable, not excluded. So k=20 is open to this family arithmetically, same as k=18 just was in practice.
+
+Next turn: widen the seed space past 6 free lines (more restarts, longer walks, or seeded from a near-optimal odd-k table's orbit structure) and push k=18 toward 94 for real, since this family now has a working, bug-checked harness rather than an abstract argument.
+
+falsifier: a proof that no order-3-rational-linear-symmetric 18-line arrangement can exceed some fixed bound below 94 would kill this route; a hillclimb or structured seed choice reaching 94 on 18 lines would win the case outright.
+
+<!-- meta
+{"addresses": [664, 665], "claims_conceded": [], "claims_opened": ["order-3-rational-linear-map-gives-stretchable-symmetric-constructions-no-irrational-coords", "order-3-k18-hillclimb-reaches-73-of-94-with-bug-caught-and-fixed"], "falsifier": "a proof capping order-3-rational-symmetric 18-line arrangements below 94, or a hillclimb/structured seed reaching 94, would resolve this route outright", "tier": "none", "verifier_runs": ["Fraction matrix check: M^3==I for companion matrix of x^2+x+1 -> True", "point/transformed-line consistency check on sample line -> True", "verify.triangles on naive 6-seed order-3 orbit k=18 -> 51", "verify.triangles on hillclimbed seeds with raw-tuple dedup only -> 101 (invalid: scalar-normalized dedup found only 12 distinct lines of 18)", "600-step hillclimb with scalar-normalized distinctness enforced, k=18 -> best T=73, independently rechecked via verify.triangles", "k=20 mod-3 achievability check: f=2, orbits=6, b in 0..6, 117 mod 3 = 0 achievable"]}
+-->
