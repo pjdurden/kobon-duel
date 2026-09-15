@@ -14499,3 +14499,33 @@ Next move: build an `f_perp=2` axis-absent example, confirm a fixed triangle act
 <!-- meta
 {"addresses": [674], "claims_conceded": ["mirror-symmetry-axis-in-arrangement-dead-at-14-18-20"], "claims_opened": ["mirror-symmetry-axis-absent-f-perp-zero-forces-even-t"], "falsifier": "an axis-absent, f_perp=0 mirror-symmetric arrangement at any k with odd T, or a fixed triangle in one, would refute the parity law and reopen k=20 at f_perp=0", "tier": "none", "verifier_runs": ["hand-built axis-in-arrangement k=6 instance: p=0,c=2 at (1,0){0,2,3} and (3,0){0,4,5}, B=18=(k-2)(2k-3)/2, T=6=B/3 -- confirms T674's formula", "axis-absent f_perp=0: k=6 pairs example T=4 fixed=0; 6x k=8 random mirror-pair sets T in {8,6,6,12,10,6} all even, fixed=0 in all 7"]}
 -->
+
+## Turn 676 - Euclidn't - 2026-09-15T12:17:26Z
+
+T675's parity law for `f_perp=0` is right, but the "next move" it proposes — `f_perp=2` making odd `T` "structurally possible" — needed a construction before it could be treated as live. I built five, independently, and all five land on exactly the wrong parity.
+
+Setup: axis absent, reflection `y → -y`, two fixed verticals (`f_perp=2`) plus `n` mirror pairs `y=mx+c` / `y=-mx-c`. For each I enumerated `verify.triangles`, matched every triangle's line-index triple against its mirror image, and counted fixed triangles (`s_mirror`, the analogue of C3's `s`).
+
+```
+verticals(-3,3), 1 pair    k=4  T=2   s_mirror=2   per-vertical {1,1}
+verticals(-3,3), 3 pairs   k=8  T=12  s_mirror=2   per-vertical {1,1}
+verticals(-3,3), 5 pairs   k=12 T=22  s_mirror=2   per-vertical {1,1}
+verticals(-50,3),5 pairs   k=12 T=20  s_mirror=2   per-vertical {1,1}
+verticals(1,2) same-side,3 pairs k=8 T=10 s_mirror=2 per-vertical {1,1}
+```
+
+Every single one: `s_mirror = 2 = f_perp`, split exactly one fixed triangle per fixed vertical line, never zero on one side and never more than one per line even at 5 mirror pairs. That includes the minimal case (one mirror pair total) and two deliberately asymmetric placements (verticals 47 apart, verticals on the same side of every pair's axis-crossing). `T` was even in all five, matching `T ≡ s_mirror (mod 2)`.
+
+There's a plausible mechanism, not yet a proof: each mirror pair's apex sits on the axis, and for a fixed vertical `P` the candidate triangle `{P, ℓ_i, ℓ_i'}` from the *nearest* pair is uncut, while every farther pair's candidate gets cut by the nearer pair's lines — the same nesting logic 34b/50d use to cap C3's `s ≤ 1`. If that's right, `s_mirror = f_perp` whenever at least one mirror pair exists on each side, for the same structural reason C3 caps at exactly one, and it would make `f_perp=2` no better than `f_perp=0`: still even.
+
+This matters because of the budget. `f_perp` must be even at k=20 (parity of `k − f_perp` forces it), so the only candidates are `0, 2, 4, ...`. `f_perp=0` is dead by T675's own argument. `f_perp≥4` costs `f_perp(f_perp−1) ≥ 12`, giving `B ≤ 20·18 − 12 = 348 < 351 = 3·117` — dead by budget, before parity even enters. `f_perp=2` is the *only* budget-feasible positive option (`B=358`, slack 7), and five independent constructions, including two built specifically to try to break the left-right symmetry, all give `s_mirror=2`. If that pattern holds in general, axis-absent mirror symmetry is dead at every value of `f_perp` at k=20, not just the one T675 checked.
+
+I'm not calling this a theorem — the nearest-pair-uncut mechanism is a conjecture, not derived, and five constructed instances is a search result, stated as one. What would break it is exactly what T675 needs anyway: a single concrete `f_perp=2` construction with `s_mirror=1` (one vertical gets a fixed triangle, the other genuinely gets none), verified the same way. Until that exists, "structurally possible" describes an empty search, and the concrete evidence points the other way.
+
+Axis-in-arrangement (T674/T675) and axis-absent-`f_perp=0` (T675) are conceded dead at all three cases and at k=20 respectively; this turn's target is the one branch T675 left open.
+
+falsifier: a verified `f_perp=2`, axis-absent, k=20-scale mirror construction with `s_mirror` odd (in particular `s_mirror=1`), via `verify.triangles`, or a general proof that `s_mirror` can differ from `f_perp`.
+
+<!-- meta
+{"addresses": [675], "claims_conceded": [], "claims_opened": ["mirror-axis-absent-fperp2-forces-s-mirror-even"], "falsifier": "a verified f_perp=2 axis-absent mirror construction with s_mirror odd (e.g. =1) at k=20 scale, or a proof that s_mirror can differ from f_perp", "tier": "none", "verifier_runs": ["verify.triangles(k=4, verts(-3,3), 1 pair) -> T=2, s_mirror=2, per-vertical{1,1}", "verify.triangles(k=8, verts(-3,3), 3 pairs) -> T=12, s_mirror=2, per-vertical{1,1}", "verify.triangles(k=12, verts(-3,3), 5 pairs) -> T=22, s_mirror=2, per-vertical{1,1}", "verify.triangles(k=12, verts(-50,3), 5 pairs) -> T=20, s_mirror=2, per-vertical{1,1}", "verify.triangles(k=8, verts(1,2) same-side, 3 pairs) -> T=10, s_mirror=2, per-vertical{1,1}"]}
+-->
