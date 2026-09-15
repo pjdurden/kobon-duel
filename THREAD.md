@@ -14648,3 +14648,29 @@ verifier_runs:
 <!-- meta
 {"addresses": [667, 673, 678], "claims_conceded": [], "claims_opened": ["c3-k18-84-independently-reproduced-with-seeds"], "falsifier": "a weak-search (few-trial, unoptimized) estimate on any symmetric family that a subsequent real anneal fails to beat by a wide margin, which would undercut my methodology critique of T678's 120-trial mean", "tier": "silver", "verifier_runs": ["v.triangles on 18-line C3 construction (seeds (-19,22,0)(6,8,8)(-9,0,38)(19,-9,21)(22,14,-39)(12,22,-28)) -> T=84, p=0, c=1 at origin {0,1,2}, s=0, B=285, 3T=252<=285"]}
 -->
+
+## Turn 680 - Euclidn't - 2026-09-15T16:17:26Z
+
+T679's C3 construction reproduces exactly: I rebuilt the 18-line object from the printed seeds under `M`, and `verify.triangles` returns 84, with the concurrent triple `{0,1,2}` at the origin and zero parallel pairs, matching the report to the digit. Orbit-pattern census, computed directly: `(3)`-pattern (same-orbit triangles) = 0, `(1,2)` = 24, `(1,1,1)` = 60, sum 84. So `s = 0` here, not because it was chosen, but because orbit 0's three lines are concurrent — a concurrency produces no triangle at all (`verify.triangles` excludes degenerate zero-area triples), so that orbit can never be the `s = 1` face 32e/50d require for 94.
+
+PythagorAss flagged this concurrency as "pure waste" and proposed testing it next turn. I ran that test now, not to scoop the move but because it's the direct falsifier of my own T678 ceiling claim, and it should be checked before either of us builds on 84. Perturbing only the degenerate seed's constant term, `(-19,22,0) → (-19,22,1)`, breaks the concurrency and **improves the count**: `T = 85`, `p = 0`, `c = 0`, `s = 1` exactly — the fixed triangle is now the genuine face `{0,1,2}` — clean `B = 288` (no 3-segment concurrency tax), `3T = 255`. This is the first verified `C3` `k = 18` object in the whole thread with the necessary residue condition (`s = 1`, `94 ≡ 1 ≡ s (mod 3)`) actually satisfied, not sidestepped. I then ran my own search from this seed — 8 restarts × 150 steps, coordinate-wise integer perturbation, keep-if-not-worse — and it never beat 85; six of eight restarts land in the 60s–70s and the best restart reproduces 85 exactly at the start (a local optimum, not a fluke of one lucky tweak).
+
+Here's what satisfying `s = 1` actually bought: nothing, on efficiency. The concurrent `T = 84` object used `252` of `285` bounded segments (`88.4%`). The clean `s = 1` `T = 85` object uses `255` of `288` (`88.5%`). Same slack, 33 unused segments, to the integer, whether or not the concurrency tax is paid. Compare that to the one object anywhere in the corpus that actually is a `C3` optimum with `s = 1`: reference data 34c's `kobon_21_133tri_1`, `B = 21·19 = 399`, `3T = 399` — **zero slack, every one of the 21 lines' 19 bounded segments is a triangle side.** Target 94 at k=18 needs `3·94 = 282 ≤ 288`, slack `6`. Two independent real searches (PythagorAss's 30×150, mine 8×150-from-a-fixed-point) both bottom out around slack 33 — more than five times the slack the target permits, and the only structurally analogous success case in the corpus runs at slack zero.
+
+This doesn't settle the case. It's two small searches, not an exhaustive one, and I'm not calling 85 a ceiling — PythagorAss's own restart 84 came from a wider net than mine and beat my naive attempts on the concurrent side. What it does is close the "we haven't even tried the necessary condition yet" gap: `s = 1` is now tested, clean-budget is now tested, and the slack didn't move. The efficiency wall T678 flagged and PythagorAss agreed was real in T679 is still there after the fix both of us thought might dissolve it.
+
+falsifier: a verified C3 k=18 construction (via `verify.triangles`) with `s = 1`, `c = 0`, reaching `T ≥ 90` — cutting slack from 33 to 12 or below — or a mechanism explaining why 33 unused segments is a genuine structural floor for this family rather than search depth.
+
+```
+verifier_runs:
+1. verify.triangles on T679's 18-line seeds (unmodified) -> T=84, p=0, c=1
+   (concurrent triple {0,1,2} at origin), pattern-census (3)=0,(1,2)=24,(1,1,1)=60
+2. same construction, seed0 c-term 0->1 -> T=85, p=0, c=0, s=1 (face {0,1,2}),
+   B=288, 3T=255
+3. 8 restarts x 150-step integer hillclimb from result 2 -> best remains T=85,
+   no restart exceeds it
+```
+
+<!-- meta
+{"addresses": [679], "claims_conceded": [], "claims_opened": ["c3-k18-s1-clean-budget-construction-caps-near-85-slack-33-vs-k21-zero-slack"], "falsifier": "a verified C3 k=18 construction with s=1, c=0 reaching T>=90, or a mechanism showing the 33-segment slack is a structural floor rather than search depth", "tier": "none", "verifier_runs": ["verify.triangles on T679's 18-line seeds -> T=84, p=0, c=1, pattern-census (3)=0,(1,2)=24,(1,1,1)=60", "same seeds with seed0 c-term 0->1 -> T=85, p=0, c=0, s=1, B=288, 3T=255", "8x150-step hillclimb from the s=1 seed -> best remains T=85"]}
+-->
