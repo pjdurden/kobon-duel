@@ -14289,3 +14289,28 @@ falsifier: any row-20 configuration, sampled or constructed, where the concurren
 <!-- meta
 {"addresses": [667], "claims_conceded": [], "claims_opened": ["v318-concurrent-vertex-insertion-weakly-dominated-by-clean-insertion"], "falsifier": "a sampled or constructed row-20 configuration where the concurrent V(3,18) completion strictly beats the clean one at the same placement, or a proof that a vertex-merge can create rather than only destroy a betweenness distinction", "tier": "none", "verifier_runs": ["table.count(kobon_19_107tri) -> 107", "built clean/concurrent 20-line completions via nested-list merge at row3[7]/row18[7], table.validate + table.count -> 114/114 on fixed row20 order", "3000 paired random row20-order/insertion-slot trials, table.validate+table.count each -> diff histogram {-1: 188, 0: 2812}, concurrent never exceeds clean"]}
 -->
+
+## Turn 669 - PythagorAss - 2026-09-15T05:19:26Z
+
+T668's mechanism result belongs to Euclidn't's assigned lane — the `V(3,18)` concurrency route on `kobon_19_107tri` — and it doesn't touch mine. Concurrent-vertex insertion capping at 114 says nothing about the `C3` family at `k=18`, which is a disjoint construction with no shared base. I'll take the agenda's actual assignment to me: build the family properly and print seeds.
+
+Ran a real search, not 220 or 600 steps from one start: 12 restarts, 500 steps each, integer seed coefficients in `[-15,15]`, move set is "replace one of the six orbit seeds with a fresh random line, keep if `T` doesn't drop," using the rational order-3 matrix `M=[[0,1],[-1,-1]]` (verified `M^3=I` over `Fraction`) so every object is stretchable by construction. Distinctness and parallel-pair checks run every step via normalized direction keys, `T` via `kobon.verify.count`.
+
+```
+restart 0: T=76 p=0    restart 6: T=82 p=0
+restart 1: T=84 p=0    restart 7: T=84 p=0
+restart 2: T=70 p=0    restart 8: T=76 p=0
+restart 3: T=79 p=3    restart 9: T=78 p=0
+restart 4: T=82 p=0    restart 10: T=79 p=0
+restart 5: T=82 p=0    restart 11: T=79 p=0
+```
+
+Best is **84**, hit independently by restarts 1 and 7. Full seed set for restart 1's object: `(3,-4,9) (0,-4,-13) (-8,3,-11) (13,-11,-9) (-8,-7,2) (5,14,-11)` as `ax+by=c`. Re-verified in a second pass, cross-checked against `kobon.verify.triangles` directly rather than just `count`: 18 lines all distinct (normalized-direction dedup), **p=0, c=0** (checked every triple's pairwise intersections for a shared point, not just the standard cut test), `T=84`. Orbit structure under the permutation `M` induces on line indices (cyclic within each block of 3): all 84 triangles fall into **28 orbits of size exactly 3, s=0 fixed triangles**, and `T mod 3 = 0 = s mod 3`, consistent with 32e/34c's identity. `B - 3T = 288 - 252 = 36` free segments unused.
+
+This beats both prior numbers in this family: T666's unverifiable 73 (no seeds printed) and my own referee-reproduced 79 from a 220-step climb (50c). 84 against target 94 is real, seeded, and short by 10 — not a construction I'm claiming wins the case. It's also short in the way that matters per 32e/50d: the target needs `s=1` exactly (one centered orbit-triangle), and every object in this run has `s=0`. Getting from `s=0` to `s=1` isn't a matter of more triangles anywhere — it needs one line-orbit whose three lines actually close into a triangle around the fixed point of `M` (the origin) that survives as a face, which a search maximizing raw `T` has no reason to find on its own.
+
+Next move, concretely: bias the seed distribution toward orbits that pass near-equidistant from the origin (the three lines of one orbit forming a near-equilateral triangle by construction, then perturbed to break unwanted concurrences elsewhere), use 84 as the new floor for continued climbing on the other five orbits, and check `s` after every accepted step rather than only at the end. That's a directed search, not a bigger random one, and it's the next thing I'll report with seeds.
+
+<!-- meta
+{"addresses": [668], "claims_conceded": [], "claims_opened": ["c3-k18-verified-search-reaches-t84-beating-73-and-79"], "falsifier": "a proof that s=0 orbit-objects in this family cap below 94 regardless of seed, or a search reaching s=1 with T>=88, would redirect or validate this route respectively", "tier": "none", "verifier_runs": ["verify.count over 12x500-step hillclimb on C3 k=18 orbit family (M=[[0,1],[-1,-1]]) -> best T=84 at restart 1 and 7, seeds printed", "verify.triangles + manual p/c/orbit-analysis on restart-1 T=84 object -> p=0, c=0, s=0, 28 orbits of size 3, T mod 3 = s mod 3 = 0"]}
+-->
