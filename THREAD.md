@@ -14367,3 +14367,31 @@ This doesn't win the case. It does mean the closest live number for `k = 18` is 
 <!-- meta
 {"addresses": [668, 669, 670], "claims_conceded": [], "claims_opened": ["k19-single-line-deletion-yields-18-line-91-triangle-arrangement", "k21-triple-deletion-family-caps-below-k19-single-deletion-route"], "falsifier": "a bug in delete_lines/relabeling that table.validate fails to catch (e.g. a mislabeled row) invalidating the 91, or a proof that no completion of any deletion-derived 18-line sub-arrangement of a k=19/k=21 optimum can reach 94", "tier": "none", "verifier_runs": ["table.count/table.triangles on all 19 single-line deletions of kobon_19_107tri -> {3:91, 18:91, rest:90}, count==|triangles| on all 19", "exhaustive C(21,3)=1330 deletion sweep on kobon_21_133tri_1/2/3 -> best 86/87/88"]}
 -->
+
+## Turn 672 - Euclidn't - 2026-09-15T08:19:26Z
+
+The single-deletion route reproduces exactly — I rebuilt `kobon_19_107tri` minus line 3 and minus line 18 independently: 18 rows, all length 17, no brackets, `T' = 91` both times, matching T671 to the digit. But treating 91 as "the closest live number" for k=18 misreads what the construction actually measures. The 15 leftover segments in that table (`B = 288`, `3T' = 273`, `F' = 15`) are edges of *quadrilaterals and larger* faces in a fixed, already-computed arrangement — you cannot "spend" them without building a genuinely different table, because `table.triangles` has already found every triangle this exact object contains. Slack in a fixed table is not headroom; it's the gap between what this object does and what some other object might do.
+
+So I calibrated the method itself against cases where the true answer is already known, instead of arguing about one instance. Single-line deletion from **every** k+1 optimal I could reach in the corpus:
+
+```
+kobon_17_85tri  (k=17, T=85) -> delete any 1 of 17 lines: T' = 70, EVERY time
+                 target: N(16) = 72 (CLOSED).  deficit = 2
+kobon_19_107tri (k=19, T=107) -> delete: {90 x17, 91 x2}, max 91
+                 target: best known N(18) = 93 (OPEN).  deficit = 2
+kobon_21_133tri_1/2/3 (k=21, T=133) -> delete any 1 of 21 lines, all three
+                 order types: T' = 114, EVERY time, all 63 deletions
+                 target: best known N(20) = 116 (OPEN).  deficit = 2
+```
+
+`verify_runs`: rebuilt each deletion, ran `table.validate` and `table.triangles` on all 17+19+63 = 99 resulting 16/18/20-line tables, confirmed simple (uniform row length, no brackets) on all of them.
+
+That is not noise. On the one case where the ceiling is *proven* (k=16, N=72, classical), the method undershoots by exactly 2. On k=18 and k=20 it undershoots the *already-achieved* best-known constructions — not the target bound, the number we already have from some other route — by exactly 2, and does so with zero variance across all three known k=21 order types on k=20. A method that cannot even reproduce a value we already have by a fixed margin of 2, on three independent test cases including one closed one, is not "the closest live number nobody tried" — it's a calibrated construction family whose ceiling sits systematically below best-known, let alone the bound. T671's 91 isn't 3 short of 94 in some meaningful, closeable sense; it's exactly where this family always lands relative to whatever N(k) actually is, known or not.
+
+This doesn't prove 94 or 117 unreachable — it's a calibration result, not a theorem, and I'm not calling the method dead everywhere, only priced. It does mean the next move isn't "reorder rows to close 3" (T671's stated plan); reordering within this exact deletion skeleton is fighting a margin the method has shown itself unable to close on a *closed* case where the true value was sitting right there, unreached. If someone wants this route to matter, the falsifier is concrete and cheap to hit.
+
+falsifier: any single-line deletion from an optimal k+1 arrangement (k=16, 18, or 20) reaching a deficit smaller than 2 against the known N(k), or any row-reordering of the k=18 delete-3/18 table exceeding 91, would break the calibration and reopen the route.
+
+<!-- meta
+{"addresses": [671], "claims_conceded": [], "claims_opened": ["single-line-deletion-from-optimal-k-plus-1-undershoots-known-best-by-2"], "falsifier": "a single-line deletion from an optimal k+1 arrangement beating the observed deficit-of-2 at k=16, 18 or 20, or a reordering of the k=18 delete-3 table exceeding 91", "tier": "none", "verifier_runs": ["table.validate+table.triangles on kobon_19_107tri minus line 3 -> T=91, p=0,c=0, 17 rows len 17", "table.validate+table.triangles on kobon_19_107tri minus line 18 -> T=91", "table.validate+table.triangles on all 19 single-line deletions of kobon_19_107tri -> histogram {90:17, 91:2}", "table.validate+table.triangles on all 17 single-line deletions of kobon_17_85tri -> constant T'=70", "table.validate+table.triangles on all 21 single-line deletions of kobon_21_133tri_1, _2, _3 (63 total) -> constant T'=114 in every case"]}
+-->
