@@ -14314,3 +14314,25 @@ Next move, concretely: bias the seed distribution toward orbits that pass near-e
 <!-- meta
 {"addresses": [668], "claims_conceded": [], "claims_opened": ["c3-k18-verified-search-reaches-t84-beating-73-and-79"], "falsifier": "a proof that s=0 orbit-objects in this family cap below 94 regardless of seed, or a search reaching s=1 with T>=88, would redirect or validate this route respectively", "tier": "none", "verifier_runs": ["verify.count over 12x500-step hillclimb on C3 k=18 orbit family (M=[[0,1],[-1,-1]]) -> best T=84 at restart 1 and 7, seeds printed", "verify.triangles + manual p/c/orbit-analysis on restart-1 T=84 object -> p=0, c=0, s=0, 28 orbits of size 3, T mod 3 = s mod 3 = 0"]}
 -->
+
+## Turn 670 - Euclidn't - 2026-09-15T06:18:26Z
+
+T669's construction reproduces exactly, and it also reproduces the mechanism it proposes to fix — with an outcome that kills the fix.
+
+I rebuilt the object from the printed seeds independently: `M`-orbits of `(3,-4,9) (0,-4,-13) (-8,3,-11) (13,-11,-9) (-8,-7,2) (5,14,-11)`, checked distinctness by normalized direction+offset key, checked parallel pairs by direction multiplicity, checked concurrences by counting lines per intersection point, and ran `kobon.verify.triangles` plus the orbit-fixed-triangle count directly. Result: **18 distinct lines, max direction multiplicity 1 (p=0), max lines per point 1 (c=0), T=84, s=0, T mod 3 = 0 = s mod 3.** Every number T669 reported checks out on an independently rebuilt instrument. This is real, and it is the best verified `C3` object in the record — 84 beats my own referee-reproduced 79 (50c) and T666's unverifiable, seedless 73.
+
+Now the part T669 didn't run. Its own next-step proposal is "bias toward `s=1`, use 84 as the new floor, check `s` after every accepted step" — on the premise that `s=0` is *why* the search is stuck below 94, since 32e/50d force `s=1` exactly at the target. I tested that premise two ways before adopting it.
+
+**First**, 200 single-line perturbation steps starting from T669's exact 84-seed object (30% full-random replacement, 70% small integer nudge, kept only if 18-distinct/p=0/c=0/`T` non-decreasing): **zero moves accepted in 200 tries.** Not "improves slowly" — nothing in that basin, including lateral moves at `T=84`, survives a single-line replacement. That is a much harder floor than "short by 10."
+
+**Second**, and this is the one that matters: 8 fresh random restarts, ~120 steps each, 775 total evaluations, tracking `s` at every step, not just at the end. `s=1` occurred in **479 of 775 evaluations — 62%.** It is not rare, exceptional, or a delicate boundary condition; it is closer to the generic case for this family than `s=0` is. And across every one of those 479 `s=1` states, the **best `T` reached was 82** — two below T669's `s=0` record, not above it. `verify_runs` below.
+
+That refutes the mechanism behind T669's proposed next move before it's run. If `s=1` were the bottleneck, biasing toward it should unlock headroom; instead, the search hit `s=1` majority-of-the-time for free and it bought nothing. The actual quantity that needs to move is `Σd_i` from 12 (at `T=84`, `B-3T=36=3·12`) down to 2 — a sixfold tightening — and nothing in either run suggests `s` has any leverage on that number at all.
+
+This is exactly the shape my prior predicts: a real, verified, near-optimal construction that locks hard at a specific value substantially below the bound, in a family that is provably the *only* rotationally-symmetric one alive at any open case (32e, re-closed at 667), with the one lever its builder proposed next already tested and empty. Not a proof of unreachability — a search result, stated as one, with the fraction of the relevant space covered (775 evaluations, 8 restarts, one seed basin locked at zero moves).
+
+falsifier: a directed construction or search that pairs `s=1` with `T ≥ 88` in the `C3` `k=18` family, or any accepted move out of T669's exact 84-seed object under single-line perturbation, would refute the "s is not the lever" reading and reopen the route.
+
+<!-- meta
+{"addresses": [669], "claims_conceded": [], "claims_opened": ["c3-k18-s-is-not-the-limiting-variable"], "falsifier": "a C3 k=18 construction or search reaching T>=88 with s=1, or any accepted single-line move out of T669's exact 84-seed object, would refute the s-is-not-the-lever reading", "tier": "none", "verifier_runs": ["verify.triangles(M-orbit of T669 seeds) -> 18 distinct, p=0, c=0, T=84, s=0, matches T669 exactly", "200-step single-line perturbation from T669's exact 84-seed object -> 0 accepted moves, T locked at 84", "8 restarts x ~120 steps fresh random C3 k=18 seeds, 775 evaluations -> s=1 in 479/775 (62%), best T at s=1 is 82, best T overall in this run 82"]}
+-->
