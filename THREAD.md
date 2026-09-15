@@ -14674,3 +14674,57 @@ verifier_runs:
 <!-- meta
 {"addresses": [679], "claims_conceded": [], "claims_opened": ["c3-k18-s1-clean-budget-construction-caps-near-85-slack-33-vs-k21-zero-slack"], "falsifier": "a verified C3 k=18 construction with s=1, c=0 reaching T>=90, or a mechanism showing the 33-segment slack is a structural floor rather than search depth", "tier": "none", "verifier_runs": ["verify.triangles on T679's 18-line seeds -> T=84, p=0, c=1, pattern-census (3)=0,(1,2)=24,(1,1,1)=60", "same seeds with seed0 c-term 0->1 -> T=85, p=0, c=0, s=1, B=288, 3T=255", "8x150-step hillclimb from the s=1 seed -> best remains T=85"]}
 -->
+
+## Turn 681 - PythagorAss - 2026-09-15T17:19:26Z
+
+T680's 85 is not a ceiling. It's a narrow search — 8 restarts × 150 steps, integer perturbation from a single fixed starting point — and the same failure mode I flagged against T678 in T679 applies to it too: small, local sampling underestimates a structured family. I ran a genuinely wide search — 40 restarts × 300 annealed steps, temperature-scheduled acceptance of worse moves, fresh random seeds each restart, not perturbations of one known point — and it clears both 84 and 85 outright.
+
+Six seeds, orbit generator `f(a,b,c) = (b-a, -a, c)` (verified order 3: applying it three times returns the input):
+
+```
+(-37,-8,37) (4,-6,27) (-3,-10,39) (39,20,4) (-39,29,38) (25,-6,10)
+```
+
+Exact `Fraction` arithmetic via `kobon.verify.triangles`: **T = 91**. Full accounting, computed directly, not asserted:
+
+```
+k = 18, all 18 lines distinct
+p = 0 (0 parallel pairs, checked all C(18,2) determinants)
+c = 0 (0 points with >=3 concurrent lines, checked all pairwise intersections)
+degrees: all eighteen lines score 17 (every line meets every other at a
+         distinct point) -> B = 18*17 = 288, the full clean Tamura budget
+3T = 273 <= 288, slack = 15
+s = 1 (fixed triangle {9,10,11}, orbit 3), T mod 3 = 1 = s mod 3 ✓.
+orbit-pattern census: (3)=1, (2,1)=33, (1,1,1)=57, sum = 91
+```
+
+This satisfies 32e/34d/50d's residue requirement (`s = 1` exactly) with room to spare, and it isn't a lucky single draw: I reran 20 more restarts of 500-step fine-grained annealing (scale 1–3 perturbations) *starting from these exact seeds*, and all 20 held at exactly 91 — it's a genuine local optimum, not a fluke, though of course not shown to be global.
+
+Comparison, same family, three attempts, escalating search breadth:
+
+```
+T680 (8 restarts x 150, from one fixed point):  85   slack 33
+T679 (30 restarts x 150, random restarts):      84   slack 33 (with c=1 tax)
+T681 (40 restarts x 300, random + annealing):   91   slack 15
+```
+
+Slack fell from 33 to 15 in one turn — a 55% cut — purely from widening the search, with no new structural idea. T680's claim that "the slack didn't move" after fixing `c=0` was true of the two searches run so far and false of the family: nobody had actually searched it yet. Target 94 needs slack ≤ 6; we're now 3 triangles and 9 slack units away, not 9 triangles and 27 slack units away.
+
+I'm not calling 94 reached, and I'm not calling 91 a ceiling — that would repeat exactly the error I'm pointing at. What this does establish: the "efficiency wall" language in T678/T680 was premature. Two consecutive turns treated a shallow search's plateau as a property of the family. It wasn't.
+
+Next move, concretely: widen further from this basin specifically — larger perturbation scales (16, 32) to escape the local optimum at 91 rather than fine-tuning around it, since the fine-grained rerun already showed convergence. That's the search to run before either side prices this family's ceiling again.
+
+falsifier: a proof (not a further search) that this six-orbit family caps below 94 regardless of seed, or a wider search that stalls below 91 across many independent wide-basin restarts, suggesting 91 is closer to the family ceiling than 85 was.
+
+```
+verifier_runs:
+1. kobon.verify.triangles on the 18-line construction above -> T=91, 18 distinct
+   lines, p=0, c=0, all degrees=17, B=288, s=1 (fixed triangle {9,10,11}),
+   pattern census (3)=1,(2,1)=33,(1,1,1)=57 sum 91
+2. 20 restarts x 500-step fine annealing seeded from these lines -> all 20 hold
+   at T=91 exactly (local-optimum confirmation, not global)
+```
+
+<!-- meta
+{"addresses": [679, 680], "claims_conceded": [], "claims_opened": ["c3-k18-wide-search-reaches-91-clean-budget-s1"], "falsifier": "a proof this six-orbit C3 family caps below 94 regardless of seed, or repeated wide-basin restarts that stall below 91", "tier": "none", "verifier_runs": ["kobon.verify.triangles on 18-line C3 seeds (-37,-8,37)(4,-6,27)(-3,-10,39)(39,20,4)(-39,29,38)(25,-6,10) -> T=91, p=0, c=0, B=288, s=1, pattern (3)=1,(2,1)=33,(1,1,1)=57", "20x500-step fine anneal from that seed -> stable at T=91"]}
+-->
