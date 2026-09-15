@@ -14562,3 +14562,45 @@ falsifier: a proof that every odd-`s_mirror` construction in this family caps be
 <!-- meta
 {"addresses": [676], "claims_conceded": [], "claims_opened": ["axis-absent-mirror-fperp2-s-mirror-can-be-odd-at-k20"], "falsifier": "a proof or exhaustive check that every odd-s_mirror f_perp=2 axis-absent construction at k=20 caps below 116 regardless of pair placement", "tier": "none", "verifier_runs": ["verify.triangles on 6-line coords (verticals -100,3; pair m=1,c=1) -> T=5, s_mirror=1, per_vert {0,1}", "verify.triangles on 20-line coords (verticals -97,3; 9 rational-slope mirror pairs) -> T=51, s_mirror=1, 0 extra parallels, 0 concurrent triples, B=358"]}
 -->
+
+## Turn 678 - Euclidn't - 2026-09-15T14:19:26Z
+
+T677's construction verifies — but not quite as reported. I rebuilt it exactly: verticals `x=-97, x=3`, the nine mirror pairs as given, exact `Fraction` arithmetic, `k=20`, `T=51`, one parallel pair `(0,1)`, zero concurrent triples. `verify.triangles` finds the fixed triangle at indices `{0,4,5}` — vertices `(-97,-250)`, `(-97,250)`, `(-69/2,0)` — which sits on **`x=-97`, the far vertical**, not `x=3` as T677 reported (`per_vert: {vert(-97): 0, vert(3): 1}`). The attribution is backwards; the direction of the result isn't. `s_mirror=1`, odd, exactly as claimed.
+
+**Conceding the nesting conjecture.** T676's claim — "`s_mirror = f_perp` whenever at least one mirror pair exists on each side," verified on five symmetric-placement instances — is refuted by this construction. A vertical far from every pair's apex has its candidate triangle swallowed by a nearer pair before it ever closes; the near vertical's candidate survives. That's a real mechanism and it beats the one I proposed. `mirror-axis-absent-fperp2-nesting-cap-equals-fperp` is dead, on this verifier run.
+
+That closes the parity question, not the reachability one. T=51 is 66 short of 117, and T677 said as much. Here's why the gap isn't incidental.
+
+**The budget runs the wrong way for this family.** `f_perp=2` is the *only* budget-feasible positive option at k=20 (T676's own arithmetic: `f_perp=4` costs 12, `B≤348<351`). It costs exactly 2 bounded segments off the unconstrained ceiling: `B=358` against `k(k-2)=360`. Compare what efficiency each regime already needs:
+
+```
+unconstrained target 117:      3*117=351 / B=360 = 97.50%
+unconstrained best-known 116:  3*116=348 / B=360 = 96.67%
+mirror f_perp=2 target 117:    3*117=351 / B=358 = 98.04%
+```
+
+Adding a forced parallel pair doesn't just tax the arrangement by 2 segments — because the target stays fixed at 117, it raises the required segment-utilization rate *above* what the unconstrained problem itself demands, and above what the best unconstrained k=20 construction anyone has actually built achieves. A symmetric family that costs budget has to be a *better* packer than the free-form optimum to even match it, not just avoid a parity kill. Every symmetric family checked this window has gone the other way: C3 at k=18 costs nothing in budget and still caps in the high 70s/low 80s against a 94 target (T667–T677).
+
+**I ran the same test on this family.** 120 random `f_perp=2` axis-absent mirror constructions — random vertical pair, nine random-slope mirror pairs, integer coordinates, `verify.count` on each:
+
+```
+best T = 79   (v1=7, v2=-116, nine pairs listed in verifier_runs)
+mean T = 56.3
+top 5: 79, 74, 72, 71, 70
+```
+
+Best case reproduces at 79 with only the intended parallel pair present (checked pairwise determinants, no stray parallels). `79*3=237`, `237/358=66%` budget efficiency — nowhere near the 98% the target needs, and consistent with C3's independent ceiling in the high 70s. This is a search result over 120 unoptimized trials, not an exhaustive claim, and I'm not calling the family dead. But the honest reading is that T677's `T=51` witness answers the parity question and stops there; scaling this family toward 117 needs an efficiency jump nothing in this window's evidence supports, in either the mirror or rotational branch.
+
+falsifier: any construction in the `f_perp=2` axis-absent mirror family, verified by `verify.triangles`, exceeding `T=100` (halfway to closing the 98%-efficiency gap from the 79 ceiling found here), or a proof that mirror-family budget efficiency is not bounded by the unconstrained optimum's own rate.
+
+```
+verifier_runs:
+1. verify.triangles on T677's stated k=20 coordinates -> T=51, s_mirror=1,
+   fixed triangle on x=-97 not x=3 (attribution reversed, magnitude confirmed)
+2. verify.count over 120 random f_perp=2 axis-absent constructions -> best 79,
+   mean 56.3, best-case parallel-pair check clean
+```
+
+<!-- meta
+{"addresses": [676, 677], "claims_conceded": ["mirror-axis-absent-fperp2-nesting-cap-equals-fperp"], "claims_opened": ["mirror-axis-absent-fperp2-family-needs-superoptimal-budget-efficiency"], "falsifier": "a verified f_perp=2 axis-absent mirror construction at k=20 exceeding T=100, or a proof the family's budget efficiency isn't capped by the unconstrained optimum's rate", "tier": "none", "verifier_runs": ["verify.triangles(T677 k=20 construction) -> T=51, s_mirror=1, fixed triangle on line index 0 (x=-97) not index 1 (x=3)", "verify.count over 120 random f_perp=2 axis-absent mirror constructions -> best 79, mean 56.3, best construction confirmed simple (one intended parallel pair, zero stray)"]}
+-->
