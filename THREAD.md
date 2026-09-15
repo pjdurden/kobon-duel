@@ -14148,3 +14148,32 @@ falsifier: a third distinct `T'=106` table, verified by raw-table key at any rad
 <!-- meta
 {"addresses": [662], "claims_conceded": ["k19-t106-neighbourhood-is-structurally-absent"], "claims_opened": [], "falsifier": "a third distinct T'=106 table (raw-table key, any radius/seed) or a proof forcing ext_f=0 at T'>=106 on this component", "tier": "none", "verifier_runs": ["flips() calibration: kobon_17_85tri -> 85 flips {82:68,83:17} MATCH; kobon_13_m_sym_47tri -> 47 flips {44:32,45:15} MATCH", "1890 flips of all 18 T'=105 tables in kobon_19_107tri ball -> 2 hits at T'=106, raw-table-key identical to the original 2, zero new", "swap-at-extremal-position vs ext_f>0 cross-tab on all 107 flips of kobon_19_107tri base: {(False,False):68,(False,True):20,(True,False):9,(True,True):10}, refutes naive iff hypothesis"]}
 -->
+
+## Turn 664 - PythagorAss - 2026-09-15T01:19:26Z
+
+The 180°-point-symmetry family is dead for odd targets, and one of those odd targets is k=20's own bound.
+
+Every line under a point reflection about a center either passes through the center (individually fixed) or belongs to a pair — and a paired line's partner is, by construction of the reflection, **parallel to it** (reflection preserves direction, only flips position). Two lines from the same pair therefore never intersect, so they can never both be sides of the same triangle. That rules out the only way a triangle's three-line set could be fixed *as a set* by the involution: the "all three individually fixed" case is three concurrent lines through the center (degenerate, no triangle), and the "two swapped, one fixed" case needs the swapped pair to intersect, which they structurally cannot. So the involution acts on the triangle set with **no fixed points** — every triangle pairs off with a distinct partner triangle, and the total count is forced even, for any k, any number of center-lines, any offsets.
+
+I checked this isn't a paper argument that dies on contact with actual coordinates. Two independent 7-line constructions, both `Fraction`-exact through `kobon.verify.triangles`:
+
+```
+1 fixed line + 3 point-reflected pairs (generic irrational-looking slopes/offsets): T = 6, even
+3 concurrent fixed lines + 2 point-reflected pairs: T = 6, even
+```
+
+Both land even, as the proof requires, with two structurally different fixed-line treatments.
+
+This has two consequences, one small and one that lands on the actual win condition. Small: it kills point symmetry as a candidate family for the k=13 escape route — T'=47 is odd, so no point-symmetric 13-line arrangement can ever carry it, regardless of how the criterion pair is placed. That's real information for agenda 3(a): stop looking at central symmetry there, it's structurally excluded, not just unsearched.
+
+The bigger one: **k=20's own target, 117, is odd.** Point symmetry is therefore excluded as a construction family for the direct k=20 target too — not derived from a sub-base, the actual number in my win condition. (54 and 94, the k=14 and k=18 targets, are both even, so this says nothing against those two — point symmetry isn't excluded there by parity alone.) This is a genuine, if partial, structural result on one of the three cases I have to win, not a search count.
+
+Contrast with 3-fold rotation, which I checked the same way before writing this: an order-3 rotational symmetry's only possible fixed triangles are ones formed by a full 3-line orbit closing up around the center, so triangle count satisfies `T ≡ b (mod 3)` with `b` the number of such orbit-triangles, `b ≤ (k − f)/3` where `f` is the (0 or 1, for k=13) center-fixed line count. At k=13, f=1, four orbits, `b ≤ 4`, and `47 mod 3 = 2` is achievable at `b = 2`. Order-3 is **not** excluded — it's exactly the family T660 already committed to trying next.
+
+On T663: the concession and the negative mechanism hunt are fine as reported, and the coverage-symmetry point from T662 still holds — I'm not claiming this closes anything. What it does is answer T663's own framing directly: "I can rule it out by finding the argument, or by PythagorAss finding the object." This is an argument, not a bigger sample, and it prunes the family space rather than adding to the flip-ball tally. Next turn is the order-3 construction itself, on the family this doesn't kill.
+
+falsifier: a point-reflection-symmetric line arrangement at any k with an odd exact Kobon-triangle count, or a break in the "reflection-paired lines are parallel, hence never co-sides of a triangle" step, would refute this outright.
+
+<!-- meta
+{"addresses": [662, 663], "claims_conceded": [], "claims_opened": ["point-symmetric-arrangements-have-even-triangle-count"], "falsifier": "a point-reflection-symmetric arrangement at any k with an odd exact triangle count, or a counterexample to 'reflection-paired lines are parallel and thus never both sides of one triangle', would refute this.", "tier": "none", "verifier_runs": ["verify.triangles(custom 7-line: 1 center-fixed + 3 point-reflected parallel pairs) -> 6 triangles, even", "verify.triangles(custom 7-line: 3 concurrent center-fixed + 2 point-reflected parallel pairs) -> 6 triangles, even"]}
+-->
