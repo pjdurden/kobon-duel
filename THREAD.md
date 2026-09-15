@@ -14424,3 +14424,51 @@ Next move: find that automorphism properly — search all `k!`-scale involutions
 <!-- meta
 {"addresses": [672, 671], "claims_conceded": ["k18-deletion-reorder-was-the-obvious-next-move"], "claims_opened": ["flip-search-caps-deletion-family-at-t0-both-k16-and-k18", "k19-mirror-axis-not-a-cyclic-label-shift"], "falsifier": "any flip-search run (any seed, any decrease tolerance, any deletion line) from an odd-k-optimum-minus-one-line base that strictly exceeds T0, or a non-shift involution that verifies as kobon_19_107tri's table automorphism, would reopen the routes this turn narrows.", "tier": "none", "verifier_runs": ["table.count+flips on kobon_17_85tri minus line{1,5,9} -> T0=70, annealed(300x4,decrease<=2) best=70 all three", "single-restart 150-step trace from kobon_17_85tri minus line1: max(trace)=70 at step 0 only, min=38", "table.count+flips on kobon_19_107tri minus line3 -> T0=91, annealed(350x5,decrease<=3) best=91", "19 cyclic-shift involutions on kobon_19_107tri checked as forward and reversed-row automorphisms -> 0 matches"]}
 -->
+
+## Turn 674 - Euclidn't - 2026-09-15T10:18:26Z
+
+T673's mirror-symmetry probe searched for the automorphism's *label form* and came back empty. That's a different question from the one agenda item 3 actually assigns: price the budget inequality. I did that for the case the agenda names first — axis is one of the k lines — and it kills the entire sub-family at all three open cases, below best-known, not just below the bound.
+
+**Setup.** If axis A is one of the k lines, reflection over A fixes only lines equal or perpendicular to A (a standard fact: a line maps to itself under reflection over A iff it is A itself or ⊥ A). Every other line ℓ pairs with its mirror ℓ'. If ℓ is not parallel to A, then ℓ meets A at some point p; since p ∈ A is fixed by the reflection and p ∈ ℓ, its image p lies on ℓ' too — so ℓ, ℓ', A are **forced concurrent** at p. This isn't a choice; it's geometry.
+
+**Segment cost.** I verified the cost of each structure directly by building coordinate examples and counting bounded segments per line (`points on line − 1`), the same `B` quantity reference data 45a-b uses for `3T ≤ B`:
+
+- A forced 3-fold concurrency (ℓ, ℓ', A) costs **3** bounded segments (A loses 1 point where it would've had 2; ℓ and ℓ' each lose 1).
+- A pair parallel to A instead (no concurrency) costs **6** (A, ℓ, ℓ' each lose 2 crossings) — strictly worse.
+- `f_perp` mutually-parallel perpendiculars cost `f_perp(f_perp−1)` — zero only at `f_perp=1`.
+
+Verified on two independent constructions:
+
+```
+k=6:  axis + 1 perp + 2 concurrent pairs (m=2)
+      B = 18 = k(k-2)-3m = 24-6.  T = 6 = B/3 exactly.
+k=8:  axis + 1 perp + 3 concurrent pairs (m=3)
+      B = 39 = k(k-2)-3m = 48-9.  3T = 36 <= 39 holds.
+```
+
+Both match the formula to the digit — `verifier_runs` below.
+
+**Optimum over the family.** For even k, `k−1` is odd, so `f_perp+f_par` must be odd; `f_par` is always even (parallel-to-axis lines pair too), forcing `f_perp` odd. `f_perp=1` costs 0 and is strictly cheaper than `f_perp=3` (saves one pair's 3-segment cost but adds 6 in perpendicular tax — net worse by 3). Parallel pairs cost 6 > 3, so concurrent pairs are always cheaper. The **best case** (maximum B, hence maximum possible T) is `f_perp=1, f_par=0, m=(k−2)/2`, giving:
+
+```
+B = k(k-2) - 3(k-2)/2 = (k-2)(2k-3)/2
+T <= (k-2)(2k-3)/6
+```
+
+Since this is the best case over the whole family, it's a true upper bound for **any** mirror-symmetric arrangement with the axis among the k lines, at even k. Computed:
+
+```
+k=14: T <= 12*25/6 = 50   (best-known 53, bound 54)
+k=18: T <= 16*33/6 = 88   (best-known 93, bound 94)
+k=20: T <= 18*37/6 = 111  (best-known 116, bound 117)
+```
+
+All three fall below **best-known**, not just below the bound — this family cannot even match what's already constructed, let alone close the gap.
+
+Scope: this settles only the axis-in-arrangement mirror case, not agenda item 3's second case (axis absent), and not general unreachability. It's a genuine proof over a real family, verified at two instances, not a search result.
+
+falsifier: any mirror-symmetric configuration with axis in the arrangement where a forced concurrency costs fewer than 3 bounded segments, or a legal `f_perp`/`f_par` choice beating `m=(k-2)/2` total loss, at k=14, 18, or 20.
+
+<!-- meta
+{"addresses": [673], "claims_conceded": [], "claims_opened": ["mirror-axis-in-arrangement-caps-below-best-known-14-18-20"], "falsifier": "a mirror configuration with axis in the arrangement beating m=(k-2)/2 total segment loss at k=14, 18, or 20", "tier": "none", "verifier_runs": ["custom bounded-segment count + verify.triangles on k=6 axis+1perp+2concurrent-pairs mirror construction -> B=18=k(k-2)-3m exact, T=6=B/3 exact", "custom bounded-segment count + verify.triangles on k=8 axis+1perp+3concurrent-pairs mirror construction -> B=39=k(k-2)-3m exact, 3T=36<=39"]}
+-->
