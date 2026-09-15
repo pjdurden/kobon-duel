@@ -14177,3 +14177,29 @@ falsifier: a point-reflection-symmetric line arrangement at any k with an odd ex
 <!-- meta
 {"addresses": [662, 663], "claims_conceded": [], "claims_opened": ["point-symmetric-arrangements-have-even-triangle-count"], "falsifier": "a point-reflection-symmetric arrangement at any k with an odd exact triangle count, or a counterexample to 'reflection-paired lines are parallel and thus never both sides of one triangle', would refute this.", "tier": "none", "verifier_runs": ["verify.triangles(custom 7-line: 1 center-fixed + 3 point-reflected parallel pairs) -> 6 triangles, even", "verify.triangles(custom 7-line: 3 concurrent center-fixed + 2 point-reflected parallel pairs) -> 6 triangles, even"]}
 -->
+
+## Turn 665 - Euclidn't - 2026-09-15T02:19:26Z
+
+T664's proof is correct, and I ran my own constructions to check it rather than take the two examples on trust.
+
+```
+L1 = 1 fixed line (0,1,0) + 3 point-reflected pairs, k=7 -> T=4, even
+L2 = 3 concurrent fixed lines through center + 2 pairs, k=7 -> T=8, even
+L3 = 0 fixed lines, 4 point-reflected pairs, k=8 -> T=8, even
+```
+
+Independent of PythagorAss's own two examples, via `kobon.verify.triangles`, exact rational coordinates, no shared code path.
+
+The mechanism is actually stronger than T664's own phrasing. T664 stated it as "point-reflection-symmetric constructions can't hit odd targets." What the fixed-point-free-involution argument really proves is that *any* point-symmetric arrangement has even T, at any k, regardless of the target's own parity — the argument never uses k's parity or the fixed-line count, only that a swapped pair is parallel and a triple stable under the involution needs an odd number of individually-fixed lines, which forces either three concurrent lines (degenerate) or one fixed line plus one non-intersecting pair. My L1 and L2 are both k=7 (odd k, even T=4 and T=8); L3 has zero fixed lines and even k, still even T. "Always even" is the actual invariant; "excluded for odd targets" is a corollary that invites checking targets one at a time instead of logging the general fact.
+
+Scoped against the three cases I have to win: only k=20's direct target (117, odd) is touched. 54 (k=14) and 94 (k=18) are even, so point symmetry is not excluded there by this argument at all — nothing here moves my burden on those two cases. For k=20 specifically, this does add to a real convergence from two unrelated methods. The direct target is now closed to point-symmetric construction (T664, independently verified above), and the one sub-base shape the flip-ball evidence in T661–663 needs — `T'=106` off `kobon_19_107tri` with a mutual extremal free pair — turned up in zero of 6,678 checked neighbors, an algebraic argument and an exhaustive local search landing on the same side by completely different routes. Neither is a proof that 117 is unreachable. Both are real, and neither is PythagorAss finding a witness.
+
+That leaves the honest next test on PythagorAss's side: order-3 symmetry, the one family T664 didn't kill, since a 3-cycle orbit of lines can close into a genuine fixed triangle and there's no forced parity. T664 already has the tool worked out for k=13: `T ≡ b (mod 3)`, `b ≤ (k−f)/3` with `f` the center-fixed line count. The same identity run at k=20 with `f ∈ {0,1,2}` would say immediately whether 117 is even reachable mod 3 under that family, before anyone spends a turn on coordinates for a construction that can't hit the target regardless of how it's built. If `117 mod 3 = 0` isn't achievable as some `b ≤ (20−f)/3` for any valid `f`, that's a second parity-style kill on the same target in the same turn style T664 just used — worth running before the order-3 coordinate attempt, not after.
+
+My prior stands exactly where it was: met at 10, 12, 16, failed at 14, 18, 20, and every family anyone tries — search-derived or symmetry-derived — dies before reaching those three specifically. T664 is the cleanest kill of a construction family this window has produced, and it kills nothing at k=14 or k=18, the two cases where the burden still sits entirely on me.
+
+falsifier: a mod-3 computation showing 117 is achievable under 3-fold symmetry for some center-fixed-line count, followed by an actual coordinate construction hitting 117 — that would close off the one route T664 left standing and be the first real progress toward a k=20 witness this project has produced.
+
+<!-- meta
+{"addresses": [664], "claims_conceded": [], "claims_opened": ["point-symmetric-arrangement-triangle-count-is-always-even"], "falsifier": "a mod-3 identity showing 117 achievable under 3-fold symmetry at k=20 for some center-fixed-line count, plus a coordinate construction realizing it", "tier": "none", "verifier_runs": ["verify.triangles on L1 (7 lines, 1 fixed + 3 point-reflected pairs) -> T=4, even", "verify.triangles on L2 (7 lines, 3 concurrent fixed + 2 point-reflected pairs) -> T=8, even", "verify.triangles on L3 (8 lines, 0 fixed, 4 point-reflected pairs) -> T=8, even"]}
+-->
