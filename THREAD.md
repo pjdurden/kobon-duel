@@ -14472,3 +14472,30 @@ falsifier: any mirror-symmetric configuration with axis in the arrangement where
 <!-- meta
 {"addresses": [673], "claims_conceded": [], "claims_opened": ["mirror-axis-in-arrangement-caps-below-best-known-14-18-20"], "falsifier": "a mirror configuration with axis in the arrangement beating m=(k-2)/2 total segment loss at k=14, 18, or 20", "tier": "none", "verifier_runs": ["custom bounded-segment count + verify.triangles on k=6 axis+1perp+2concurrent-pairs mirror construction -> B=18=k(k-2)-3m exact, T=6=B/3 exact", "custom bounded-segment count + verify.triangles on k=8 axis+1perp+3concurrent-pairs mirror construction -> B=39=k(k-2)-3m exact, 3T=36<=39"]}
 -->
+
+## Turn 675 - PythagorAss - 2026-09-15T11:18:26Z
+
+T674's case-1 proof reproduces independently. I built my own instance of the exact structure it describes — axis `y=0`, one perpendicular `x=5`, two mirror pairs each forced concurrent with the axis — and got `p=0, c=2` (concurrencies at `(1,0)` on lines `{axis,2,3}` and `(3,0)` on lines `{axis,4,5}`), `B=18`, matching `(k-2)(2k-3)/2 = 18` to the integer, with `T=6` hitting `B/3` exactly. The formula is right and I'm not rebuilding it a second time.
+
+> All three fall below best-known, not just below the bound — this family cannot even match what's already constructed, let alone close the gap.
+
+Conceding this: axis-in-arrangement mirror symmetry is dead at all three open cases, independently confirmed.
+
+But agenda item 3 named two cases, and T674 only priced one. The axis-*absent* case is different in a way that matters, and I found a real constraint in it that T674's framework doesn't have a slot for. When the axis isn't among the k lines, a line maps to itself only if it's perpendicular to the axis (`f_perp` of them, mutually parallel). If `f_perp=0`, no line is individually fixed. A triangle fixed as a *set* under an order-2 map needs its 3-side permutation to fix at least one side (3 is odd — a fixed-point-free involution can't act on an odd set). With `f_perp=0` no side can be that fixed point, so **no triangle can be fixed**, and every triangle pairs with a distinct mirror image. That forces **T even**, unconditionally, whenever `f_perp=0`.
+
+Verified computationally, not just argued: 7 constructions (my first `k=6` example plus 6 random `k=8` mirror-pair sets, axis absent, `f_perp=0`), checked by mapping each triangle's index-triple through the pair-swap and testing for a fixed point:
+
+```
+k=6  T=4   T%2=0  fixed=0
+k=8  T=8,6,6,12,10,6   T%2=0 all six   fixed=0 all six
+```
+
+`verifier_runs` below. This is the mirror analogue of T664/T665's point-symmetry parity law, and it cuts a different way than case 1: **it kills only k=20**, not k=14 or k=18. Target 117 is odd; `f_perp=0` axis-absent mirror symmetry cannot produce an odd `T`, so that sub-case is dead at k=20 specifically. 54 and 94 are both even — axis-absent, `f_perp=0` mirror symmetry is untouched by this argument at k=14 and k=18, and unlike case 1, it costs **nothing** in the budget: my original `k=6` check gave `B=24=k(k-2)` exactly, the full Tamura ceiling, because no forced concurrency exists when the axis itself isn't a line.
+
+k=20 isn't fully dead in this family either — only the `f_perp=0` slice is. `f_perp` must match k's parity (even), so `f_perp=2` is the next option: one pair of mutually-fixed parallel perpendiculars, budget cost `f_perp(f_perp-1)=2`, giving `B=20·18-2=358`, and `3·117=351 ≤ 358` — still feasible. With `f_perp≥1` a fixed triangle becomes structurally possible (one fixed perpendicular side plus one mirror-paired pair of sides meeting it), so `T` parity now tracks the count of such fixed triangles, `s_mirror`, and 117 needs `s_mirror` odd.
+
+Next move: build an `f_perp=2` axis-absent example, confirm a fixed triangle actually occurs and that `T` becomes odd, and check whether fixed triangles nest the way C3's do (34b/50d's `s≤1` argument) — that would cap `s_mirror` and turn this into a real constraint rather than just a parity note.
+
+<!-- meta
+{"addresses": [674], "claims_conceded": ["mirror-symmetry-axis-in-arrangement-dead-at-14-18-20"], "claims_opened": ["mirror-symmetry-axis-absent-f-perp-zero-forces-even-t"], "falsifier": "an axis-absent, f_perp=0 mirror-symmetric arrangement at any k with odd T, or a fixed triangle in one, would refute the parity law and reopen k=20 at f_perp=0", "tier": "none", "verifier_runs": ["hand-built axis-in-arrangement k=6 instance: p=0,c=2 at (1,0){0,2,3} and (3,0){0,4,5}, B=18=(k-2)(2k-3)/2, T=6=B/3 -- confirms T674's formula", "axis-absent f_perp=0: k=6 pairs example T=4 fixed=0; 6x k=8 random mirror-pair sets T in {8,6,6,12,10,6} all even, fixed=0 in all 7"]}
+-->
