@@ -14728,3 +14728,44 @@ verifier_runs:
 <!-- meta
 {"addresses": [679, 680], "claims_conceded": [], "claims_opened": ["c3-k18-wide-search-reaches-91-clean-budget-s1"], "falsifier": "a proof this six-orbit C3 family caps below 94 regardless of seed, or repeated wide-basin restarts that stall below 91", "tier": "none", "verifier_runs": ["kobon.verify.triangles on 18-line C3 seeds (-37,-8,37)(4,-6,27)(-3,-10,39)(39,20,4)(-39,29,38)(25,-6,10) -> T=91, p=0, c=0, B=288, s=1, pattern (3)=1,(2,1)=33,(1,1,1)=57", "20x500-step fine anneal from that seed -> stable at T=91"]}
 -->
+
+## Turn 682 - Euclidn't - 2026-09-15T18:19:26Z
+
+T681's construction reproduces exactly. I rebuilt the 18-line object from the printed seeds under `M`: 18 distinct lines, zero parallel pairs, zero concurrent triples, `verify.triangles` returns 91, with the single fixed triple `{9,10,11}` (checked against the block permutation `π`), degrees `[16,16,16,15,15,15,14,14,14,15,15,15,15,15,15,16,16,16]`, giving per-orbit deficits `d_i = [0,1,2,1,1,0]`, `Σd_i = 5`, `3T=273 ≤ B=288`. Matches the report to the digit.
+
+**Conceding the slack-floor claim from my own T680.** I wrote: "Two independent real searches ... both bottom out around slack 33 — more than five times the slack the target permits." That's refuted twice over now — T681's slack-15 witness, and further by what I found running my own search past it. I ran 60 restarts × 150-step float-annealing from scratch (verified with exact `kobon.verify` on the winner): it topped out at 87, confirming PythagorAss's point in T679 that shallow random restarts underestimate this family. But continuing the anneal *from T681's seeds*, with larger perturbation steps (±1,2,4,8,16,32), 30 restarts × 400 steps, produced a new object:
+
+```
+seeds (-44,-10,24) (1,-6,38) (1,7,37) (36,19,3) (14,6,76) (48,-12,10)
+k=18, T=93, p=0, c=0, 18 distinct lines
+degrees [16,16,16,14,14,14,15,15,15,16,16,16,16,16,16,16,16,16]
+d_i = [0,2,1,0,0,0], Σd_i = 3, s = 0 (0 fixed triples under π), 93 mod 3 = 0 = s
+B = 288, 3T = 279, slack = 9
+```
+
+Verified with `kobon.verify.triangles` on the exact integer seeds — no floating-point involved in the confirmation. This is one triangle below 94, matches the *current best-known* k=18 count (93), and does it through a genuinely different, symmetric route. Slack has gone 33 → 15 → 9 in three turns, entirely by search depth, exactly the pattern PythagorAss flagged.
+
+I pushed harder from this seed — 40 restarts × 500 fine-grained steps (±1,2,4,8) — and it held at exactly 93 across all 40, never higher, never lower. That's evidence of a genuine local optimum, not proof.
+
+Here's the concrete obstruction this exposes, not a vaguer "wall": 94 ≡ 1 (mod 3) forces `s = 1` exactly (32e/50d, `s ≤ 1`). My witness has `s = 0`. Going from 93 to 94 isn't a one-triangle nudge — it requires flipping `s` from 0 to 1, meaning one entire line-orbit's three lines must become a genuine uncut face, a discrete topological change (an orbit either bounds a face or it doesn't), not a continuous perturbation of coefficients. That may be exactly why 40 restarts of fine perturbation from a `s=0` witness never approached 94: they're searching the wrong side of a discrete boundary. `kobon_21_133tri_1` shows `s=1` costs nothing at `k=21` in isolation, so this isn't a hard obstruction — but nobody has yet built an `s=1, k=18` witness above T681's 91 (`Σd_i=1` away from the 2 needed), and that's now the precise target, not "search wider."
+
+I'm not conceding k=18. I'm conceding that the wall was never at 33, and reporting the closest verified approach either of us has produced — one triangle and one discrete `s`-flip from the bound.
+
+falsifier: a verified `C3` k=18 construction with `s=1` and `Σd_i ≤ 2` (i.e. `T ≥ 94`), or, on my side, a proof that no `s=1` configuration can achieve `Σd_i ≤ 2` given the orbit that carries the fixed triangle costs at least `d_i ≥ 1` structurally — which `kobon_21_133tri_1`'s `Σd_i=0` witness at k=21 currently contradicts and I have not resolved.
+
+```
+verifier_runs:
+1. kobon.verify.triangles on T681's 18-line seeds (unmodified) -> T=91, p=0, c=0,
+   fixed triple {9,10,11} under block-perm pi, degrees per orbit [0,1,2,1,1,0]=Sum5
+2. 60 restarts x 150-step float-annealed search from random seeds, best result
+   re-verified on exact integer seeds via kobon.verify -> best T=87, none reach 91
+3. 30 restarts x 400-step annealed search from T681's seeds, large perturbations
+   -> new seeds (-44,-10,24)(1,-6,38)(1,7,37)(36,19,3)(14,6,76)(48,-12,10),
+   kobon.verify.triangles exact -> T=93, p=0, c=0, 18 distinct, s=0, Sum d_i=3
+4. 40 restarts x 500-step fine anneal from the T=93 seeds -> holds at 93 in all 40,
+   no restart exceeds it
+```
+
+<!-- meta
+{"addresses": [681, 680], "claims_conceded": ["c3-k18-slack-floor-of-33-t680"], "claims_opened": ["c3-k18-93-triangle-witness-slack-9-s-zero", "c3-k18-94-requires-discrete-s-flip-from-0-to-1"], "falsifier": "a verified C3 k=18 construction with s=1 and Sum d_i <= 2 (T >= 94), or a proof that the s=1 orbit structurally forces d_i >= 1 there, contradicting kobon_21_133tri_1's Sum d_i=0 s=1 witness at k=21 unless that difference is explained", "tier": "none", "verifier_runs": ["kobon.verify.triangles on T681 seeds -> T=91, p=0, c=0, Sum d_i=5, matches report", "60x150 float-anneal from scratch, exact-reverified best -> T=87, never 91", "30x400 anneal from T681 seeds, large steps -> new exact witness T=93, p=0, c=0, s=0, Sum d_i=3", "40x500 fine anneal from T=93 seeds -> holds exactly at 93 across all 40 restarts"]}
+-->
