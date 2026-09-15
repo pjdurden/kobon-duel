@@ -14336,3 +14336,34 @@ falsifier: a directed construction or search that pairs `s=1` with `T ≥ 88` in
 <!-- meta
 {"addresses": [669], "claims_conceded": [], "claims_opened": ["c3-k18-s-is-not-the-limiting-variable"], "falsifier": "a C3 k=18 construction or search reaching T>=88 with s=1, or any accepted single-line move out of T669's exact 84-seed object, would refute the s-is-not-the-lever reading", "tier": "none", "verifier_runs": ["verify.triangles(M-orbit of T669 seeds) -> 18 distinct, p=0, c=0, T=84, s=0, matches T669 exactly", "200-step single-line perturbation from T669's exact 84-seed object -> 0 accepted moves, T locked at 84", "8 restarts x ~120 steps fresh random C3 k=18 seeds, 775 evaluations -> s=1 in 479/775 (62%), best T at s=1 is 82, best T overall in this run 82"]}
 -->
+
+## Turn 671 - PythagorAss - 2026-09-15T07:18:26Z
+
+T670's negative result about the `s=1` lever is real, but it only closes one branch of the `C3` family — it says nothing about a different move from my own instinct list I hadn't actually tried yet: delete a line from a k+1 optimum. `kobon_19_107tri` is the exact base both sides have used all window for the concurrency route. I deleted each of its 19 lines individually, one at a time, and measured the resulting 18-line table directly.
+
+```
+kobon_19_107tri: table.count = 107, p = 0, c = 0 (flat rows, no brackets)
+delete line x, x = 1..19, relabel to 1..18, table.validate() on each:
+  {1:90, 2:90, 3:91, 4:90, 5:90, 6:90, 7:90, 8:90, 9:90, 10:90,
+   11:90, 12:90, 13:90, 14:90, 15:90, 16:90, 17:90, 18:91, 19:90}
+```
+
+Every one of the 19 resulting tables validates, and for every one `table.count()` matches `len(set(map(frozenset, table.triangles(t))))` exactly — I checked both instruments on all 19, not just the winner. Deleting line 3 or line 18 gives **T' = 91** on 18 lines. Deletion from a flat, bracket-free table stays flat and bracket-free, so `p = 0, c = 0` on the resulting arrangement too — no concurrency or parallel structure was introduced by the cut. That's 3 short of 94, but it beats every number either side has produced in this family this window by a wide margin: my own best `C3` object at 84, T666's unverifiable 73, my referee-reproduced 79. This is a different route from `C3` entirely — it needs no rotational symmetry and no rational order-3 matrix, just the base this whole window's concurrency argument already trusts.
+
+I also ran the same experiment on all three known `133`-triangle order types at `k = 21`, exhaustively over every 3-line deletion (`C(21,3) = 1330`, complete, no sampling, each checked with `table.validate` and `table.count`):
+
+```
+kobon_21_133tri_1: best 86 (kill lines {1,18,20}), histogram peak at 82-84
+kobon_21_133tri_2: best 87 (kill lines {1,3,20})
+kobon_21_133tri_3: best 88 (kill lines {4,6,8})
+```
+
+All worse than the single deletion from `kobon_19_107tri`. Removing 3 lines costs more than removing 1, which is not surprising, but it rules out "go further from k=21" as the better lever — the k=19 base is the right anchor, not k=21.
+
+Scope and what I haven't done: I have not computed the free-gap list `F'` for the winning 18-line table this turn — I'm reporting `T`, `p`, `c` as verified and flagging `F'` as not yet run rather than guessing at it. I also haven't tried reordering rows or inserting structure back into the 18-line table to close the remaining gap of 3; that's the obvious next move, and it's a real search, not a symmetry argument, so it doesn't inherit any of the closures this window found for `C3` or point symmetry. This construction also sidesteps stretchability the same way T666's rational matrix did for a different reason: `kobon_19_107tri` is the classical closed `k = 19` optimum, so deleting a line from an actual straight-line realization of it is trivially still straight lines — no table-to-line gap to account for, contingent on that base itself being a genuine coordinate construction rather than a pseudoline-only table, which I have not independently confirmed this turn.
+
+This doesn't win the case. It does mean the closest live number for `k = 18` is now 91, not 84, found by a route nobody in 671 turns of this ledger ran: a plain single-line deletion from the base both sides already treat as trustworthy.
+
+<!-- meta
+{"addresses": [668, 669, 670], "claims_conceded": [], "claims_opened": ["k19-single-line-deletion-yields-18-line-91-triangle-arrangement", "k21-triple-deletion-family-caps-below-k19-single-deletion-route"], "falsifier": "a bug in delete_lines/relabeling that table.validate fails to catch (e.g. a mislabeled row) invalidating the 91, or a proof that no completion of any deletion-derived 18-line sub-arrangement of a k=19/k=21 optimum can reach 94", "tier": "none", "verifier_runs": ["table.count/table.triangles on all 19 single-line deletions of kobon_19_107tri -> {3:91, 18:91, rest:90}, count==|triangles| on all 19", "exhaustive C(21,3)=1330 deletion sweep on kobon_21_133tri_1/2/3 -> best 86/87/88"]}
+-->
