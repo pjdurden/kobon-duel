@@ -15040,3 +15040,36 @@ verifier_runs:
 <!-- meta
 {"addresses": [688], "claims_conceded": [], "claims_opened": ["c3-k18-orbit-distance-ordering-determines-central-face-and-is-constructible"], "falsifier": "a verified C3 k=18 construction reaching T>=92 by any method, or a proof that fixed-orbit d_i=0 forces the other five orbits' combined deficit above what 91 already achieves", "tier": "none", "verifier_runs": ["custom half-plane clip on T685 seeds -> 3 sides, bounded by orbit 3", "distance^2 sort on T685's 18 lines -> matches clip exactly", "20/20 close/far construction trials -> central_sides==3", "require_s1 anneal from 5 close/far-constructed seeds, 150 steps each -> best T=79, s=1"]}
 -->
+
+## Turn 690 - Euclidn't - 2026-09-16T03:19:26Z
+
+T689's near/far construction reproduces exactly on my independent rebuild: seeds `(-39,41,-500)(-45,55,-404)(11,-28,-458)(25,12,-18)(16,-40,-350)(8,-79,-280)` give `T=79, s=1, simple`. The geometric point stands — s=1 is now cheap to guarantee by construction — but it changes nothing about the ceiling. Six methods this window (my joint anneal 91, PythagorAss's freeze-transplant 91, table-deletion 85, my freeze-batch 88, blind require_s1 85, near/far 79) all sit at or below 91, none at 92, and 94 still needs Σd_i≤2 against a best of 5.
+
+I went looking for the mechanism behind T685/T687's shared pattern: in both witnesses, sorting the six orbits by distance from O (`d²=c²/(a²+b²)`), the *second-farthest* orbit — not the fixed one, not the farthest one — carries the single largest deficit, d_i=3 in both cases, while the farthest orbit (dist²≈14.0) sits right next to it (dist²≈13.95) — a near-tie. That looked like a real lead: two orbits at nearly equal radius crowding each other out of triangles, the same flavor as the referee's extremal-free-gap finding.
+
+I tested it directly, perturbing only that orbit's `c` (holding `a,b` fixed, so its angular position is unchanged) to separate it from its near-twin: at `c=45` (dist² 13.95→18.58) **T stays exactly 91 with identical d_i** — a small plateau, so the configuration has some slack, not knife-edge fragility. But past that, at `c=55` and beyond, T collapses to 79 and the deficit doesn't just leave orbit2 — d_i worsens on orbits 0, 1, and 3 simultaneously (`[2,5,6,2,1,1]` at c=55, vs `[0,1,3,0,1,0]` at baseline). **Distance-proximity between the two farthest orbits is refuted as the mechanism**: separating them doesn't relieve the cost, it relocates and grows it, because moving `c` alone drags the line through unrelated crossings elsewhere in the arrangement. The pattern I found is real and reproducible on two independent witnesses, but I don't have an explanation for it, and the one explanation I tried died on contact with a five-line verifier check — the same fate T684's fixed-orbit mechanism met at T685.
+
+That's now two mechanism proposals from my side (T684's fixed-orbit tax, this turn's distance-proximity) refuted by direct construction, matching T689's own honest scoring of its near/far recipe against the 91 ceiling. I'm not going to spin that as progress toward a proof — it isn't one. What it does rule out, cleanly, is the two simplest single-variable stories for why six independent methods keep landing at ≤91. The next test that actually isolates a variable, rather than confounding radius with everything else the line touches: fix each orbit's radius `|c|/√(a²+b²)` exactly at its T=91 value and anneal only the six angular parameters. If the ceiling holds under pure angular search with radii frozen at the known-good values, that's real evidence the obstruction is angular, not radial — a testable claim, unlike the one I just killed.
+
+Holding my prior: no proof yet, and I'm not entitled to one from a search ceiling. But three independent methods hitting 91 exactly, and two targeted attempts to explain why it stops there both failing under my own verification, is the kind of converging failure my prior predicts rather than one that undermines it.
+
+falsifier: a verified C3 k=18 construction with T≥92, or an angular-only search (radii frozen at a known T=91 witness's values) that clears 91.
+
+```
+verifier_runs:
+1. scratch_t683_search.build/s_value on T689's printed near/far seeds ((-39,41,-500)
+   ... (8,-79,-280)) -> T=79, s=1, simple, matches T689 exactly
+2. per-orbit distance^2=c^2/(a^2+b^2) and d_i on T685's 91-witness and T687's
+   88-witness -> both rank the fixed orbit closest (dist2 0.009), and both put
+   peak d_i=3 on the same rank position (2nd-farthest orbit, idx2), dist2
+   13.95 vs farthest orbit's 14.02 (near-tie)
+3. single-variable perturbation of T685's orbit-2 seed c in
+   {15,20,25,39,45,55,70,90,120,160}, rest of seeds fixed, re-scored each time
+   -> c=45 (dist2 18.58) holds T=91 d_i=[0,1,3,0,1,0] unchanged; c>=55 collapses
+   to T<=79 with d_i worsening on orbits 0,1,3, not just orbit 2 -- distance-
+   proximity mechanism refuted
+```
+
+<!-- meta
+{"addresses": [689], "claims_conceded": [], "claims_opened": ["c3-k18-orbit-pair-distance-proximity-does-not-explain-deficit-concentration"], "falsifier": "a verified C3 k=18 construction with T>=92, or an angular-only search at frozen T=91 radii that clears 91", "tier": "none", "verifier_runs": ["scratch_t683_search.build/s_value on T689 near/far seeds -> T=79,s=1 matches", "distance^2 ranking + d_i on T685/T687 witnesses -> peak deficit at 2nd-farthest orbit both times", "single-variable c-perturbation of T685 orbit-2, 10 values -> plateau to c=45 then collapse with deficit relocating not shrinking"]}
+-->
