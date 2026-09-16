@@ -15537,3 +15537,44 @@ verifier_runs: ["referee_t691_par.build+custom analyse_lines on T701 seeds -> T=
 <!-- meta
 {"addresses": [704], "claims_conceded": [], "claims_opened": ["c3-k18-93-witness-is-strict-local-max-under-unrestricted-single-line-perturbation", "c3-k18-two-orbit-joint-scaling-caps-at-88-for-s1"], "falsifier": "any joint 2+-line move from this witness reaching T>=92 at s=1, or a proof (not a search ceiling) ruling out F=0 at s=1 near this combinatorial type", "tier": "none", "verifier_runs": ["referee_t691_par.build+custom analyse_lines on T701 seeds -> T=93,B=282,F=3,p=3 matches par.analyse exactly", "2-orbit joint scaling grid 19x19 on seeds 2,3 -> s=0 plateau 93, s=1 ceiling 88", "unrestricted single-line anneal 10x8000 steps from T701 93-witness -> never leaves T=93"]}
 -->
+
+## Turn 706 - Euclidn't - 2026-09-16T20:18:26Z
+
+T705's finding — ten trials, 8000 steps, zero movement off T=93 under any single-line perturbation, plus a 361-cell joint-orbit grid pinned at the same ceilings — is the strongest local-rigidity result either side has produced this window, and it deserves a mechanism, not just a bigger search next turn. I built the tool I flagged as missing last turn instead of hand-deriving it: a real bounded-face enumerator. BFS over the arrangement's cell-adjacency graph, reusing the packet's own Sutherland-Hodgman `clip()`: start at the known central cell (sign vector evaluated at the origin), and at each polygon edge identify which of the 18 lines it lies on by exact rational collinearity of both endpoints, then flip that one line's sign to reach the neighbor. Anything touching the `R=10^7` bounding box is discarded as unbounded.
+
+On T701's exact-confirmed 93-witness: 133 bounded faces total, 93 triangles and 40 not — 16 hexagons, 15 pentagons, 9 heptagons, zero quadrilaterals. `verify.triangles` agrees at T=93 on the nose, and 133 = E − V + 1 = 282 − 150 + 1 matches the packet's own Euler identity, so the pipeline checks out before I trust anything downstream.
+
+Then the real result. I ran the same enumerator on three more p=3, c=0 witnesses spanning two unrelated generating families and three T values: T701's own seeds with orbit 2's offset scaled to t=0.7 (T=85, s=1, quadrilaterals appear for the first time), the same at t=1.3 (T=93, s=0, identical degree profile to the unscaled witness — same cell, matching T703's flat plateau), and the referee's independent agenda-item-1 seeds (T=91, s=1). Define excess = Σ over non-triangular bounded faces of (degree − 3):
+
+```
+T=93 (orig):   {3:93, 5:15, 6:16, 7:9}         excess = 114
+T=85 (t=0.7):  {3:85, 4:6, 5:24, 6:12, 7:6}    excess = 114
+T=93 (t=1.3):  {3:93, 5:15, 6:16, 7:9}         excess = 114
+T=91 (agenda): {3:91, 5:15, 6:24, 7:3}         excess = 114
+```
+
+Four for four, across a 20-point swing in T. That falls out of two constants fixed by p=3, c=0, k=18 alone, independent of coordinates: total bounded faces = 133 (Euler, from V=150, E=282, both determined by p, c), and — confirmed four times, not derived — merged outer-face degree = 51. Given both, excess = 165 − 51 = 114 wherever the degree-51 outer face holds, whatever T you land on.
+
+I want to be precise about what this does and doesn't do. It does not forbid T=94: ntri would be 133−94=39, needing ΣD_rest = 114+3·39 = 231 over those 39 faces, average degree 5.9 — arithmetically unremarkable, same conclusion as last turn's mod-9 check: no arithmetic obstruction exists at this level. What it does do is explain T705's rigidity rather than just report it. T, and the whole face-degree multiset, is order-type data — constant on the interior of a realization-space cell, changing only by crossing a codimension-1 wall where two lines go parallel or three go concurrent. A coordinate anneal that accepts sideways-or-better moves will almost never stumble onto such a wall; it sits at the bottom of whichever cell it started in. That's what T705 measured, and T703 already showed what happens on purpose: a hard drop crossing the one wall it deliberately targeted, not a rise. Ten trials finding nothing is exactly what a search structurally blind to the only move that changes the answer should produce.
+
+falsifier: a p=3, c=0, k=18 witness with excess ≠ 114 (kills the outer-degree-51 pattern), or any witness in this branch, by wall-crossing or otherwise, with T=94.
+
+```
+verifier_runs:
+1. face enumerator (new, BFS cell-adjacency via referee_t691_central.clip, exact
+   Fraction edge-to-line matching) on T701 seeds -> 133 bounded faces,
+   degs {3:93,5:15,6:16,7:9}, verify.triangles independently confirms T=93,
+   Euler check E-V+1 = 282-150+1 = 133 matches
+2. same enumerator on T701 seeds with orbit-index-2 offset scaled by 7/10 ->
+   analyse: T=85,s=1,B=282,F=27,p=3; degs {3:85,4:6,5:24,6:12,7:6}, excess=114
+3. same enumerator on T701 seeds with orbit-index-2 offset scaled by 13/10 ->
+   analyse: T=93,s=0,B=282,F=3,p=3; degs identical to unscaled witness, excess=114
+4. same enumerator on referee's agenda-item-1 p=3 seeds
+   (9,9,21)(65,-13,-17)(-47,-60,29)(8,13,27)(-42,-31,-24)(-42,-31,47) ->
+   analyse=91,s=1,B=282,F=9,p=3 matches ledger 51c; degs {3:91,5:15,6:24,7:3},
+   excess=114
+```
+
+<!-- meta
+{"addresses": [705, 703], "claims_conceded": [], "claims_opened": ["c3-p3-k18-face-degree-excess-invariant-114"], "falsifier": "a p=3,c=0,k=18 witness with excess != 114, or any T=94 witness in this branch by any method", "tier": "none", "verifier_runs": ["face enumerator (BFS cell-adjacency, exact Fraction) on T701 93-witness -> 133 bounded faces, degs {3:93,5:15,6:16,7:9}, verify.triangles=93, Euler E-V+1=133 matches", "same enumerator on T701 seeds, orbit-2 offset x0.7 -> T=85 s=1 F=27, degs {3:85,4:6,5:24,6:12,7:6}, excess=114", "same enumerator on T701 seeds, orbit-2 offset x1.3 -> T=93 s=0, degs identical to original, excess=114", "same enumerator on referee's agenda-item-1 p=3 seeds -> T=91 s=1 F=9 matches 51c, degs {3:91,5:15,6:24,7:3}, excess=114"]}
+-->
