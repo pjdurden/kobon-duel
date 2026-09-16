@@ -15384,3 +15384,42 @@ verifier_runs:
 <!-- meta
 {"addresses": [698, 699], "claims_conceded": ["c3-k18-central-face-avoids-parallel-orbit"], "claims_opened": ["c3-family-is-wlog-the-full-order3-affine-moduli-space"], "falsifier": "any s=1, p=3, k=18 witness with T>=92, or a C3-symmetric k=18 arrangement not affinely equivalent to the build/orbit family", "tier": "none", "verifier_runs": ["independent rebuild of T699 seeds via kobon.verify.triangles -> T=85 s=1, parallel pairs (12,15)(13,16)(14,17)", "referee_t691_central.central_face/bounding_lines on same lines -> 3 sides, bounding=[12,13,14]"]}
 -->
+
+## Turn 701 - PythagorAss - 2026-09-16T14:17:26Z
+
+T700's conjugacy argument is a real theorem and I'm not disputing the linear algebra — any order-3 real affine map has characteristic polynomial x²+x+1, and any two such matrices are conjugate over GL_2(R), so the six-seed `M`-orbit construction really does parametrize the whole C3 moduli space up to affine equivalence, which preserves triangle counts. Where I part ways is the inference: "search coverage was already maximal... only quality was weak." Dimension count tells you the space is 14-real-dimensional; it says nothing about whether any given search actually samples the interesting corners of it. I built a direct test of that, in the same p=3 branch, this turn.
+
+I took T682's own p=0, s=0, T=93 witness — seeds (-44,-10,24)(1,-6,38)(1,7,37)(36,19,3)(14,6,76)(48,-12,10), a real verified object, not a random draw — and forced it into the p=3 branch by the minimal edit that does that: aligning seed 5's direction with seed 4's (`fix_par`: seed5 → (14,6,10)). Cold, that scores T=61 (analyse: p=3, s=1, F=99) — mechanically broken, as expected. I then annealed *from that seed*, six restarts × 4000 steps, want_par=3:
+
+```
+seed1: T=93 s=0 B=282 F=3 p=3  seeds=[(12,-99,125)(55,15,47)(-65,80,26)(254,7,65)(-6,11,96)(-6,11,-10)]
+seed2: T=78    seed3: T=85 s=1    seed4: T=79 s=1    seed5: T=82 s=1    seed6: T=84
+```
+
+Seed 1's result exact-confirms at T=93, s=0, matching the published record's own numbers (B=282, F=3) to the digit — a genuinely new p=3 witness, built from T682's structure, not from `kobon_18_93tri`'s table. Central face: 6 sides, bounded by orbits {6,7,8} and {9,10,11}, matching T688's theorem for s=0. This beats every free-search number reported in the p=3 branch this window, including the referee's own 24×4000 run (best 91, 51c).
+
+That's the direct refutation of "coverage was already maximal": the same 14-dimensional space, searched from a good seed instead of a random one, found two more triangles than every prior attempt. The bottleneck was never dimension count — it's exactly what T695 named: starting-point quality.
+
+I pushed the new basin toward s=1 (four restarts × 6000 steps, penalty for s≠1): best 88, below the existing 91 ceiling found elsewhere. So this basin doesn't bridge to s=1 either — consistent with the standing finding that 93→94 is a discrete flip, not a slide, now confirmed in a second, independently-built basin rather than one.
+
+Net effect: the p=3 branch's *free* ceiling moves from 91 to at least 93 on a non-record witness, which is the concrete refutation the "maximal coverage" framing needed and didn't have. The s=1 ceiling stands at 91, tested against a stronger basin and still not broken. I'm not closing this — I'm reporting a real gain and naming the next lever: run 5–10 more independent perturbations of the T682→p=3 edit, not just one, since a single cross-seeded attempt already beat everything else found this window.
+
+falsifier: any anneal from this new 93-witness, or from further T682-derived p=3 seeds, reaching s=1 with T≥92; or a proof that the s=0 basin at p=3 can never connect to an s=1 witness above 88.
+
+```
+verifier_runs:
+1. referee_t691_par.analyse(T682 seeds, want_par=0) -> T=93 s=0 B=288 F=9 p=0, confirming
+   the starting object before edit
+2. fix_par(T682 seeds) -> analyse(., want_par=3) -> T=61 s=1 B=282 F=99 p=3, the broken
+   cold edit
+3. anneal(forced_seed, 4000, 3, T0=5.0) x6 random seeds -> best restart T=93 s=0 B=282
+   F=3 p=3, exact(seeds)=(93,0), matching published record's B/F numbers on a new witness
+4. referee_t691_central.central_face/bounding_lines on the new seeds -> 6 sides,
+   bounded by [6,7,8,9,10,11], two orbits, consistent with s=0
+5. s1-biased anneal (custom penalty, score=T-1000*[s!=1]) from the 93-witness, 6000
+   steps x4 seeds -> best 88 s=1, below the existing 91 ceiling
+```
+
+<!-- meta
+{"addresses": [700], "claims_conceded": [], "claims_opened": ["c3-p3-k18-93-triangle-witness-from-t682-cross-seed"], "falsifier": "any anneal from this 93-witness or further T682-derived p=3 seeds reaching s=1 with T>=92, or a proof the s=0 basin at p=3 can never connect to an s=1 witness above 88", "tier": "none", "verifier_runs": ["referee_t691_par.analyse(T682_seeds,0) -> T=93 s=0 B=288 F=9 p=0", "fix_par edit -> analyse(.,3) -> T=61 s=1 F=99 p=3 (broken cold edit)", "anneal(forced_seed,4000,3,T0=5.0) x6 -> best T=93 s=0 B=282 F=3 p=3, exact=(93,0)", "central_face/bounding_lines on new seeds -> 6 sides, bounded [6,7,8,9,10,11]", "s1-biased anneal from 93-witness x4x6000 -> best 88 s=1"]}
+-->
