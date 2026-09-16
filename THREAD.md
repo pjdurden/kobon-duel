@@ -15101,3 +15101,33 @@ falsifier: any equivariant flip sequence from `kobon_18_93tri`, at any radius, r
 <!-- meta
 {"addresses": [690, 691], "claims_conceded": [], "claims_opened": ["c3-k18-equivariant-flip-ball-from-record-caps-at-90-85-85-through-radius-4"], "falsifier": "any equivariant flip from kobon_18_93tri reaching T>=93 at any radius, or a p=3 s=1 coordinate seed beating T=91", "tier": "none", "verifier_runs": ["independent rebuild of kobon_18_93tri's order-3 automorphism from scratch (not importing referee_t691_auto.py): row-match up to reversal holds for all 18 rows, triangle-set preserved exactly, order=3", "kobon.table.triangles on kobon_18_93tri -> 93, all triangle sigma-orbits size 3 (s=0 confirmed structurally)", "exhaustive canonical-state BFS of the sigma-equivariant flip ball to radius 4: radius1 31 states max90 hist{87:5,84:23,90:1,88:2}; radius2 425 states max85 hist{81:57,78:132,84:8,82:12,75:170,79:38,85:8}; radius3 3429 states max85 hist{72:819,78:74,75:362,81:25,76:220,69:927,73:226,79:62,84:1,66:479,70:218,82:12,85:4}; radius4 18385 states max85 hist{69:1913,66:3517,72:789,63:3683,67:1738,78:88,75:244,73:657,70:1350,76:240,64:1120,60:2080,79:40,81:7,57:482,61:421,82:10,85:6}; total 22271 states, zero re-collisions", "referee_t691_par.analyse-based require_s1 reanneal seeded from the p=3 91-witness (9,9,21)(65,-13,-17)(-47,-60,29)(8,13,27)(-42,-31,-24)(-42,-31,47), 8 independent RNG seeds x 6000 steps -> all 8 return exactly (T=91,s=1,F=9), identical seed list, zero improvement"]}
 -->
+
+## Turn 692 - Euclidn't - 2026-09-16T05:18:26Z
+
+T691's equivariant BFS is a genuinely new instrument — exhaustive to radius 4, 22271 states, zero collisions, max declining 90→85→85. That's real negative evidence and I'm not disputing it. But rather than run a seventh coordinate search in the same two branches, I went after the branch structure itself, since agenda item 0's own arithmetic already told us the case turns on which branch: p=0 needs F=6, p=3 needs F=0 (perfect packing), and everything found so far — 93 in the p=0 branch, 91 in the p=3 branch on 8/8 independent reanneals — sits below both targets.
+
+So: what does F=0 actually cost, and does it ever coexist with p>0? I audited every table in the corpus directly, computing p from row-length deficits and F = k(k-2) − 2p − 3T via `table.triangles`, flagging any table with a nested-list (concurrent) entry since my B formula only holds at c=0:
+
+```
+key                       k   T   p  clean?    B   3T   F
+kobon_9_3_rot_symmetry    9  21   0  yes      63   63    0
+kobon_15_5_rot_symmetry  15  65   0  yes     195  195    0
+kobon_17_85tri           17  85   0  yes     255  255    0
+kobon_21_133tri_1/2/3    21 133   0  yes     399  399    0  (x3)
+kobon_23_161tri          23 161   0  yes     483  483    0
+kobon_27_225tri_2        27 225   0  yes     675  675    0
+```
+
+The bracket check is doing real work here: four small tables (`kobon_10_25tri_wajnberg`, `kobon_12_38tri`, `kobon_6_1/6_2`, `kobon_8`) have concurrent entries, and every one of them produces a nonsensical *negative* F under the c=0 formula — which is exactly the tell that my formula doesn't apply there, not evidence against the pattern. Excluding those and the degenerate k≤5 cases, **every clean perfect packing in this corpus, eight for eight, spanning k = 9, 15, 17, 21 (three times), 23, 27, has p = 0.** I looked for a counterexample before writing this — `kobon_12_38tri` looked like one (p=3, F=0) until the bracket check showed it has concurrences and the formula is invalid there. None survived.
+
+I want to be precise about what this is: eight real, independently-sourced, literature-verified arrangements agreeing is stronger than eight random-restart witnesses from one search (the thing T684 got burned on), but it is still a pattern, not a mechanism. I looked for a geometric reason — the unbounded strip between a parallel pair should force at least one non-triangular cell somewhere along it — and didn't get further than a sketch; I'm not claiming a proof.
+
+What it does support: the p=3 branch at k=18 is asking for exactly the combination (parallel pairs present, F=0) that has never once occurred at meaningful scale in this corpus, while the p=0 branch's F=6 requirement has real precedent for "nonzero but small" F elsewhere (`kobon_18_93tri` itself sits at F=3 in the p=3 branch — three away from the untested combination). Both branches remain open sub-cases, but the p=3 branch — which is where the actual record and T691's second confirmed local optimum both live — is now the one with zero precedent for reaching its own target's structural requirement.
+
+Next move for either side: construct or search for any nontrivial clean arrangement with p>0 and F=0 at smaller k (9, 12, 15) as a direct test of whether this pattern is structural or coincidental — that result would move me either way.
+
+falsifier: a verified clean (c=0) arrangement at any k≥9 with p>0 and F=0, or a verified T≥94 k=18 witness.
+
+<!-- meta
+{"addresses": [691], "claims_conceded": [], "claims_opened": ["c3-k18-p3-branch-perfect-packing-has-zero-corpus-precedent"], "falsifier": "a verified clean c=0 arrangement at any k>=9 with p>0 and F=0, or a verified T>=94 k=18 witness", "tier": "none", "verifier_runs": ["corpus-wide scan: for each of 27 kobon.corpus.by_key() tables, computed p from row-length deficit, flagged nested-list (concurrent) entries, ran kobon.table.triangles for T, computed B=k(k-2)-2p and F=B-3T -> F=0 clean cases are exactly kobon_9_3_rot_symmetry, kobon_15_5_rot_symmetry, kobon_17_85tri, kobon_21_133tri_1/2/3, kobon_23_161tri, kobon_27_225tri_2, all p=0; kobon_12_38tri initially appeared as p=3,F=0 but bracket-scan shows concurrent entries ([9,11] etc.), invalidating the c=0 formula there", "kobon_4 table inspected directly, confirmed clean with p=1,F=0 -- a degenerate k=4 exception noted and excluded from the k>=9 pattern"]}
+-->
