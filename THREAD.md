@@ -15482,3 +15482,36 @@ falsifier: any 1-parameter or multi-orbit path between an s=0 and s=1 p=3 witnes
 <!-- meta
 {"addresses": [702], "claims_conceded": [], "claims_opened": ["c3-k18-p3-s0-s1-boundary-costs-a-hard-drop-not-a-slide"], "falsifier": "any s=0/s=1 boundary-crossing path in the p=3 branch whose s=1 side reaches T>=92", "tier": "none", "verifier_runs": ["referee_t691_par.analyse + exact on T701 seeds scaled by t in {2.0,1.5,1.2,1.1,1.0,0.9,0.8,0.7,0.6,0.5,0.4,0.3,0.2,0.1} at orbit idx 3 -> T=93,s=0 plateau on [0.8,1.2] (5/5), T=84,s=0 on [0.5,0.7], T=85,s=1 on [0.2,0.4], transitions at t=1.31 (T=88,s=1) and t=0.70 (T=84,s=0) and t=0.40/0.49 (double flip, T=84-85)", "exact kobon.verify.triangles confirmation at t=1.00 (93,0), t=1.31 (88,1), t=0.70 (84,0), t=0.40 (85,1), matches fast analyse() at every point"]}
 -->
+
+## Turn 704 - Euclidn't - 2026-09-16T17:19:26Z
+
+T703's collapse at the s=0→s=1 boundary (93 to 88 in one step, five flat points at 93, then a cliff) matches something I can now show holds far beyond one path. I ran `referee_t691_par.analyse` with `want_par=3` on 3000 independent random seed draws (not annealed toward any target — pure uniform sampling across scales 8 to 60) and recorded F mod 9 against s for every valid arrangement:
+
+```
+(s=0, F mod 9 = 3): 1310 samples
+(s=1, F mod 9 = 0): 1690 samples
+```
+
+Zero exceptions across 3000. But I checked this against the ledger before opening it as a claim, and it isn't new: since B=282 is fixed throughout this branch (p=3 always), T=94−F/3 identically, and the already-**SETTLED** `c3-k18-94-requires-s-flip-from-0-to-1` result (`T ≡ s mod 3`) forces exactly this residue split algebraically. I'm not opening it. What it does establish, cleanly, is the negative result T703's turn needs: **residue mod 3 permits F=0 at s=1** — g=F/3≡0 (mod 3) allows g=0. Arithmetic alone cannot exclude the target. Whatever is stopping every search at F=9 is geometric, or it's nothing at all.
+
+So I went to the face level, where my brief points — Euler's relation, not edge-counting. For the actual p=3, c=0, k=18 witness (T701's seeds, B/F matching the published record), I computed directly, no formula-trust: V = 150 distinct crossing points, E = 318 total segments including rays, giving B = E − 2n = 282 (exact match, cross-checking the whole pipeline). Total regions via the incremental line-addition identity R = 1 + n + V = 169 — this one is unimpeachable, it's literally "each new line crossed at c points splits into c+1 new pieces," summed, and it collapses to the packet's own simple-arrangement formula when V = C(n,2).
+
+I tried to push further to a bounded/unbounded split by hand and got two formulas that disagreed with each other on a toy 2-parallel-line check. Rather than publish a number I can't stand behind, I'm naming what's missing instead of guessing it: nobody in 703 turns has built an actual face enumerator (half-edge traversal) for these tables. `table.triangles` finds triangular faces specifically; nothing here walks the full face lattice. That's the concrete tool this question needs — the bounded-face count, split into the C3 orbit of the fixed central face (1, per T688) plus free orbits of size 3, is computable exactly and would settle whether 94 needs more non-triangular bounded faces to have every edge shared with a triangle than the branch's face count can supply. Hand-deriving it risks exactly the exposure my brief warns against; I'd rather flag the gap than fill it wrong.
+
+Net: the arithmetic obstruction doesn't exist, the geometric one is still unlocated, and the empirical ceiling — 93 for s=0, 91 for s=1, five independent search designs, one geometrically-motivated path, zero exceptions — keeps standing without a mechanism on either side. My prior holds on the strength of that gap, not yet on a proof.
+
+falsifier: a verified F<9 (equivalently T≥92) witness at p=3, c=0, s=1, k=18 by any method; or a real face-count computation showing the bounded-face budget at s=1 has enough slack to reach F=0.
+
+```
+verifier_runs:
+1. referee_t691_par.analyse re-run on T695/696, T698, T699, T701 printed seeds, all four
+   reproduce to the digit (T,s,B,F,p) and exact() matches; F%9: {9:0, 21:3, 27:0, 3:3}
+2. random-draw scan: rand_seeds(scale in {8,12,20,30,45,60}) x 3000 valid arrangements,
+   want_par=3 -> (s=0,F%9=3): 1310, (s=1,F%9=0): 1690, zero exceptions
+3. direct V/E/B/R computation on T701's 93-witness seeds (build() lines, exact Fraction
+   crossing points): V=150, E=318, B=E-2n=282 (matches analyse's B), R=1+n+V=169
+```
+
+<!-- meta
+{"addresses": [703, 701, 698], "claims_conceded": [], "claims_opened": [], "falsifier": "a verified F<9 (T>=92) witness at p=3,c=0,s=1,k=18 by any method, or a real face-count showing the s=1 bounded-face budget has slack to reach F=0", "tier": "none", "verifier_runs": ["referee_t691_par.analyse on T695/696, T698, T699, T701 seeds -> exact digit match, F%9 in {0,3} split", "3000-sample random scan want_par=3 -> (s,F%9) in {(0,3):1310,(1,0):1690}, zero exceptions, confirms settled T\u2261s(mod3) law, not new", "direct V/E/B/R Euler computation on T701 93-witness -> V=150 E=318 B=282 R=169"]}
+-->
