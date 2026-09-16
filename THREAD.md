@@ -14957,3 +14957,42 @@ verifier_runs:
 <!-- meta
 {"addresses": [686], "claims_conceded": [], "claims_opened": ["c3-k18-orbit-deletion-from-real-k21-optimum-lands-near-but-below-coordinate-ceiling"], "falsifier": "a real construction (coordinate or deletion-based) with s=1 reaching T>=92, or a proof every C3 k=18 configuration has sum d_i >= 5", "tier": "none", "verifier_runs": ["reproduction of T686 88-witness -> (88,1) exact match", "single-seed transplant+reanneal, 5x400 steps -> 91,91,91,76,73 printed with seeds", "table.triangles on all 7 orbit-deletions of kobon_21_133tri_1 -> 85,81,82,82,82,82,82, best verified simple p=0 c=0"]}
 -->
+
+## Turn 688 - Euclidn't - 2026-09-16T01:18:26Z
+
+Verifying T687's construction turns up something the debate hasn't used yet: the geometry of the fixed point itself. Since M (order 3, no eigenvalue, per 50b) has no fixed line, the center O cannot be a vertex — if two lines crossed there, M's order-3 action on that ≤2-element line-set would have to fix each line individually (order 3 can't act nontrivially on a set of size ≤2), contradicting "no fixed line." So O sits in the interior of exactly one face of the arrangement, and that face is automatically the arrangement's unique fixed face under M.
+
+Is it bounded or unbounded? Unbounded faces number `2k = 36` at k=18, and `36 ≡ 0 (mod 3)`. If the O-face were unbounded, the remaining 35 unbounded faces would have to split into free 3-orbits, but `35 mod 3 = 2` — contradiction. So **the central face is always bounded**, and being fixed, its boundary edges come in free 3-orbits under M (no edge can be individually fixed, same eigenvalue argument). Its side count is therefore `3m` for some `m ≥ 1`.
+
+I checked this isn't just abstract: I wrote an exact-Fraction half-plane intersection (clip a bounding box by all 18 half-planes containing O, dedupe, drop collinear artifacts) and ran it on both live witnesses:
+
+- T685's 91-witness (s=1): central face has **exactly 3 sides**.
+- T682's 93-witness (s=0): central face has **exactly 6 sides**.
+
+That's `m=1` and `m=2` respectively, matching the theorem exactly. I also checked the fixed triangle `{9,10,11}` in T685's data directly: its three vertices average to `(0,0)` exactly, confirming it *is* that central face, not a coincidentally-labeled triple elsewhere.
+
+This sharpens `s=1` from a residue bookkeeping fact into a concrete geometric requirement: **94 is reachable only if the innermost region around O, formed by the closest line of each orbit, is literally a triangle (m=1) — not a hexagon, nonagon, or anything else.** That's stronger than "some orbit closes a fixed triangle": it says the *specific* polygon nearest the rotation center must have exactly three sides, which is checkable in the time it takes to clip 18 half-planes, before ever calling `verify.triangles`. Neither side has been using this as a pre-filter; every search so far has generated random seeds, built all 18 lines, and paid for full triangle enumeration to discover `s` after the fact.
+
+I want to be precise about what this does and doesn't do. It does not lower the ceiling below 91, and it does not prove Σd_i≥3. What it does is convert "s must equal 1" from an arithmetic constraint discovered by counting triangles into a geometric constraint on the arrangement's innermost cell — which means the orbit that will host the fixed triangle is *determined by which line sits closest to O*, not chosen freely. T687's transplant found two orbit-positions (idx0, idx4) that never recovered 91 when perturbed alone; under this lens that's worth re-examining as a question about which orbit is geometrically nearest the center in that witness, not a generic search artifact.
+
+Holding the prior: two searches now agree at 91 and none has touched Σd_i≤2. The new fact doesn't move that number, but it gives the next search a cheap admissibility check it didn't have before.
+
+falsifier: a verified C3 k=18 construction with T≥94 (which necessarily has central-face side count exactly 3, checkable independently of the full triangle count), or a proof that m=1 central-triangle configurations are bounded away from T=94 by more than the current Σd_i=5 gap.
+
+```
+verifier_runs:
+1. scratch_t683_search.build + kobon.verify.triangles on T685's printed seeds ->
+   T=91, s=1, fixed triple (9,10,11), per-orbit participation groups
+   [[16,16,16],[15,15,15],[13,13,13],[16,16,16],[15,15,15],[16,16,16]],
+   d_i=[0,1,3,0,1,0] sum 5 -- matches T685/T687 to the digit
+2. centroid of fixed triangle (9,10,11)'s three verify.triangles vertices ->
+   exactly (0,0), confirming it is the O-centered face
+3. custom exact-Fraction half-plane-intersection central-face solver (clip
+   bounding box by all 18 lines' O-containing half-planes) on T685's 91-witness
+   -> 3 sides; on T682's 93-witness seeds -> 6 sides; both multiples of 3
+   matching the m-orbit theorem
+```
+
+<!-- meta
+{"addresses": [687], "claims_conceded": [], "claims_opened": ["central-face-side-count-is-3m-and-s1-requires-a-literal-central-triangle"], "falsifier": "a verified C3 k=18 construction with T>=94 (forcing central-face side count exactly 3), or a proof that m=1 configurations cap Sigma d_i above 2", "tier": "none", "verifier_runs": ["scratch_t683_search.build+kobon.verify.triangles on T685 seeds -> T=91,s=1,fixed(9,10,11),d_i=[0,1,3,0,1,0]", "centroid of fixed triangle (9,10,11) vertices -> (0,0)", "exact half-plane-intersection central-face side count: T685 91-witness -> 3 sides, T682 93-witness -> 6 sides"]}
+-->
