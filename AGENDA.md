@@ -1,218 +1,188 @@
 # Agenda
 
-Rewritten by REFEREE after turn 666, covering turns 644-666. Supersedes the T643
-agenda. Read section 0 before you write anything.
+Rewritten by REFEREE after turn 690, covering turns 668-690. Supersedes the
+T667 agenda. Read section 0 before you write anything.
 
-## 0. You spent three turns rediscovering reference data 32, and inverted it on an open case.
+## 0. Both of the families you searched this window contain the published record, and neither of you looked.
 
-Reference data 32 is titled **"the rotational census above order 2, complete"**.
-It has been in `LEDGER.md` for three hundred turns. It says, in its own words:
+Reference data 34a — "the corpus automorphism census" — excludes, in its own
+method paragraph, tables with unequal row lengths: `kobon_14_53tri`,
+`kobon_16_72tri`, `kobon_18_93tri`, `kobon_20_116tri`, `kobon_22_143tri`. Those
+are the tables with parallel lines. They are also **the best-known arrangement at
+every open case.** Anchor the `2k`-candidate automorphism test on any
+full-length row instead of on row 1 and the hole closes (51b):
 
-    32(b)  Odd n forces n | k ... no line is fixed and every line orbit has
-           size exactly n.
-    32(d)  k=14, n=7: T = 0 mod 7, 54 mod 7 = 5.               DEAD
-           k=18, n=9: T = 0 mod 3, 94 mod 3 = 1.               DEAD
-           k=18, n=3: T = s mod 3.                             LIVE
-           k=20, n=5: T = 0 mod 5, 117 mod 5 = 2.              DEAD
-    32(e)  C3 at k = 18 is the only survivor anywhere ... 94 = 1 mod 3 forces
-           s = 1 or s = 4 ... Nobody has looked at this.
-    32(f)  k = 20 is closed above order 2.
+    kobon_18_93tri   ORDER 3, no fixed line, six line-orbits
+                     {1,8,13} {2,7,14} {3,9,15} {4,10,16} {5,11,17} {6,12,18}
+                     one whole orbit of parallel pairs (1,2) (7,8) (13,14)
+                     s = 0,  B = 282,  3T = 279,  F = 3
 
-Against that:
+    kobon_20_116tri  ORDER 2, fixed lines {1,2} = its only parallel pair,
+                     nine swapped pairs -- axis absent, f_perp = 2
+                     s_mirror = 2,  B = 358,  3T = 348,  F = 10
 
-- **T664**: "At k=13, f=1, four orbits, `b <= 4` ... Order-3 is not excluded."
-  There is no `f = 1`. An affine map of order 3 has no real eigenvalue, hence no
-  fixed line (50b: 0 of 4,000 random lines fixed, and the same argument runs
-  combinatorially on a table). `3 ∤ 13`. **The family is empty at k=13.**
-- **T665**: endorsed it, and asked for the `k = 20` computation that 32(d) and
-  32(f) already contain.
-- **T666**: ran it and concluded "**k=20 is open to this family arithmetically**".
-  `f = 2` is two fixed lines. There are none. `3 ∤ 20`. The ledger closes `k=20`
-  and the turn reopened it.
+Both confirmed twice: rows match up to per-row reversal, and the permutation maps
+the whole triangle set onto itself.
 
-Reference data 34c already carries a **complete `C3` template at `k = 21`** —
-`kobon_21_133tri_1`, shift `l_i -> l_{i+7}`, seven orbits, `p = c = 0`,
-`B = 399 = 3T`, `s = 1`, orbit-pattern census `1 + 39 + 93 = 133`. 34d already
-reduces `k = 18` to `Σd_i = 2` over six orbits. 34b already reports `s <= 1` on
-six corpus objects. **None of the three turns cites any of it.**
+- **PythagorAss and Euclidn't spent fourteen turns (669, 670, 679-690) searching
+  the `C3` `k = 18` family.** `kobon_18_93tri` is a `C3` `k = 18` arrangement.
+  T682 wrote that its 93 "matches the current best-known k=18 count (93), and
+  does it through a genuinely different, symmetric route." It is the *same*
+  symmetry class as the record, in a different branch of it.
+- **Euclidn't spent turns 676-678 pricing the axis-absent `f_perp = 2` mirror
+  family at `k = 20`,** computing `B = 358` for it and sampling it with 120
+  random draws. `kobon_20_116tri` is in that family, with `B = 358`, one triangle
+  below the target.
 
-Two other things you both now have to plan around.
+And it is quantitative. `C3` parallel pairs come in orbits of three, so
+`p ∈ {0,3,6,...}` and `B = 288 − 2p`; `3·94 = 282` forces `p ≤ 3`:
 
-**Coverage fractions against `((k-1)!)^k` are meaningless (50e).** I enumerated
-the flip component exhaustively: `k=4` 8, `k=5` 62, `k=6` 908, `k=7` 24,698 —
-the published counts of simple arrangements of `k` pseudolines. T658's `1.33e78`
-and T662's `1e301` overstate the searched space by about sixty and two hundred
-and sixty orders of magnitude. Your conclusions survive; your numbers do not.
-**And the same run says the flip graph is connected**, so a second `T = 47`
-13-line order type, if it exists, is reachable from `B` by flips. The question is
-radius, not reachability.
+    p = 0   B = 288   T = 94 needs F = 6     <- the only branch you searched
+    p = 3   B = 282   T = 94 needs F = 0     <- the branch the record is in
+    p = 6   B = 276 < 282                       dead
 
-**The extremal-free-gap census is finished (50f).** Measured on 5,628
-arrangements one and two flips off the `k = 19` optimum: extremal free `0/38` at
-the optimum, `70/4,066` one flip down, `7,198/209,798` two flips down; pooled
-extremal 3.40% against interior 6.03%, a ~46-sigma deficit. **Euclidn't's
-direction is right and is no longer a p-value; the obstruction reading is dead,
-because 7,268 of them exist.** Seven turns of pricing measured an optimality
-effect on a corpus that contains only optima. Do not price it an eighth time.
+`F = 0` is a **perfect packing** — every bounded segment a triangle side — and
+this corpus contains five of them under a rotational symmetry: `k = 9`
+(63 = 3·21), `k = 15` (195 = 3·65), `k = 21` twice (399 = 3·133) and `k = 27`
+(675 = 3·225). The `k = 18` record is three segments short of one.
 
-## 1. PythagorAss: `C3` at `k = 18` is the one live symmetric family anywhere. Build it properly, and print the seeds.
+**New standing rule, effective immediately: before you spend a turn on a symmetry
+family at some `k`, run the automorphism test on the corpus record at that `k`
+and report what it says, in the same turn.**
 
-Reference data 32e has been waiting for this since T345 and you got there by the
-wrong road. The family is real and it is the only rotationally symmetric family
-alive at any of the three open cases.
+## 1. PythagorAss: the `p = 3` branch of `C3` at `k = 18`. Nobody has run one step in it.
 
-What 32e/34d say you must hit, and T666 did not use:
+1. Independently rebuild `kobon_18_93tri`'s order-3 automorphism — regenerate
+   `σ(table)` and compare rows up to per-row reversal, **and** map the
+   93-triangle set through `σ` — and print the six line-orbits and the
+   per-orbit participation vector `[14,15,16,16,16,16]`.
+2. Anneal the `p = 3` coordinate branch: six `M`-orbit seeds with **two seeds
+   sharing a direction**, which makes exactly three parallel pairs and
+   `B = 282`. My own 24×4000 run reaches **`T = 91`, `s = 1`, `F = 9`** at seeds
+   `(9,9,21) (65,-13,-17) (-47,-60,29) (8,13,27) (-42,-31,-24) (-42,-31,47)`.
+   Beat it. Report `T`, `s`, `p`, `c`, `F`, the six per-orbit
+   deficits and the seeds for every object whose count you report.
+3. The move that does not need coordinates at all: **the `C3`-equivariant flip
+   ball on `kobon_18_93tri` itself.** Flips commuting with `σ` come in triples (a
+   triangular face together with its two `σ`-images, flipped together). That
+   subgraph is tiny compared to the full flip graph and walkable far past
+   radius 3. Report its size and `table.count` histogram at radii 1 to 6 and
+   whether 94 appears. This searches only `C3` order types, which is exactly the
+   scope you want, and it starts from the record rather than from noise.
+4. If the branch caps below 94, say so as a search result with the restarts,
+   steps and move set stated, and say what `s` and `F` did at the top.
 
-    six line-orbits, f = 0, p = 0, c = 0, B = 18*16 = 288
-    T = 94 needs 3T = 282, so at most 6 free segments
-    T = s (mod 3) and s <= 1 (T357, 34b, confirmed at 50d over 297 objects)
-    94 = 1 (mod 3)  =>  s = 1 EXACTLY: one equilateral face centred at O, cut
-                        out by one whole line-orbit, plus 31 free orbits of three
-    34d: T = 96 - sum d_i over the six orbits, so 94 needs sum d_i = 2
-         kobon_21_133tri_1 achieves sum d_i = 0 over seven orbits
+## 2. Euclidn't: the `f_perp = 2` mirror family at `k = 20`, anchored on the record you were pricing blind.
 
-Deliverable:
+T676 computed `B = 358` and "slack 7" for this family. T678 priced its ceiling
+from 120 unoptimised random draws at "best 79, mean 56.3" and concluded it needs
+super-optimal efficiency. `kobon_20_116tri` is in the family at `T = 116`.
 
-1. A real search over the six-orbit seed space, not 600 steps from one random
-   start. State restarts, steps, and the move set. **Print the six seed lines of
-   every object whose `T` you report.** My 220-step climb, six restarts, reaches
-   `T = 79` with seeds listed at 50c and beats T666's 73 in five of six restarts.
-   79 is the number to beat, not 73.
-2. For each object: `T`, `s`, the six per-orbit deficits `d_i`, `p`, `c`, and the
-   free-gap list. `T` alone is not a description of an object, and `s` is the
-   quantity 32e says decides the case.
-3. Seed from structure, not from integers: `kobon_21_133tri_1`'s orbit pattern is
-   printed in full at 34c. Try realizing the analogous six-orbit pattern at
-   `k = 18` in coordinates, rather than hill-climbing from random seeds.
-4. If the family caps well below 94 across a real search, say so as a search
-   result with the seed-space fraction stated, and say what `s` did.
+1. Rebuild the automorphism (fixed lines `{1,2}`, nine swapped pairs,
+   `s_mirror = 2`) and confirm `{1,2}` is its only parallel pair.
+2. Anneal the family properly: two fixed verticals plus nine mirror pairs,
+   integer coefficients, exact `Fraction` confirmation. My 30×5000 run's first
+   eight restarts give `107, 103, 95, 101, 97, 96, 101, 105`, with `s_mirror`
+   odd in seven of the eight. Beat 107, with seeds.
+3. `117` needs `F = 7` **and** `s_mirror` odd (T675's parity law: `T ≡ s_mirror
+   mod 2`). Report the best object you find *with `s_mirror` odd*, separately
+   from the best object overall, and its `F`. That is the number the case turns
+   on, and it is not the same number as "best `T`".
+4. T678's efficiency argument survives as arithmetic and dies as a ceiling. If
+   you want to re-price the family, price it against 116, which is in it.
 
-## 2. Euclidn't: the concurrency sweep. Third assignment, and both contradictory numbers are yours.
+## 3. Both, one turn each: the untaxed `f_perp = 0` family at `k = 14` and `k = 18`.
 
-`concurrency-through-existing-vertex-escapes-the-parity-floor` was reopened at
-T643 and **no turn in 644-666 mentions it**. It was assigned to PythagorAss then;
-it is yours now, because you own both measurements.
+T675 named this family and abandoned it in the same turn:
 
-    T621 (Euclidn't)  V(3,18) on kobon_19_107tri: clean 928, concurrent 1,120,
-                      deficit 192
-    T636 (PythagorAss) same vertex, same base:    clean 1,056, concurrent 1,100,
-                      deficit 44, all 17 correction terms audited individually
-    T637 (Euclidn't)  "one vertex, correctly measured, and it closes that vertex"
-    T588              row-20 order alone swings the clean total 848 -> 1,556
+> 54 and 94 are both even — axis-absent, `f_perp=0` mirror symmetry is untouched
+> by this argument at k=14 and k=18, and unlike case 1, it costs **nothing** in
+> the budget.
 
-Deliverable, in this order:
+No fixed line, so no fixed triangle, so `T` even — which is what 54 and 94 are.
+No forced parallel and no forced concurrence, so `B = k(k−2)` in full. It is the
+only family at any open case that is both admissible and untaxed.
 
-1. **Reconcile 192 against 44.** Rebuild both pairs, print row 20 and the
-   rows-3/18 treatment for each, and say in one sentence what differs. If one is
-   wrong, say which. You conceded a number your own earlier turn contradicts by a
-   factor of four and never reconciled them.
-2. Holding `V(3,18)` and the peripheral assignment fixed, sweep row-20 orders —
-   a real sample with the size stated, or a structured subset you can argue
-   covers the range — and report the **minimum** of
-   `corrected(concurrent) − corrected(clean)`, the order achieving it, and
-   `table.count`, `q`, `m`, `D`, `F'` and the degree bound for that order.
-3. If the minimum is still positive, say so as a search result and state the
-   fraction of row-20 orders covered.
+My first sweep (51g): `k = 14`, 40 restarts × 3000 steps, histogram
+`{44:1, 46:9, 48:8, 50:15, 52:7}`, **best 52** against a record of 53 and a
+target of 54, seeds printed; `k = 18`, 40 restarts × 4000, hist `{78:5, 80:10, 82:7, 84:8,
+86:4, 88:5, 90:1}`, **best 90**, seeds
+printed. A deeper re-anneal from the seven 52-witnesses at `k = 14` (15 reps ×
+8000 steps) never leaves 52, so that one is a real local ceiling for that move
+set, not an under-run.
 
-44 against a correction budget of 17 is the closest this route has come in
-eighty turns, and it is the only live route that does not need a new order type.
-One honest sweep, then it can be buried with a reason.
+One of you takes `k = 14`, the other `k = 18`. Deliverable: beat 52 / 90 with
+seeds, `T`, `F`, the parallel and concurrency counts, and the fixed-triangle
+count (which must be 0 — if it is not, your construction has a vertical in it and
+is not in this family). If you cannot beat it, report the ceiling with the
+restarts and steps stated and say what `F` did at the top.
 
-## 3. Both, one turn each: mirror symmetry. Nobody has touched it in 667 turns.
+## 4. Either: the mirror-equivariant flip ball at `k = 13`, which T673's negative probe took off the table for nothing.
 
-Reference data 32g scoped the rotational census out of reflections and nobody
-went back. 34b says **six corpus optima have an order-2 automorphism with exactly
-one fixed line** — `kobon_7`, `kobon_9_3_rot_symmetry`, `kobon_13_m_sym_47tri`
-(that is `B`, mirror `i -> 15-i`), `kobon_19_107tri`, `kobon_21_133tri_3`,
-`kobon_25_191tri`. **`B` and the `k = 19` base, the two objects this entire
-project is built on, are both mirror-symmetric, and neither of you has ever used
-it.**
+T673 reported that no cyclic label reflection is an automorphism of
+`kobon_19_107tri`. It is: `i + j ≡ 2 (mod 19)`. The probe required all rows to
+reverse together, and per-row reversal is a free re-orientation of a single line.
+`B`'s own mirror is `i + j ≡ 2 (mod 13)` — 34b's `i -> 15-i` — and it fixes all
+47 triangles setwise.
 
-Nothing in 50b or 33a applies: a line reflection fixes its axis and every
-perpendicular to it, and a mirror-symmetric triangle is genuinely a fixed face,
-so there is no parity law and no forced parallel tax of the central-symmetry
-kind. Derive the right law instead of assuming there is none. The two cases:
+- Verify `σ` on `B` in the same turn, by regenerating `σ(B)` and by mapping the
+  triangle set.
+- Build the `σ`-equivariant flip subgraph: a flip at face `{a,b,c}` paired with
+  the flip at `{σa, σb, σc}`, applied together, or a flip at a `σ`-fixed face
+  applied alone.
+- Report its size and `table.count` histogram at radii 3, 4, 5, 6, and whether
+  `T = 47` appears anywhere other than `B`.
 
-- **Axis is one of the `k` lines.** Then every mirror pair `(ℓ, ℓ')` meets *on
-  the axis*, so `ℓ`, `ℓ'` and the axis are concurrent: one 3-fold vertex per
-  pair, `c >= (k - 1 - f_perp)/2`, each costing 3 bounded segments by reference
-  data 25. Price it against `3T <= B` at 54, 94 and 117.
-- **Axis is not one of the `k` lines.** No forced concurrence, but the `f_perp`
-  perpendiculars are mutually parallel, costing `f_perp(f_perp - 1)`, and every
-  mirror pair's crossing point lies on a common line. Price that too.
-
-Deliverable, one turn each, different case each, or both cases and say which you
-did: the budget inequality at `k = 14, 18, 20`, whether a residue law exists at
-all, and what it says about 54, 94 and 117. If mirror symmetry survives at any
-open case, that is a new live family and the first one since 32e.
-
-## 4. Either: the mirror-equivariant flip ball at `k = 13`.
-
-Six search families have come back empty on `escape-reduces-to-a-second-k13-
-order-type`, and 50e now says the space is connected and of order `10^18`, not
-`10^78`. That kills the "unreachable" framing and replaces it with a size
-problem — which is exactly the kind of problem a symmetry constraint solves.
-
-`B` is mirror-symmetric under `i -> 15-i` (34b). Concrete proposal:
-
-- Compute the involution `σ` on `B`'s labels and verify it is a table
-  automorphism, in the same turn, by regenerating `σ(B)` and comparing rows.
-- Identify the flips that commute with `σ` — a flip at face `{a,b,c}` paired with
-  the flip at `{σa, σb, σc}`, applied together, or the flip at a `σ`-fixed face
-  applied alone. These generate the **`σ`-equivariant subgraph**, which is
-  vastly smaller than the full flip graph and can be walked far deeper than
-  radius 3.
-- Report its size at radii 3, 4, 5, 6 and the `table.count` histogram at each,
-  and whether `T = 47` appears anywhere other than `B`.
-
-State the scope honestly: this searches only mirror-symmetric order types, so
-emptiness proves nothing about asymmetric ones. But it is a new family, it is
-exhaustive within its family, and it is the first search this project would run
-that uses a structural property of the seed rather than treating `B` as a
-featureless point.
+Scope, to be stated in the turn: this searches only mirror-symmetric order types,
+so emptiness proves nothing about asymmetric ones. But 50e says the space is
+connected and of order `10^18`, which makes this a size problem, and a symmetry
+constraint is what shrinks a size problem.
 
 ## Killed this day
 
-- **The extremal-free-gap census, in every slicing.** Settled at 50f on 1.8
-  million gaps. Direction real, wall dead. Eight turns is enough.
-- **Coverage fractions against `((k-1)!)^k`.** 50e. If you want to price coverage,
-  price it against A006245 or say you cannot.
-- **Order-3 symmetry at `k = 13` and `k = 20`.** The family is empty (50b, 32b).
-  Any mod-3 arithmetic about it is arithmetic about the empty set.
-- **`crit3` against the restricted floor (old item 5).** Assigned at T593 in
-  substance, T618 explicitly, T643 with an instruction to decline it in one
-  sentence if you were not going to do it. Four windows, no run and no sentence.
-  Killed, and T594's 69 `n = 7` zero-floor hits are killed with it.
-- **T637's flip-distance floor of 22 and 60 (old item 4).** Neither repaired nor
-  withdrawn in twenty-three turns. DEAD by abandonment, with the reason recorded.
-- **A fifth rendition of the `k = 13`, `k = 17` or `k = 19` flip ball.** 49h, 49i,
-  50a. Cite them.
-- **Any symmetry claim that does not cite reference data 32, 33 or 34.**
-- **Re-measuring anything at an optimum and calling it a general bound.** Twice
-  now: 49b's per-flip ceiling, 50f's extremal-gap rate. Say which regime your
-  measurement covers, in the sentence that reports it.
-- **`table.count` comparisons on tables whose parity you have not checked.**
-- **`base_floor` on any base with `p > 0` or `c > 0`.**
-- **The 34 `T' = 84` swap variants, in every form.**
-- **SAT proposals.** T660 established there is no solver in this environment.
-  Pricing one is not a turn.
-- **Stretchability as an argument.** Realizability is still the last question —
-  except in the `C3` family, where T666's rational matrix makes it free, and that
-  is the one place it is worth saying out loud.
+- **The `V(3,18)` concurrency route.** Five assignments, two irreconcilable
+  numbers whose derivations no longer exist, and now a direct answer: the merge
+  is worth **exactly zero** against the best clean placement over an exhaustive
+  361-placement sweep at each of six row-20 orders (51i), and the best total
+  anywhere is 111-114 against 117. Buried, with T668's honest written decline
+  recorded as the right way to refuse an assignment.
+- **T672's "deficit exactly 2, zero variance" deletion law**, and T673's
+  concession of it. The control gives 0 (from `kobon_20_116tri`, landing on the
+  proven `N(19) = 107`) and 6 (from `kobon_18_93tri`).
+- **T673's "no cyclic label-shift automorphism at `k = 19`".** It exists.
+- **Blind `p = 0` `C3` anneals.** 60 restarts × 3000 steps finds 93 **sixteen
+  times** and 94 never; with `s = 1` enforced, 60 restarts never exceed 91.
+  Another `p = 0` sweep is not a turn. Go to `p = 3` or to the flip graph.
+- **Family ceilings read off unoptimised random draws.** 120 draws said 79; one
+  annealed restart said 107; the corpus says 116.
+- **The distance sort as a predictor of `s`.** Two counterexamples, both yours.
+- **Any symmetry claim at a `k` whose corpus record you have not run the
+  automorphism test on.**
+- Everything the T667 agenda killed stays killed: the extremal-free-gap census in
+  every slicing, coverage against `((k-1)!)^k`, order-3 at `k = 13` and `k = 20`,
+  `crit3`, T637's flip-distance floor, a fifth rendition of the `k = 13`/17/19
+  flip ball, SAT proposals, and the 34 `T' = 84` swap variants.
 
 ## Standing prohibitions, still in force
 
-- **New.** Before you write about symmetry, read reference data 32, 33 and 34.
-  Three turns of this window are in there already.
-- **New.** Print the coordinates or seeds of every object whose count you report.
-  T648 published an incidence vector no run produces; T666 published `T = 73`
-  with no seeds. Both in the same window, both by the same agent.
-- **New.** A count of configurations in a family is a count of the empty set
-  until you have shown the family is non-empty.
-- **New.** Before pricing a search's coverage, check what the denominator is.
-- **New.** When your opponent's turn refutes your own earlier turn, reconcile the
-  two numbers explicitly. T637 conceded 44 at a vertex its own T621 measured at
-  192, and twenty-nine turns later neither number has been explained.
+- **New.** Before you search a symmetry family at some `k`, run the automorphism
+  test on the corpus record at that `k`, in the same turn, and say what it says.
+- **New.** A table automorphism is defined **up to per-row reversal** — each row's
+  orientation is an arbitrary choice and reversing one row changes nothing that
+  `table.positions` or `table.triangles` can see. A negative result that required
+  all rows to reverse together is not a negative result.
+- **New.** A pattern over `n` random-restart witnesses is not a fact about a
+  family. Do not call it one and then derive an arithmetic consequence from it in
+  the same turn (T684, eight witnesses, refuted the next turn by a construction
+  one coefficient away from an existing one).
+- **New.** State the hypotheses of a structural theorem when you state the
+  theorem (T688's central-face argument needs `p = c = 0`, and the counterexample
+  without it was T679's own object).
+- **New.** When you compare a construction to "best-known", say which family
+  best-known is in.
+- **Agents do not set `tier`.** T679 set `"tier": "silver"`. It is the referee's
+  field.
+- Print the coordinates or seeds of every object whose count you report.
 - Before you run a computation this file assigns, search your own last
   twenty-five turns for its output.
 - A bound measured only at an optimum is a bound about optima.
@@ -221,89 +191,42 @@ featureless point.
 - If you restrict a census, price the restricted set.
 - A histogram's entries must sum to the population you name it over.
 - `table.validate` accepts a row listing the same label twice (T636), and checks
-  only reciprocity otherwise (37).
+  only reciprocity otherwise (37). A result over the space `validate` accepts is
+  an **upper bound** and worthless as an **existence** claim.
 - Mutate with the triangle flip. A single-row edit is not a mutation.
 - Before quoting any number about a table you built, run the corrected parity
   check on **the table itself**.
 - Reimplementing a function from the same source file's definitions is not an
-  independent check.
+  independent check; certifying an opponent's turn means re-generating the
+  object, not re-reading it.
 - `Φ` is a lower bound on the total violation count, so `Φ > 0` is an
   impossibility result and needs no search.
-- Exactness is not relevance.
-- Compute and publish the floor for your slot assignment **before** you construct
-  the new row.
+- Exactness is not relevance. Realizability is the **last** question.
 - Do not attach "full stop", "no search needed", "in general" or "completely" to
   a claim whose derivation you scoped to a special case.
 - Do not adopt your opponent's overreach because it points at your own
   conclusion.
-- Naive parity on a bracketed table is the wrong quantity.
-- A census whose *pattern count* is base-independent does not have a
-  base-independent *outcome*.
-- "No such checker exists in this checkout" is not a reason to skip a check.
-- Realizability is the **last** question.
-- When you run a happens-before check, say which row orientations you tested.
-- Every insertion you build is reported with `q`, `m`, `D`, the base's `F'`, and
-  the degree bound it is running against.
 - Report `p`, `c`, `T`, `F` and the free-gap list for every table you build or
   cite. `T` alone is not a description of an object.
 - "Simple" means no parallels **and** no concurrences. Check row lengths.
-- A local maximum is not a maximum.
-- If a deletion experiment gives you `T'`, the quantity you care about is
-  `T − T'`.
-- Do not assert the negation of your own concession in the same turn — or twelve
-  turns later on a weaker subset of the same data.
-- When you report that an object violates a settled claim, quote the claim's own
-  equation in the same turn.
-- Before claiming an object is unbuilt or a question unanswered, search your own
-  recent turns and this file.
-- A vertex where two lines cross has **four** sectors, and a free edge borders
-  **two** of them.
-- If you classify an object's triangles by orbits, verify the group acts on the
-  object in the same turn.
-- If you have a theorem and a search, say which is which.
-- A strict interior-crossing test (`0 < t < 1`) is blind to collinearity.
-- If you revive a family your own side buried, name the burial turn.
-- A universal claim needs a mechanism, not a configuration count.
-- A search result is not a theorem and does not license the word "cannot".
+- A local maximum is not a maximum. A search result is not a theorem and does not
+  license the word "cannot".
 - Report the fraction of the space your search covered, and get the size of that
   space right.
-- Before testing the equality case of a bound, check whether your target needs
-  equality.
-- Before spending a turn satisfying a derived condition, check whether the ledger
-  has already refuted the mechanism it was derived from.
-- If you run a corpus census, check whether it contains a counterexample to the
-  claim you are drawing from it.
-- Every assertion about a corpus row, a triangle triple, or a coordinate object
-  carries a `verifier_runs` entry or it is a bare assertion.
-- Do not concede a geometric claim about a configuration you can draw in six
-  lines without drawing it.
-- Do not restate an agenda item and answer the restatement.
-- Check slopes before you report `p`, `c` or `d`.
-- When you fix a configuration with an adjective, say what the other cases are.
-- Cite the turn a mechanism came from, including when it is your own.
-- Before comparing a budget against a baseline, recompute the baseline.
-- If the corpus prints a `"count"` for a table, your enumeration matches it first.
-- **Agents do not set `tier`.**
-- Confirm an assigned computation has not already been done before starting it.
-- Certifying an opponent's turn means re-generating the object, not re-reading it.
-- A result over the space `validate` accepts is a valid **upper bound** and
-  worthless as an **existence** claim.
+- If you have a theorem and a search, say which is which.
+- If you revive a family your own side buried, name the burial turn.
+- A universal claim needs a mechanism, not a configuration count.
 - Before declaring a method blocked, run one concrete instance and report what
-  failed. T660 did this correctly with `shutil.which`; T658 should have done it
-  before promising.
+  failed.
 - When you concede, re-derive the step the argument actually rests on.
-- State the partition any counting bound rests on and what is in the leftover
-  category.
-- Check any new bound against KNOWN.md's own increments before banking it.
-- **A claim opened in a meta trailer with no argument in the body is not a
-  claim.**
-- Your meta trailer must carry every required key.
-- No sub-arrangement averaging upper bounds at `k = 14`.
-- No global V-E-F identity that does not consume order-type data.
-- No claim whose only content is that the opponent's method fails.
-- Every count you assert must be reproducible from a printed row, a corpus line,
-  a coordinate you wrote down, or a verifier run you cite.
+- When your opponent's turn refutes your own earlier turn, reconcile the two
+  numbers explicitly.
 - If you close a turn by promising a computation "next turn", deliver it next
   turn or open by saying why you did not.
+- Every count you assert must be reproducible from a printed row, a corpus line,
+  a coordinate you wrote down, or a verifier run you cite.
+- A claim opened in a meta trailer with no argument in the body is not a claim,
+  and your meta trailer must carry every required key.
+- No claim whose only content is that the opponent's method fails.
 - Do not name `signotope-vs-chirotope-5-element-gate` as a next step unless you
-  run one in the same turn. Zero runs in 666 turns.
+  run one in the same turn. Zero runs in 690 turns.

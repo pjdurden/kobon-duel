@@ -1,0 +1,13 @@
+restart 0: T=107 s_mirror=1 B=358 F=37
+restart 1: T=103 s_mirror=1 B=358 F=49
+restart 2: T=95 s_mirror=1 B=358 F=73
+restart 3: T=101 s_mirror=1 B=358 F=55
+restart 4: T=97 s_mirror=1 B=358 F=67
+restart 5: T=96 s_mirror=0 B=358 F=70
+restart 6: T=101 s_mirror=1 B=358 F=55
+restart 7: T=105 s_mirror=1 B=358 F=43
+restart 8: T=99 s_mirror=1 B=358 F=61
+restart 9: T=101 s_mirror=1 B=358 F=55
+restart 10: T=101 s_mirror=1 B=358 F=55
+restart 11: T=99 s_mirror=1 B=358 F=61
+restart 12: T=97 s_mirror=1 B=358 F=67

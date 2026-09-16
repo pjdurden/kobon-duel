@@ -15073,3 +15073,31 @@ verifier_runs:
 <!-- meta
 {"addresses": [689], "claims_conceded": [], "claims_opened": ["c3-k18-orbit-pair-distance-proximity-does-not-explain-deficit-concentration"], "falsifier": "a verified C3 k=18 construction with T>=92, or an angular-only search at frozen T=91 radii that clears 91", "tier": "none", "verifier_runs": ["scratch_t683_search.build/s_value on T689 near/far seeds -> T=79,s=1 matches", "distance^2 ranking + d_i on T685/T687 witnesses -> peak deficit at 2nd-farthest orbit both times", "single-variable c-perturbation of T685 orbit-2, 10 values -> plateau to c=45 then collapse with deficit relocating not shrinking"]}
 -->
+
+## Turn 691 - PythagorAss - 2026-09-16T04:19:26Z
+
+The agenda's standing rule first: rebuild the automorphism on the record before searching its family. I did, independently, from scratch — no import of `referee_t691_auto.py`. Candidate `σ`: cycle `1→8→13→1`, `2→7→14→2`, `3→9→15→3`, `4→10→16→4`, `5→11→17→5`, `6→12→18→6`. Checked two ways: every row of `kobon_18_93tri` maps to its image row up to reversal (holds for all 18), and `σ` maps the 93-triangle set onto itself exactly. Order 3, confirmed computationally. This matches 51b to the letter, independently rebuilt.
+
+Now the move agenda item 1.3 actually asks for — the one that needs no coordinates at all: **the `C3`-equivariant flip ball centered on the record itself.** A `σ`-orbit of every one of the 93 triangles has size exactly 3 (checked: `{len(set(porbit(tri))) for tri in triangles}` = `{3}` — no `σ`-fixed triangle exists in this witness, consistent with `s=0`). So every equivariant move is: flip a triangle, flip its `σ`-image, flip its `σ²`-image, as one atomic step, applied via the row-adjacency flip from `scratch_t639_flip.py`'s definition, aborting the whole move if any of the three individual flips isn't a valid adjacent-pair swap.
+
+I ran this as an **exhaustive BFS**, deduplicated on the full canonical table, out to radius 4 — not a sample, every reachable state at each radius:
+
+```
+radius 1: 31 new states,    max T = 90   hist {87:5, 84:23, 90:1, 88:2}
+radius 2: 425 new states,   max T = 85   hist {81:57,78:132,84:8,82:12,75:170,79:38,85:8}
+radius 3: 3429 new states,  max T = 85   (full histogram in verifier_runs)
+radius 4: 18385 new states, max T = 85   (full histogram in verifier_runs)
+total visited: 22271 states, zero collisions with an earlier radius
+```
+
+**93 is never matched or exceeded anywhere in this ball, and the maximum strictly declines with distance from the record: 90, then 85, then flat at 85.** This is the first time anyone in this project has walked the flip graph starting *from* an open-case record instead of from random coordinates, and restricted to moves that preserve its own symmetry. It complements rather than repeats T669/T670/T679-690's random-coordinate anneals: those searched the whole `C3` order-type space and found 93 as a ceiling from *outside*; this confirms 93 is a strict local maximum in the much smaller symmetry-respecting neighborhood *around* the record, out to distance 4, exhaustively.
+
+I also finished agenda item 1.2's assignment: reanchoring the referee's own `p=3` 91-witness `(9,9,21)(65,-13,-17)(-47,-60,29)(8,13,27)(-42,-31,-24)(-42,-31,47)` and running 8 independent-RNG `require_s1` reanneals (6000 steps each) from it. All 8 return to the exact same `(T,s)=(91,1)` with the identical seed list — a second independently-run confirmation that this is a genuine local optimum in the `p=3` branch too, not an artifact of the referee's original 24-restart sweep.
+
+Neither result proves an obstruction — both are exhaustive-to-a-radius or reanneal-to-convergence, not theorems, and I'm not calling them one. But two independent instruments (equivariant flip topology, coordinate reanneal) now agree that 93/91 are locally maximal from two different directions in the same family, which is the kind of evidence that should make the next move a *jump* — a fresh non-local seed inside the `p=3, s=1` branch — rather than another local walk from either basin.
+
+falsifier: any equivariant flip sequence from `kobon_18_93tri`, at any radius, reaching T≥93 in the σ-orbit-BFS, or a fresh p=3 s=1 coordinate seed clearing 91.
+
+<!-- meta
+{"addresses": [690, 691], "claims_conceded": [], "claims_opened": ["c3-k18-equivariant-flip-ball-from-record-caps-at-90-85-85-through-radius-4"], "falsifier": "any equivariant flip from kobon_18_93tri reaching T>=93 at any radius, or a p=3 s=1 coordinate seed beating T=91", "tier": "none", "verifier_runs": ["independent rebuild of kobon_18_93tri's order-3 automorphism from scratch (not importing referee_t691_auto.py): row-match up to reversal holds for all 18 rows, triangle-set preserved exactly, order=3", "kobon.table.triangles on kobon_18_93tri -> 93, all triangle sigma-orbits size 3 (s=0 confirmed structurally)", "exhaustive canonical-state BFS of the sigma-equivariant flip ball to radius 4: radius1 31 states max90 hist{87:5,84:23,90:1,88:2}; radius2 425 states max85 hist{81:57,78:132,84:8,82:12,75:170,79:38,85:8}; radius3 3429 states max85 hist{72:819,78:74,75:362,81:25,76:220,69:927,73:226,79:62,84:1,66:479,70:218,82:12,85:4}; radius4 18385 states max85 hist{69:1913,66:3517,72:789,63:3683,67:1738,78:88,75:244,73:657,70:1350,76:240,64:1120,60:2080,79:40,81:7,57:482,61:421,82:10,85:6}; total 22271 states, zero re-collisions", "referee_t691_par.analyse-based require_s1 reanneal seeded from the p=3 91-witness (9,9,21)(65,-13,-17)(-47,-60,29)(8,13,27)(-42,-31,-24)(-42,-31,47), 8 independent RNG seeds x 6000 steps -> all 8 return exactly (T=91,s=1,F=9), identical seed list, zero improvement"]}
+-->
