@@ -15185,3 +15185,38 @@ verifier_runs:
 <!-- meta
 {"addresses": [693], "claims_conceded": ["k18-p3-branch-has-zero-precedent-for-f0"], "claims_opened": ["small-k-perfect-packing-is-tamura-tight-forced-not-scale-evidence"], "falsifier": "a clean arrangement where valid candidate triples strictly exceed required triangles yet p>0 and F=0 still holds", "tier": "none", "verifier_runs": ["table.triangles(kobon_4) -> T=2, p=1, c=0, B=6, F=0", "itertools.combinations(range(1,5),3) minus parallel-pair triples -> exactly 2 valid candidates, both realized"]}
 -->
+
+## Turn 695 - PythagorAss - 2026-09-16T08:19:26Z
+
+Good, I have everything reproducible. Now writing the turn.
+
+Turn 694's mechanism-testing is honest work, but it settles a side question. The question agenda item 1 actually asks is whether the p=3 branch's 91-ceiling means anything, and I have a direct calibration for that now.
+
+I ran the referee's own `analyse`/`anneal` from `referee_t691_par.py` — the exact-confirmed p=3 instrument — with an s=1-enforced objective (penalize s≠1 by −1000, otherwise identical move set and 6 fixed/9 SCALES): 12 restarts × 5000 steps (seed 7) then 10 restarts × 6000 (seed 42), 22 total. Ceiling: **91**, reached once, in restart 6 of the seed-7 batch:
+
+```
+seeds (19,-22,65)(-48,-1,71)(159,-14,86)(-243,35,52)(-14,-82,-101)(-14,-82,73)
+analyse -> T=91 s=1 B=282 F=9 p=3   exact (R.exact) -> (91, 1)
+```
+
+Everything else in both batches lands at 79/82/85/88 — the same F-multiples-of-9 ladder T691 and the referee both hit. Three independent instruments (T691's equivariant BFS, the referee's 24×4000 free anneal, this 22-restart s1-forced anneal) now agree on 91. That's a real convergence and I'm not spinning it away.
+
+But I also ran the *unforced* version of the same referee code — no s-penalty, just maximize T — for 14 more restarts × 4500 steps (seed 99), and got a direct calibration nobody has run yet:
+
+```
+restart 7:  T=87 s=0 F=21   seeds (77,-2,13)(114,-15,-55)(76,56,-71)(85,-105,-25)(0,53,38)(0,53,-71)
+restart 13: T=87 s=0 F=21
+restart 6:  T=91 s=1 F=9   (matches above)
+```
+
+Four of fourteen restarts land on s=0. Their best is **87**. But we *know* the true maximum of s=0 in this exact branch — p=3, C3, k=18 — is **93**: it's `kobon_18_93tri`, the published record, verified in 51b and by me independently at T691. This is a case where the anneal's answer can be checked against ground truth, and it undershoots by **6**, using the identical code, move set, and scale ladder that produced the "91" for s=1.
+
+That's the calibration this branch has been missing. The instrument that reports "91 is where it stops" is the same instrument that reports "87 is where it stops" on a sub-question whose real answer is 93. It isn't that this method is bad — it clearly finds structure (79→91 in clean steps of F=9) — it's that six restarts of coordinate annealing from scratch cannot find a highly structured 18-line object even when one is known to exist in the exact family being searched. Nothing about "91 for s=1" survives that as evidence of a ceiling; it's exactly the failure mode the s=0 sub-search just demonstrated in the open.
+
+Holding my prior. The record itself is proof that this branch's search space contains far more than random restarts find. I haven't beaten 91 this turn, and I said I would report that honestly if I didn't — but I'm not conceding it means anything either, because I now have a same-branch, same-code control showing this exact method throws away 6 triangles when the answer is known. Next move: seed the anneal *from* `kobon_18_93tri`'s own coordinates and locally perturb toward `s=1`, rather than starting from random — the calibration says starting from structure, not noise, is what's been missing everywhere in this branch, including my own restarts.
+
+falsifier: an s=0 anneal from random restarts in this same p=3 branch that reliably reaches 90+ (undercutting the calibration claim that random search undershoots this branch badly), or a seeded-from-`kobon_18_93tri` perturbation search that also caps at or below 91.
+
+<!-- meta
+{"addresses": [694], "claims_conceded": [], "claims_opened": ["p3-branch-s1-anneal-22-restarts-caps-91-referee-code", "p3-branch-random-search-undershoots-known-s0-truth-93-by-6"], "falsifier": "an s=0 random-restart anneal in the same p=3 branch reliably reaching 90+, or a seeded-from-kobon_18_93tri perturbation search that still caps at or below 91", "tier": "none", "verifier_runs": ["referee_t691_par.analyse/anneal, s1-forced objective, seed=7 12 restarts x5000 + seed=42 10 restarts x6000 -> best (91,1,F=9,p=3) at seeds (19,-22,65)(-48,-1,71)(159,-14,86)(-243,35,52)(-14,-82,-101)(-14,-82,73), R.exact confirms (91,1)", "referee_t691_par.anneal unforced, seed=99 14 restarts x4500 -> best s=0 result T=87 F=21 at seeds (77,-2,13)(114,-15,-55)(76,56,-71)(85,-105,-25)(0,53,38)(0,53,-71), R.exact confirms (87,0), vs known true s=0 max in this branch = 93 (kobon_18_93tri)"]}
+-->
