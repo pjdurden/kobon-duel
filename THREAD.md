@@ -15578,3 +15578,27 @@ verifier_runs:
 <!-- meta
 {"addresses": [705, 703], "claims_conceded": [], "claims_opened": ["c3-p3-k18-face-degree-excess-invariant-114"], "falsifier": "a p=3,c=0,k=18 witness with excess != 114, or any T=94 witness in this branch by any method", "tier": "none", "verifier_runs": ["face enumerator (BFS cell-adjacency, exact Fraction) on T701 93-witness -> 133 bounded faces, degs {3:93,5:15,6:16,7:9}, verify.triangles=93, Euler E-V+1=133 matches", "same enumerator on T701 seeds, orbit-2 offset x0.7 -> T=85 s=1 F=27, degs {3:85,4:6,5:24,6:12,7:6}, excess=114", "same enumerator on T701 seeds, orbit-2 offset x1.3 -> T=93 s=0, degs identical to original, excess=114", "same enumerator on referee's agenda-item-1 p=3 seeds -> T=91 s=1 F=9 matches 51c, degs {3:91,5:15,6:24,7:3}, excess=114"]}
 -->
+
+## Turn 707 - PythagorAss - 2026-09-16T21:19:09Z
+
+**PythagorAss — Turn 707**
+
+T706's rigidity claim needs a scope check before it gets used to justify "structurally blind" search designs, so I built an independent face enumerator — full BFS over sign-vector cells via `referee_t691_central.clip`, not just the central cell — and calibrated it against T701's seeds first: `169 total, 36 unbounded, 133 bounded, degrees {3:93, 5:15, 6:16, 7:9}`, matching T706's numbers exactly, including the excess-114 read.
+
+First result: the bounded-face count of 133 is not an empirical pattern, it's forced. `R = 1+n+V` (Euclidn't's Euler check) and `unbounded = 2n = 36` hold regardless of *which* lines are parallel — I confirmed this by building five **non-C3, non-orbit** arrangements (15 random lines plus 3 independently-perturbed parallels, no shared structure at all) and every one gave `total=169, unbounded=36, bounded=133`. So `bounded = 1+V-n = C(n-1,2)-p` is a general fact about any `(n=18, p=3, c=0)` arrangement, symmetric or not. That closes the gap T706 flagged ("I got two formulas that disagreed") — the count is real, general, and now derived, not just observed four times.
+
+Second result, and this is where T706's framing overreaches: **excess is not invariant on the branch.** The same five generic arrangements gave excess `{121, 123, 123, 124, 123}` — never 114 — with quadrilaterals appearing freely (absent in every C3 witness) and `T` collapsing to 44–55. So "merged outer-face degree = 51" is a property of the C3-orbit-locked corner of the branch, not of `p=3, c=0, k=18` in general. Algebraically: `outer = 165 − excess` (bounded-face degree sum = `excess+399 = 564−outer`), and outer boundary length is a shape fact about the unbounded region's contact with the bounded core — it depends on how the arrangement is laid out, not on `n,p` alone.
+
+Third, a direct test of whether *local* symmetry-breaking already escapes the 114 floor: six single-line perturbations of the 93-witness (random line, random `c`-shift of 3–7, `p=3` and `c=0` preserved in all six) — every one landed back at exactly `T=93, excess=114`, identical degree histogram. So small symmetry-breaking moves don't leave the cell; T705's rigidity and T706's excess constant are the same phenomenon (staying inside one realization-space cell), and it takes a genuine wall-crossing, not just an asymmetric nudge, to change either number.
+
+Net: T706's mechanism is real but narrower than stated — it explains rigidity *within* the C3-symmetric family, and generic points of the same `(n,p,c)` branch sit at a different, worse excess with far fewer triangles. That's not evidence for 94 — none of my generic samples beat 55 — but it means the right next search isn't "more anneal inside the symmetric corner" (dead, per T705/706) or "fully random from scratch" (dead, per this turn, floor ~55). It's a **targeted wall crossing near the 93-witness**: perturbations large enough to change combinatorial type while staying close enough in coordinate space to inherit near-93 triangle count. I haven't built one yet; that's the next turn, not this one.
+
+falsifier: any p=3,c=0,k=18 witness with excess=114 and T<93 that isn't a small perturbation of a known C3 object (would suggest 114 is more structural than "symmetric corner only"); or any wall-crossing perturbation of the 93-witness landing at T≥92 with any excess value.
+
+```
+verifier_runs: ["independent BFS face enumerator (referee_t691_central.clip reused, full sign-vector walk) on T701 seeds -> 169/36/133, degrees {3:93,5:15,6:16,7:9}, matches T706 exactly", "5 generic non-C3 p=3,c=0,k=18 arrangements (verify.triangles + same enumerator) -> bounded=133 in all 5 (confirms general formula), excess in {121,123,123,124,123}, T in {44,55,44,49,54}", "6 single-line c-perturbations (delta 3-7) of T701's 93-witness, p=3/c=0 preserved -> all 6 return T=93, bounded=133, excess=114, identical degree histogram"]
+```
+
+<!-- meta
+{"addresses": [706], "claims_conceded": [], "claims_opened": ["p3-branch-bounded-face-count-133-is-general-not-c3-specific", "excess-114-is-scoped-to-c3-orbit-corner-not-the-general-p3-branch"], "falsifier": "a non-perturbation p=3,c=0,k=18 witness with excess=114 and T<93, or any wall-crossing perturbation of the 93-witness reaching T>=92", "tier": "none", "verifier_runs": ["independent BFS face enumerator on T701 seeds -> 169/36/133, degrees {3:93,5:15,6:16,7:9}", "5 generic non-C3 p=3,c=0,k=18 arrangements -> bounded=133 always, excess in {121,123,123,124,123}, T in {44,49,54,55}", "6 single-line perturbations of the 93-witness -> all stay at T=93, excess=114"]}
+-->
