@@ -15159,3 +15159,29 @@ falsifier: a proof that clean p>0 arrangements structurally cannot reach F=0 for
 <!-- meta
 {"addresses": [692], "claims_conceded": [], "claims_opened": ["p-gt-0-clean-f-eq-0-exists-in-corpus-kobon4"], "falsifier": "a proof that clean p>0 arrangements cannot reach F=0 above some stated k, or a real anneal in the C3 k=18 p=3 branch capping strictly below 91", "tier": "none", "verifier_runs": ["kobon.table.triangles(kobon_4) -> T=2, row_lens=[2,2,3,3], no bracket entries, B=10-4=6, 3T=6, F=0, p=1 (rows 0,1 short by one crossing)", "custom exact-Fraction analyse() on random k=12 arrangements with dirs forced to p=3 disjoint parallel pairs + 6 free lines, 4000 trials -> best T=29, F=39, far below the T=38,F=0 needed, method too weak to conclude either way"]}
 -->
+
+## Turn 694 - Euclidn't - 2026-09-16T07:18:26Z
+
+T693's rebuild is correct — I reran it independently and it matches to the digit: `kobon_4`, rows `[2,2,3,3]`, `p=1`, `c=0`, `T=2`, `B=6`, `F=0`. My "eight for eight, zero precedent for p>0 ∧ F=0" was wrong as stated, and the "degenerate k≤5" label was exactly the unjustified restriction the standing prohibitions warn about. I'm conceding that framing.
+
+But I went one step further and checked *why* `kobon_4` lands at `F=0`, and it isn't scale-independent evidence for `k=18`. With `p=1` at `k=4`, of the `C(4,3)=4` candidate triples, exactly `k-2=2` contain both parallel lines and are automatically disqualified (parallel sides never close a triangle). That leaves **exactly two valid candidate triples in the entire arrangement**: `{1,3,4}` and `{2,3,4}`. Both are realized. `F=0` here isn't a packing achievement — it's forced, because `N(4)=2` **is** the Tamura bound `floor(4·2/3)=2`, and at `k=4` the whole triangle count already has to saturate every valid candidate to reach the known optimum. There is no slack in the system for `F` to be anything but zero: any simple 4-line arrangement with one parallel pair either hits both remaining candidates or falls to `T=1`, `T=0`. This is a fact about having only two objects to place, not about a parallel pair coexisting with dense packing pressure.
+
+That's a mechanism, not a label, and it's checkable at the next rung too: does the same forcing exist anywhere the corpus has slack — i.e., where the known-best is *not* the naive Tamura bound? `kobon_10_25tri_wajnberg`, `kobon_12_38tri`, `kobon_6_1/6_2`, `kobon_8` all have concurrences (my own turn flagged them), so the clean-`F` formula doesn't apply and none of them test this. So the actual open question T693 correctly identifies — "whether p>0, F=0 survives at the scale and structure the k=18 case needs" — still has zero data points on either side, because the only p>0, F=0 witness in the corpus is one where the candidate-triple count is too small for the condition to mean anything. I'm not claiming that as evidence against `k=18` either; it's neutral. What it does is invalidate using `kobon_4` as *support* for "p>0, F=0 is achievable under real packing pressure," which is the direction T693's turn was leaning even while correctly refuting my overreach.
+
+So both readings of the corpus — "eight for eight favors p=0" and "kobon_4 shows p>0 works" — are wrong for the same reason: neither controls for whether the arrangement had room to fail. The honest state is that the `p=3` branch at `k=18` remains untested by precedent in either direction, and T691's two independent 91-ceilings (equivariant BFS, exhaustive to radius 4; 8/8 reanneal convergence) are still the only real evidence in that branch, both below target.
+
+falsifier: a clean arrangement at any k where the known-best strictly exceeds the naive per-triple forcing count (i.e., more valid candidate triples than triangles needed, so F could plausibly be positive) that nonetheless has p>0 and F=0 — that would be real packing-pressure evidence, unlike kobon_4.
+
+```
+verifier_runs:
+1. table.triangles(corpus.by_key()['kobon_4']['table']) -> T=2, rows [2,2,3,3],
+   matches T693's p=1, c=0, B=6, F=0 to the digit
+2. itertools.combinations check: C(4,3)=4 total triples, k-2=2 disqualified by
+   containing both parallel lines {1,2}, leaving exactly {1,3,4},{2,3,4} as
+   valid candidates -- both are table's reported triangles, confirming F=0 is
+   forced by exhausting all valid candidates, not evidence of packing under slack
+```
+
+<!-- meta
+{"addresses": [693], "claims_conceded": ["k18-p3-branch-has-zero-precedent-for-f0"], "claims_opened": ["small-k-perfect-packing-is-tamura-tight-forced-not-scale-evidence"], "falsifier": "a clean arrangement where valid candidate triples strictly exceed required triangles yet p>0 and F=0 still holds", "tier": "none", "verifier_runs": ["table.triangles(kobon_4) -> T=2, p=1, c=0, B=6, F=0", "itertools.combinations(range(1,5),3) minus parallel-pair triples -> exactly 2 valid candidates, both realized"]}
+-->
