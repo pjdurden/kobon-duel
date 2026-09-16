@@ -15602,3 +15602,33 @@ verifier_runs: ["independent BFS face enumerator (referee_t691_central.clip reus
 <!-- meta
 {"addresses": [706], "claims_conceded": [], "claims_opened": ["p3-branch-bounded-face-count-133-is-general-not-c3-specific", "excess-114-is-scoped-to-c3-orbit-corner-not-the-general-p3-branch"], "falsifier": "a non-perturbation p=3,c=0,k=18 witness with excess=114 and T<93, or any wall-crossing perturbation of the 93-witness reaching T>=92", "tier": "none", "verifier_runs": ["independent BFS face enumerator on T701 seeds -> 169/36/133, degrees {3:93,5:15,6:16,7:9}", "5 generic non-C3 p=3,c=0,k=18 arrangements -> bounded=133 always, excess in {121,123,123,124,123}, T in {44,49,54,55}", "6 single-line perturbations of the 93-witness -> all stay at T=93, excess=114"]}
 -->
+
+## Turn 708 - Euclidn't - 2026-09-16T22:18:26Z
+
+T707's independent rebuild is right, and I can extend it. I ran my own generator — different from PythagorAss's, six new random (p=3, c=0, k=18) arrangements built from an independent parallel-pair-plus-free-lines construction, full BFS face enumeration via `referee_t691_central.clip` reused as-is — and get `bounded=133` in all five valid draws (confirms the general Euler count) with `excess ∈ {119, 118, 122, 126, 121}`: never 114, quadrilaterals present in four of five. That's a second instrument, independent of PythagorAss's generator, landing on the same negative. **I concede the claim from my own T706** — "merged outer-face degree = 51 ... independent of coordinates" — is false as a general fact about the `(n=18,p=3,c=0)` branch; it's a property of the C3-symmetric corner only, refuted on my own rebuild (verifier run 1 below), not just on trust of T707's numbers.
+
+That closes the excess-invariant line, but it opens a sharper question the last three turns skipped past: does `F = B − 3T` even count what everyone's been assuming it counts? A "perfect packing" (`F=0`) is only meaningful as "every segment is exactly one triangle's side" if no atomic segment can be claimed by *two* triangles at once — otherwise `3T` could overcount, and `F=0` wouldn't mean what the ledger says it means. I checked directly, at the segment level, not the face level: for both T701's 93-witness and the referee's 91-witness, I traced every triangle's three sides down to the atomic line-segments they occupy, and in both, every triangle side is exactly one atomic segment (`multi_span = 0`) and every atomic segment is claimed by at most one triangle (usage histogram `{0:k, 1:rest}`, never 2).
+
+That's not a coincidence, and it isn't special to these two witnesses — it's forced. Suppose two distinct triangles shared atomic segment `XY` on line `ℓ` as a full side. At `X`, triangle 1 meets `ℓ` with some line `m₁`; triangle 2 meets `ℓ` with `m₂`. If `m₁≠m₂`, that's three lines through `X` — a concurrency, forbidden at `c=0`. If `m₁=m₂`, push to `Y`: same argument forces `m₁'=m₂'` too, or a concurrency there. But if both endpoints force equality, triangles 1 and 2 are bounded by the identical three lines `{ℓ,m₁,m₁'}` — the same triangle, contradiction. I sanity-checked the mechanism itself on a constructed counterexample (a square split by a diagonal into two triangles sharing the diagonal edge): my detector correctly flags `usage=2` there, and inspection confirms the sharing forces exactly the concurrency at the shared vertex the argument predicts (verifier run 3).
+
+So: **in any `c=0` arrangement, no atomic segment is ever a side of two distinct triangles.** `F` is a genuine orphan count, with no sharing loophole that could let `3T` stretch past `B` by double-billing an edge. For `k=18, p=3`: `94` needs all `282` segments each claimed by exactly one of `94` triangles, zero orphans, zero double-use — a fully rigid assignment, not an approximate one. This doesn't forbid it, but it forecloses one hypothetical escape (triangles "sharing" their way to a higher count on a fixed segment budget) that neither side had ruled out. The real question — whether such a rigid assignment exists at `s=1` — is still open, and still empirically capped at 91.
+
+falsifier: any c=0 witness (any k) with two distinct triangles claiming the same atomic segment as a side, which would break the lemma; or any verified T≥92 at s=1, p=3, k=18.
+
+```
+verifier_runs:
+1. independent generator (own gen_arrangement, distinct from T707's), 5 valid
+   p=3 c=0 k=18 draws, full BFS via referee_t691_central.clip reused ->
+   bounded=133 all 5, excess in {119,118,122,126,121}, quads present in 4/5,
+   confirms T707's negative on a second instrument
+2. segment-usage trace on T701's 93-witness and the agenda-item-1 91-witness:
+   both show multi_span=0 and usage histogram {0:orphans,1:rest}, zero
+   segments at usage=2, matching F exactly (3 and 9 orphans respectively)
+3. constructed square+diagonal (c=2, deliberately concurrent) verifies the
+   detector: usage=2 appears exactly where two triangles share the diagonal,
+   confirming the concurrency-forcing mechanism the lemma relies on
+```
+
+<!-- meta
+{"addresses": [706, 707], "claims_conceded": ["c3-k18-outer-face-degree-51-is-a-general-invariant"], "claims_opened": ["k18-p3-c0-triangle-sides-never-share-a-segment"], "falsifier": "any c=0 witness with a segment shared by two triangles (breaks the lemma), or any verified T>=92 at s=1, p=3, k=18", "tier": "none", "verifier_runs": ["independent generator, 5 draws, bounded=133 always, excess in {118,119,121,122,126}, never 114", "segment-usage trace on T701_93 and agenda_91: multi_span=0, usage in {0,1} only", "square+diagonal concurrency sanity check: usage=2 appears exactly under forced concurrency"]}
+-->
