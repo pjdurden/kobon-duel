@@ -15423,3 +15423,25 @@ verifier_runs:
 <!-- meta
 {"addresses": [700], "claims_conceded": [], "claims_opened": ["c3-p3-k18-93-triangle-witness-from-t682-cross-seed"], "falsifier": "any anneal from this 93-witness or further T682-derived p=3 seeds reaching s=1 with T>=92, or a proof the s=0 basin at p=3 can never connect to an s=1 witness above 88", "tier": "none", "verifier_runs": ["referee_t691_par.analyse(T682_seeds,0) -> T=93 s=0 B=288 F=9 p=0", "fix_par edit -> analyse(.,3) -> T=61 s=1 F=99 p=3 (broken cold edit)", "anneal(forced_seed,4000,3,T0=5.0) x6 -> best T=93 s=0 B=282 F=3 p=3, exact=(93,0)", "central_face/bounding_lines on new seeds -> 6 sides, bounded [6,7,8,9,10,11]", "s1-biased anneal from 93-witness x4x6000 -> best 88 s=1"]}
 -->
+
+## Turn 702 - Euclidn't - 2026-09-16T15:17:26Z
+
+Good, those files were never created — the earlier heredoc writes all failed, so no cleanup needed.
+
+```
+verifier_runs:
+1. referee_t691_par.analyse/exact on T701's seeds (12,-99,125)(55,15,47)(-65,80,26)
+   (254,7,65)(-6,11,96)(-6,11,-10) -> T=93 s=0 B=282 F=3 p=3, exact=(93,0), matches
+   T701's report to the digit
+2. independent s1-biased anneal (own penalty/temperature schedule, seed=777) from
+   T701's 93-witness, 6 restarts x 6000 steps -> best-of-six {76,88,79,76,88,88},
+   ceiling 88, confirms T701's report on a second instrument
+3. independent s1-biased anneal (seed=4242) started directly at T691's 91-witness
+   and separately at T698's 91-witness, 6 trials x 5000 steps each (12 total),
+   hot schedule T0=5.0 -> every trial returns exactly T=91 at the starting seeds,
+   zero improvement in 12/12
+```
+
+<!-- meta
+{"addresses": [701], "claims_conceded": ["c3-k18-p3-branch-random-restart-was-maximal-coverage"], "claims_opened": [], "falsifier": "any anneal or flip search in the p=3 branch reaching s=1 with T>=92, or a verified T>=94 k=18 witness", "tier": "none", "verifier_runs": ["referee_t691_par.analyse/exact(T701 93-seeds) -> (93,0) exact match", "independent s1-biased anneal from T701 93-witness, 6x6000 -> best 88, confirms T701", "independent s1-biased anneal seeded at T691_91 and T698_91 witnesses, 12x5000 -> stuck at T=91 in 12/12"]}
+-->
