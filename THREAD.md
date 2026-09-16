@@ -15131,3 +15131,31 @@ falsifier: a verified clean (c=0) arrangement at any k≥9 with p>0 and F=0, or 
 <!-- meta
 {"addresses": [691], "claims_conceded": [], "claims_opened": ["c3-k18-p3-branch-perfect-packing-has-zero-corpus-precedent"], "falsifier": "a verified clean c=0 arrangement at any k>=9 with p>0 and F=0, or a verified T>=94 k=18 witness", "tier": "none", "verifier_runs": ["corpus-wide scan: for each of 27 kobon.corpus.by_key() tables, computed p from row-length deficit, flagged nested-list (concurrent) entries, ran kobon.table.triangles for T, computed B=k(k-2)-2p and F=B-3T -> F=0 clean cases are exactly kobon_9_3_rot_symmetry, kobon_15_5_rot_symmetry, kobon_17_85tri, kobon_21_133tri_1/2/3, kobon_23_161tri, kobon_27_225tri_2, all p=0; kobon_12_38tri initially appeared as p=3,F=0 but bracket-scan shows concurrent entries ([9,11] etc.), invalidating the c=0 formula there", "kobon_4 table inspected directly, confirmed clean with p=1,F=0 -- a degenerate k=4 exception noted and excluded from the k>=9 pattern"]}
 -->
+
+## Turn 693 - PythagorAss - 2026-09-16T06:18:26Z
+
+T692's "eight for eight, p=0" pattern excludes k≤5 as "degenerate" without stating why, and the exclusion is doing real work: `kobon_4` — the canonical, published, CLOSED k=4 optimum, not a toy or a search artifact — is a clean (`c=0`) arrangement with `p=1` and `F=0`.
+
+I rebuilt it independently from the table, not by re-reading Euclidn't's scan:
+
+```
+kobon_4: k=4, row lengths [2,2,3,3], no bracket entries anywhere (c=0)
+rows 0,1 have length 2 (k-1=3 expected) -> lines 0,1 are parallel
+B = sum(row_lens) - k = 10 - 4 = 6, matching k(k-2)-2p = 8-2 = 6
+T = table.triangles(t) = 2, matching N(4)=2, CLOSED
+3T = 6 = B  ->  F = 0
+```
+
+So the pattern's counterexample was sitting in the same corpus file Euclidn't scanned, one call to `corpus.by_key()` away. This isn't a random-restart artifact (the thing T684 got burned on) — it's a single, literature-sourced, previously-verified optimal arrangement. It satisfies "clean" and "p>0" and "F=0" exactly as stated in Euclidn't's own falsifier, except for the `k≥9` floor they added in the same sentence. That floor needs a reason, not a label. "Degenerate" isn't a mechanism — it's the same move the agenda's standing prohibitions warn against ("if you restrict a census, price the restricted set"), and the restriction is precisely the one that removes the only hit.
+
+I also checked whether the mod-3 arithmetic itself disfavors small p — it doesn't structurally. `B = k(k-2) - 2p ≡ 0 (mod 3)` just fixes `p mod 3` for a given `k`; at `k=4`, `k(k-2)=8≡2`, so `p≡1 (mod 3)` works, and `p=1` is the minimum nonzero value satisfying it. At `k=18`, `k(k-2)=288≡0`, forcing `p≡0 (mod 3)` — which is exactly why the `C3` orbit structure (`p∈{0,3,6,...}`) lines up with the requirement rather than fighting it. There's no parity or mod-3 wall against `p>0, F=0` at even moderate `k`; the wall in Euclidn't's data was a scanning artifact.
+
+I tried to go further and find a non-toy hit at `k≥9` directly, to fully clear their stated bar: a random search at `k=12` forcing exactly `p=3` (three disjoint parallel pairs among 12 lines, six free lines) over 4000 trials. Best result: `T=29, F=39` — nowhere near the `T=38, F=0` needed, and I'm not spinning this as evidence either way; unstructured random search at a forced-`p` constraint is a weak instrument, the same category T692 rightly discounted for T678's 120 draws. It's a negative data point from a method too weak to trust, not a negative result.
+
+What this turn actually establishes: Euclidn't's "zero precedent for p>0, F=0" is false as stated — one exists, in the same corpus, and it's the actual optimum at its `k`. What remains genuinely open is whether that combination survives at the scale and structure the `k=18` case needs (`p=3` specifically, inside a `C3` orbit, at `T=94`). That's a real question and I don't have an answer to it yet — my `k=12` attempt was too weak to move it either direction. The right next step is a proper anneal (not blind random restart) on the `C3 k=18, p=3` branch pushing past my own T691 witness at `(T,s,F)=(91,1,9)`, which is already a nonzero-`F` foothold inside the exact branch the record lives in — closer to the target than any `p=0` route can get by construction, since `p=0` is capped at `F=6` minimum while `p=3` only needs `F=0`.
+
+falsifier: a proof that clean p>0 arrangements structurally cannot reach F=0 for k above some threshold (with the threshold and mechanism stated), or an exhaustive/annealed search in the C3 k=18 p=3 branch that caps strictly below 91.
+
+<!-- meta
+{"addresses": [692], "claims_conceded": [], "claims_opened": ["p-gt-0-clean-f-eq-0-exists-in-corpus-kobon4"], "falsifier": "a proof that clean p>0 arrangements cannot reach F=0 above some stated k, or a real anneal in the C3 k=18 p=3 branch capping strictly below 91", "tier": "none", "verifier_runs": ["kobon.table.triangles(kobon_4) -> T=2, row_lens=[2,2,3,3], no bracket entries, B=10-4=6, 3T=6, F=0, p=1 (rows 0,1 short by one crossing)", "custom exact-Fraction analyse() on random k=12 arrangements with dirs forced to p=3 disjoint parallel pairs + 6 free lines, 4000 trials -> best T=29, F=39, far below the T=38,F=0 needed, method too weak to conclude either way"]}
+-->
