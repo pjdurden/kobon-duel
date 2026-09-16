@@ -15350,3 +15350,37 @@ falsifier: a proof that `p=3, c=0, s=1, F=0` is geometrically impossible at k=18
 <!-- meta
 {"addresses": [698], "claims_conceded": [], "claims_opened": ["c3-k18-p3-central-face-boundary-unrestricted-by-parallel-orbit"], "falsifier": "a proof that p=3, c=0, s=1, F=0 is geometrically impossible at k=18, or any construction/search reaching T>=94", "tier": "none", "verifier_runs": ["referee_t691_par.analyse s=1-forced anneal, 10x4000 steps T0=6.0, seed 20260916 -> best T=88 s=1", "kobon.verify.triangles exact-confirms T=85 and T=82 s=1 witnesses to the digit, matching fast instrument", "scanned all C(18,2) pairs on T=85 witness seeds (-18,77,-186)(0,109,159)(113,-37,-226)(60,37,36)(-199,23,-55)(-199,23,-233) -> parallel pairs exactly (12,15)(13,16)(14,17)", "referee_t691_central.central_face/bounding_lines on top 4 s=1 witnesses -> 2 of 4 bounded by parallel-orbit lines {12,13,14}, refuting the 2-for-2 pattern"]}
 -->
+
+## Turn 700 - Euclidn't - 2026-09-16T13:18:26Z
+
+T699's counterexample checks out, on a different instrument than the one that produced it. I rebuilt the six-seed witness from scratch using `kobon.verify.triangles` directly (not `referee_t691_par.py`'s fast `analyse`) and `referee_t691_central.central_face`/`bounding_lines` independently:
+
+```
+seeds (-18,77,-186)(0,109,159)(113,-37,-226)(60,37,36)(-199,23,-55)(-199,23,-233)
+-> parallel pairs (det==0, scanned over all C(18,2)): (12,15) (13,16) (14,17)
+-> verify.triangles: T=85, s=1
+-> central_face: 3 sides, bounding_lines = [12, 13, 14]  <- the parallel-carrying orbit itself
+```
+
+Exact match to T699's report, on a rebuild that doesn't share code with the anneal that found it. My T698 conjecture — that a parallel-orbit line never bounds the central face — is dead. I'm retiring it. Conceded, with my own evidence, not just T699's.
+
+What's left standing from that line of inquiry is the part that survives the counterexample: T698's actual theorem extension (central face bounded, `3m` sides, `p=c=0` weakened to `c=0`) is untouched — T699 didn't test `c=0`, it tested the orbit-identity of the bounding lines, which was always the unproven side-conjecture, not the theorem.
+
+Here's the new ground. Every coordinate search in this branch — T691's, T695/696's, T697's, T699's, now mine — uses `build`/`orbit`'s fixed rotation `M = [[0,1],[-1,-1]]`. I checked whether that's a real restriction or not. An order-3 real affine map with no fixed-point-free part has a fixed point (average of a 3-orbit), so WLOG it's linear, `A` with `A³ = I`, `A ≠ I`. If `A` had a real eigenvalue, order-3 forces that eigenvalue to be 1 (the only real cube root of unity), and a 2×2 real matrix with eigenvalue 1 and order exactly 3 in the remaining eigenvalue must also be 1 there or the matrix isn't real-diagonalizable with a repeated unit eigenvalue that still has order 3 — the only consistent case is `A = I`, contradiction. So `A ≠ I` forces both eigenvalues to be the non-real primitive cube roots of unity, forcing char poly `x² + x + 1` exactly — the same as `M`'s. Two real matrices sharing that irreducible characteristic polynomial are conjugate over `GL_2(R)` (the plane becomes a 1-dimensional vector space over `R[x]/(x²+x+1) ≅ C`, and any two such actions differ by a change of basis). So `M` isn't a choice — every order-3 affine symmetry of the plane is affinely equivalent to exactly this construction, and affine maps preserve collinearity, betweenness, and hence every triangle count. The family searched for ten turns isn't a slice of the `C3` moduli space; up to the equivalence that matters here, it **is** the moduli space.
+
+That reframes what the accumulated ceiling means. Raw parameter count: `6 × 3 = 18`, minus 2 for the `p = 3` constraint (`a₅ = a₄, b₅ = b₄`), minus 2 for the global centralizer of `M` (the `R[M] ≅ C` scalars, which commute with `M` and act by combined rotation+scaling without touching any incidence) — 14 real dimensions. That count doesn't prove or refute anything about `T = 94` on its own; I'm not claiming it does. What it fixes is scope, not strength: T695's calibration showed the *search quality* is weak, not that the *search coverage* was partial. It was already maximal. Across BFS-to-radius-4, ~46 anneal restarts, 9000 unrestricted flips, and now a hot `s=1`-forced batch, the true 14-dimensional `s=1` stratum has never produced 92, only 91 as a ceiling three times over from three different methods. Weak evidence, wide net, still short.
+
+falsifier: any `s=1`, `p=3`, `k=18` witness with `T ≥ 92` from any construction, coordinate-based or table-based; or a demonstration that some C3-symmetric k=18 arrangement is NOT affinely equivalent to the build/orbit family (which would mean my conjugacy argument has an error).
+
+```
+verifier_runs:
+1. independent rebuild (verify.triangles, not referee_t691_par.analyse) of T699's
+   seeds (-18,77,-186)(0,109,159)(113,-37,-226)(60,37,36)(-199,23,-55)(-199,23,-233)
+   -> parallel pairs (12,15)(13,16)(14,17), T=85, s=1
+2. referee_t691_central.central_face/bounding_lines on same 18 lines -> 3 sides,
+   bounding=[12,13,14], confirming a parallel-carrying orbit bounds the central face
+```
+
+<!-- meta
+{"addresses": [698, 699], "claims_conceded": ["c3-k18-central-face-avoids-parallel-orbit"], "claims_opened": ["c3-family-is-wlog-the-full-order3-affine-moduli-space"], "falsifier": "any s=1, p=3, k=18 witness with T>=92, or a C3-symmetric k=18 arrangement not affinely equivalent to the build/orbit family", "tier": "none", "verifier_runs": ["independent rebuild of T699 seeds via kobon.verify.triangles -> T=85 s=1, parallel pairs (12,15)(13,16)(14,17)", "referee_t691_central.central_face/bounding_lines on same lines -> 3 sides, bounding=[12,13,14]"]}
+-->
