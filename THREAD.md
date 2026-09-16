@@ -15285,3 +15285,43 @@ verifier_runs:
 <!-- meta
 {"addresses": [696], "claims_conceded": [], "claims_opened": ["flip-preserves-p-by-construction-not-just-empirically", "unrestricted-single-flip-anneal-from-k18-record-caps-at-93"], "falsifier": "any single-flip path (equivariant or not) from kobon_18_93tri reaching T>=94, or a proof that p=3,c=0,s=1,F=0 is impossible at k=18", "tier": "none", "verifier_runs": ["scratch_t639_flip.flip row-length invariance inspection", "unrestricted single-flip anneal from kobon_18_93tri, 6x1500 steps, best=93, p=3 preserved in all 6", "seed-0 accepted-state trajectory histogram, 34/1500 accepted, range 85-93"]}
 -->
+
+## Turn 698 - Euclidn't - 2026-09-16T11:18:26Z
+
+T697's flip-invariance proof is airtight — I re-derived it from the same code and it holds regardless of symmetry: `swap_adjacent` never changes row length, so `p` cannot change under any flip, period. That closes the door on "maybe a longer walk finds a row-length change." What's left is whether local search around one point is representative of the whole `p=3` branch, and rather than run a fourth anneal, I looked at what constrains that branch structurally — the thing agenda item 1 keeps calling "the exact branch under dispute" and nobody has examined geometrically.
+
+T688's central-face theorem was scoped to `p = c = 0`. I checked which hypothesis is actually load-bearing by rebuilding the exact-`Fraction` clip on two `p = 3` witnesses — the T695/T696 `(T,s,F)=(91,1,9)` seed set and T695's `(87,0,21)` seed set, both freshly reproduced from their printed seeds, not reread from a prior turn:
+
+```
+seeds (19,-22,65)(-48,-1,71)(159,-14,86)(-243,35,52)(-14,-82,-101)(-14,-82,73)
+  -> analyse: T=91 s=1 B=282 F=9 p=3, exact confirms (91,1)
+  -> central_face: 3 sides, bounding lines [9,10,11] (a single line-orbit)
+
+seeds (77,-2,13)(114,-15,-55)(76,56,-71)(85,-105,-25)(0,53,38)(0,53,-71)
+  -> analyse: T=87 s=0 B=282 F=21 p=3
+  -> central_face: 6 sides, bounding lines [0,1,2,9,10,11] (two orbits)
+```
+
+Both bounded, both `3m` with `m = 1` exactly when `s = 1` — T688's theorem holds at `p = 3` unchanged. So the hypothesis that actually matters is `c = 0`, not `p = 0`: nothing in the proof (O lies on no line because two lines through O would be a fixed 2-set; a convex fixed face contains the orbit average, hence O) uses the absence of parallels. This corrects the ledger's stated scope, with two independent exact-arithmetic confirmations rather than one.
+
+Here's the part I can't yet turn into a theorem but won't bury either: in both witnesses, the central face's bounding lines come from orbits **other than the two parallel-carrying orbits** (`{12,13,14}` and `{15,16,17}` in the first build, the ones sharing `(a,b)` pairwise). Neither the triangle (`s=1`) nor the hexagon (`s=0`) case ever uses a parallel-pair line as a central-face side. That's two witnesses from the same search design — not a fact about the family, and I'm naming the standing prohibition against treating it as one. But it's a sharp, checkable question: is a parallel-orbit line ever the central face's boundary in this branch, or is there a real obstruction (if line 12 bounds the central face, symmetry forces its whole orbit `{12,13,14}` to, and its mirror-under-parallelism `{15,16,17}` sits just outside — is there a reason that configuration can't close a bounded fixed face)? I don't have that mechanism yet. I looked for one in the strip-crossing structure between a parallel pair and didn't get further than what I already had for `kobon_4`: a plausible sketch, not a proof.
+
+So: T697's search-based ceiling is exactly as strong as T695's calibration says it is — weak, for the reason both sides now agree on. What's stronger this turn is a real extension of a proven theorem to the disputed branch, plus a concretely falsifiable structural question that neither random search nor the flip graph was built to answer. Neither closes the case. My prior stands unmoved, on new ground.
+
+falsifier: a verified p=3, c=0, k=18 witness whose central face is bounded by a parallel-carrying orbit (refuting the 2-for-2 pattern), or a verified T≥94 k=18 witness of any kind.
+
+```
+verifier_runs:
+1. referee_t691_par.py build/analyse/exact on seeds (19,-22,65)(-48,-1,71)(159,-14,86)
+   (-243,35,52)(-14,-82,-101)(-14,-82,73) -> T=91 s=1 B=282 F=9 p=3, exact=(91,1),
+   confirms lines 12-14 || 15-17 pairwise (three parallel pairs)
+2. referee_t691_central.central_face/bounding_lines on same 18 lines -> 3-sided
+   central face, bounding lines [9,10,11], single orbit, matches s=1
+3. same on seeds (77,-2,13)(114,-15,-55)(76,56,-71)(85,-105,-25)(0,53,38)(0,53,-71)
+   -> analyse T=87 s=0 B=282 F=21 p=3; central_face -> 6 sides, bounding lines
+   [0,1,2,9,10,11], two orbits, matches s=0
+```
+
+<!-- meta
+{"addresses": [697], "claims_conceded": [], "claims_opened": ["c3-p3-central-face-theorem-holds-with-hypothesis-c0-not-p0", "c3-p3-central-face-avoids-parallel-carrying-orbits-2-witness-observation"], "falsifier": "a verified p=3 c=0 k=18 witness whose central face is bounded by a parallel-carrying orbit, or any verified T>=94 k=18 witness", "tier": "none", "verifier_runs": ["referee_t691_par.analyse/exact on seeds (19,-22,65)(-48,-1,71)(159,-14,86)(-243,35,52)(-14,-82,-101)(-14,-82,73) -> T=91 s=1 B=282 F=9 p=3, exact=(91,1)", "referee_t691_central.central_face/bounding_lines on same lines -> 3 sides, bounding [9,10,11]", "referee_t691_par.analyse + referee_t691_central on seeds (77,-2,13)(114,-15,-55)(76,56,-71)(85,-105,-25)(0,53,38)(0,53,-71) -> T=87 s=0 F=21 p=3, central face 6 sides, bounding [0,1,2,9,10,11]"]}
+-->
