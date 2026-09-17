@@ -15715,3 +15715,34 @@ verifier_runs: ["anchored automorphism search on kobon_18_93tri (any-row anchor,
 <!-- meta
 {"addresses": [710], "claims_conceded": [], "claims_opened": ["c3-k18-equivariant-flip-ball-radius6-caps-at-93-15085-order-types"], "falsifier": "an equivariant flip from any node in this ball reaching T=94, or any single flip from kobon_18_93tri (equivariant or not) reaching T>=94", "tier": "none", "verifier_runs": ["anchored automorphism search on kobon_18_93tri -> order-3 sigma, six orbits matching 51b", "sigma-fixed-triangle check -> zero fixed triangles", "sigma-equivariant flip-ball BFS radii 1-6 -> 15085 nodes, max T=93 at base only", "validate+parallel-count spot-check on 8 sampled nodes -> all valid, p=3 throughout"]}
 -->
+
+## Turn 712 - Euclidn't - 2026-09-17T03:17:26Z
+
+T711's flip-ball result is the strongest discrete instrument this window produced, so I rebuilt it independently rather than trusting the count — same σ (line-orbits `{1,8,13}{2,7,14}{3,9,15}{4,10,16}{5,11,17}{6,12,18}`, confirmed by row-match-up-to-reversal and by mapping the 93-triangle set onto itself), same calibrated `flips()` routine from `referee_t643_checks.py` (single row-adjacent swap per line, unmodified). At radius 1 there are exactly 31 σ-orbits of triangles (93/3, since `s=0` means every orbit has size 3, no fixed triangle). My enumeration finds **all 31 succeed** as valid triple-flips. T711 reports 19 nodes at radius 1. That's a 12-move gap before radius 2 even starts.
+
+Two of the missing twelve are not noise. Triangles `(3,6,12)` and `(3,6,15)` each use **two lines from the same σ-orbit** (`6,12` both in `{6,12,18}`; `3,15` both in `{3,9,15}`), so the triangle and its own σ-image share a line — a genuinely different move class from the disjoint-orbit case, since the three flips in the triple aren't independent. Both flip cleanly and land at `T=88`. I checked both, not by trusting `table.count`: `table.validate` passes, σ is still a table automorphism of the result (both instruments — row-match-up-to-reversal, and mapping the new 88-triangle set onto itself), and in both cases the new fixed triangle is exactly a full line-orbit itself — `{6,12,18}` and `{3,9,15}` respectively. That means `s=1`.
+
+`88 ≡ 1 (mod 3)`. It is the only residue reachable by an `s=1` object, and `s=1` is the *only* residue that can ever reach 94 — settled, `c3-k18-94-requires-s-flip-from-0-to-1`. Every T-value T711 reported, at every radius from 1 through 6, is `≡ 0 (mod 3)`. Not one node in 15085 touches the branch the whole case turns on. That isn't a search finding the s=1 branch empty — it's a search that never entered it, one flip away from the base, on a move class the enumeration silently dropped. T711's conclusion — "the C3 stratum is now saturated across four instruments, and I should stop spending turns inside it" — is true for the s=0 corner and unsupported for the branch that actually matters.
+
+To be precise about what this does and doesn't do: it doesn't move the ceiling. Continuing my own BFS to radius 3 from the base, the s=1 nodes reached top out at 88 — three below the 91 already established by continuous search (T709, T710, agenda-1). So no new record, and this is not evidence for 94 either. What it does is retract the "stop searching here" verdict: the σ-equivariant flip graph restricted to shared-line triangle moves is exactly the missing piece connecting the s=0 and s=1 strata, and nobody — either side — has BFS'd it starting from the s=1 witnesses (T=91) the way T711 BFS'd from the s=0 witness (T=93). That's the actual next step in this family, not agenda item 3.
+
+falsifier: any equivariant BFS from an s=1 base (the T=91 witness or one of these T=88 shared-line children) reaching T≥92 at s=1, which would move the ceiling; or a re-derivation showing my two flips are invalid under the intended definition of "equivariant move" (i.e., that shared-line triangle triples must be excluded on principled, not incidental, grounds).
+
+```
+verifier_runs:
+1. table.count(kobon_18_93tri) -> 93; sigma rebuilt from 51b orbits, verified via
+   row-match-up-to-reversal AND full-93-triangle-set mapping -> both pass, s=0
+2. full radius-1 sigma-equivariant enumeration (flips() from referee_t643_checks.py,
+   applied to all 31 orbits) on kobon_18_93tri -> 31/31 orbits succeed,
+   hist {84:23, 87:5, 88:2, 90:1}, all T mod 3 in {0,1} -- contra T711's 19-node,
+   all-mod-0 radius-1 report
+3. radius 2-3 continuation of same BFS -> hist includes T=79,82,85 (radius2, mod1)
+   and T=70,73,76,79,82,85 (radius3, mod1); best s=1 value reached so far: 88
+4. table.validate + sigma-automorphism recheck (both instruments) on the two
+   T=88 children from triangles (3,6,12) and (3,6,15) -> both valid, both s=1,
+   fixed triangles {6,12,18} and {3,9,15} respectively (full line-orbits)
+```
+
+<!-- meta
+{"addresses": [711], "claims_conceded": [], "claims_opened": ["c3-k18-sigma-flip-ball-undercounts-radius1-and-excludes-the-s1-branch"], "falsifier": "an equivariant BFS from an s=1 base reaching T>=92 at s=1 (moves the ceiling), or a principled reason the two shared-line flips aren't legitimate equivariant moves", "tier": "none", "verifier_runs": ["table.count(kobon_18_93tri)->93 + sigma rebuild via row-match and triangle-set mapping, s=0", "full radius-1 equivariant enumeration: 31/31 orbits succeed, hist {84:23,87:5,88:2,90:1}, mod3 in {0,1}", "radius 2-3 continuation: mod-1 values 79,82,85,70,73,76 appear, best s=1 so far 88", "table.validate + sigma-automorphism recheck on both T=88,s=1 children (triangles (3,6,12) and (3,6,15))"]}
+-->
