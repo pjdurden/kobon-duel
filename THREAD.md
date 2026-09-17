@@ -15802,3 +15802,25 @@ verifier_runs:
 <!-- meta
 {"addresses": [713], "claims_conceded": [], "claims_opened": ["table-per-line-order-determines-wiring-diagram-uniquely-up-to-reversal"], "falsifier": "a verified-realizable table with a valid pi0 not the reverse of its only other valid pi0, i.e. genuine non-trivial ambiguity in the table-to-face-lattice map", "tier": "none", "verifier_runs": ["brute-force pi0 search, k=4..7, 8 trials, to_table() on Fraction coords -> exactly 2 solutions per trial, always an exact-reverse pair", "greedy mutual-next chain-merge reconstruction, k=5..10 -> fails in every trial, concrete stuck states logged (not-at-end, non-adjacent-same-chain)"]}
 -->
+
+## Turn 715 - Euclidn't - 2026-09-17T05:19:26Z
+
+T714's result stands on its own and I'm not touching it — item 1 needed exactly what it delivered, a proof that the table determines the wiring diagram uniquely up to reversal, plus an honestly-reported dead end in the fast reconstruction. Nothing there bears on k=20, and I owe the referee item 2, unworked for two windows running.
+
+I ran the anneal the referee specified: `referee_t691_mirror20.py`, two fixed vertical lines plus nine mirror-swapped pairs, `B=358` fixed by the family's combinatorics regardless of coordinates. 20 restarts × 5000 steps, seed 713. Best overall: **T=112, s_mirror=2** (even — useless against the odd-parity requirement `T ≡ s_mirror (mod 2)`, T675). Best with **s_mirror odd: T=111**, seeds `[-3, 270, [(19,23,29),(-116,34,-154),(116,77,-83),(-141,67,-81),(17,-91,84),(86,240,-170),(1,93,-4),(-26,48,-28),(-115,193,-17)]]`, `F=25`. Both confirmed by `verify.triangles` directly on the coordinate lines, not the fast `analyse` shortcut: `exact=(112,2)` and `exact=(111,1)`.
+
+That beats the referee's own printed baseline (107, from an 8-restart sample) by four. Read it correctly: the target is 117 at `F=7`; this run's best odd witness sits at `F=25`, eighteen free segments over budget, and the family is nowhere near saturated the way `C3` at k=18 is — twenty restarts of five thousand steps is a fraction of the ~46 restarts, five exhaustive flip balls, and three exact grids it took eleven turns to exhaust there. So I'm not reading anything into the gap yet, in either direction. Doing so would be exactly the move T703 got called out for at k=18 — presenting a raw search number as if it says something about basin shape before the space is remotely covered.
+
+One thing worth flagging before either of us builds on the F column: `F = 358 - 3T` is not an independent measurement in this family, it's arithmetic — `B=358` is fixed by `k=20, p=1, c=0` alone (52f's formula, `C(k-1,2)-p`, doesn't even need the mirror structure). Every F value in my restart list is `358` minus three times its T. Don't mistake it for a second signal.
+
+On the structural side: unlike `C3` at k=18, where T688 proves the fixed face — and hence `s ≤ 1` — is unique, this family has *two* axis-invariant lines (the fixed verticals), not one fixed point. A fixed triangle here needs exactly one side on `x=v1` or `x=v2` — the only lines a `y → -y` involution maps to themselves; a generic mirror-pair line is swapped with its partner, never fixed — and the other two sides swapped. That's a necessary condition, not yet a bound: two candidate axis lines could in principle each support more than one fixed triangle, and restart 15 hit `s_mirror=2`, so `s_mirror ≤ 1` does **not** hold here the way it does at k=18. Whether `s_mirror ≤ 2` is provable, or higher values exist, is open and I have not derived it — flagging it rather than claiming it, per the standing rule on stating a structural theorem's hypotheses before using it.
+
+falsifier: any construction in this or any k=20 family reaching T=117 with F=7, verified by `verify.triangles`; short of that, any anneal in this family exceeding T=112 overall or T=111 at odd s_mirror would revise my read of how saturated it is.
+
+```
+verifier_runs: ["referee_t691_mirror20.py anneal, 20 restarts x 5000 steps, seed 713 -> best overall T=112 s_mirror=2 F=22, best odd s_mirror T=111 F=25, both confirmed by kobon.verify.triangles via the script's exact() call: exact=(112,2), exact=(111,1); reference baseline in AGENDA.md was T=107 from an 8-restart sample"]
+```
+
+<!-- meta
+{"addresses": [713, 714], "claims_conceded": [], "claims_opened": ["k20-fperp2-mirror-anneal-reaches-111-sodd-112-overall-still-far-from-117-f7"], "falsifier": "any k=20 construction reaching T=117 with F=7 verified by verify.triangles, or any anneal in this family exceeding T=112 overall / T=111 at odd s_mirror", "tier": "none", "verifier_runs": ["referee_t691_mirror20.py anneal, 20 restarts x 5000 steps, seed 713 -> best overall T=112 s_mirror=2 F=22, best odd s_mirror T=111 F=25, both confirmed by kobon.verify.triangles via exact() -> (112,2), (111,1)"]}
+-->
