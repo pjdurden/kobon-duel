@@ -15656,3 +15656,27 @@ verifier_runs: ["kobon.verify.triangles on T701 seeds, base recheck -> T=93 (exa
 <!-- meta
 {"addresses": [708, 707, 706], "claims_conceded": [], "claims_opened": ["c3-k18-p3-two-line-joint-move-caps-at-93-s0-91-s1"], "falsifier": "the same two-line joint grid run on a different basin (T682's p=0 93-witness, or another independent p=3 91-witness) lands above 93 or 92 respectively, or any construction reaches s=1,T>=92 at p=3", "tier": "none", "verifier_runs": ["kobon.verify.triangles on T701 seeds -> T=93 exact", "2-line joint grid (idx 3,9, +-16, 1089 cells) on T701 93-witness -> max 93", "single line-15 full offset sweep -80..40 -> global max 93, same plateau as T703", "2-line joint grid (idx 3,9, +-16, 1089 cells) on referee's T=91 s=1 witness -> max 91, reached once"]}
 -->
+
+## Turn 710 - Euclidn't - 2026-09-17T01:19:26Z
+
+T709 asked the right question and I ran it myself rather than waiting: does the 93/91 rigidity replicate on T682's genuinely different `p=0` basin, or is it witness-specific? I went further than the proposed two-line grid — three independent lines, three degrees of freedom, on T682's actual seeds `(-44,-10,24)(1,-6,38)(1,7,37)(36,19,3)(14,6,76)(48,-12,10)`, rechecked first against exact `verify.triangles` (`T=93, s=0`, matching the ledger).
+
+Two-line grid, lines 3 and 9 (different orbits, non-parallel), offsets `di,dj ∈ [-8,8]`, 289 exact `verify.triangles` calls: max **93**, hit in 32/289 cells, never exceeded. Zero cells land at `s=1` anywhere in this neighborhood — a difference from T701's basin worth flagging, not a contradiction of anything.
+
+Three-line grid, lines 3, 9, 15 (one from each of three distinct orbits), offsets `di,dj,dk ∈ [-4,4]`, 729 exact calls: max still exactly **93** (156/729 cells), histogram `{93:156, 90:235, 88:92, 87:86, 85:115, 84:45}`. A third independent degree of freedom, breaking C3 symmetry in three places at once, does not move the ceiling by one.
+
+That's the falsifier T709 named, tested and failed to trigger: the same integer, 93, now confirmed on two structurally distinct seed families (T701's `p=3` orbit and T682's `p=0` orbit), under three different move classes (single-line anneal, two-line grid, three-line grid). That is basin-independence, not witness-specificity — on the `s=0` side.
+
+I also went looking for this basin's `s=1` analog, since T709's second grid used the referee's `T=91` object and I wanted the matching test on T682's family. Scaling seed index 3's offset by `t=1/2` (the same wall-crossing move T703 used) lands at `T=88, s=1` — a real `s=1` neighbor, but a shallower one than 91. The two-line grid around it (lines 0, 12; `di,dj ∈ [-8,8]`, 289 cells) tops out at exactly **88**, never higher, 90/289 cells reaching it. So this basin's `s=1` valley is rigid too, but I have not found a third `s=1` basin near 91 itself — this test doesn't speak to whether 91 specifically is basin-independent, only that whatever local `s=1` max a basin has, it resists joint perturbation the same way its `s=0` sibling does.
+
+Read plainly: three basins, three move classes, one number on the `s=0` side. That is what a real obstruction looks like, and it is still not a proof — I want to be exact about that boundary, per the standing rule against calling a search result a theorem. What would make it one is a wall-crossing accounting: every move here stayed inside a coordinate cell or hopped between cells of the *same* combinatorial type family (orbit-scaling). Nobody has yet enumerated the actual walls — the codimension-1 loci where a fourth line becomes parallel or a fourth triple goes concurrent — and shown each one strictly decreases `T` near this basin. That enumeration, not another grid, is what closes the gap between "93/91 keeps winning" and "94 is impossible."
+
+falsifier: any joint move, any number of lines, any basin, verified by `verify.triangles`, landing at T≥94 (s=0-compatible) or T≥92 (s=1), in this or any other p=3/p=0 C3 family.
+
+```
+verifier_runs: ["kobon.verify.triangles on T682 seeds -> T=93,s=0 (base recheck)", "2-line exact grid (lines 3,9; di,dj in [-8,8]; 289 verify.triangles calls) on T682 93-witness -> max 93, 32/289 cells, 0 cells at s=1", "3-line exact grid (lines 3,9,15; di,dj,dk in [-4,4]; 729 verify.triangles calls) on T682 93-witness -> max 93, 156/729 cells", "orbit-offset scaling (seed idx 3, t=1/2) on T682 seeds -> T=88,s=1 exact; 2-line grid (lines 0,12; di,dj in [-8,8]; 289 calls) around it -> max 88, 90/289 cells"]
+```
+
+<!-- meta
+{"addresses": [709], "claims_conceded": [], "claims_opened": ["c3-k18-s0-93-ceiling-holds-across-independent-basins-under-3dof-joint-moves"], "falsifier": "any joint multi-line move, any basin, verified via verify.triangles, reaching T>=94 (s=0) or T>=92 (s=1)", "tier": "none", "verifier_runs": ["kobon.verify.triangles on T682 seeds -> T=93,s=0", "2-line exact grid (lines 3,9; range 8) on T682 basin -> max 93/289 cells, 0 at s=1", "3-line exact grid (lines 3,9,15; range 4) on T682 basin -> max 93/729 cells", "orbit-scale wall crossing (idx3, t=1/2) -> T=88,s=1; 2-line grid around it -> max 88/289 cells"]}
+-->
